@@ -1,0 +1,86 @@
+// Your custom styles
+
+//text styles
+.text-primary {
+    color: $primary !important;
+}
+
+//form
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: $primary;
+    outline: 0;
+    box-shadow: 0 0 0 0rem #2e2e2e;
+}
+
+//btn styles
+.btnLink {
+    padding: 10px 0px !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: $primary !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    text-transform: capitalize;
+    text-decoration: none !important;
+}
+
+.btn.btn-link {
+    color: $primary !important;
+}
+
+.btn-auth {
+    width: 100%;
+    margin: 0;
+    background-color: $primary !important
+}
+
+.btn-icon {
+    display: inline-block;
+    padding: 10px;
+    background-color: #3aa6d4;
+    margin-right: 15px;
+}
+
+//navTabs Style material
+.nav-tabs {
+    border-bottom: transparent;
+    text-align: center;
+}
+
+.nav-tabs .nav-item {
+    border-bottom: transparent;
+    width: 50% !important;
+    text-align: center;
+}
+
+.nav-item .nav-link:hover {
+    color: $grey-darken-4 !important;
+}
+
+.navbar.navbar-dark .breadcrumb .nav-item .nav-link,
+.navbar.navbar-dark .navbar-nav .nav-item .nav-link {
+    color: $grey-darken-4;
+    transition: 0.35s;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.nav-tabs .nav-link.active {
+    color: $grey-darken-4 !important;
+    background-color: #fff;
+    border-color: transparent;
+    border-bottom: 2px solid $primary;
+}
+
+.nav-tabs .nav-link.active:hover {
+    color: $grey-darken-4 !important;
+    background-color: #fff;
+    border-color: transparent;
+    border-bottom: 2px solid $primary;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent;
+}
