@@ -47,16 +47,43 @@ class SidebarComponent extends React.Component {
                 {
                   path: "/home",
                   name: "Home",
-                  image: HomeIcon
+                  image: HomeIcon,
+                  className: "title-list-item"
                 },
-                { path: "/profile", name: "Profile", image: ProfileIcon },
-                { path: "/sales", name: "Sales", image: SalesIcon },
+                {
+                  path: "/profile",
+                  name: "Profile",
+                  image: ProfileIcon,
+                  className: "title-list-item"
+                },
+                {
+                  path: "/sales",
+                  name: "Sales",
+                  image: SalesIcon,
+                  className: "title-list-item"
+                },
                 {
                   path: "/notifications",
                   name: "Notifications",
-                  image: NotificationIcon
+                  image: NotificationIcon,
+                  className: "title-list-item"
                 },
-                { path: "/invetory", name: "Sales", image: InvetoryIcon }
+                {
+                  path: "/invetory",
+                  name: "Invetory",
+                  image: InvetoryIcon,
+                  className: "title-list-item"
+                },
+                {
+                  path: "/privacy-police",
+                  name: "Privacy Police",
+                  className: "title-list-item-no-icon"
+                },
+                {
+                  path: "/terms-and-conditions",
+                  name: "Terms and Conditions",
+                  className: "title-list-item-no-icon"
+                }
               ]}
             />
           }
@@ -64,6 +91,7 @@ class SidebarComponent extends React.Component {
           docked={this.state.sidebarDocked}
           onSetOpen={this.onSetSidebarOpen}
           sidebarClassName={"sidebarStyles"}
+          transitions={false}
         >
           {this.props.children}
         </Sidebar>
