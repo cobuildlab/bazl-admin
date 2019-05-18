@@ -8,7 +8,7 @@ import FormLogin from "./FormLogin";
 import Logo from "../assets/img/Bazl-logo.png";
 import FormSignUp from "./FormSignUp";
 
-const ModalComponent = ({ linkName }) => {
+const ModalComponent = ({ linkName, closed }) => {
   const [selectTab, setSelectTab] = React.useState("0");
   const [status, setStatus] = React.useState(false);
 

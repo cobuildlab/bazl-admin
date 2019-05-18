@@ -8,6 +8,7 @@ import ProfileScreen from "./modules/admin/Profile/Profile";
 import SalesScreen from "./modules/admin/Sales/Sales";
 import NotificationsScreen from "./modules/admin/Notifications/Notifications";
 import InvetoryScreen from "./modules/admin/Invetory/Invetory";
+import NewProductScreen from "./modules/admin/NewProduct/NewProduct";
 
 export default class App extends Component {
   render() {
@@ -20,6 +21,7 @@ export default class App extends Component {
           <Route exact path="/sales" component={SalesScreen} />{" "}
           <Route exact path="/notifications" component={NotificationsScreen} />{" "}
           <Route exact path="/invetory" component={InvetoryScreen} />{" "}
+          <Route exact path="/new-product" component={NewProductScreen} />{" "}
         </Switch>{" "}
       </BrowserRouter>
     );

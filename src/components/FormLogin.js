@@ -1,11 +1,12 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Icon } from "react-icons-kit";
 import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { facebook } from "react-icons-kit/fa/facebook";
 import { googlePlus } from "react-icons-kit/fa/googlePlus";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
+import ModalComponentRecovery from "./ModalComponentRecovey";
 
 class FormLogin extends React.Component {
   render() {
@@ -64,7 +65,10 @@ class FormLogin extends React.Component {
                   aria-describedby="basic-addon1"
                 />
               </div>
-              <p className="text-center">Don't remember your password?</p>
+              <ModalComponentRecovery
+                displayStatus={this.props.open}
+                onClick={this.handleClick}
+              />
             </form>
             <div className="text-center">
               <MDBBtn className="btn-auth">
