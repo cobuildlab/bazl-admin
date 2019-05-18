@@ -1,7 +1,8 @@
 import React from "react";
 import { MDBRow, MDBCol, MDBCard, MDBCardText, MDBScrollbar } from "mdbreact";
 
-import ImgCard from "../assets/img/ropa-dama.jpg";
+import ImgCardDama from "../assets/img/ropa-dama.jpg";
+import ImgCardHombre from "../assets/img/ropa-hombre.jpg";
 
 class SliderCards extends React.Component {
   render() {
@@ -23,7 +24,7 @@ class SliderCards extends React.Component {
           >
             <div
               className="img-card"
-              style={{ backgroundImage: `url(${ImgCard})` }}
+              style={{ backgroundImage: `url(${ImgCardDama})` }}
             />
             <MDBCardText className="p-2">@username</MDBCardText>
           </MDBCard>
@@ -36,7 +37,7 @@ class SliderCards extends React.Component {
           >
             <div
               className="img-card"
-              style={{ backgroundImage: `url(${ImgCard})` }}
+              style={{ backgroundImage: `url(${ImgCardHombre})` }}
             />
             <MDBCardText className="p-2">@username</MDBCardText>
           </MDBCard>
@@ -49,7 +50,7 @@ class SliderCards extends React.Component {
           >
             <div
               className="img-card"
-              style={{ backgroundImage: `url(${ImgCard})` }}
+              style={{ backgroundImage: `url(${ImgCardDama})` }}
             />
             <MDBCardText className="p-2">@username</MDBCardText>
           </MDBCard>
@@ -62,7 +63,7 @@ class SliderCards extends React.Component {
           >
             <div
               className="img-card"
-              style={{ backgroundImage: `url(${ImgCard})` }}
+              style={{ backgroundImage: `url(${ImgCardHombre})` }}
             />
             <MDBCardText className="p-2">@username</MDBCardText>
           </MDBCard>
@@ -75,7 +76,7 @@ class SliderCards extends React.Component {
           >
             <div
               className="img-card"
-              style={{ backgroundImage: `url(${ImgCard})` }}
+              style={{ backgroundImage: `url(${ImgCardDama})` }}
             />
             <MDBCardText className="p-2">@username</MDBCardText>
           </MDBCard>
@@ -88,7 +89,7 @@ class SliderCards extends React.Component {
           >
             <div
               className="img-card"
-              style={{ backgroundImage: `url(${ImgCard})` }}
+              style={{ backgroundImage: `url(${ImgCardHombre})` }}
             />
             <MDBCardText className="p-2">@username</MDBCardText>
           </MDBCard>
