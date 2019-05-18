@@ -4,48 +4,51 @@ import { Icon } from "react-icons-kit";
 import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
-import View from 'react-flux-state';
-import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT} from "../modules/landing/landing-store";
-import { onLogin, pushHome } from '../modules/landing/landing-actions';
-import firebase from 'firebase';
-import * as R from 'ramda';
-import { uiConfig } from '../config/firebase';
-import { StyledFirebaseAuth } from 'react-firebaseui';
-import { error } from 'pure-logger';
-import { toast } from 'react-toastify';
+import View from "react-flux-state";
+import {
+  landingStore,
+  LOGIN_EVENT,
+  LOGIN_ERROR_EVENT
+} from "../modules/landing/landing-store";
+import { onLogin, pushHome } from "../modules/landing/landing-actions";
+import firebase from "firebase";
+import * as R from "ramda";
+import { uiConfig } from "../config/firebase";
+import { StyledFirebaseAuth } from "react-firebaseui";
+import { error } from "pure-logger";
+import { toast } from "react-toastify";
 
 class FormLogin extends View {
   constructor(props) {
-    super(props) 
+    super(props);
     this.state = {
-        email: '',
-        password: ''
-    }
+      email: "",
+      password: ""
+    };
     this.onError = error.bind(this);
   }
 
   componentDidMount() {
-    this.subscribe( landingStore, LOGIN_EVENT, () => {
+    this.subscribe(landingStore, LOGIN_EVENT, () => {
       pushHome();
-    })
-    this.subscribe( landingStore, LOGIN_ERROR_EVENT, (err) => {
+    });
+    this.subscribe(landingStore, LOGIN_ERROR_EVENT, err => {
       toast.error(err.message);
     });
-
   }
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
     this.setState(() => {
       onLogin(R.clone(this.state.email, this.state.password));
-    })
-  }
+    });
+  };
 
-  onChange = ({ target: { name, value }}) => {
+  onChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value
-    })
-  }
+    });
+  };
 
   render() {
     const { email, password } = this.state;
@@ -55,12 +58,14 @@ class FormLogin extends View {
           <MDBCol md="12" className="p-0">
             <form className="p-3">
               <div className="text-center">
-                <StyledFirebaseAuth 
+                <StyledFirebaseAuth
                   uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-                <StyledFirebaseAuth 
+                  firebaseAuth={firebase.auth()}
+                />
+                <StyledFirebaseAuth
                   uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
+                  firebaseAuth={firebase.auth()}
+                />
               </div>
               <MDBRow>
                 <MDBCol md="5" xs="5">
@@ -83,7 +88,7 @@ class FormLogin extends View {
                 <input
                   onChange={this.onChange}
                   type="email"
-                  name='email'
+                  name="email"
                   value={email}
                   className="form-control"
                   placeholder="Email"
@@ -100,7 +105,7 @@ class FormLogin extends View {
                 <input
                   onChange={this.onChange}
                   type="password"
-                  name='password'
+                  name="password"
                   value={password}
                   className="form-control"
                   placeholder="Password"
@@ -108,13 +113,17 @@ class FormLogin extends View {
                   aria-describedby="basic-addon1"
                 />
               </div>
-              <p className="text-center">Don't remember your password?</p>
+              <ModalComponentRecovery
+                displayStatus={this.props.open}
+                onClick={this.handleClick}
+              />
             </form>
             <div className="text-center">
-            <MDBBtn 
-                type={'submit'} 
-                className="btn-auth" 
-                onClick={this.onSubmit}>
+              <MDBBtn
+                type={"submit"}
+                className="btn-auth"
+                onClick={this.onSubmit}
+              >
                 Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
               </MDBBtn>
             </div>

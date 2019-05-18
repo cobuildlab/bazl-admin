@@ -2,162 +2,345 @@
 
 //text styles
 .text-primary {
-    color: $primary !important;
+  color: $primary !important;
 }
 
 //form
 .form-control:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: $primary;
-    outline: 0;
-    box-shadow: 0 0 0 0rem #2e2e2e;
+  color: #495057;
+  background-color: #fff;
+  border-color: $primary;
+  outline: 0;
+  box-shadow: 0 0 0 0rem #2e2e2e;
 }
 
 //btn styles
+
+.btn-default {
+  background-color: #44c1f6 !important;
+  color: #fff;
+}
+
+.btn-default:not([disabled]):not(.disabled):active,
+.btn-default:not([disabled]):not(.disabled).active,
+.show > .btn-default.dropdown-toggle {
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+  background-color: #27b9f7 !important;
+}
+
+.btn-circle {
+  border-radius: 100px;
+  padding: 5px 35px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.btn-circle-link {
+  background-color: $primary;
+  color: #fff;
+}
+
 .btnLink {
-    padding: 10px 0px !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    color: $primary !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    text-transform: capitalize;
-    text-decoration: none !important;
+  padding: 10px 0px !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  color: $primary !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  text-transform: capitalize;
+  text-decoration: none !important;
 }
 
 .btn.btn-link {
-    color: $primary !important;
+  color: $primary !important;
 }
 
 .btn-auth {
-    width: 100%;
-    margin: 0;
-    background-color: $primary !important
+  width: 100%;
+  margin: 0;
+  background-color: $primary !important;
 }
 
 .btn-icon {
-    display: inline-block;
-    padding: 10px;
-    background-color: #3aa6d4;
-    margin-right: 15px;
+  display: inline-block;
+  padding: 10px;
+  background-color: #3aa6d4;
+  margin-right: 15px;
 }
 
 //navTabs Style material
 .nav-tabs {
-    border-bottom: transparent;
-    text-align: center;
+  border-bottom: transparent;
+  text-align: center;
 }
 
 .nav-tabs .nav-item {
-    border-bottom: transparent;
-    width: 50% !important;
-    text-align: center;
+  border-bottom: transparent;
+  width: 50% !important;
+  text-align: center;
 }
 
 .nav-item .nav-link:hover {
-    color: $grey-darken-4 !important;
+  color: $grey-darken-4 !important;
 }
 
 .navbar.navbar-dark .breadcrumb .nav-item .nav-link,
 .navbar.navbar-dark .navbar-nav .nav-item .nav-link {
-    color: $grey-darken-4;
-    transition: 0.35s;
-    font-weight: bold;
-    font-size: 14px;
+  color: $grey-darken-4;
+  transition: 0.35s;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .nav-tabs .nav-link.active {
-    color: $grey-darken-4 !important;
-    background-color: #fff;
-    border-color: transparent;
-    border-bottom: 2px solid $primary;
+  color: $grey-darken-4 !important;
+  background-color: #fff;
+  border-color: transparent;
+  border-bottom: 2px solid $primary;
 }
 
 .nav-tabs .nav-link.active:hover {
-    color: $grey-darken-4 !important;
-    background-color: #fff;
-    border-color: transparent;
-    border-bottom: 2px solid $primary;
+  color: $grey-darken-4 !important;
+  background-color: #fff;
+  border-color: transparent;
+  border-bottom: 2px solid $primary;
 }
 
 .nav-tabs .nav-link:hover {
-    border-color: transparent;
+  border-color: transparent;
 }
 
 // Sidebar Styles
 
 .sidebarStyles {
-    width: 260px;
-    background-color: $primary;
+  width: 260px;
+  background-color: $primary;
 }
 
 // List item sidebar
 .list-group-item {
-    position: relative;
-    display: block;
-    padding: .85rem 1.25rem;
-    margin-bottom: -1px !important;
-    background-color: transparent;
-    border: 0;
-    color: #fff;
+  position: relative;
+  display: block;
+  padding: 0.85rem 1.25rem;
+  margin-bottom: -1px !important;
+  background-color: transparent;
+  border: 0;
+  color: #fff;
 }
 
 .list-group-item.active {
-    z-index: 2;
-    color: #fff;
-    background-color: #8dd8f8;
-    border-color: #8dd8f8;
-    border-left: 2px solid #707070;
-    transition: all .2s ease;
-    -moz-transition: .2s ease all;
-    -webkit-transition: all .2s ease;
+  z-index: 2;
+  color: #fff;
+  background-color: #8dd8f8;
+  border-color: #8dd8f8;
+  border-left: 2px solid #707070;
+  transition: all 0.2s ease;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: all 0.2s ease;
 }
 
 .list-group-item:hover {
-    background-color: #8dd8f8;
-    border-left: 2px solid #707070;
-    transition: all .2s ease;
-    -moz-transition: .2s ease all;
-    -webkit-transition: all .2s ease;
+  background-color: #8dd8f8;
+  border-left: 2px solid #707070;
+  transition: all 0.2s ease;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: all 0.2s ease;
 }
 
 .list-group .list-group-item:last-child {
-    border-bottom-left-radius: 0 !important;
-    border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 .list-group .list-group-item:first-child {
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 .icon-list-item {
-    margin-right: 15px;
-    width: 20px;
+  margin-right: 15px;
+  width: 20px;
 }
 
 .title-list-item {
-    position: relative;
-    top: 3px;
+  position: relative;
+  top: 3px;
 }
 
 .title-list-item-no-icon {
-    position: relative;
-    top: 3px;
-    left: 35px;
+  position: relative;
+  top: 3px;
+  left: 35px;
 }
 
 .link-logout {
-    color: #fff;
-    position: absolute;
-    bottom: 15px;
-    left: 55px;
+  color: #fff;
+  position: absolute;
+  bottom: 15px;
+  left: 55px;
 }
 
-.link-logout:hoverC {
-    color: #fff;
-    position: absolute;
-    bottom: 15px;
-    left: 55px;
+.link-logout:hoverc {
+  color: #fff;
+  position: absolute;
+  bottom: 15px;
+  left: 55px;
 }
+
+// Nav Bar Admin
+.nav-admin {
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 25px;
+}
+
+.body {
+  padding: 15px 60px;
+}
+
+.img-card {
+  width: 100%;
+  height: 190px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+.scrollbar {
+  overflow: scroll;
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* custom colors  */
+.scrollbar-primary::-webkit-scrollbar {
+  background-color: #f5f5f5;
+}
+
+.scrollbar-primary::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: $primary;
+}
+
+//Table component
+
+table.table thead th {
+  border-top: none;
+  border-bottom: 2px solid #e6e6e6;
+}
+.table td,
+.table th {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+.img-profile-table {
+  width: 30px;
+  height: 30px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 100px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  display: inline-block;
+  margin-right: 10px;
+}
+.username-table {
+  position: relative;
+  top: -10px;
+}
+.Customlabel {
+  padding: 14px;
+  cursor: pointer;
+  width: 100%;
+  height: 155px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#upload-photo {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.md-form {
+  position: relative;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+.custom-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0);
+}
+
+/* The container */
+.container-radio {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  margin-right: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  border: 1px solid #ccc;
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: all 0.2s ease;
+}
+
+/* On mouse-over, add a grey background color */
+.container-radio:hover input ~ .checkmark {
+  border: 1px solid $primary;
+}
+
+/* When the radio button is checked, add a blue background */
+.container-radio input:checked ~ .checkmark {
+  background-color: $primary;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container-radio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
