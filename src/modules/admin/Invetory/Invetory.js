@@ -1,7 +1,7 @@
 import React from "react";
 import SidebarComponent from "../../../components/SidebarComponent";
 
-class InvetoryScreen extends React.Component {
+class InventoryScreen extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -13,4 +13,4 @@ class InvetoryScreen extends React.Component {
   }
 }
 
-export default InvetoryScreen;
+export default InventoryScreen;

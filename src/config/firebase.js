@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { pushHome } from '../modules/landing/landing-actions';
 
 export const config = {
   apiKey: "AIzaSyAUhqrxL0qCgk7DD_0pvtpW263WRLUZKa0",
@@ -11,15 +12,15 @@ export const config = {
 };
 
 export const uiConfig = {
-  // Popup signin flow rather than redirect flow.
+  // Popup signin flow rather than redirect flow
   signInFlow: 'popup',
-  // this will display Google and Facebook as auth providers.
+  // this will display Google and Facebook as auth providers
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.FacebookAuthProvider.PROVIDER_ID
   ],
   callbacks: {
     // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => {this.props.history.push('/');}
+    signInSuccessWithAuthResult: () => {pushHome()}
   }
 }

@@ -1,28 +1,66 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Icon } from "react-icons-kit";
 import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
-import { facebook } from "react-icons-kit/fa/facebook";
-import { googlePlus } from "react-icons-kit/fa/googlePlus";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
+import View from 'react-flux-state';
+import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT} from "../modules/landing/landing-store";
+import { onLogin, pushHome } from '../modules/landing/landing-actions';
+import firebase from 'firebase';
+import * as R from 'ramda';
+import { uiConfig } from '../config/firebase';
+import { StyledFirebaseAuth } from 'react-firebaseui';
+import { error } from 'pure-logger';
+import { toast } from 'react-toastify';
 
-class FormLogin extends React.Component {
+class FormLogin extends View {
+  constructor(props) {
+    super(props) 
+    this.state = {
+        email: '',
+        password: ''
+    }
+    this.onError = error.bind(this);
+  }
+
+  componentDidMount() {
+    this.subscribe( landingStore, LOGIN_EVENT, () => {
+      pushHome();
+    })
+    this.subscribe( landingStore, LOGIN_ERROR_EVENT, (err) => {
+      toast.error(err.message);
+    });
+
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.setState(() => {
+      onLogin(R.clone(this.state.email, this.state.password));
+    })
+  }
+
+  onChange = ({ target: { name, value }}) => {
+    this.setState({
+      [name]: value
+    })
+  }
+
   render() {
+    const { email, password } = this.state;
     return (
       <MDBContainer>
         <MDBRow>
           <MDBCol md="12" className="p-0">
             <form className="p-3">
               <div className="text-center">
-                <MDBBtn size="sm" className="btn-auth text-left mb-3 p-0">
-                  <Icon icon={facebook} className="btn-icon" /> Login with
-                  Facebook
-                </MDBBtn>
-                <MDBBtn size="sm" className="btn-auth text-left mb-3 p-0">
-                  <Icon icon={googlePlus} className="btn-icon" /> Login with
-                  Google
-                </MDBBtn>
+                <StyledFirebaseAuth 
+                  uiConfig={uiConfig}
+                  firebaseAuth={firebase.auth()} />
+                <StyledFirebaseAuth 
+                  uiConfig={uiConfig}
+                  firebaseAuth={firebase.auth()} />
               </div>
               <MDBRow>
                 <MDBCol md="5" xs="5">
@@ -37,28 +75,34 @@ class FormLogin extends React.Component {
               </MDBRow>
 
               <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="basic-addon1">
                     <Icon icon={ic_mail_outline} />
                   </span>
                 </div>
                 <input
+                  onChange={this.onChange}
                   type="email"
-                  class="form-control"
+                  name='email'
+                  value={email}
+                  className="form-control"
                   placeholder="Email"
                   aria-label="Email"
                   aria-describedby="basic-addon1"
                 />
               </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="basic-addon1">
                     <Icon icon={ic_lock_outline} />
                   </span>
                 </div>
                 <input
+                  onChange={this.onChange}
                   type="password"
-                  class="form-control"
+                  name='password'
+                  value={password}
+                  className="form-control"
                   placeholder="Password"
                   aria-label="Password"
                   aria-describedby="basic-addon1"
@@ -67,8 +111,11 @@ class FormLogin extends React.Component {
               <p className="text-center">Don't remember your password?</p>
             </form>
             <div className="text-center">
-              <MDBBtn className="btn-auth">
-                Login <Icon size={24} icon={ic_keyboard_arrow_right} />
+            <MDBBtn 
+                type={'submit'} 
+                className="btn-auth" 
+                onClick={this.onSubmit}>
+                Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
               </MDBBtn>
             </div>
           </MDBCol>
@@ -77,4 +124,5 @@ class FormLogin extends React.Component {
     );
   }
 }
+
 export default FormLogin;
