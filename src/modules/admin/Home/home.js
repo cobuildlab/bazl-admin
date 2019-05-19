@@ -57,6 +57,9 @@ class HomeScreen extends React.Component {
               </MDBCol>
             </MDBRow>
             <SliderCards />
+            <MDBCol md="12" className="p-0">
+              <h6 className="mt-5 mb-3">Recent Sales</h6>
+            </MDBCol>
             <TableSales />
           </MDBContainer>
         </SidebarComponent>

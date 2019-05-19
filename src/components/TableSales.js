@@ -13,9 +13,6 @@ class TableSales extends React.Component {
   render() {
     return (
       <MDBRow>
-        <MDBCol md="12">
-          <h6 className="mt-5 mb-3">Recent Sales</h6>
-        </MDBCol>
         <MDBCol md="12" className="p-0">
           <MDBTable borderless responsive>
             <MDBTableHead>
