@@ -113,10 +113,10 @@ class FormLogin extends View {
                   aria-describedby="basic-addon1"
                 />
               </div>
-              <ModalComponentRecovery
+              {/* <ModalComponentRecovery
                 displayStatus={this.props.open}
                 onClick={this.handleClick}
-              />
+              /> */}
             </form>
             <div className="text-center">
               <MDBBtn
