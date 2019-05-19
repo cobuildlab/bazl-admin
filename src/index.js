@@ -8,9 +8,10 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "./assets/scss/mdb.scss";
 import * as serviceWorker from "./serviceWorker";
 import firebase from 'firebase';
-import { config } from './firebase';
+import { config } from './config/firebase';
+import 'react-toastify/dist/ReactToastify.css';
 
-firebase.initializeApp(config)
+firebase.initializeApp(config);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

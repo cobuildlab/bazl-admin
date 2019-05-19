@@ -1,28 +1,70 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
 import { Icon } from "react-icons-kit";
 import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
-import { facebook } from "react-icons-kit/fa/facebook";
-import { googlePlus } from "react-icons-kit/fa/googlePlus";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
+import View from 'react-flux-state';
+import { landingStore, SIGNUP_EVENT, USER_ERROR_EVENT} from "../modules/landing/landing-store";
+import { createUser, pushHome } from '../modules/landing/landing-actions';
+import firebase from 'firebase';
+import * as R from 'ramda';
+import { uiConfig } from '../config/firebase';
+import { StyledFirebaseAuth } from 'react-firebaseui';
+import { error } from 'pure-logger';
+import { toast } from 'react-toastify';
 
-class FormSignUp extends React.Component {
+class FormSignUp extends View {
+  constructor(props) {
+    super(props) 
+    this.state = {
+        email: '',
+        password: ''
+    }
+    this.onError = error.bind(this);
+  }
+
+  componentDidMount() {
+    this.subscribe( landingStore, SIGNUP_EVENT, () => {
+      pushHome();
+    })
+    this.subscribe( landingStore, USER_ERROR_EVENT, () => this.onError())
+
+  }
+
+  onSubmit (e) {
+    e.preventDefault();
+    this.setState(() => {
+      createUser(R.clone(this.state.data));
+    })
+  }
+
+  onChange = ({ target: { name, value }}) => {
+    this.setState({
+      [name]: value
+    })
+  }
+
+  onError(err) {
+    error(err);
+    toast.error(err.message);
+  }
+
+
   render() {
+    const { email, password} = this.state;
     return (
       <MDBContainer>
         <MDBRow>
           <MDBCol md="12" className="p-0">
             <form className="p-3">
               <div className="text-center">
-                <MDBBtn size="sm" className="btn-auth text-left mb-3 p-0">
-                  <Icon icon={facebook} className="btn-icon" /> Login with
-                  Facebook
-                </MDBBtn>
-                <MDBBtn size="sm" className="btn-auth text-left mb-3 p-0">
-                  <Icon icon={googlePlus} className="btn-icon" /> Login with
-                  Google
-                </MDBBtn>
+                <StyledFirebaseAuth 
+                  uiConfig={uiConfig}
+                  firebaseAuth={firebase.auth()} />
+                <StyledFirebaseAuth 
+                  uiConfig={uiConfig}
+                  firebaseAuth={firebase.auth()} />
               </div>
               <MDBRow>
                 <MDBCol md="5" xs="5">
@@ -44,10 +86,13 @@ class FormSignUp extends React.Component {
                 </div>
                 <input
                   type="email"
+                  name='email'
+                  value={email}
                   class="form-control"
                   placeholder="Email"
                   aria-label="Email"
                   aria-describedby="basic-addon1"
+                  onChange={this.onChange}
                 />
               </div>
               <div class="input-group mb-3">
@@ -58,10 +103,13 @@ class FormSignUp extends React.Component {
                 </div>
                 <input
                   type="password"
+                  name='password'
+                  value={password}
                   class="form-control"
                   placeholder="Password"
                   aria-label="Password"
                   aria-describedby="basic-addon1"
+                  onChange={this.onChange}
                 />
               </div>
               <p className="text-center">
@@ -70,7 +118,10 @@ class FormSignUp extends React.Component {
               </p>
             </form>
             <div className="text-center">
-              <MDBBtn className="btn-auth">
+              <MDBBtn 
+                type={'submit'} 
+                className="btn-auth" 
+                onClick={this.onSubmit}>
                 Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
               </MDBBtn>
             </div>

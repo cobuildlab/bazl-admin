@@ -8,11 +8,11 @@
     "firebase-admin": "^7.3.0",
     "firebase-tools": "^6.9.2",
     "flux-state": "^4.1.0",
+    "mdbreact": "^4.14.0",
+    "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "pure-logger": "0.0.1",
     "ramda": "^0.26.1",
-    "mdbreact": "^4.14.0",
-    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-firebaseui": "^3.1.2",
@@ -21,6 +21,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-sidebar": "^3.0.2",
+    "react-toastify": "^5.1.0",
     "reactstrap": "^8.0.0"
   },
   "scripts": {
