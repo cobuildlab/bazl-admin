@@ -79,7 +79,7 @@ class FormLogin extends View {
                 </MDBCol>
               </MDBRow>
 
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="basic-addon1">
                     <Icon icon={ic_mail_outline} />
