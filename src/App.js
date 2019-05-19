@@ -5,8 +5,9 @@ import HomeScreen from "./modules/admin/Home/home";
 import ProfileScreen from "./modules/admin/Profile/Profile";
 import SalesScreen from "./modules/admin/Sales/Sales";
 import NotificationsScreen from "./modules/admin/Notifications/Notifications";
-import InventoryScreen from "./modules/admin/Invetory/Invetory";
+import InvetoryScreen from "./modules/admin/Invetory/Invetory";
 import { ToastContainer } from "react-toastify";
+import NewProductScreen from "./modules/admin/NewProduct/NewProduct";
 
 /**
  * @typedef {[ component: any, pathname: string ]} publicRoutes
@@ -19,7 +20,8 @@ const publicRoutes = [
   { pathname: "/profile", component: ProfileScreen },
   { pathname: "/sales", component: SalesScreen },
   { pathname: "/notifications", component: NotificationsScreen },
-  { pathname: "/inventory", component: InventoryScreen }
+  { pathname: "/invetory", component: InvetoryScreen },
+  { pathname: "/new-product", component: NewProductScreen }
 ];
 
 class App extends Component {

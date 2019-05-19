@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBRow, MDBCol, MDBCard, MDBCardText, MDBScrollbar } from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardText } from "mdbreact";
 
 import ImgCardDama from "../assets/img/ropa-dama.jpg";
 import ImgCardHombre from "../assets/img/ropa-hombre.jpg";

@@ -61,37 +61,55 @@ class NewProductScreen extends React.Component {
                 </MDBRow>
                 <MDBRow>
                   <MDBCol>
-                    <h6 className="font-weight-bold mb-3 mt-3">Size Article</h6>
-                    <label class="container-radio">
-                      XXS
-                      <input type="radio" checked="checked" name="radio" />
-                      <span class="checkmark" />
-                    </label>
-                    <label class="container-radio">
-                      xS
-                      <input type="radio" name="radio" />
-                      <span class="checkmark" />
-                    </label>
-                    <label class="container-radio">
-                      S
-                      <input type="radio" name="radio" />
-                      <span class="checkmark" />
-                    </label>
-                    <label class="container-radio">
-                      M
-                      <input type="radio" name="radio" />
-                      <span class="checkmark" />
-                    </label>
-                    <label class="container-radio">
-                      L
-                      <input type="radio" name="radio" />
-                      <span class="checkmark" />
-                    </label>
-                    <label class="container-radio">
-                      XL
-                      <input type="radio" name="radio" />
-                      <span class="checkmark" />
-                    </label>
+                    <MDBRow>
+                      <MDBCol md="9">
+                        <div>
+                          <h6 className="font-weight-bold mb-3">
+                            Size Article
+                          </h6>
+                        </div>
+                        <label class="container-radio">
+                          XXS
+                          <input type="radio" checked="checked" name="radio" />
+                          <span class="checkmark" />
+                        </label>
+                        <label class="container-radio">
+                          xS
+                          <input type="radio" name="radio" />
+                          <span class="checkmark" />
+                        </label>
+                        <label class="container-radio">
+                          S
+                          <input type="radio" name="radio" />
+                          <span class="checkmark" />
+                        </label>
+                        <label class="container-radio">
+                          M
+                          <input type="radio" name="radio" />
+                          <span class="checkmark" />
+                        </label>
+                        <label class="container-radio">
+                          L
+                          <input type="radio" name="radio" />
+                          <span class="checkmark" />
+                        </label>
+                        <label class="container-radio">
+                          XL
+                          <input type="radio" name="radio" />
+                          <span class="checkmark" />
+                        </label>
+                      </MDBCol>
+                      <MDBCol md="3">
+                        <h6 className="font-weight-bold m-0">
+                          Quantity Article
+                        </h6>
+                        <select className="browser-default custom-select mt-1 mb-3">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                        </select>
+                      </MDBCol>
+                    </MDBRow>
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>

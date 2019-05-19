@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody } from "mdbreact";
+import { MDBContainer, MDBModal, MDBModalBody } from "mdbreact";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import TabComponent from "./TabComponent";
