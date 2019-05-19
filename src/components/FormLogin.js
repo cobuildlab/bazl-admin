@@ -79,7 +79,7 @@ class FormLogin extends View {
                 </MDBCol>
               </MDBRow>
 
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="basic-addon1">
                     <Icon icon={ic_mail_outline} />
@@ -113,10 +113,6 @@ class FormLogin extends View {
                   aria-describedby="basic-addon1"
                 />
               </div>
-              {/* <ModalComponentRecovery
-                displayStatus={this.props.open}
-                onClick={this.handleClick}
-              /> */}
             </form>
             <div className="text-center">
               <MDBBtn
