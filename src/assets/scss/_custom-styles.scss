@@ -91,3 +91,73 @@
     width: 260px;
     background-color: $primary;
 }
+
+// List item sidebar
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .85rem 1.25rem;
+    margin-bottom: -1px !important;
+    background-color: transparent;
+    border: 0;
+    color: #fff;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #8dd8f8;
+    border-color: #8dd8f8;
+    border-left: 2px solid #707070;
+    transition: all .2s ease;
+    -moz-transition: .2s ease all;
+    -webkit-transition: all .2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #8dd8f8;
+    border-left: 2px solid #707070;
+    transition: all .2s ease;
+    -moz-transition: .2s ease all;
+    -webkit-transition: all .2s ease;
+}
+
+.list-group .list-group-item:last-child {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+.list-group .list-group-item:first-child {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.icon-list-item {
+    margin-right: 15px;
+    width: 20px;
+}
+
+.title-list-item {
+    position: relative;
+    top: 3px;
+}
+
+.title-list-item-no-icon {
+    position: relative;
+    top: 3px;
+    left: 35px;
+}
+
+.link-logout {
+    color: #fff;
+    position: absolute;
+    bottom: 15px;
+    left: 55px;
+}
+
+.link-logout:hoverC {
+    color: #fff;
+    position: absolute;
+    bottom: 15px;
+    left: 55px;
+}

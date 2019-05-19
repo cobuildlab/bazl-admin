@@ -7,6 +7,10 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "./assets/scss/mdb.scss";
 import * as serviceWorker from "./serviceWorker";
+import firebase from 'firebase';
+import { config } from './firebase';
+
+firebase.initializeApp(config)
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
