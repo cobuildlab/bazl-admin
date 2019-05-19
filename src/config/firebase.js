@@ -1,5 +1,4 @@
 import firebase from 'firebase';
-import { pushHome } from '../modules/landing/landing-actions';
 
 export const config = {
   apiKey: "AIzaSyAUhqrxL0qCgk7DD_0pvtpW263WRLUZKa0",
@@ -20,7 +19,8 @@ export const uiConfig = {
     firebase.auth.FacebookAuthProvider.PROVIDER_ID
   ],
   callbacks: {
-    // Avoid redirects after sign-in.
-    signInSuccessWithAuthResult: () => {pushHome()}
+    signInSuccessWithAuthResult() {
+      window.location.href = '/home'
+    }
   }
 }
