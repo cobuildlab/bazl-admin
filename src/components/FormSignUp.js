@@ -76,9 +76,9 @@ class FormSignUp extends View {
                 </MDBCol>
               </MDBRow>
 
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="basic-addon1">
                     <Icon icon={ic_mail_outline} />
                   </span>
                 </div>
@@ -86,16 +86,16 @@ class FormSignUp extends View {
                   type="email"
                   name='email'
                   value={email}
-                  class="form-control"
+                  className="form-control"
                   placeholder="Email"
                   aria-label="Email"
                   aria-describedby="basic-addon1"
                   onChange={this.onChange}
                 />
               </div>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text" id="basic-addon1">
                     <Icon icon={ic_lock_outline} />
                   </span>
                 </div>
@@ -103,7 +103,7 @@ class FormSignUp extends View {
                   type="password"
                   name='password'
                   value={password}
-                  class="form-control"
+                  className="form-control"
                   placeholder="Password"
                   aria-label="Password"
                   aria-describedby="basic-addon1"
