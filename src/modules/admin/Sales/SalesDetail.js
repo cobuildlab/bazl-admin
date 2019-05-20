@@ -101,7 +101,7 @@ class SalesDetailScreen extends React.Component {
                   <MDBBtn className="btn btn-circle">Send</MDBBtn>
                 </div>
               </MDBCol>
-              <MDBCol md="2">
+              <MDBCol md="2" className="mb-3">
                 <h5>Total Sales</h5>
                 <h6 className="text-primary">
                   <span className="font-weight-bold">80</span> Sales
