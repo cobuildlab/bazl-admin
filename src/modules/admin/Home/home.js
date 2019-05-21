@@ -1,6 +1,6 @@
 import React from "react";
 import SidebarComponent from "../../../components/SidebarComponent";
-import { MDBBtn, MDBIcon, MDBContainer, MDBRow, MDBCol } from "mdbreact";
+import { MDBIcon, MDBContainer, MDBRow, MDBCol } from "mdbreact";
 import SliderCards from "../../../components/SliderCards";
 import TableData from "../../../components/TableData";
 

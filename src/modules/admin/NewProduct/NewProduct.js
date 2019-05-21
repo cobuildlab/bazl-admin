@@ -3,11 +3,56 @@ import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
 import SidebarComponent from "../../../components/SidebarComponent";
 
 import ImgDefault from "../../../assets/img/img-default.png";
-
+import * as R from 'ramda';
 import { Link } from "react-router-dom";
+import View from 'react-flux-state';
+import {productModel} from './newproduct-models';
+import { productStore, PRODUCT_EVENT, PRODUCT_ERROR_EVENT} from './newproduct-store';
+import Flux from 'react-flux-state';
+import { toast } from 'react-toastify';
+import { error } from 'pure-logger';
 
-class NewProductScreen extends React.Component {
+class NewProductScreen extends View {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: R.clone(productModel)
+    };
+    this.onError = error.bind(this);
+
+  }
+
+  componentDidMount() {
+    this.subscribe( productStore, PRODUCT_EVENT, () => {})
+    this.subscribe( productStore, PRODUCT_ERROR_EVENT, (err) => {
+      toast.error(err.message)
+    })
+
+  }
+
+  onChange = (e) => {
+    e.preventDefault();
+    const { data } = this.state;
+    data[e.target.name] = e.target.value;
+    this.setState({
+      data,
+    });
+  }
+
+  onSubmit = () => {
+
+  }
+
   render() {
+    const { data } = this.state;
+    const {
+      name,
+      category,
+      description,
+      newColor,
+      price,
+      additionalFee,
+      shippingFee } = data
     return (
       <React.Fragment>
         <SidebarComponent>
@@ -35,7 +80,10 @@ class NewProductScreen extends React.Component {
                     width="80"
                   />
                 </label>
-                <input type="file" name="photo" id="upload-photo" />
+                <input 
+                  type="file" 
+                  name="photo" 
+                  id="upload-photo" />
                 <small className="text-center">
                   JPG or PNG format with a maximum of 5mb
                 </small>
@@ -43,10 +91,15 @@ class NewProductScreen extends React.Component {
               <MDBCol md="9">
                 <MDBRow>
                   <MDBCol>
-                    <MDBInput label="Product Name" className="mt-0" />
+                    <MDBInput
+                      name='name'
+                      value={name} 
+                      onChange={this.onChange}
+                      label="Product Name" 
+                      className="mt-0" />
                   </MDBCol>
                   <MDBCol>
-                    <select className="browser-default custom-select mt-1">
+                    <select value={category} className="browser-default custom-select mt-1">
                       <option>Choose your option</option>
                       <option value="1">Option 1</option>
                       <option value="2">Option 2</option>
@@ -56,7 +109,12 @@ class NewProductScreen extends React.Component {
                 </MDBRow>
                 <MDBRow>
                   <MDBCol>
-                    <MDBInput label="Description" className="mt-0" />
+                    <MDBInput 
+                      name='description'
+                      value={description}
+                      onChange={this.onChange}
+                      label="Description" 
+                      className="mt-0" />
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>
@@ -64,7 +122,10 @@ class NewProductScreen extends React.Component {
                     <h6 className="font-weight-bold mb-3 mt-3">Size Article</h6>
                     <label class="container-radio">
                       XXS
-                      <input type="radio" checked="checked" name="radio" />
+                      <input 
+                        type="radio" 
+                        checked="checked" 
+                        name="radio" />
                       <span class="checkmark" />
                     </label>
                     <label class="container-radio">
@@ -163,7 +224,12 @@ class NewProductScreen extends React.Component {
                     </label>
                   </MDBCol>
                   <MDBCol md="12">
-                    <MDBInput label="Other Color" className="mt-0" />
+                    <MDBInput 
+                      name='newColor'
+                      value={newColor}
+                      onChange={this.onChange}
+                      label="Other Color" 
+                      className="mt-0" />
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>
@@ -173,7 +239,12 @@ class NewProductScreen extends React.Component {
                     </h5>
                   </MDBCol>
                   <MDBCol md="2">
-                    <MDBInput label="Price" className="mt-0" />
+                    <MDBInput 
+                      name='price'
+                      value={price}
+                      onChange={this.onChange}
+                      label="Price" 
+                      className="mt-0" />
                   </MDBCol>
                   <MDBCol>
                     <small>Commission percentage Minimum commission 3%</small>
@@ -186,10 +257,20 @@ class NewProductScreen extends React.Component {
                     </select>
                   </MDBCol>
                   <MDBCol>
-                    <MDBInput label="Additional Fee" className="mt-0" />
+                    <MDBInput 
+                    name='additionalFee'
+                    value={additionalFee}
+                    onChange={this.onChange}
+                    label="Additional Fee" 
+                    className="mt-0" />
                   </MDBCol>
                   <MDBCol>
-                    <MDBInput label="Shipping Fee" className="mt-0" />
+                    <MDBInput 
+                    name='shippingFee'
+                    value={shippingFee}
+                    onChange={this.onChange}
+                    label="Shipping Fee" 
+                    className="mt-0" />
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>
