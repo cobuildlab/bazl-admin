@@ -7,23 +7,23 @@ import {
   MDBTableHead,
   MDBBtn
 } from "mdbreact";
-import ImgProfile from "../assets/img/profile-table.jpg";
+import ImgProduct from "../assets/img/ropa-dama.jpg";
 
-class TableData extends React.Component {
+class TableInvetory extends React.Component {
   render() {
     return (
       <MDBRow>
-        <MDBCol md="12">
-          <h6 className="mt-5 mb-3">Recent Sales</h6>
-        </MDBCol>
         <MDBCol md="12" className="p-0">
           <MDBTable borderless responsive>
             <MDBTableHead>
               <tr>
-                <th>Name</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
                 <th>Price</th>
-                <th>Date</th>
-                <th>Order No</th>
+                <th>Comissions</th>
+                <th>Additional Fee</th>
+                <th># of posts</th>
                 <th> </th>
               </tr>
             </MDBTableHead>
@@ -32,16 +32,19 @@ class TableData extends React.Component {
                 <td>
                   <div
                     className="img-profile-table"
-                    style={{ backgroundImage: `url(${ImgProfile})` }}
+                    style={{ backgroundImage: `url(${ImgProduct})` }}
                   />
                   <span className="username-table">@username</span>
                 </td>
-                <td>$100</td>
-                <td>16/05/2019</td>
-                <td>09876543212</td>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                <td>15</td>
+                <td>$30</td>
+                <td>3%</td>
+                <td>1%</td>
+                <td>5</td>
                 <td>
                   <MDBBtn color="default" className="btn btn-circle m-0">
-                    Order Details
+                    Details
                   </MDBBtn>
                 </td>
               </tr>
@@ -49,16 +52,19 @@ class TableData extends React.Component {
                 <td>
                   <div
                     className="img-profile-table"
-                    style={{ backgroundImage: `url(${ImgProfile})` }}
+                    style={{ backgroundImage: `url(${ImgProduct})` }}
                   />
                   <span className="username-table">@username</span>
                 </td>
-                <td>$100</td>
-                <td>16/05/2019</td>
-                <td>09876543212</td>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                <td>15</td>
+                <td>$30</td>
+                <td>3%</td>
+                <td>1%</td>
+                <td>5</td>
                 <td>
                   <MDBBtn color="default" className="btn btn-circle m-0">
-                    Order Details
+                    Details
                   </MDBBtn>
                 </td>
               </tr>
@@ -69,4 +75,4 @@ class TableData extends React.Component {
     );
   }
 }
-export default TableData;
+export default TableInvetory;

@@ -358,4 +358,16 @@ table.table thead th {
   display: block;
 }
 
-/* Style the indicator (dot/circle) */
+//Form Search
+
+.form-group-search {
+  width: 75%;
+  margin: auto;
+}
+
+.form-control-search {
+  background-color: #e8eaed;
+  border-radius: 100px;
+  height: calc(1.5em + 0.25rem + 0px);
+  font-size: .9rem;
+}
