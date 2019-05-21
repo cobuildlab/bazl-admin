@@ -71,13 +71,20 @@ class ProfileScreen extends React.Component {
                     </div>
                     <div className="mt-4">
                       <h5>Bank Accounts</h5>
-                      <div className="d-flex justify-content-between align-items-center">
+                      <div className="d-flex justify-content-between align-items-center mb-3">
                         <div>0000 visa ********0000</div>
                         <div>
-                          <MDBBtn className="btn btn-circle">
-                            Add Accounts
+                          <MDBBtn className="btn-edit">
+                            <MDBIcon icon="pencil-alt" />
+                          </MDBBtn>
+                          <MDBBtn className="btn-delete">
+                            <MDBIcon icon="times" />
                           </MDBBtn>
                         </div>
+                      </div>
+
+                      <div className="d-flex justify-content-end align-items-center">
+                        <MDBBtn className="btn btn-circle">Add Accounts</MDBBtn>
                       </div>
                     </div>
                     <div className="mt-3 mb-5">

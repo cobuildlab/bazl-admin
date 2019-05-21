@@ -8,6 +8,7 @@ import NotificationsScreen from "./modules/admin/Notifications/Notifications";
 import InventoryScreen from "./modules/admin/Inventory/Inventory";
 import { ToastContainer } from "react-toastify";
 import NewProductScreen from "./modules/admin/NewProduct/NewProduct";
+import SalesDetailScreen from "./modules/admin/Sales/SalesDetail";
 
 /**
  * @typedef {[ component: any, pathname: string ]} publicRoutes
@@ -21,8 +22,8 @@ const publicRoutes = [
   { pathname: "/sales", component: SalesScreen },
   { pathname: "/notifications", component: NotificationsScreen },
   { pathname: "/inventory", component: InventoryScreen },
-  { pathname: "/new-product", component: NewProductScreen }
-
+  { pathname: "/new-product", component: NewProductScreen },
+  { pathname: "/order-detail", component: SalesDetailScreen }
 ];
 
 class App extends Component {

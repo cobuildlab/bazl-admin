@@ -35,9 +35,17 @@
   text-transform: capitalize;
 }
 
+.btn-circle-danger {
+  border-radius: 100px;
+  padding: 5px 35px;
+  font-size: 12px;
+  text-transform: capitalize;
+  background-color: #ff5a5a !important
+}
+
 .btn-circle-link {
   background-color: $primary;
-  color: #fff;
+  color: #fff !important;
 }
 
 .btnLink {
@@ -66,6 +74,24 @@
   padding: 10px;
   background-color: #3aa6d4;
   margin-right: 15px;
+}
+
+.btn-edit {
+  border-radius: 100px;
+  padding: 5px;
+  height: 30px;
+  width: 30px;
+  font-size: 12px;
+  background-color: #52df78 !important;
+}
+
+.btn-delete {
+  border-radius: 100px;
+  padding: 5px;
+  height: 30px;
+  width: 30px;
+  font-size: 12px;
+  background-color: #ff5a5a !important;
 }
 
 //navTabs Style material
@@ -268,6 +294,17 @@ table.table thead th {
   cursor: pointer;
   width: 100%;
   height: 300px;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0px;
+}
+
+.CustomlabelSales {
+  padding: 7px;
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
   position: relative;
   border: 1px solid #ccc;
   border-radius: 5px;

@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { MDBIcon } from "mdbreact";
 import SidebarComponent from "../../../components/SidebarComponent";
 
 class NotificationsScreen extends React.Component {
@@ -6,7 +8,19 @@ class NotificationsScreen extends React.Component {
     return (
       <React.Fragment>
         <SidebarComponent>
-          <h1>Notifications</h1>
+          <div className="d-flex justify-content-between nav-admin body">
+            <div>
+              <h2 className="m-0">Notification</h2>
+            </div>
+            <div>
+              <Link
+                to="/new-product"
+                className="btn btn-circle btn-circle-link"
+              >
+                Upload <MDBIcon icon="upload" className="ml-1" />
+              </Link>
+            </div>
+          </div>
         </SidebarComponent>
       </React.Fragment>
     );
