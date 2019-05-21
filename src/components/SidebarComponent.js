@@ -69,8 +69,8 @@ class SidebarComponent extends React.Component {
                   className: "title-list-item"
                 },
                 {
-                  path: "/invetory",
-                  name: "Invetory",
+                  path: "/inventory",
+                  name: "Inventory",
                   image: InvetoryIcon,
                   className: "title-list-item"
                 },

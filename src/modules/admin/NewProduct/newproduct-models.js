@@ -1,6 +1,7 @@
 import { number } from "prop-types";
 
 export const productModel = {
+  picture: '',
   name: '',
   category: '',
   description: '',
@@ -12,4 +13,5 @@ export const productModel = {
   commission: '',
   additionalFee: '',
   shippingFee: '',
+  userId: '',
 }

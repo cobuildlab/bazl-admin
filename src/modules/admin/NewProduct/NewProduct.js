@@ -8,9 +8,9 @@ import { Link } from "react-router-dom";
 import View from 'react-flux-state';
 import {productModel} from './newproduct-models';
 import { productStore, PRODUCT_EVENT, PRODUCT_ERROR_EVENT} from './newproduct-store';
-import Flux from 'react-flux-state';
 import { toast } from 'react-toastify';
 import { error } from 'pure-logger';
+import { createProduct } from "./newproduct-actions";
 
 class NewProductScreen extends View {
   constructor(props) {
@@ -39,8 +39,11 @@ class NewProductScreen extends View {
     });
   }
 
-  onSubmit = () => {
-
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.setState(() => {
+      createProduct(R.clone(this.state.data))
+    })
   }
 
   render() {

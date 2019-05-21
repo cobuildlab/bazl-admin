@@ -5,7 +5,7 @@ import HomeScreen from "./modules/admin/Home/home";
 import ProfileScreen from "./modules/admin/Profile/Profile";
 import SalesScreen from "./modules/admin/Sales/Sales";
 import NotificationsScreen from "./modules/admin/Notifications/Notifications";
-import InventoryScreen from "./modules/admin/Invetory/Invetory";
+import InventoryScreen from "./modules/admin/Inventory/Inventory";
 import { ToastContainer } from "react-toastify";
 import NewProductScreen from "./modules/admin/NewProduct/NewProduct";
 

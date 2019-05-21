@@ -9,7 +9,7 @@ import {
 } from "mdbreact";
 import ImgProduct from "../assets/img/ropa-dama.jpg";
 
-class TableInvetory extends React.Component {
+class TableInventory extends React.Component {
   render() {
     return (
       <MDBRow>
@@ -75,4 +75,4 @@ class TableInvetory extends React.Component {
     );
   }
 }
-export default TableInvetory;
+export default TableInventory;
