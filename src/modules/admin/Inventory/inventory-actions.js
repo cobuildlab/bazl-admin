@@ -5,7 +5,7 @@ import firebase from 'firebase'
  * @param {string} email the user's email
  * @returns {Promise<{userProducts}>}
  */
-export const fetchProducts = () => {
+export const fetchUserProducts = () => {
   const DB = firebase.firestore();
   const productsCollection = DB.collection('products')
   

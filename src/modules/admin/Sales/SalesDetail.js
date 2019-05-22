@@ -92,7 +92,7 @@ class SalesDetailScreen extends React.Component {
                 <hr />
                 <label
                   className="CustomlabelSales text-center"
-                  for="upload-photo"
+                  htmlFor="upload-photo"
                 >
                   <MDBIcon icon="file-upload" /> Upload Image
                 </label>

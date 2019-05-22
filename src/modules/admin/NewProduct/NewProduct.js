@@ -39,6 +39,14 @@ class NewProductScreen extends View {
     });
   }
 
+  onToggle = (valueIndex, optionsIndex, questionIndex) => {
+    const { data } = this.state;
+    const question = data[optionsIndex].options[questionIndex];
+    question.values.forEach((value, i) => (value.checked = i === valueIndex));
+    data[optionsIndex][questionIndex] = question;
+    this.setState({ data });
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
     this.setState(() => {
@@ -50,7 +58,6 @@ class NewProductScreen extends View {
     const { data } = this.state;
     const {
       name,
-      category,
       description,
       newColor,
       price,
@@ -75,7 +82,7 @@ class NewProductScreen extends View {
           <MDBContainer className="body" fluid>
             <MDBRow>
               <MDBCol md="3">
-                <label className="Customlabel text-center" for="upload-photo">
+                <label className="Customlabel text-center" htmlFor="upload-photo">
                   <img
                     src={ImgDefault}
                     alt="default"
@@ -102,7 +109,7 @@ class NewProductScreen extends View {
                       className="mt-0" />
                   </MDBCol>
                   <MDBCol>
-                    <select value={category} className="browser-default custom-select mt-1">
+                    <select className="browser-default custom-select mt-1">
                       <option>Choose your option</option>
                       <option value="1">Option 1</option>
                       <option value="2">Option 2</option>
@@ -129,35 +136,35 @@ class NewProductScreen extends View {
                             Size Article
                           </h6>
                         </div>
-                        <label class="container-radio">
+                        <label className="container-radio">
                           XXS
-                          <input type="radio" checked="checked" name="radio" />
-                          <span class="checkmark" />
+                          <input  type="radio" checked="checked" name="radio" />
+                          <span className="checkmark" />
                         </label>
-                        <label class="container-radio">
+                        <label className="container-radio">
                           xS
-                          <input type="radio" name="radio" />
-                          <span class="checkmark" />
+                          <input  type="radio" name="radio" />
+                          <span className="checkmark" />
                         </label>
-                        <label class="container-radio">
+                        <label className="container-radio">
                           S
                           <input type="radio" name="radio" />
-                          <span class="checkmark" />
+                          <span className="checkmark" />
                         </label>
-                        <label class="container-radio">
+                        <label className="container-radio">
                           M
                           <input type="radio" name="radio" />
-                          <span class="checkmark" />
+                          <span className="checkmark" />
                         </label>
-                        <label class="container-radio">
+                        <label className="container-radio">
                           L
                           <input type="radio" name="radio" />
-                          <span class="checkmark" />
+                          <span className="checkmark" />
                         </label>
-                        <label class="container-radio">
+                        <label className="container-radio">
                           XL
                           <input type="radio" name="radio" />
-                          <span class="checkmark" />
+                          <span className="checkmark" />
                         </label>
                       </MDBCol>
                       <MDBCol md="3">
@@ -178,67 +185,67 @@ class NewProductScreen extends View {
                     <h6 className="font-weight-bold mb-3 mt-3">
                       Color Article
                     </h6>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" checked="checked" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
                   </MDBCol>
                   <MDBCol md="12">
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" checked="checked" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
-                    <label class="container-radio">
+                    <label className="container-radio">
                       Color
                       <input type="radio" name="radio" />
-                      <span class="checkmark" />
+                      <span className="checkmark" />
                     </label>
                   </MDBCol>
                   <MDBCol md="12">
@@ -293,7 +300,7 @@ class NewProductScreen extends View {
                 </MDBRow>
                 <MDBRow>
                   <MDBCol className="text-center">
-                    <MDBBtn className="btn btn-circle mt-4 mb-5">
+                    <MDBBtn onClick={this.onSubmit} className="btn btn-circle mt-4 mb-5">
                       Publish
                     </MDBBtn>
                   </MDBCol>

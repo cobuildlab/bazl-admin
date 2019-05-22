@@ -37,7 +37,7 @@ class ProfileScreen extends React.Component {
           <MDBContainer>
             <MDBRow>
               <MDBCol md="3">
-                <label className="Customlabel text-center" for="upload-photo">
+                <label className="Customlabel text-center" htmlFor="upload-photo">
                   <img
                     src={ImgDefault}
                     alt="default"

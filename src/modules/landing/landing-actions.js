@@ -133,6 +133,10 @@ export const requestPasswordReset = async (email) => {
     .catch((err) => Flux.dispatchEvent(USER_ERROR_EVENT, err));
   };
   
+/**
+ * function that pushes the user home
+ * @param {props} props 
+ */
 export const pushHome = async (props) => {
   const { history } = this.props
   await history.push('/home')
