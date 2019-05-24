@@ -5,11 +5,11 @@ import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from "react-flux-state";
-import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT } from "../modules/landing/landing-store";
-import { onLogin, pushHome } from "../modules/landing/landing-actions";
+import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT } from "../landing-store";
+import { onLogin, pushHome } from "../landing-actions";
 import firebase from "firebase";
-import * as R from "ramda";
-import { uiConfig } from "../config/firebase";
+
+import { uiConfig } from "../../../config/firebase";
 import { StyledFirebaseAuth } from "react-firebaseui";
 import { error } from "pure-logger";
 import { toast } from "react-toastify";
@@ -34,10 +34,12 @@ class FormLogin extends View {
   }
 
   onSubmit = e => {
+    const { email, password } = this.state;
     e.preventDefault();
     this.setState(() => {
-      onLogin(R.clone(this.state.email, this.state.password));
+      onLogin({ email, password });
     });
+    console.log(email);
   };
 
   onChange = ({ target: { name, value } }) => {

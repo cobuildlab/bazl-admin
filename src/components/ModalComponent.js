@@ -3,10 +3,10 @@ import { MDBContainer, MDBModal, MDBModalBody } from "mdbreact";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import TabComponent from "./TabComponent";
-import FormLogin from "./FormLogin";
+import FormLogin from "../modules/landing/components/FormLogin";
 
 import Logo from "../assets/img/Bazl-logo.png";
-import FormSignUp from "./FormSignUp";
+import FormSignUp from "../modules/landing/components/FormSignUp";
 
 const ModalComponent = ({ linkName, closed }) => {
   const [selectTab, setSelectTab] = React.useState("0");
@@ -35,7 +35,7 @@ const ModalComponent = ({ linkName, closed }) => {
             defaultTab={selectTab}
             tabs={[
               { tabName: "Login", JSX: <FormLogin /> },
-              { tabName: "Sign Up", JSX: <FormSignUp /> }
+              { tabName: "Sign Up", JSX: <FormSignUp /> },
             ]}
           />
         </MDBModalBody>

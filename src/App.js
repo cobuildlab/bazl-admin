@@ -1,30 +1,20 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import LandingView from "./modules/landing/Landing";
-import HomeScreen from "./modules/admin/Home/home";
-import ProfileScreen from "./modules/admin/Profile/Profile";
-import SalesScreen from "./modules/admin/Sales/Sales";
-import NotificationsScreen from "./modules/admin/Notifications/Notifications";
-import InventoryScreen from "./modules/admin/Inventory/Inventory";
+import LandingView from "./modules/landing/LandingView";
+import HomeView from "./modules/admin/Home/homeView";
+import ProfileView from "./modules/admin/Profile/ProfileView";
+import SalesView from "./modules/admin/Sales/SalesView";
+import NotificationsView from "./modules/admin/Notifications/NotificationsView";
+import InventoryView from "./modules/admin/Inventory/InventoryView";
 import { ToastContainer } from "react-toastify";
-import NewProductScreen from "./modules/admin/NewProduct/NewProduct";
-import SalesDetailScreen from "./modules/admin/Sales/SalesDetail";
+import NewProductView from "./modules/admin/NewProduct/NewProductView";
+import SalesDetailView from "./modules/admin/Sales/SalesDetailView";
 
 /**
  * @typedef {[ component: any, pathname: string ]} publicRoutes
  * Defines all public routes
  */
 
-const publicRoutes = [
-  { pathname: "/", component: LandingView },
-  { pathname: "/home", component: HomeScreen },
-  { pathname: "/profile", component: ProfileScreen },
-  { pathname: "/sales", component: SalesScreen },
-  { pathname: "/notifications", component: NotificationsScreen },
-  { pathname: "/inventory", component: InventoryScreen },
-  { pathname: "/new-product", component: NewProductScreen },
-  { pathname: "/order-detail", component: SalesDetailScreen }
-];
 
 class App extends Component {
   render() {
@@ -42,15 +32,20 @@ class App extends Component {
           pauseOnHover
         />
         <Switch>
-          {publicRoutes.map((route, index) => (
-            <Route
-              exact
-              path={route.pathname}
-              component={route.component}
-              key={index}
-            />
-          ))}
-          ;
+          <Route exact path={'/'} component={LandingView} />
+          {/*Sidebar*/}
+          <Route path={'/home'} component={HomeView} />
+          <Route path={'/profile'} component={ProfileView} />
+          <Route exact path={'/sales'} component={SalesView}/>
+          <Route path={'/notifications'} component={NotificationsView} />
+          <Route path={'/inventory'} component={InventoryView} />
+          {/*home, profile, sales*/}
+          <Route path={'/new-product'} component={NewProductView} />
+          {/* sales */}
+          <Route path={'/order-details'} component={SalesDetailView} />
+
+
+
         </Switch>
       </BrowserRouter>
     );

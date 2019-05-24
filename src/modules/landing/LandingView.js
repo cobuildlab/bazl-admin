@@ -18,7 +18,7 @@ import Logo from "../../assets/img/Bazl-logo.png";
 import Phone from "../../assets/img/phone.png";
 import ModalComponent from "../../components/ModalComponent";
 
-class Landing extends React.Component {
+class LandingView extends React.Component {
   state = {
     collapsed: false
   };
@@ -103,4 +103,4 @@ class Landing extends React.Component {
   }
 }
 
-export default Landing;
+export default LandingView;

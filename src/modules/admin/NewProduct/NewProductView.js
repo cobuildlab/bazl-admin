@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { error } from 'pure-logger';
 import { createProduct } from "./newproduct-actions";
 
-class NewProductScreen extends View {
+class NewProductView extends View {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,13 +39,7 @@ class NewProductScreen extends View {
     });
   }
 
-  onToggle = (valueIndex, optionsIndex, questionIndex) => {
-    const { data } = this.state;
-    const question = data[optionsIndex].options[questionIndex];
-    question.values.forEach((value, i) => (value.checked = i === valueIndex));
-    data[optionsIndex][questionIndex] = question;
-    this.setState({ data });
-  };
+
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -314,4 +308,4 @@ class NewProductScreen extends View {
   }
 }
 
-export default NewProductScreen;
+export default NewProductView;

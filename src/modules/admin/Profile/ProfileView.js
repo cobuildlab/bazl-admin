@@ -16,7 +16,7 @@ import SidebarComponent from "../../../components/SidebarComponent";
 import ImgDefault from "../../../assets/img/img-default.png";
 import SliderCards from "../../../components/SliderCards";
 
-class ProfileScreen extends React.Component {
+class ProfileView extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -113,4 +113,4 @@ class ProfileScreen extends React.Component {
   }
 }
 
-export default ProfileScreen;
+export default ProfileView;

@@ -1,9 +1,9 @@
 import React from "react";
 import { MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
 import SidebarComponent from "../../../components/SidebarComponent";
-import TableInventory from "../../../components/TableInventory";
+import TableInventory from "./components/TableInventory";
 
-class InventoryScreen extends React.Component {
+class InventoryView extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -33,4 +33,4 @@ class InventoryScreen extends React.Component {
   }
 }
 
-export default InventoryScreen;
+export default InventoryView;

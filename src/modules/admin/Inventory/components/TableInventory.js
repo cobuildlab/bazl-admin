@@ -7,7 +7,7 @@ import {
   MDBTableHead,
   MDBBtn
 } from "mdbreact";
-import ImgProduct from "../assets/img/ropa-dama.jpg";
+import ImgProduct from '../../../../assets/img/ropa-dama.jpg';
 
 class TableInventory extends React.Component {
   render() {

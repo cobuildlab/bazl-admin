@@ -38,6 +38,7 @@ export const onLogin = async ({email, password}) => {
     Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
 
+
 /**
  * 
  * @param {string} email

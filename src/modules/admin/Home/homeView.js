@@ -6,7 +6,7 @@ import TableSales from "../../../components/TableSales";
 
 import { Link } from "react-router-dom";
 
-class HomeScreen extends React.Component {
+class HomeView extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -68,4 +68,4 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default HomeScreen;
+export default HomeView;
