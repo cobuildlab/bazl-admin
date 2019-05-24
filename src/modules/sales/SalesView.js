@@ -1,16 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { MDBIcon } from "mdbreact";
-import SidebarComponent from "../../../components/SidebarComponent";
+import { MDBIcon, MDBContainer } from "mdbreact";
+import SidebarComponent from "../../components/SidebarComponent";
 
-class NotificationsView extends React.Component {
+import { Link } from "react-router-dom";
+import TableSales from "../../components/TableSales";
+
+class SalesView extends React.Component {
   render() {
     return (
       <React.Fragment>
         <SidebarComponent>
           <div className="d-flex justify-content-between nav-admin body">
             <div>
-              <h2 className="m-0">Notification</h2>
+              <h2 className="m-0">Sales</h2>
             </div>
             <div>
               <Link
@@ -21,10 +23,13 @@ class NotificationsView extends React.Component {
               </Link>
             </div>
           </div>
+          <MDBContainer fluid className="body">
+            <TableSales />
+          </MDBContainer>
         </SidebarComponent>
       </React.Fragment>
     );
   }
 }
 
-export default NotificationsView;
+export default SalesView;

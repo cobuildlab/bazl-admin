@@ -1,8 +1,8 @@
 import React from "react";
-import SidebarComponent from "../../../components/SidebarComponent";
+import SidebarComponent from "../../components/SidebarComponent";
 import { MDBIcon, MDBContainer, MDBRow, MDBCol } from "mdbreact";
-import SliderCards from "../../../components/SliderCards";
-import TableSales from "../../../components/TableSales";
+import SliderCards from "../../components/SliderCards";
+import TableSales from "../../components/TableSales";
 
 import { Link } from "react-router-dom";
 

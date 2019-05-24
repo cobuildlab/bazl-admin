@@ -11,10 +11,10 @@ import {
   MDBCardTitle,
   MDBBtn
 } from "mdbreact";
-import SidebarComponent from "../../../components/SidebarComponent";
+import SidebarComponent from "../../components/SidebarComponent";
 
-import ImgDefault from "../../../assets/img/img-default.png";
-import SliderCards from "../../../components/SliderCards";
+import ImgDefault from "../../assets/img/img-default.png";
+import SliderCards from "../../components/SliderCards";
 
 class ProfileView extends React.Component {
   render() {

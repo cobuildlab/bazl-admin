@@ -1,8 +1,8 @@
 import React from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
-import SidebarComponent from "../../../components/SidebarComponent";
+import SidebarComponent from "../../components/SidebarComponent";
 
-import ImgDefault from "../../../assets/img/img-default.png";
+import ImgDefault from "../../assets/img/img-default.png";
 import * as R from 'ramda';
 import { Link } from "react-router-dom";
 import View from 'react-flux-state';

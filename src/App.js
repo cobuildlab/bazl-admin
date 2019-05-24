@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import LandingView from "./modules/landing/LandingView";
-import HomeView from "./modules/admin/Home/homeView";
-import ProfileView from "./modules/admin/Profile/ProfileView";
-import SalesView from "./modules/admin/Sales/SalesView";
-import NotificationsView from "./modules/admin/Notifications/NotificationsView";
-import InventoryView from "./modules/admin/Inventory/InventoryView";
+import HomeView from "./modules/home/homeView";
+import ProfileView from "./modules/profile/ProfileView";
+import SalesView from "./modules/sales/SalesView";
+import NotificationsView from "./modules/notifications/NotificationsView";
+import InventoryView from "./modules/inventory/InventoryView";
 import { ToastContainer } from "react-toastify";
-import NewProductView from "./modules/admin/NewProduct/NewProductView";
-import SalesDetailView from "./modules/admin/Sales/SalesDetailView";
+import NewProductView from "./modules/new-product/NewProductView";
+import SalesDetailView from "./modules/sales/SalesDetailView";
 
 /**
  * @typedef {[ component: any, pathname: string ]} publicRoutes

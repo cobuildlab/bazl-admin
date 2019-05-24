@@ -3,7 +3,7 @@ import {
   PRODUCT_EVENT,
   PRODUCT_ERROR_EVENT 
 } from './newproduct-store';
-import { landingStore, USER_EVENT } from '../../landing/landing-store';
+import { landingStore, USER_EVENT } from '../landing/landing-store';
 import Flux from 'react-flux-state';
 
 

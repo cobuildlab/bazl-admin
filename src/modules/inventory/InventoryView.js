@@ -1,6 +1,6 @@
 import React from "react";
 import { MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
-import SidebarComponent from "../../../components/SidebarComponent";
+import SidebarComponent from "../../components/SidebarComponent";
 import TableInventory from "./components/TableInventory";
 
 class InventoryView extends React.Component {
