@@ -10,13 +10,15 @@ import {
   MDBView,
   MDBMask,
   MDBRow,
-  MDBCol
+  MDBCol,
+  MDBAnimation
 } from "mdbreact";
 import bgLanding from "../../assets/img/background.png";
 import Logo from "../../assets/img/Bazl-logo.png";
+import Phone from "../../assets/img/phone.png";
 import ModalComponent from "../../components/ModalComponent";
 
-class Landing extends React.Component {
+class LandingView extends React.Component {
   state = {
     collapsed: false
   };
@@ -66,19 +68,31 @@ class Landing extends React.Component {
             <MDBContainer>
               <MDBRow>
                 <MDBCol md="8" className="mb-4">
-                  <h1 className="h1-reponsive mb-4 pt-md-5 pt-5 text-primary ">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  </h1>
-                  <h6 className="mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.
-                  </h6>
+                  <MDBAnimation type="fadeInLeft">
+                    <h1 className="h1-reponsive mb-4 pt-md-5 pt-5 text-primary ">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    </h1>
+                    <h6 className="mb-4">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. quis nostrud
+                      exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                      consequat.
+                    </h6>
+                  </MDBAnimation>
+                </MDBCol>
+                <MDBCol md="4">
+                  <MDBAnimation type="fadeInRight">
+                    <img
+                      src={Phone}
+                      alt="phone"
+                      className="img-fluid"
+                      width="50%"
+                    />
+                  </MDBAnimation>
                 </MDBCol>
               </MDBRow>
             </MDBContainer>
@@ -89,4 +103,4 @@ class Landing extends React.Component {
   }
 }
 
-export default Landing;
+export default LandingView;

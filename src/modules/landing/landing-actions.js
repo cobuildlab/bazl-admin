@@ -11,7 +11,7 @@ import {
 import { error, log } from 'pure-logger';
 import Flux from 'flux-state';
 import * as R from 'ramda';
-import { userModel } from './landing-models';
+import { UserModel } from './landing-models';
 
 /** 
  * @param {string} email
@@ -37,6 +37,7 @@ export const onLogin = async ({email, password}) => {
 
     Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
+
 
 /**
  * 
@@ -106,7 +107,7 @@ export const createUser = async (firebaseUser) => {
     const DB = firebase.firestore();
     const usersCollection = DB.collection('users');
 
-    const user = R.clone(userModel);
+    const user = R.clone(UserModel);
     user.email = firebaseUser.email;
     user.password = firebaseUser.password;
 
@@ -133,7 +134,13 @@ export const requestPasswordReset = async (email) => {
     .catch((err) => Flux.dispatchEvent(USER_ERROR_EVENT, err));
   };
   
+/**
+ * function that pushes the user home
+ * @param {props} props 
+ */
 export const pushHome = async (props) => {
   const { history } = this.props
   await history.push('/home')
 }
+
+

@@ -5,16 +5,13 @@ import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from 'react-flux-state';
-import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT} from "../modules/landing/landing-store";
-import { onLogin, pushHome } from '../modules/landing/landing-actions';
-import firebase from 'firebase';
+import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT} from "../landing-store";
+import { createUser, pushHome } from '../landing-actions';
 import * as R from 'ramda';
-import { uiConfig } from '../config/firebase';
-import { StyledFirebaseAuth } from 'react-firebaseui';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
 
-class FormLogin extends View {
+class FormSignUp extends View {
   constructor(props) {
     super(props) 
     this.state = {
@@ -25,7 +22,7 @@ class FormLogin extends View {
   }
 
   componentDidMount() {
-    this.subscribe( landingStore, LOGIN_EVENT, () => {
+    this.subscribe( landingStore, SIGNUP_EVENT, () => {
       pushHome();
     })
     this.subscribe( landingStore, LOGIN_ERROR_EVENT, (err) => {
@@ -37,7 +34,7 @@ class FormLogin extends View {
   onSubmit = (e) => {
     e.preventDefault();
     this.setState(() => {
-      onLogin(R.clone(this.state.email, this.state.password));
+      createUser(R.clone(this.state.email, this.state.password)).then(pushHome());
     })
   }
 
@@ -47,21 +44,15 @@ class FormLogin extends View {
     })
   }
 
+
+
   render() {
-    const { email, password } = this.state;
+    const { email, password} = this.state;
     return (
       <MDBContainer>
         <MDBRow>
           <MDBCol md="12" className="p-0">
             <form className="p-3">
-              <div className="text-center">
-                <StyledFirebaseAuth 
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-                <StyledFirebaseAuth 
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-              </div>
               <MDBRow>
                 <MDBCol md="5" xs="5">
                   <hr className="hr-dark" />
@@ -74,14 +65,13 @@ class FormLogin extends View {
                 </MDBCol>
               </MDBRow>
 
-              <div class="input-group mb-3">
+              <div className="input-group mb-3">
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="basic-addon1">
                     <Icon icon={ic_mail_outline} />
                   </span>
                 </div>
                 <input
-                  onChange={this.onChange}
                   type="email"
                   name='email'
                   value={email}
@@ -89,6 +79,7 @@ class FormLogin extends View {
                   placeholder="Email"
                   aria-label="Email"
                   aria-describedby="basic-addon1"
+                  onChange={this.onChange}
                 />
               </div>
               <div className="input-group mb-3">
@@ -98,7 +89,6 @@ class FormLogin extends View {
                   </span>
                 </div>
                 <input
-                  onChange={this.onChange}
                   type="password"
                   name='password'
                   value={password}
@@ -106,12 +96,16 @@ class FormLogin extends View {
                   placeholder="Password"
                   aria-label="Password"
                   aria-describedby="basic-addon1"
+                  onChange={this.onChange}
                 />
               </div>
-              <p className="text-center">Don't remember your password?</p>
+              <p className="text-center">
+                by signing up, you agree to our terms of services and privacy
+                policy.
+              </p>
             </form>
             <div className="text-center">
-            <MDBBtn 
+              <MDBBtn 
                 type={'submit'} 
                 className="btn-auth" 
                 onClick={this.onSubmit}>
@@ -124,5 +118,4 @@ class FormLogin extends View {
     );
   }
 }
-
-export default FormLogin;
+export default FormSignUp;
