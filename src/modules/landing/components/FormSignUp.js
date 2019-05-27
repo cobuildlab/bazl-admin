@@ -7,10 +7,7 @@ import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_ri
 import View from 'react-flux-state';
 import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT} from "../landing-store";
 import { createUser, pushHome } from '../landing-actions';
-import firebase from 'firebase';
 import * as R from 'ramda';
-import { uiConfig } from '../../../config/firebase';
-import { StyledFirebaseAuth } from 'react-firebaseui';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
 
@@ -56,14 +53,6 @@ class FormSignUp extends View {
         <MDBRow>
           <MDBCol md="12" className="p-0">
             <form className="p-3">
-              <div className="text-center">
-                <StyledFirebaseAuth 
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-                <StyledFirebaseAuth 
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-              </div>
               <MDBRow>
                 <MDBCol md="5" xs="5">
                   <hr className="hr-dark" />
