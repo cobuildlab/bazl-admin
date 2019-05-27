@@ -7,8 +7,7 @@ import * as R from 'ramda';
 import { Link } from "react-router-dom";
 import View from 'react-flux-state';
 import {productModel} from './newproduct-models';
-import { productStore, PRODUCT_EVENT, PRODUCT_ERROR_EVENT} from './newproduct-store';
-import { toast } from 'react-toastify';
+import { productStore, PRODUCT_EVENT } from './newproduct-store';
 import { error } from 'pure-logger';
 import { createProduct } from "./newproduct-actions";
 
@@ -24,9 +23,6 @@ class NewProductView extends View {
 
   componentDidMount() {
     this.subscribe( productStore, PRODUCT_EVENT, () => {})
-    this.subscribe( productStore, PRODUCT_ERROR_EVENT, (err) => {
-      toast.error(err.message)
-    })
 
   }
 

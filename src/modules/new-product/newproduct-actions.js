@@ -6,7 +6,6 @@ import {
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 import Flux from 'react-flux-state';
 
-
 /**
  * creates a new product belonging to the user
  * @param {string} firebaseUser the firebase uid
@@ -44,13 +43,9 @@ export const createProduct = async ({
     userId: user.email
   };
 
-  
-
-
-
   const productRef = productCollection.doc(name)
   try{
-    await productRef.set(product, {merge: true})
+    await productCollection.add(productRef);
   } catch {
     Flux.dispatchEvent(PRODUCT_ERROR_EVENT, product);
   }

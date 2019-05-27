@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import LandingView from "./modules/landing/LandingView";
-import HomeView from "./modules/home/homeView";
+import HomeView from "./modules/home/HomeView";
 import ProfileView from "./modules/profile/ProfileView";
 import SalesView from "./modules/sales/SalesView";
 import NotificationsView from "./modules/notifications/NotificationsView";
