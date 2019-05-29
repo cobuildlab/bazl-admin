@@ -3,7 +3,8 @@ import {
   MDBIcon,
   MDBRow,
   MDBBtn,
-  MDBInput
+  MDBInput,
+  MDBLabel
 } from "mdbreact";
 
 export class BankAccount extends Component {
@@ -59,8 +60,28 @@ export class BankAccount extends Component {
             </MDBRow>
           ) : (
               <MDBRow className="d-flex justify-content-around align-items-center mb-3">
-                <div>{account.title} </div>
-                <div>{account.number}</div>
+                <MDBInput
+                  label="Bank Name"
+                  className="mt-0"
+                  type="text"
+                  value={title}
+                  disabled
+                />
+                <MDBInput
+                  label="Bank Number"
+                  className="mt-0"
+                  type="text"
+                  value={number}
+                  disabled
+                />
+                <div>
+                  <MDBBtn disabled className="btn-edit" onClick={() => onEdit(this.state)} >
+                    <MDBIcon icon="pencil-alt" />
+                  </MDBBtn>
+                  <MDBBtn disabled className="btn-delete" onClick={() => onDelete(account)} >
+                    <MDBIcon icon="times" />
+                  </MDBBtn>
+                </div>
               </MDBRow>
             )
         }

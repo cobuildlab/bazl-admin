@@ -13,7 +13,7 @@ import { error, log } from 'pure-logger';
 import Flux from 'flux-state';
 import * as R from 'ramda';
 import { userModel } from './landing-models';
-import { FirebaseAuth } from 'react-firebaseui';
+// import { FirebaseAuth } from 'react-firebaseui';
 
 
 /** 

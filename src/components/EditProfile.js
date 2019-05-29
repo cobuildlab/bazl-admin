@@ -55,9 +55,6 @@ class EditProfile extends React.Component {
   };
 
   onChangeBank = ({ target: { name, value } }) => {
-    console.log("onChangeBank name", name);
-    console.log("onChangeBank value", value);
-
     const data = this.state;
     data[name] = value;
     this.setState({ data });
@@ -75,17 +72,14 @@ class EditProfile extends React.Component {
   }
 
   onEdit = (bank) => {
-    console.log("onEdit");
-    console.log("Cuenta Nueva", bank);
     let { bankAccounts } = this.state.user;
 
-    bankAccounts.map(function (bankAccount, i) {
+    bankAccounts.map = (bankAccount, i) => {
       if (bank.Id === bankAccount.Id) {
         bankAccounts[i] = bank;
-        console.log("Cuenta Vieja", bankAccounts);        
       }
-    });
-    this.setState({  });
+    };
+    this.setState({});
   }
 
   changeFlag = () => {
@@ -116,11 +110,10 @@ class EditProfile extends React.Component {
     let { title, number } = '';
 
     if (picture) {
-      imagePreview = (<img src={picture} className="img-fluid img-label" />);
+      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid img-label" />);
     } else {
       imagePreview = (<img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />);
     }
-    console.log('this.state editprofile', this.state);
 
     return (
       <SidebarComponent>
@@ -150,6 +143,7 @@ class EditProfile extends React.Component {
               </small>
             </MDBCol>
             <MDBCol md="7">
+              <h5>Name User</h5>
               <MDBInput
                 className="mt-0"
                 type="text"
@@ -157,16 +151,14 @@ class EditProfile extends React.Component {
                 value={name}
                 onChange={this.onChange}
               />
-              <div className="mt-5">
-                <h5>Description</h5>
-                <MDBInput
-                  className="mt-0"
-                  type="textarea"
-                  name="description"
-                  value={description}
-                  onChange={this.onChange}
-                  rows="5" />
-              </div>
+              <h5>Description</h5>
+              <MDBInput
+                className="mt-0"
+                type="textarea"
+                name="description"
+                value={description}
+                onChange={this.onChange}
+                rows="5" />
               <MDBCol className="text-center">
                 <MDBBtn onClick={() => onSave(this.state.user)} color="success" className="btn btn-circle mt-4 mb-5">
                   Save
@@ -204,33 +196,6 @@ class EditProfile extends React.Component {
                 </div>
                 {
                   !this.state.flagAccounts ? (
-                    // <MDBRow>
-                    //   <MDBCol md="12">
-                    //     <MDBCard>
-                    //       <MDBCardBody>
-                    //         <MDBRow className="d-flex justify-content-around align-items-center">
-                    //           <MDBInput
-                    //             label="Bank Name"
-                    //             className="mt-0"
-                    //             type="text"
-                    //             name="title"
-                    //             value={title}
-                    //             onChange={this.onChangeBank}
-                    //           />
-                    //           <MDBInput
-                    //             label="Bank Number"
-                    //             className="mt-0"
-                    //             type="text"
-                    //             name="number"
-                    //             value={number}
-                    //             onChange={this.onChangeBank}
-                    //           />
-                    //           <MDBBtn onClick={() => this.newAccount()} className="btn btn-circle">Add</MDBBtn>
-                    //         </MDBRow>
-                    //       </MDBCardBody>
-                    //     </MDBCard>
-                    //   </MDBCol>
-                    // </MDBRow>         
                     <div>
                       <h5>New Accounts</h5>
                       <MDBRow className="d-flex justify-content-around align-items-center mb-3">

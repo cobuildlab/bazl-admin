@@ -9,6 +9,8 @@ import {
   MDBCardBody,
   MDBCardText,
   MDBCardTitle,
+  MDBBtn,
+  MDBInput
 } from "mdbreact";
 import SidebarComponent from "./SidebarComponent";
 import SliderCards from "./SliderCards";
@@ -17,12 +19,12 @@ import { BankAccount } from './BankAccount';
 
 class Profile extends React.Component {
   render() {
-    const { onClickEdit } = this.props;
+    const { onClickEdit, onCancel, onSave } = this.props;
     let { name, description, bankAccounts, picture } = this.props.user;
     let imagePreview = null;
 
     if (picture) {
-      imagePreview = (<img src={picture} className="img-fluid img-label" />);
+      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid img-label" />);
     } else {
       imagePreview = (<img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />);
     }
@@ -52,16 +54,35 @@ class Profile extends React.Component {
                 JPG or PNG format with a maximum of 5mb
               </small>
             </MDBCol>
-
             <MDBCol md="7">
-              <h2 className="text-black-50 mb-0">{name}</h2>
-              <small className="text-primary">@User</small>
-              <div className="mt-5">
-                <h5>Description</h5>
-                <small>
-                  {description}
-                </small>
-              </div>
+              <h5>Name User</h5>
+              <MDBInput
+                className="mt-0"
+                type="text"
+                name="name"
+                value={name}
+                onChange={this.onChange}
+                disabled
+              />
+              <h5>Description</h5>
+              <MDBInput
+                className="mt-0"
+                type="textarea"
+                name="description"
+                value={description}
+                onChange={this.onChange}
+                rows="5"
+                disabled
+              />
+              <MDBCol className="text-center">
+                <MDBBtn disabled onClick={() => onSave(this.state.user)} color="success" className="btn btn-circle mt-4 mb-5">
+                  Save
+                    </MDBBtn>
+                <MDBBtn disabled onClick={onCancel} color="danger" className="btn btn-circle mt-4 mb-5">
+                  Cancel
+                    </MDBBtn>
+              </MDBCol>
+
             </MDBCol>
             <MDBCol md="2">
               <MDBCard>
@@ -85,6 +106,9 @@ class Profile extends React.Component {
                 {bankAccounts.map((account, i) => (
                   <BankAccount key={i} account={account} onEdit={this.onEdit} onDelete={this.onDelete} editAccount={false}></BankAccount>
                 ))}
+                <div className="d-flex justify-content-center align-items-center">
+                  <MDBBtn disabled onClick={() => this.changeFlag()} className="btn btn-circle">Add Accounts</MDBBtn>
+                </div>
               </div>
             </MDBCol>
             <MDBCol md="2"></MDBCol>
