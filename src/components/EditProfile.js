@@ -110,7 +110,7 @@ class EditProfile extends React.Component {
     let { title, number } = '';
 
     if (picture) {
-      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid img-label" />);
+      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid" />);
     } else {
       imagePreview = (<img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />);
     }

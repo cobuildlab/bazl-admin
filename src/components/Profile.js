@@ -24,7 +24,7 @@ class Profile extends React.Component {
     let imagePreview = null;
 
     if (picture) {
-      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid img-label" />);
+      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid" />);
     } else {
       imagePreview = (<img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />);
     }
