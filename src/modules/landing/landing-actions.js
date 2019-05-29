@@ -46,8 +46,7 @@ export const onLogin = async ({email, password}) => {
  * @returns {Promise<user: userModel>}
  */
 export const onSignup = async ({email,password}) => {
-  await firebase.auth()
-  const AUTH= firebase.auth()
+  const AUTH = firebase.auth()
   let data
   try {
     data = await AUTH.createUserWithEmailAndPassword(email, password);
