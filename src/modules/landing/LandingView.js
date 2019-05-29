@@ -16,7 +16,7 @@ import {
 import bgLanding from "../../assets/img/background.png";
 import Logo from "../../assets/img/Bazl-logo.png";
 import Phone from "../../assets/img/phone.png";
-import ModalComponent from "../../components/ModalComponent";
+import ModalComponent from "./components/ModalComponent";
 
 class LandingView extends React.Component {
   state = {

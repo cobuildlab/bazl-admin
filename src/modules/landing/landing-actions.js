@@ -20,7 +20,6 @@ import { UserModel } from './landing-models';
  */
 export const onLogin = async ({email, password}) => {
 
-  await firebase.auth();
   const AUTH = firebase.auth();
   let data;
     try {

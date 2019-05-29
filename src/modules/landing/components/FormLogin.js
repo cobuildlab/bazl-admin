@@ -9,13 +9,15 @@ import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT } from "../landing-store";
 import { onLogin } from "../landing-actions";
 import { error } from "pure-logger";
 import { toast } from "react-toastify";
+import { ClipLoader } from 'react-spinners';
 
 class FormLogin extends View {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      loading: false
     };
     this.onError = error.bind(this);
   }
@@ -32,7 +34,7 @@ class FormLogin extends View {
   onSubmit = e => {
     const { email, password } = this.state;
     e.preventDefault();
-    this.setState(() => {
+    this.setState({loading: true}, () => {
       onLogin({ email, password });
     });
     console.log(email);
@@ -45,24 +47,12 @@ class FormLogin extends View {
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, loading } = this.state;
     return (
       <MDBContainer>
         <MDBRow>
           <MDBCol md="12" className="p-0">
             <form className="p-3">
-              <MDBRow>
-                <MDBCol md="5" xs="5">
-                  <hr className="hr-dark" />
-                </MDBCol>
-                <MDBCol md="2" xs="2" className="text-center">
-                  OR
-                </MDBCol>
-                <MDBCol md="5" xs="5">
-                  <hr className="hr-dark" />
-                </MDBCol>
-              </MDBRow>
-
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="basic-addon1">
@@ -99,6 +89,13 @@ class FormLogin extends View {
               </div>
             </form>
             <div className="text-center">
+            {loading ? (
+              <ClipLoader 
+              sizeUnit={'px'} 
+              size={120} 
+              color={'#44c1f6'} 
+              loading={true} />
+            ) : (
               <MDBBtn
                 type={"submit"}
                 className="btn-auth"
@@ -106,6 +103,7 @@ class FormLogin extends View {
               >
                 Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
               </MDBBtn>
+            )}
             </div>
           </MDBCol>
         </MDBRow>

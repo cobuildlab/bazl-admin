@@ -22,6 +22,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-sidebar": "^3.0.2",
+    "react-spinners": "^0.5.4",
     "react-toastify": "^5.1.0",
     "reactstrap": "^8.0.0"
   },

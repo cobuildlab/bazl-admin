@@ -2,11 +2,11 @@ import React from "react";
 import { MDBContainer, MDBModal, MDBModalBody } from "mdbreact";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
-import TabComponent from "./TabComponent";
-import FormLogin from "../modules/landing/components/FormLogin";
+import TabComponent from "../../../components/TabComponent";
+import FormLogin from "./FormLogin";
 
-import Logo from "../assets/img/Bazl-logo.png";
-import FormSignUp from "../modules/landing/components/FormSignUp";
+import Logo from "../../../assets/img/Bazl-logo.png";
+import FormSignUp from "./FormSignUp";
 
 const ModalComponent = ({ linkName, history }) => {
   const [selectTab, setSelectTab] = React.useState("0");
@@ -45,7 +45,8 @@ const ModalComponent = ({ linkName, history }) => {
 };
 
 ModalComponent.propTypes = {
-  linkName: PropTypes.string.isRequired
+  linkName: PropTypes.string.isRequired,
+  history: PropTypes.string
 };
 
 export default ModalComponent;
