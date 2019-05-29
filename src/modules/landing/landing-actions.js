@@ -20,7 +20,6 @@ import { UserModel } from './landing-models';
  */
 export const onLogin = async ({email, password}) => {
 
-  await firebase.auth();
   const AUTH = firebase.auth();
   let data;
     try {
@@ -45,9 +44,8 @@ export const onLogin = async ({email, password}) => {
  * @param {string} password
  * @returns {Promise<user: userModel>}
  */
-export const OnSignup = async ({email,password}) => {
-  await firebase.auth()
-  const AUTH= firebase.auth()
+export const onSignup = async ({email,password}) => {
+  const AUTH = firebase.auth()
   let data
   try {
     data = await AUTH.createUserWithEmailAndPassword(email, password);
@@ -56,9 +54,8 @@ export const OnSignup = async ({email,password}) => {
     error('onSignup', e)
   }
   const { user: firebaseUser} = data;
-  let user = await createUser(firebaseUser.email);
-  log('onLogin:createUser', user);
-  Flux.dispatchEvent(LOGIN_EVENT, { user });
+  let user = await createUser(firebaseUser);
+  return Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
 
 /**
@@ -67,10 +64,11 @@ export const OnSignup = async ({email,password}) => {
  * @returns {Promise<{user}>}
  */
 export const fetchUser = async (email) => {
+  console.log(email);
   const DB = firebase.firestore();
-  const usersCollection = DB.collection('users');
+  const usersCollection = await DB.collection('users');
 
-  const userRef = usersCollection.doc(email);
+  const userRef = await usersCollection.doc(email);
   let query;
   try{
     query = await userRef.get({ source: 'server' });
@@ -78,13 +76,11 @@ export const fetchUser = async (email) => {
     Flux.dispatchEvent(USER_ERROR_EVENT, new Error(e.message))
     throw e;
   }
-  log('fetchUser', query);
 
   if(!query.exists) return null;
     const user = query.data()
 
   Flux.dispatchEvent(USER_EVENT, user);
-  log('fetchUser:credentials', user);
   return user;
 }
 
@@ -98,6 +94,9 @@ export const onLogout = async () => {
   Flux.dispatchEvent(LOGOUT_EVENT, {});
 };
 
+
+
+
 /**
  * Creates a new user in the system
  * @param {string} firebaseUser the firebase uid
@@ -109,14 +108,15 @@ export const createUser = async (firebaseUser) => {
 
     const user = R.clone(UserModel);
     user.email = firebaseUser.email;
-    user.password = firebaseUser.password;
+    user.id = firebaseUser.uid;
 
-    const userRef = usersCollection.doc(firebaseUser.email)
+    const userRef = await usersCollection.doc(firebaseUser.email)
     try{
       await userRef.set(user, {merge: true});
-    } catch (e) {
+    } catch (err) {
+      console.log(err)
       Flux.dispatchEvent(USER_ERROR_EVENT, user)
-      throw e;
+      throw err;
     }
     Flux.dispatchEvent(SIGNUP_EVENT, user);
     return user;
@@ -139,7 +139,7 @@ export const requestPasswordReset = async (email) => {
  * @param {props} props 
  */
 export const pushHome = async (props) => {
-  const { history } = this.props
+  const { history } = props
   await history.push('/home')
 }
 

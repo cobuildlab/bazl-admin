@@ -7,6 +7,12 @@ import TableSales from "../../components/TableSales";
 import { Link } from "react-router-dom";
 
 class HomeView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    }
+  }
   render() {
     return (
       <React.Fragment>

@@ -2,13 +2,13 @@ import React from "react";
 import { MDBContainer, MDBModal, MDBModalBody } from "mdbreact";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
-import TabComponent from "./TabComponent";
-import FormLogin from "../modules/landing/components/FormLogin";
+import TabComponent from "../../../components/TabComponent";
+import FormLogin from "./FormLogin";
 
-import Logo from "../assets/img/Bazl-logo.png";
-import FormSignUp from "../modules/landing/components/FormSignUp";
+import Logo from "../../../assets/img/Bazl-logo.png";
+import FormSignUp from "./FormSignUp";
 
-const ModalComponent = ({ linkName, closed }) => {
+const ModalComponent = ({ linkName, history }) => {
   const [selectTab, setSelectTab] = React.useState("0");
   const [status, setStatus] = React.useState(false);
 
@@ -34,8 +34,8 @@ const ModalComponent = ({ linkName, closed }) => {
           <TabComponent
             defaultTab={selectTab}
             tabs={[
-              { tabName: "Login", JSX: <FormLogin /> },
-              { tabName: "Sign Up", JSX: <FormSignUp /> },
+              { tabName: "Login", JSX: <FormLogin history={history} /> },
+              { tabName: "Sign Up", JSX: <FormSignUp history={history} /> },
             ]}
           />
         </MDBModalBody>
@@ -45,7 +45,8 @@ const ModalComponent = ({ linkName, closed }) => {
 };
 
 ModalComponent.propTypes = {
-  linkName: PropTypes.string.isRequired
+  linkName: PropTypes.string.isRequired,
+  history: PropTypes.string
 };
 
 export default ModalComponent;
