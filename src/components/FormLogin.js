@@ -8,9 +8,10 @@ import View from "react-flux-state";
 import {
   landingStore,
   LOGIN_EVENT,
-  LOGIN_ERROR_EVENT
+  LOGIN_ERROR_EVENT,
+  SIGNUP_GOOGLE_EVENT
 } from "../modules/landing/landing-store";
-import { onLogin, pushHome } from "../modules/landing/landing-actions";
+import { onLogin, pushHome, onGoogleLogin } from "../modules/landing/landing-actions";
 import firebase from "firebase";
 import * as R from "ramda";
 import { uiConfig } from "../config/firebase";
@@ -25,12 +26,16 @@ class FormLogin extends View {
       email: "",
       password: ""
     };
-    this.onError = error.bind(this);
+    this.onError = error.bind(this);    
   }
 
   componentDidMount() {
     this.subscribe(landingStore, LOGIN_EVENT, () => {
       pushHome();
+    });
+    this.subscribe(landingStore, SIGNUP_GOOGLE_EVENT, () => {
+      const user3 = landingStore.getState(SIGNUP_GOOGLE_EVENT);
+      console.log("user3",user3);      
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, err => {
       toast.error(err.message);
@@ -41,6 +46,12 @@ class FormLogin extends View {
     e.preventDefault();
     this.setState(() => {
       onLogin(R.clone(this.state.email, this.state.password));
+    });
+  };
+  signInGoogle = e => {
+    e.preventDefault();
+    this.setState(() => {
+      onGoogleLogin();
     });
   };
 
@@ -66,6 +77,15 @@ class FormLogin extends View {
                   uiConfig={uiConfig}
                   firebaseAuth={firebase.auth()}
                 />
+                <div className="text-center">
+              {/* <MDBBtn
+                type="btn"
+                className="btn-auth"
+                onClick={this.signInGoogle}
+              >
+                Google <Icon size={24} icon={ic_keyboard_arrow_right} />
+              </MDBBtn> */}
+            </div>
               </div>
               <MDBRow>
                 <MDBCol md="5" xs="5">

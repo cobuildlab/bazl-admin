@@ -12,10 +12,12 @@ export const USER_ERROR_EVENT = 'USER_ERROR_EVENT';
  * @property {string} LOGIN_EVENT triggers when a user login into the system
  * @property {string} LOGIN_ERROR_EVENT triggers when a user fails to login
  * @property {string} SIGN_EVENT triggers when a new user logs into the system
+ * @property {string} SIGNUP_GOOGLE_EVENT triggers when a new user login with google provider into the system
  */
 export const LOGIN_EVENT = 'LOGIN_EVENT';
 export const LOGIN_ERROR_EVENT = 'LOGIN_ERRIR_EVENT';
 export const SIGNUP_EVENT = 'SIGNUP_EVENT';
+export const SIGNUP_GOOGLE_EVENT = 'SIGNUP_GOOGLE_EVENT';
 
 /**
  * @property {string} REQUEST_RECOVER_PASSWORD triggers when a user asks to change their password
@@ -35,6 +37,7 @@ class LandingStore extends Flux.DashStore {
     this.addEvent(LOGIN_EVENT);
     this.addEvent(LOGIN_ERROR_EVENT);
     this.addEvent(SIGNUP_EVENT);
+    this.addEvent(SIGNUP_GOOGLE_EVENT);
     this.addEvent(USER_EVENT);
     this.addEvent(USER_ERROR_EVENT);
     this.addEvent(REQUEST_PASSWORD_RESET);

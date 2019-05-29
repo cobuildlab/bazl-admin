@@ -5,6 +5,7 @@ import {
   LOGIN_EVENT,
   LOGIN_ERROR_EVENT,
   SIGNUP_EVENT,
+  SIGNUP_GOOGLE_EVENT,
   REQUEST_PASSWORD_RESET,
   LOGOUT_EVENT
 } from './landing-store';
@@ -12,6 +13,8 @@ import { error, log } from 'pure-logger';
 import Flux from 'flux-state';
 import * as R from 'ramda';
 import { userModel } from './landing-models';
+import { FirebaseAuth } from 'react-firebaseui';
+
 
 /** 
  * @param {string} email
@@ -22,6 +25,7 @@ export const onLogin = async ({email, password}) => {
 
   await firebase.auth();
   const AUTH = firebase.auth();
+ 
   let data;
     try {
       data = await AUTH.signInWithEmailAndPassword(email, password);
@@ -32,11 +36,24 @@ export const onLogin = async ({email, password}) => {
       return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
     }
     const { user: firebaseUser } = data;
+    console.log('data from action',data);
     let user = await fetchUser(firebaseUser.email);
     log('onLogin:fetchUser');
 
     Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
+
+export const onGoogleLogin = async () =>{
+  await firebase.auth();
+  const AUTH = firebase.auth();
+
+  await AUTH.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    .then((authCredential) => {
+      let {user} = authCredential;
+      console.log(user) ;
+      Flux.dispatchEvent(SIGNUP_GOOGLE_EVENT, { user });
+    });
+}
 
 /**
  * 
@@ -134,6 +151,7 @@ export const requestPasswordReset = async (email) => {
   };
   
 export const pushHome = async (props) => {
-  const { history } = this.props
+  const { history } = props
+  // const { history } = this.props
   await history.push('/home')
 }
