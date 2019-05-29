@@ -54,10 +54,10 @@ class LandingView extends React.Component {
             <MDBCollapse isOpen={this.state.collapsed} navbar>
               <MDBNavbarNav right>
                 <MDBNavItem active>
-                  <ModalComponent linkName="Login" />
+                  <ModalComponent linkName="Login" history={this.props.history} />
                 </MDBNavItem>
                 <MDBNavItem>
-                  <ModalComponent linkName="Sign Up" />
+                  <ModalComponent linkName="Sign Up" history={this.props.history} />
                 </MDBNavItem>
               </MDBNavbarNav>
             </MDBCollapse>

@@ -8,7 +8,7 @@ import FormLogin from "../modules/landing/components/FormLogin";
 import Logo from "../assets/img/Bazl-logo.png";
 import FormSignUp from "../modules/landing/components/FormSignUp";
 
-const ModalComponent = ({ linkName, closed }) => {
+const ModalComponent = ({ linkName, history }) => {
   const [selectTab, setSelectTab] = React.useState("0");
   const [status, setStatus] = React.useState(false);
 
@@ -34,8 +34,8 @@ const ModalComponent = ({ linkName, closed }) => {
           <TabComponent
             defaultTab={selectTab}
             tabs={[
-              { tabName: "Login", JSX: <FormLogin /> },
-              { tabName: "Sign Up", JSX: <FormSignUp /> },
+              { tabName: "Login", JSX: <FormLogin history={history} /> },
+              { tabName: "Sign Up", JSX: <FormSignUp history={history} /> },
             ]}
           />
         </MDBModalBody>

@@ -6,8 +6,7 @@ import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from 'react-flux-state';
 import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT} from "../landing-store";
-import { createUser, pushHome } from '../landing-actions';
-import * as R from 'ramda';
+import { onSignup } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
 
@@ -23,7 +22,7 @@ class FormSignUp extends View {
 
   componentDidMount() {
     this.subscribe( landingStore, SIGNUP_EVENT, () => {
-      pushHome();
+      this.props.history.push('/home')
     })
     this.subscribe( landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
@@ -32,10 +31,11 @@ class FormSignUp extends View {
   }
 
   onSubmit = (e) => {
+    const { email, password} = this.state
     e.preventDefault();
     this.setState(() => {
-      createUser(R.clone(this.state.email, this.state.password)).then(pushHome());
-    })
+      onSignup({email, password})
+    });
   }
 
   onChange = ({ target: { name, value }}) => {
