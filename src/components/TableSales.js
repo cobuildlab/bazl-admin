@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead } from "mdbreact";
+import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead, MDBBtn } from "mdbreact";
 import ImgProfile from "../assets/img/profile-table.jpg";
 
 class TableSales extends React.Component {
@@ -32,11 +32,14 @@ class TableSales extends React.Component {
                 <td>09876543212</td>
                 <td>
                   <Link
-                    to="/order-detail"
+                    to="/order-details"
                     className="btn btn-circle btn-circle-link"
                   >
                     Order Details
                   </Link>
+                </td>
+                <td>
+                  <MDBBtn className="btn btn-circle-danger">Closed Sale</MDBBtn>
                 </td>
               </tr>
               <tr>
@@ -58,6 +61,7 @@ class TableSales extends React.Component {
                     Order Details
                   </Link>
                 </td>
+                <td> <MDBBtn className="btn btn-circle-danger">Closed Sale</MDBBtn></td>
               </tr>
             </MDBTableBody>
           </MDBTable>
