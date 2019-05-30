@@ -1,7 +1,7 @@
 import React from "react";
 import View from 'react-flux-state';
-import Profile from '../../../components/Profile';
-import EditProfile from '../../../components/EditProfile';
+import Profile from '../../components/Profile';
+import EditProfile from '../../components/EditProfile';
 
 class ProfileView extends View {
   constructor(props) {
