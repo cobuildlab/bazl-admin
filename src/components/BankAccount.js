@@ -24,11 +24,10 @@ export class BankAccount extends Component {
 
   render() {
     let { account, onDelete, onEdit, editAccount } = this.props;
-    let { Id, title, number } = this.state;
-    console.log("BankAccount", this.state);
-
+    let { title, number } = this.state;
+    console.log("account desde el BankAccount", account);
     return (
-      <div key={Id} >
+      <div >
         {
           editAccount ? (
             <MDBRow className="d-flex justify-content-around align-items-center mb-3">
@@ -48,7 +47,7 @@ export class BankAccount extends Component {
                 value={number}
                 onChange={this.onChange}
               />
-              <div>
+              <div>                
                 <MDBBtn className="btn-edit" onClick={() => onEdit(this.state)} >
                   <MDBIcon icon="pencil-alt" />
                 </MDBBtn>

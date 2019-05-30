@@ -60,23 +60,6 @@ class EditProfile extends React.Component {
     this.setState({ data });
   };
 
-  onDelete = (bank) => {
-    let { bankAccounts } = this.state.user;
-    let data = this.state.user;
-    bankAccounts.map(function (bankAccount) {
-      if (bank.Id === bankAccount.Id) {
-        let i = bankAccounts.indexOf(bankAccount);
-        bankAccounts.splice(i, 1);
-        console.log("data[bankAccounts]",data[bankAccounts]);
-        console.log("i",i);
-        console.log("data",data);        
-      }
-    });
-    console.log("bankAccounts",bankAccounts);    
-    this.setState({ data });
-    console.log("this.state",this.state);
-  }
-
   onEdit = (bank) => {
     let { bankAccounts } = this.state.user;
 
@@ -110,10 +93,10 @@ class EditProfile extends React.Component {
   }
 
   render() {
-    const { onCancel, onSave } = this.props;
+    const { onCancel, onSave, onDelete } = this.props;
     let { name, description, bankAccounts, picture } = this.state.user;
-    console.log("bankAccounts desde el editprofile",bankAccounts);
-    
+    console.log("bankAccounts desde el editprofile", bankAccounts);
+
     let imagePreview = null;
     let { title, number } = '';
 
@@ -197,7 +180,7 @@ class EditProfile extends React.Component {
               <div className="mt-3 mb-5">
                 <h5>Bank Accounts</h5>
                 {bankAccounts.map((account, i) => (
-                  <BankAccount key={i} account={account} onEdit={this.onEdit} onDelete={this.onDelete} editAccount={true}></BankAccount>
+                  <BankAccount key={i} account={account} onEdit={this.onEdit} onDelete={onDelete} editAccount={true}></BankAccount>
                 ))}
                 <div className="d-flex justify-content-center align-items-center">
                   <MDBBtn onClick={() => this.changeFlag()} className="btn btn-circle">Add Accounts</MDBBtn>

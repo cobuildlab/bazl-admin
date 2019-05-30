@@ -17,6 +17,7 @@ class ProfileView extends View {
           { Id: 1, title: 'title_1', number: 'number1' },
           { Id: 2, title: 'title_2', number: 'number2' },
           { Id: 3, title: 'title_3', number: 'number3' },
+          { Id: 4, title: 'title_4', number: 'number4' },
         ],
         picture: null,
       }
@@ -30,10 +31,43 @@ class ProfileView extends View {
   }
 
   onUpdateUser = (newUser) => {
-    this.setState({ 
+    this.setState({
       editProfile: false,
       user: newUser
-    })   
+    })
+  }
+
+  onDelete = (bank) => {
+    // let { bankAccounts } = this.state.user;  
+    // let arreglo = [];
+    // arreglo = bankAccounts.filter(function(i) { return i !== bank });
+    // console.log(arreglo);
+    // let data = this.state.user;
+    // this.setState({
+    //   data: arreglo
+    // })
+    //////////////////////////////////
+    let { bankAccounts } = this.state.user;
+    let data = this.state.user;
+    bankAccounts.map(function (bankAccount) {
+      if (bank.Id === bankAccount.Id) {
+        let i = bankAccounts.indexOf(bankAccount);
+        bankAccounts.splice(i, 1);       
+      }
+    });   
+    this.setState({ data });
+    this.onEdit();
+    ////////////////////////777
+    // let bankAccounts = [...this.state.user.bankAccounts];
+    // let data = this.state.user.bankAccounts;
+    // let i = -1;
+    // bankAccounts.map((bankAccount) => {
+    //   if (bank.Id === bankAccount.Id) 
+    //     i = bankAccounts.indexOf(bankAccount);     
+    // });   
+    // bankAccounts.splice(i, 1);     
+    
+    // this.setState({ bankAccounts: [...bankAccounts]});
   }
 
   render() {
@@ -44,7 +78,7 @@ class ProfileView extends View {
           !editProfile ? (
             <Profile onClickEdit={this.onEdit} user={user}></Profile>
           ) : (
-              <EditProfile onSave={this.onUpdateUser} onCancel={this.onEdit} user={user}></EditProfile>
+              <EditProfile onSave={this.onUpdateUser} onCancel={this.onEdit} onDelete={this.onDelete} user={user}></EditProfile>
             )
         }
       </React.Fragment>
