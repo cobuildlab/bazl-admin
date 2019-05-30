@@ -2,8 +2,44 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead, MDBBtn } from "mdbreact";
 import ImgProfile from "../assets/img/profile-table.jpg";
-
+import {fetchSales} from '../modules/sales/sales-action';
 class TableSales extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      influencer: '',
+      nOrder: '',
+      date: '',
+      quantity: 0,
+      price: '',
+      color: '',
+      size: '',
+      status: false,
+      picture: null,
+      productID: '',
+      buyerID: ''
+    };
+  }
+
+  // componentDidMount(){
+  //   const {
+  //     influencer,
+  //     nOrder,
+  //     date,
+  //     quantity,
+  //     price,
+  //     color,
+  //     size,
+  //     status,
+  //     picture,
+  //     productID,
+  //     buyerID
+  //   } = this.state;
+  //   this.setState(() =>{
+  //     fetchSales();
+  //   })
+  // }
+
   render() {
     return (
       <MDBRow>
