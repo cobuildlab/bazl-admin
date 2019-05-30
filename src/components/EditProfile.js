@@ -60,25 +60,31 @@ class EditProfile extends React.Component {
     this.setState({ data });
   };
 
-  onDelete = (bankAccount) => {
+  onDelete = (bank) => {
     let { bankAccounts } = this.state.user;
-    let i = bankAccounts.indexOf(bankAccount);
-
-    if (i !== -1) {
-      let data = this.state.user;
-      data[bankAccounts] = bankAccounts.splice(i, 1);
-      this.setState({ data });
-    }
+    let data = this.state.user;
+    bankAccounts.map(function (bankAccount) {
+      if (bank.Id === bankAccount.Id) {
+        let i = bankAccounts.indexOf(bankAccount);
+        bankAccounts.splice(i, 1);
+        console.log("data[bankAccounts]",data[bankAccounts]);
+        console.log("i",i);
+        console.log("data",data);        
+      }
+    });
+    console.log("bankAccounts",bankAccounts);    
+    this.setState({ data });
+    console.log("this.state",this.state);
   }
 
   onEdit = (bank) => {
     let { bankAccounts } = this.state.user;
 
-    bankAccounts.map = (bankAccount, i) => {
+    bankAccounts.map(function (bankAccount, i) {
       if (bank.Id === bankAccount.Id) {
         bankAccounts[i] = bank;
       }
-    };
+    });
     this.setState({});
   }
 
@@ -106,6 +112,8 @@ class EditProfile extends React.Component {
   render() {
     const { onCancel, onSave } = this.props;
     let { name, description, bankAccounts, picture } = this.state.user;
+    console.log("bankAccounts desde el editprofile",bankAccounts);
+    
     let imagePreview = null;
     let { title, number } = '';
 
@@ -133,7 +141,7 @@ class EditProfile extends React.Component {
         <MDBContainer>
           <MDBRow>
             <MDBCol md="3">
-              <label className="Customlabel text-center" for="upload-photo">
+              <label className="Customlabel text-center" htmlFor="upload-photo">
                 {imagePreview}
               </label>
               <input type="file" name='picture' id="upload-photo" onChange={this.onImageChange} />

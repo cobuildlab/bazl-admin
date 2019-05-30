@@ -4,7 +4,6 @@ import {
   MDBRow,
   MDBBtn,
   MDBInput,
-  MDBLabel
 } from "mdbreact";
 
 export class BankAccount extends Component {
@@ -64,6 +63,7 @@ export class BankAccount extends Component {
                   label="Bank Name"
                   className="mt-0"
                   type="text"
+                  name="title"
                   value={title}
                   disabled
                 />
@@ -71,14 +71,15 @@ export class BankAccount extends Component {
                   label="Bank Number"
                   className="mt-0"
                   type="text"
+                  name="number"
                   value={number}
                   disabled
                 />
                 <div>
-                  <MDBBtn disabled className="btn-edit" onClick={() => onEdit(this.state)} >
+                  <MDBBtn className="btn-edit"  disabled>
                     <MDBIcon icon="pencil-alt" />
                   </MDBBtn>
-                  <MDBBtn disabled className="btn-delete" onClick={() => onDelete(account)} >
+                  <MDBBtn className="btn-delete" disabled >
                     <MDBIcon icon="times" />
                   </MDBBtn>
                 </div>

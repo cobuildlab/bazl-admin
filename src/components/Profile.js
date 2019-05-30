@@ -19,7 +19,7 @@ import { BankAccount } from './BankAccount';
 
 class Profile extends React.Component {
   render() {
-    const { onClickEdit, onCancel, onSave } = this.props;
+    const { onClickEdit } = this.props;
     let { name, description, bankAccounts, picture } = this.props.user;
     let imagePreview = null;
 
@@ -47,7 +47,7 @@ class Profile extends React.Component {
         <MDBContainer>
           <MDBRow>
             <MDBCol md="3">
-              <label className="Customlabel text-center" for="upload-photo">
+              <label className="Customlabel text-center" htmlFor="upload-photo">
                 {imagePreview}
               </label>
               <small className="text-center">
@@ -61,8 +61,6 @@ class Profile extends React.Component {
                 type="text"
                 name="name"
                 value={name}
-                onChange={this.onChange}
-                disabled
               />
               <h5>Description</h5>
               <MDBInput
@@ -70,15 +68,12 @@ class Profile extends React.Component {
                 type="textarea"
                 name="description"
                 value={description}
-                onChange={this.onChange}
-                rows="5"
-                disabled
-              />
+                rows="5" />
               <MDBCol className="text-center">
-                <MDBBtn disabled onClick={() => onSave(this.state.user)} color="success" className="btn btn-circle mt-4 mb-5">
+                <MDBBtn disabled color="success" className="btn btn-circle mt-4 mb-5">
                   Save
                     </MDBBtn>
-                <MDBBtn disabled onClick={onCancel} color="danger" className="btn btn-circle mt-4 mb-5">
+                <MDBBtn disabled color="danger" className="btn btn-circle mt-4 mb-5">
                   Cancel
                     </MDBBtn>
               </MDBCol>
@@ -107,7 +102,7 @@ class Profile extends React.Component {
                   <BankAccount key={i} account={account} onEdit={this.onEdit} onDelete={this.onDelete} editAccount={false}></BankAccount>
                 ))}
                 <div className="d-flex justify-content-center align-items-center">
-                  <MDBBtn disabled onClick={() => this.changeFlag()} className="btn btn-circle">Add Accounts</MDBBtn>
+                  <MDBBtn disabled className="btn btn-circle">Add Accounts</MDBBtn>
                 </div>
               </div>
             </MDBCol>

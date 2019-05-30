@@ -1,15 +1,7 @@
 import React from "react";
 import View from 'react-flux-state';
-// import * as R from 'ramda';
-// import { userModel } from './Profile-models';
-// import { fetchProfileAction } from './Profile-actions';
 import Profile from '../../../components/Profile';
 import EditProfile from '../../../components/EditProfile';
-// import { landingStore, USER_EVENT, SIGNUP_EVENT, LOGIN_EVENT, SIGNUP_GOOGLE_EVENT } from '../../landing/landing-store';
-// import { fetchUser } from '../../landing/landing-actions';
-// import Flux from 'flux-state';
-// import { profileStore, UPDATE_USER_EVENT } from './Profile-store';
-// import { toast } from 'react-toastify';
 
 class ProfileView extends View {
   constructor(props) {
@@ -50,7 +42,7 @@ class ProfileView extends View {
       <React.Fragment>
         {
           !editProfile ? (
-            <Profile onSave={this.onUpdateUser} onCancel={this.onEdit} onClickEdit={this.onEdit} user={user}></Profile>
+            <Profile onClickEdit={this.onEdit} user={user}></Profile>
           ) : (
               <EditProfile onSave={this.onUpdateUser} onCancel={this.onEdit} user={user}></EditProfile>
             )
