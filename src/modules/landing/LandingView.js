@@ -16,9 +16,9 @@ import {
 import bgLanding from "../../assets/img/background.png";
 import Logo from "../../assets/img/Bazl-logo.png";
 import Phone from "../../assets/img/phone.png";
-import ModalComponent from "../../components/ModalComponent";
+import ModalComponent from "./components/ModalComponent";
 
-class Landing extends React.Component {
+class LandingView extends React.Component {
   state = {
     collapsed: false
   };
@@ -54,10 +54,10 @@ class Landing extends React.Component {
             <MDBCollapse isOpen={this.state.collapsed} navbar>
               <MDBNavbarNav right>
                 <MDBNavItem active>
-                  <ModalComponent linkName="Login" />
+                  <ModalComponent linkName="Login" history={this.props.history} />
                 </MDBNavItem>
                 <MDBNavItem>
-                  <ModalComponent linkName="Sign Up" />
+                  <ModalComponent linkName="Sign Up" history={this.props.history} />
                 </MDBNavItem>
               </MDBNavbarNav>
             </MDBCollapse>
@@ -103,4 +103,4 @@ class Landing extends React.Component {
   }
 }
 
-export default Landing;
+export default LandingView;

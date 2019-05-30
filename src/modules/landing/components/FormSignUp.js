@@ -5,28 +5,26 @@ import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from 'react-flux-state';
-import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT} from "../modules/landing/landing-store";
-import { createUser, pushHome } from '../modules/landing/landing-actions';
-import firebase from 'firebase';
-import * as R from 'ramda';
-import { uiConfig } from '../config/firebase';
-import { StyledFirebaseAuth } from 'react-firebaseui';
+import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT} from "../landing-store";
+import { onSignup } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
+import { ClipLoader } from 'react-spinners';
 
 class FormSignUp extends View {
   constructor(props) {
     super(props) 
     this.state = {
         email: '',
-        password: ''
+        password: '',
+        loading: false
     }
     this.onError = error.bind(this);
   }
 
   componentDidMount() {
     this.subscribe( landingStore, SIGNUP_EVENT, () => {
-      pushHome();
+      this.props.history.push('/home')
     })
     this.subscribe( landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
@@ -35,10 +33,11 @@ class FormSignUp extends View {
   }
 
   onSubmit = (e) => {
+    const { email, password} = this.state
     e.preventDefault();
-    this.setState(() => {
-      createUser(R.clone(this.state.email, this.state.password));
-    })
+    this.setState({loading: true},() => {
+      onSignup({email, password})
+    });
   }
 
   onChange = ({ target: { name, value }}) => {
@@ -50,32 +49,12 @@ class FormSignUp extends View {
 
 
   render() {
-    const { email, password} = this.state;
+    const { email, password, loading} = this.state;
     return (
       <MDBContainer>
         <MDBRow>
           <MDBCol md="12" className="p-0">
             <form className="p-3">
-              <div className="text-center">
-                <StyledFirebaseAuth 
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-                <StyledFirebaseAuth 
-                  uiConfig={uiConfig}
-                  firebaseAuth={firebase.auth()} />
-              </div>
-              <MDBRow>
-                <MDBCol md="5" xs="5">
-                  <hr className="hr-dark" />
-                </MDBCol>
-                <MDBCol md="2" xs="2" className="text-center">
-                  OR
-                </MDBCol>
-                <MDBCol md="5" xs="5">
-                  <hr className="hr-dark" />
-                </MDBCol>
-              </MDBRow>
-
               <div className="input-group mb-3">
                 <div className="input-group-prepend">
                   <span className="input-group-text" id="basic-addon1">
@@ -116,12 +95,22 @@ class FormSignUp extends View {
               </p>
             </form>
             <div className="text-center">
+
+            {loading ? (
+              <ClipLoader 
+              sizeUnit={'px'} 
+              size={120} 
+              color={'#44c1f6'} 
+              loading={true} />
+            ) : (
               <MDBBtn 
                 type={'submit'} 
                 className="btn-auth" 
                 onClick={this.onSubmit}>
                 Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
               </MDBBtn>
+
+            )}
             </div>
           </MDBCol>
         </MDBRow>

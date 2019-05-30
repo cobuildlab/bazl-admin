@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MDBIcon, MDBContainer, MDBCol, MDBRow, MDBBtn } from "mdbreact";
 
-import SidebarComponent from "../../../components/SidebarComponent";
+import SidebarComponent from "../../components/SidebarComponent";
 
-import ImgCardDama from "../../../assets/img/ropa-dama.jpg";
-import ImgProfile from "../../../assets/img/profile-table.jpg";
+import ImgCardDama from "../../assets/img/ropa-dama.jpg";
+import ImgProfile from "../../assets/img/profile-table.jpg";
 
 class SalesDetailScreen extends React.Component {
   render() {
@@ -92,7 +92,7 @@ class SalesDetailScreen extends React.Component {
                 <hr />
                 <label
                   className="CustomlabelSales text-center"
-                  for="upload-photo"
+                  htmlFor="upload-photo"
                 >
                   <MDBIcon icon="file-upload" /> Upload Image
                 </label>

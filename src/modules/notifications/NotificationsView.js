@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MDBIcon } from "mdbreact";
-import SidebarComponent from "../../../components/SidebarComponent";
+import SidebarComponent from "../../components/SidebarComponent";
 
-class NotificationsScreen extends React.Component {
+class NotificationsView extends React.Component {
   render() {
     return (
       <React.Fragment>
@@ -27,4 +27,4 @@ class NotificationsScreen extends React.Component {
   }
 }
 
-export default NotificationsScreen;
+export default NotificationsView;

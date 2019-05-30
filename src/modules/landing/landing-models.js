@@ -1,4 +1,4 @@
-export const userModel = {
+export const UserModel = {
   Id: null,
   name: '',
   email: '',

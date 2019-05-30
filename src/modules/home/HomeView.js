@@ -1,12 +1,18 @@
 import React from "react";
-import SidebarComponent from "../../../components/SidebarComponent";
+import SidebarComponent from "../../components/SidebarComponent";
 import { MDBIcon, MDBContainer, MDBRow, MDBCol } from "mdbreact";
-import SliderCards from "../../../components/SliderCards";
-import TableSales from "../../../components/TableSales";
+import SliderCards from "../../components/SliderCards";
+import TableSales from "../../components/TableSales";
 
 import { Link } from "react-router-dom";
 
-class HomeScreen extends React.Component {
+class HomeView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    }
+  }
   render() {
     return (
       <React.Fragment>
@@ -68,4 +74,4 @@ class HomeScreen extends React.Component {
   }
 }
 
-export default HomeScreen;
+export default HomeView;

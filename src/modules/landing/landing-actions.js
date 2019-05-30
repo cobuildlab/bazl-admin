@@ -12,9 +12,7 @@ import {
 import { error, log } from 'pure-logger';
 import Flux from 'flux-state';
 import * as R from 'ramda';
-import { userModel } from './landing-models';
-// import { FirebaseAuth } from 'react-firebaseui';
-
+import { UserModel } from './landing-models';
 
 /** 
  * @param {string} email
@@ -23,7 +21,6 @@ import { userModel } from './landing-models';
  */
 export const onLogin = async ({email, password}) => {
 
-  await firebase.auth();
   const AUTH = firebase.auth();
  
   let data;
@@ -43,17 +40,6 @@ export const onLogin = async ({email, password}) => {
     Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
 
-export const onGoogleLogin = async () =>{
-  await firebase.auth();
-  const AUTH = firebase.auth();
-
-  await AUTH.signInWithPopup(new firebase.auth.GoogleAuthProvider())
-    .then((authCredential) => {
-      let {user} = authCredential;
-      console.log(user) ;
-      Flux.dispatchEvent(SIGNUP_GOOGLE_EVENT, { user });
-    });
-}
 
 /**
  * 
@@ -61,9 +47,8 @@ export const onGoogleLogin = async () =>{
  * @param {string} password
  * @returns {Promise<user: userModel>}
  */
-export const OnSignup = async ({email,password}) => {
-  await firebase.auth()
-  const AUTH= firebase.auth()
+export const onSignup = async ({email,password}) => {
+  const AUTH = firebase.auth()
   let data
   try {
     data = await AUTH.createUserWithEmailAndPassword(email, password);
@@ -72,9 +57,8 @@ export const OnSignup = async ({email,password}) => {
     error('onSignup', e)
   }
   const { user: firebaseUser} = data;
-  let user = await createUser(firebaseUser.email);
-  log('onLogin:createUser', user);
-  Flux.dispatchEvent(LOGIN_EVENT, { user });
+  let user = await createUser(firebaseUser);
+  return Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
 
 /**
@@ -83,10 +67,11 @@ export const OnSignup = async ({email,password}) => {
  * @returns {Promise<{user}>}
  */
 export const fetchUser = async (email) => {
+  console.log(email);
   const DB = firebase.firestore();
-  const usersCollection = DB.collection('users');
+  const usersCollection = await DB.collection('users');
 
-  const userRef = usersCollection.doc(email);
+  const userRef = await usersCollection.doc(email);
   let query;
   try{
     query = await userRef.get({ source: 'server' });
@@ -94,13 +79,11 @@ export const fetchUser = async (email) => {
     Flux.dispatchEvent(USER_ERROR_EVENT, new Error(e.message))
     throw e;
   }
-  log('fetchUser', query);
 
   if(!query.exists) return null;
     const user = query.data()
 
   Flux.dispatchEvent(USER_EVENT, user);
-  log('fetchUser:credentials', user);
   return user;
 }
 
@@ -114,6 +97,9 @@ export const onLogout = async () => {
   Flux.dispatchEvent(LOGOUT_EVENT, {});
 };
 
+
+
+
 /**
  * Creates a new user in the system
  * @param {string} firebaseUser the firebase uid
@@ -123,16 +109,17 @@ export const createUser = async (firebaseUser) => {
     const DB = firebase.firestore();
     const usersCollection = DB.collection('users');
 
-    const user = R.clone(userModel);
+    const user = R.clone(UserModel);
     user.email = firebaseUser.email;
-    user.password = firebaseUser.password;
+    user.id = firebaseUser.uid;
 
-    const userRef = usersCollection.doc(firebaseUser.email)
+    const userRef = await usersCollection.doc(firebaseUser.email)
     try{
       await userRef.set(user, {merge: true});
-    } catch (e) {
+    } catch (err) {
+      console.log(err)
       Flux.dispatchEvent(USER_ERROR_EVENT, user)
-      throw e;
+      throw err;
     }
     Flux.dispatchEvent(SIGNUP_EVENT, user);
     return user;
@@ -150,8 +137,13 @@ export const requestPasswordReset = async (email) => {
     .catch((err) => Flux.dispatchEvent(USER_ERROR_EVENT, err));
   };
   
+/**
+ * function that pushes the user home
+ * @param {props} props 
+ */
 export const pushHome = async (props) => {
   const { history } = props
-  // const { history } = this.props
   await history.push('/home')
 }
+
+
