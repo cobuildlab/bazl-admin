@@ -92,6 +92,7 @@ export const onLogout = async () => {
   const AUTH = firebase.auth();
   await AUTH.signOut();
   Flux.dispatchEvent(LOGOUT_EVENT, {});
+
 };
 
 

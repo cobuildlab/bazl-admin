@@ -46,7 +46,7 @@ const ModalComponent = ({ linkName, history }) => {
 
 ModalComponent.propTypes = {
   linkName: PropTypes.string.isRequired,
-  history: PropTypes.string
+  history: PropTypes.object
 };
 
 export default ModalComponent;
