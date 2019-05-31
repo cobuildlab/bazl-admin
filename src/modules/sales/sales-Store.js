@@ -19,6 +19,6 @@ class SalesStore extends Flux.DashStore{
     }
 }
 
-const landingStore = new SalesStore();
+const salesStore = new SalesStore();
 
-export {landingStore};
+export {salesStore};

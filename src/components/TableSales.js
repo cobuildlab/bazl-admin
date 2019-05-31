@@ -3,44 +3,46 @@ import { Link } from "react-router-dom";
 import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead, MDBBtn } from "mdbreact";
 import ImgProfile from "../assets/img/profile-table.jpg";
 import {fetchSales} from '../modules/sales/sales-action';
-class TableSales extends React.Component {
+import {salesStore, SALE_EVENT} from '../modules/sales/sales-store';
+import View from 'react-flux-state';
+class TableSales extends View {
   constructor(props){
     super(props);
     this.state={
-      influencer: '',
-      nOrder: '',
-      date: '',
-      quantity: 0,
-      price: '',
-      color: '',
-      size: '',
-      status: false,
-      picture: null,
-      productID: '',
-      buyerID: ''
+      sales : [],
+      status: true
+
     };
+    this.changeStatus = this.changeStatus.bind(this);
   }
 
-  // componentDidMount(){
-  //   const {
-  //     influencer,
-  //     nOrder,
-  //     date,
-  //     quantity,
-  //     price,
-  //     color,
-  //     size,
-  //     status,
-  //     picture,
-  //     productID,
-  //     buyerID
-  //   } = this.state;
-  //   this.setState(() =>{
-  //     fetchSales();
-  //   })
-  // }
+  changeStatus(){
+    this.setState((prevState) => {
+      return {status : !prevState.status}
+    })
+    console.log(this.state.status);
+  }
+
+   componentDidMount() {
+     fetchSales();
+ this.subscribe(salesStore, SALE_EVENT, (sale) => {
+
+      const sales = sale;
+      this.setState(this.state.sales = sales);
+      console.log(this.state.sales.status);
+       
+     });
+ }
 
   render() {
+    let statBtn;
+    if (this.state.status) {
+      statBtn = <MDBBtn className="btn btn-circle" onClick={() => this.changeStatus()}>Active Sale</MDBBtn>
+    } else {
+      statBtn = <MDBBtn className="btn btn-circle-danger" onClick={() => this.changeStatus()} disabled>Closed Sale</MDBBtn>
+    };
+  
+    
     return (
       <MDBRow>
         <MDBCol md="12" className="p-0">
@@ -61,7 +63,7 @@ class TableSales extends React.Component {
                     className="img-profile-table"
                     style={{ backgroundImage: `url(${ImgProfile})` }}
                   />
-                  <span className="username-table">@username</span>
+                  <span className="username-table">{this.state.sales.buyerID}</span>
                 </td>
                 <td>$100</td>
                 <td>16/05/2019</td>
@@ -75,7 +77,8 @@ class TableSales extends React.Component {
                   </Link>
                 </td>
                 <td>
-                  <MDBBtn className="btn btn-circle-danger">Closed Sale</MDBBtn>
+                  {statBtn}
+                  {/* <MDBBtn className="btn btn-circle-danger" onClick={()=>this.changeStatus()}>Closed Sale</MDBBtn> */}
                 </td>
               </tr>
               <tr>
@@ -105,5 +108,6 @@ class TableSales extends React.Component {
       </MDBRow>
     );
   }
+
 }
 export default TableSales;

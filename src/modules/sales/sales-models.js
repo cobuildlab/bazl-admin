@@ -10,7 +10,7 @@ export const SaleModel = {
     size: '',
     status: false,
     picture: null,
-    productID: '',
+    productID: [],
     buyerID : ''
 
 }
