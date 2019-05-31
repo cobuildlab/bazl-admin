@@ -12,9 +12,9 @@ import {
   MDBBtn,
   MDBInput
 } from "mdbreact";
-import SidebarComponent from "./SidebarComponent";
-import SliderCards from "./SliderCards";
-import ImgDefault from '../assets/img/img-default.png';
+import SidebarComponent from "../../../components/SidebarComponent";
+import SliderCards from "../../../components/SliderCards";
+import ImgDefault from '../../../assets/img/img-default.png';
 import { BankAccount } from './BankAccount';
 
 class Profile extends React.Component {

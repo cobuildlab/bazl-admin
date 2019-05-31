@@ -12,9 +12,9 @@ import {
   MDBBtn,
   MDBInput
 } from "mdbreact";
-import SidebarComponent from "./SidebarComponent";
-import SliderCards from "./SliderCards";
-import ImgDefault from '../assets/img/img-default.png';
+import SidebarComponent from "../../../components/SidebarComponent";
+import SliderCards from "../../../components/SliderCards";
+import ImgDefault from '../../../assets/img/img-default.png';
 import { BankAccount } from './BankAccount';
 
 class EditProfile extends React.Component {
@@ -78,12 +78,12 @@ class EditProfile extends React.Component {
   }
 
   newAccount = () => {
-    let { title, number } = this.state
-    let newAccount = {
+    const { title, number } = this.state
+    const newAccount = {
       'title': title,
       'number': number
     }
-    let data = this.state.user.bankAccounts;
+    const data = this.state.user.bankAccounts;
     this.setState({
       data: data.push(newAccount),
       title: '',

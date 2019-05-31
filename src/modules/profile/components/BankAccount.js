@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as R from 'ramda';
 import {
   MDBIcon,
   MDBRow,
@@ -48,7 +49,7 @@ export class BankAccount extends Component {
                 onChange={this.onChange}
               />
               <div>                
-                <MDBBtn className="btn-edit" onClick={() => onEdit(this.state)} >
+                <MDBBtn className="btn-edit" onClick={() => onEdit(R.clone(this.state))} >
                   <MDBIcon icon="pencil-alt" />
                 </MDBBtn>
                 <MDBBtn className="btn-delete" onClick={() => onDelete(account)} >

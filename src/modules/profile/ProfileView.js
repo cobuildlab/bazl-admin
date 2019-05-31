@@ -1,7 +1,7 @@
 import React from "react";
 import View from 'react-flux-state';
-import Profile from '../../components/Profile';
-import EditProfile from '../../components/EditProfile';
+import Profile from './components/Profile';
+import EditProfile from './components/EditProfile';
 
 class ProfileView extends View {
   constructor(props) {
@@ -38,36 +38,16 @@ class ProfileView extends View {
   }
 
   onDelete = (bank) => {
-    // let { bankAccounts } = this.state.user;  
-    // let arreglo = [];
-    // arreglo = bankAccounts.filter(function(i) { return i !== bank });
-    // console.log(arreglo);
-    // let data = this.state.user;
-    // this.setState({
-    //   data: arreglo
-    // })
-    //////////////////////////////////
-    let { bankAccounts } = this.state.user;
-    let data = this.state.user;
+    const { bankAccounts } = this.state.user;
+    const data = this.state.user;
     bankAccounts.map(function (bankAccount) {
       if (bank.Id === bankAccount.Id) {
-        let i = bankAccounts.indexOf(bankAccount);
+        const i = bankAccounts.indexOf(bankAccount);
         bankAccounts.splice(i, 1);       
       }
     });   
     this.setState({ data });
     this.onEdit();
-    ////////////////////////777
-    // let bankAccounts = [...this.state.user.bankAccounts];
-    // let data = this.state.user.bankAccounts;
-    // let i = -1;
-    // bankAccounts.map((bankAccount) => {
-    //   if (bank.Id === bankAccount.Id) 
-    //     i = bankAccounts.indexOf(bankAccount);     
-    // });   
-    // bankAccounts.splice(i, 1);     
-    
-    // this.setState({ bankAccounts: [...bankAccounts]});
   }
 
   render() {
