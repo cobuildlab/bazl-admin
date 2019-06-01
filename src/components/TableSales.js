@@ -9,103 +9,86 @@ class TableSales extends View {
   constructor(props){
     super(props);
     this.state={
-      sales : [],
-      status: true
+      sales : {},
+      key: ''
 
     };
     this.changeStatus = this.changeStatus.bind(this);
   }
 
   changeStatus(){
-    this.setState((prevState) => {
-      return {status : !prevState.status}
-    })
-    console.log(this.state.status);
+   
   }
 
-   componentDidMount() {
+   componentDidMount(){
      fetchSales();
  this.subscribe(salesStore, SALE_EVENT, (sale) => {
 
+      const keys = sale.id;
       const sales = sale;
-      this.setState(this.state.sales = sales);
-      console.log(this.state.sales.status);
+      this.setState({
+        sales : sales,
+        key : keys
+      });
+      console.log(this.state.sales, this.state.key);
        
      });
+     
  }
 
   render() {
-    let statBtn;
-    if (this.state.status) {
-      statBtn = <MDBBtn className="btn btn-circle" onClick={() => this.changeStatus()}>Active Sale</MDBBtn>
-    } else {
-      statBtn = <MDBBtn className="btn btn-circle-danger" onClick={() => this.changeStatus()} disabled>Closed Sale</MDBBtn>
-    };
-  
+   
+     let statBtn;
+     if (this.state.sales.status) {
+       statBtn = <MDBBtn className="btn btn-circle" onClick={() => this.changeStatus()}>Active Sale</MDBBtn>
+     } else {
+       statBtn = <MDBBtn className="btn btn-circle-danger" onClick={() => this.changeStatus()} disabled>Closed Sale</MDBBtn>
+     };
     
     return (
       <MDBRow>
-        <MDBCol md="12" className="p-0">
-          <MDBTable borderless responsive>
-            <MDBTableHead>
-              <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Date</th>
-                <th>Order No</th>
-                <th> </th>
-              </tr>
-            </MDBTableHead>
-            <MDBTableBody>
-              <tr>
-                <td>
-                  <div
-                    className="img-profile-table"
-                    style={{ backgroundImage: `url(${ImgProfile})` }}
-                  />
-                  <span className="username-table">{this.state.sales.buyerID}</span>
-                </td>
-                <td>$100</td>
-                <td>16/05/2019</td>
-                <td>09876543212</td>
-                <td>
-                  <Link
-                    to="/order-details"
-                    className="btn btn-circle btn-circle-link"
-                  >
-                    Order Details
+     
+          <MDBCol md="12" className="p-0">
+            <MDBTable borderless responsive>
+              <MDBTableHead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Date</th>
+                  <th>Order No</th>
+                  <th> </th>
+                </tr>
+              </MDBTableHead>
+              <MDBTableBody>
+                <tr>
+                  <td>
+                    <div
+                      className="img-profile-table"
+                      style={{ backgroundImage: `url(${ImgProfile})` }}
+                    />
+                    <span className="username-table">{this.state.sales.buyerID}</span>
+                  </td>
+                  <td>{this.state.sales.price}</td>
+                  <td></td>
+                  <td>{this.state.sales.nOrder}</td>
+                  <td>
+                    <Link
+                      to="/order-details"
+                      className="btn btn-circle btn-circle-link"
+                    >
+                      Order Details
                   </Link>
-                </td>
-                <td>
-                  {statBtn}
-                  {/* <MDBBtn className="btn btn-circle-danger" onClick={()=>this.changeStatus()}>Closed Sale</MDBBtn> */}
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div
-                    className="img-profile-table"
-                    style={{ backgroundImage: `url(${ImgProfile})` }}
-                  />
-                  <span className="username-table">@username</span>
-                </td>
-                <td>$100</td>
-                <td>16/05/2019</td>
-                <td>09876543212</td>
-                <td>
-                  <Link
-                    to="/order-detail"
-                    className="btn btn-circle btn-circle-link"
-                  >
-                    Order Details
-                  </Link>
-                </td>
-                <td> <MDBBtn className="btn btn-circle-danger">Closed Sale</MDBBtn></td>
-              </tr>
-            </MDBTableBody>
-          </MDBTable>
-        </MDBCol>
-      </MDBRow>
+                  </td>
+                  <td>
+                     {statBtn} 
+                    
+                  </td>
+                </tr>
+              </MDBTableBody>
+            </MDBTable>
+          </MDBCol>
+       
+        </MDBRow>
     );
   }
 

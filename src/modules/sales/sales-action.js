@@ -17,6 +17,7 @@ export const fetchSales = async () => {
         .then(snapshot => {
             snapshot.forEach(doc => {
                 data = doc.data();
+                data.id = doc.id;
             });
             console.log(data);
             Flux.dispatchEvent(SALE_EVENT, data);
