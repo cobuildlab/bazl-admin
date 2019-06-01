@@ -21,6 +21,7 @@ import { UserModel } from './landing-models';
 export const onLogin = async ({email, password}) => {
 
   const AUTH = firebase.auth();
+ 
   let data;
     try {
       data = await AUTH.signInWithEmailAndPassword(email, password);
@@ -31,6 +32,7 @@ export const onLogin = async ({email, password}) => {
       return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
     }
     const { user: firebaseUser } = data;
+    console.log('data from action',data);
     let user = await fetchUser(firebaseUser.email);
     log('onLogin:fetchUser');
 
