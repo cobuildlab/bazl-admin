@@ -16,7 +16,7 @@ import { UserModel } from './landing-models';
 /** 
  * @param {string} email
  * @param {string} password
- * @returns {Promise<{user: userModel} || void>}
+ * @returns {Promise<{user: UserModel} || void>}
  */
 export const onLogin = async ({email, password}) => {
 
@@ -44,7 +44,7 @@ export const onLogin = async ({email, password}) => {
  * 
  * @param {string} email
  * @param {string} password
- * @returns {Promise<user: userModel>}
+ * @returns {Promise<user: UserModel>}
  */
 export const onSignup = async ({email,password}) => {
   const AUTH = firebase.auth()
