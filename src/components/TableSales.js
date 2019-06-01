@@ -21,7 +21,6 @@ class TableSales extends View {
   }
 
    componentDidMount(){
-     fetchSales();
  this.subscribe(salesStore, SALE_EVENT, (sale) => {
 
       const keys = sale.id;
@@ -30,10 +29,10 @@ class TableSales extends View {
         sales : sales,
         key : keys
       });
-      console.log(this.state.sales, this.state.key);
+      
        
      });
-     
+      fetchSales();
  }
 
   render() {

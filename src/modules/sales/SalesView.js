@@ -1,7 +1,6 @@
 import React from "react";
 import { MDBIcon, MDBContainer } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
-// import firebase from 'firebase';
 import { Link } from "react-router-dom";
 import TableSales from "../../components/TableSales";
 
