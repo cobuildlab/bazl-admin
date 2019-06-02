@@ -1,12 +1,13 @@
 import React from "react";
 import { MDBIcon, MDBContainer } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
-
 import { Link } from "react-router-dom";
-import TableSales from "../../components/TableSales";
+import TableSales from "./TableSalesView";
 
 class SalesView extends React.Component {
   render() {
+    
+
     return (
       <React.Fragment>
         <SidebarComponent>
