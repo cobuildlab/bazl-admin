@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead, MDBBtn } from "mdbreact";
-import ImgProfile from "../assets/img/profile-table.jpg";
+import ImgProfile from "../../assets/img/profile-table.jpg";
 import {fetchSales} from './sales-action';
 import {salesStore, SALE_EVENT} from './sales-store';
 import View from 'react-flux-state';

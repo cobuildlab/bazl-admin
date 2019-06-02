@@ -1,9 +1,7 @@
 import firebase from 'firebase';
 import {
     SALE_EVENT,
-    SALE_ERROR,
-    SALE_STAT,
-    SALE_CLOSED
+    SALE_ERROR
 } from './sales-store';
 import Flux from 'flux-state';
 
