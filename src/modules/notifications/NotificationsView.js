@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MDBIcon } from "mdbreact";
+import { MDBIcon, MDBAnimation } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
 
 class NotificationsView extends React.Component {
@@ -21,6 +21,8 @@ class NotificationsView extends React.Component {
               </Link>
             </div>
           </div>
+          <MDBAnimation type='fadeIn' >
+          </MDBAnimation>
         </SidebarComponent>
       </React.Fragment>
     );

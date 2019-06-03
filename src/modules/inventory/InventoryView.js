@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBContainer, MDBBtn, MDBIcon } from "mdbreact";
+import { MDBContainer, MDBBtn, MDBIcon, MDBAnimation } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
 import TableInventory from "./components/TableInventory";
 
@@ -24,9 +24,11 @@ class InventoryView extends React.Component {
               </MDBBtn>
             </div>
           </div>
-          <MDBContainer className="body" fluid>
-            <TableInventory />
-          </MDBContainer>
+          <MDBAnimation type='fadeIn' >
+            <MDBContainer className="body" fluid>
+              <TableInventory />
+            </MDBContainer>
+          </MDBAnimation>
         </SidebarComponent>
       </React.Fragment>
     );
