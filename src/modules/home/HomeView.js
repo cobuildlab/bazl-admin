@@ -2,7 +2,7 @@ import React from "react";
 import SidebarComponent from "../../components/SidebarComponent";
 import { MDBIcon, MDBContainer, MDBRow, MDBCol, MDBAnimation } from "mdbreact";
 import SliderCards from "../../components/SliderCards";
-import TableSales from "../../components/TableSales";
+import TableSales from "../sales/TableSalesView";
 
 import { Link } from "react-router-dom";
 

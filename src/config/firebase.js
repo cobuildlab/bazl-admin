@@ -19,7 +19,7 @@ export const uiConfig = {
     firebase.auth.FacebookAuthProvider.PROVIDER_ID
   ],
   callbacks: {
-    signInSuccessWithAuthResult() {
+    signInSuccessWithAuthResult(authResult) {
       window.location.href = '/home'
     }
   }

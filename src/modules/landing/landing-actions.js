@@ -16,25 +16,27 @@ import { UserModel } from './landing-models';
 /** 
  * @param {string} email
  * @param {string} password
- * @returns {Promise<{user: userModel} || void>}
+ * @returns {Promise<{user: UserModel} || void>}
  */
-export const onLogin = async ({email, password}) => {
+export const onLogin = async ({ email, password }) => {
 
   const AUTH = firebase.auth();
-  let data;
-    try {
-      data = await AUTH.signInWithEmailAndPassword(email, password);
-    } catch (err) {
-      console.log('LOGIN_EVENT');
-      console.log(err);
-      // error('onLogin', e)
-      return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
-    }
-    const { user: firebaseUser } = data;
-    let user = await fetchUser(firebaseUser.email);
-    log('onLogin:fetchUser');
 
-    Flux.dispatchEvent(LOGIN_EVENT, { user });
+  let data;
+  try {
+    data = await AUTH.signInWithEmailAndPassword(email, password);
+  } catch (err) {
+    console.log('LOGIN_EVENT');
+    console.log(err);
+    // error('onLogin', e)
+    return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
+  }
+  const { user: firebaseUser } = data;
+  console.log('data from action', data);
+  let user = await fetchUser(firebaseUser.email);
+  log('onLogin:fetchUser');
+
+  Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
 
 
@@ -42,20 +44,21 @@ export const onLogin = async ({email, password}) => {
  * 
  * @param {string} email
  * @param {string} password
- * @returns {Promise<user: userModel>}
+ * @returns {Promise<user: UserModel>}
  */
-export const onSignup = async ({email,password}) => {
+export const onSignup = async ({ email, password }) => {
   const AUTH = firebase.auth()
   let data
   try {
-    data = await AUTH.createUserWithEmailAndPassword(email, password);
-  } catch (e) {
-    console.log('LOGIN_EVENT')
-    error('onSignup', e)
+    data = await AUTH.createUserWithEmailAndPassword(email, password);    
+    const { user: firebaseUser } = data;
+    let user = await createUser(firebaseUser);
+
+    return Flux.dispatchEvent(LOGIN_EVENT, { user });
+  } catch (err) {    
+    return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
   }
-  const { user: firebaseUser} = data;
-  let user = await createUser(firebaseUser);
-  return Flux.dispatchEvent(LOGIN_EVENT, { user });
+
 };
 
 /**
@@ -70,15 +73,15 @@ export const fetchUser = async (email) => {
 
   const userRef = await usersCollection.doc(email);
   let query;
-  try{
+  try {
     query = await userRef.get({ source: 'server' });
-  } catch(e) {
+  } catch (e) {
     Flux.dispatchEvent(USER_ERROR_EVENT, new Error(e.message))
     throw e;
   }
 
-  if(!query.exists) return null;
-    const user = query.data()
+  if (!query.exists) return null;
+  const user = query.data()
 
   Flux.dispatchEvent(USER_EVENT, user);
   return user;
@@ -104,24 +107,24 @@ export const onLogout = async () => {
  * @return {Promise<UserModel>} user credentials or null if unexisting
  */
 export const createUser = async (firebaseUser) => {
-    const DB = firebase.firestore();
-    const usersCollection = DB.collection('users');
+  const DB = firebase.firestore();
+  const usersCollection = DB.collection('users');
 
-    const user = R.clone(UserModel);
-    user.email = firebaseUser.email;
-    user.id = firebaseUser.uid;
+  const user = R.clone(UserModel);
+  user.email = firebaseUser.email;
+  user.id = firebaseUser.uid;
 
-    const userRef = await usersCollection.doc(firebaseUser.email)
-    try{
-      await userRef.set(user, {merge: true});
-    } catch (err) {
-      console.log(err)
-      Flux.dispatchEvent(USER_ERROR_EVENT, user)
-      throw err;
-    }
-    Flux.dispatchEvent(SIGNUP_EVENT, user);
-    return user;
+  const userRef = await usersCollection.doc(firebaseUser.email)
+  try {
+    await userRef.set(user, { merge: true });
+  } catch (err) {
+    console.log(err)
+    Flux.dispatchEvent(USER_ERROR_EVENT, user)
+    throw err;
   }
+  Flux.dispatchEvent(SIGNUP_EVENT, user);
+  return user;
+}
 
 /**
  * function that dispatches an email to the user and triggers the REQUEST_RECOVER_PASSwORD
@@ -133,8 +136,8 @@ export const requestPasswordReset = async (email) => {
   AUTH.sendPasswordResetEmail(email)
     .then((send) => Flux.dispatchEvent(REQUEST_PASSWORD_RESET, send))
     .catch((err) => Flux.dispatchEvent(USER_ERROR_EVENT, err));
-  };
-  
+};
+
 /**
  * function that pushes the user home
  * @param {props} props 

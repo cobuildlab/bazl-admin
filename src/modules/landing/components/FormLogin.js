@@ -19,13 +19,17 @@ class FormLogin extends View {
       password: "",
       loading: false
     };
-    this.onError = error.bind(this);
+    this.onError = error.bind(this);    
   }
 
   componentDidMount() {
     this.subscribe(landingStore, LOGIN_EVENT, () => {
       this.props.history.push('/home')
     });
+    // this.subscribe(landingStore, SIGNUP_GOOGLE_EVENT, () => {
+    //   const user3 = landingStore.getState(SIGNUP_GOOGLE_EVENT);
+    //   console.log("user3",user3);      
+    // });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, err => {
       toast.error(err.message);
     });
@@ -39,6 +43,13 @@ class FormLogin extends View {
     });
     console.log(email);
   };
+
+  // signInGoogle = e => {
+  //   e.preventDefault();
+  //   this.setState(() => {
+  //     onGoogleLogin();
+  //   });
+  // };
 
   onChange = ({ target: { name, value } }) => {
     this.setState({
