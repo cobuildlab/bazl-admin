@@ -5,29 +5,16 @@ import {
   MDBContainer,
   MDBCol,
   MDBRow,
-  MDBCard,
-  MDBCardBody,
-  MDBCardText,
-  MDBCardTitle,
-  MDBBtn,
-  MDBInput
 } from "mdbreact";
 import SidebarComponent from "../../../components/SidebarComponent";
+import BasicInformation from './BasicInformation';
+import BankInformation from './BankInformation';
 import SliderCards from "../../../components/SliderCards";
-import ImgDefault from '../../../assets/img/img-default.png';
-import { BankAccount } from './BankAccount';
 
 class Profile extends React.Component {
   render() {
-    const { onClickEdit } = this.props;
-    let { name, description, bankAccounts, picture } = this.props.user;
-    let imagePreview = null;
-
-    if (picture) {
-      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid" />);
-    } else {
-      imagePreview = (<img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />);
-    }
+    const { flagEdit } = this.props;
+    let { name, description, picture, bankAccounts } = this.props.user;
 
     return (
       <SidebarComponent>
@@ -37,7 +24,7 @@ class Profile extends React.Component {
           </div>
           <div>
             <Link
-              onClick={onClickEdit}
+              onClick={flagEdit}
               className="btn btn-circle btn-circle-link"
             >
               Edit Profile<MDBIcon icon="upload" className="ml-1" />
@@ -46,65 +33,13 @@ class Profile extends React.Component {
         </div>
         <MDBContainer>
           <MDBRow>
-            <MDBCol md="3">
-              <label className="Customlabel text-center" htmlFor="upload-photo">
-                {imagePreview}
-              </label>
-              <small className="text-center">
-                JPG or PNG format with a maximum of 5mb
-              </small>
-            </MDBCol>
-            <MDBCol md="7">
-              <h5>Name User</h5>
-              <MDBInput
-                className="mt-0"
-                type="text"
-                name="name"
-                value={name}
-              />
-              <h5>Description</h5>
-              <MDBInput
-                className="mt-0"
-                type="textarea"
-                name="description"
-                value={description}
-                rows="5" />
-              <MDBCol className="text-center">
-                <MDBBtn disabled color="success" className="btn btn-circle mt-4 mb-5">
-                  Save
-                    </MDBBtn>
-                <MDBBtn disabled color="danger" className="btn btn-circle mt-4 mb-5">
-                  Cancel
-                    </MDBBtn>
-              </MDBCol>
-
-            </MDBCol>
-            <MDBCol md="2">
-              <MDBCard>
-                <MDBCardBody>
-                  <MDBCardText className="text-center">
-                    Total Sales
-                  </MDBCardText>
-                  <MDBCardTitle className="text-center">
-                    $1000
-                  </MDBCardTitle>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
+            <BasicInformation name={name} description={description} picture={picture} flagInformation={true}/>
           </MDBRow>
 
           <MDBRow>
             <MDBCol md="2"></MDBCol>
             <MDBCol md="8">
-              <div className="mt-3 mb-5">
-                <h5>Bank Accounts</h5>
-                {bankAccounts.map((account, i) => (
-                  <BankAccount key={i} account={account} onEdit={this.onEdit} onDelete={this.onDelete} editAccount={false}></BankAccount>
-                ))}
-                <div className="d-flex justify-content-center align-items-center">
-                  <MDBBtn disabled className="btn btn-circle">Add Accounts</MDBBtn>
-                </div>
-              </div>
+              <BankInformation bankAccounts={bankAccounts} flagInformation={true}/>
             </MDBCol>
             <MDBCol md="2"></MDBCol>
           </MDBRow>

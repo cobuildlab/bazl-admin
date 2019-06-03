@@ -8,7 +8,7 @@ import {
   REQUEST_PASSWORD_RESET,
   LOGOUT_EVENT
 } from './landing-store';
-import { error, log } from 'pure-logger';
+import { log } from 'pure-logger';
 import Flux from 'flux-state';
 import * as R from 'ramda';
 import { UserModel } from './landing-models';

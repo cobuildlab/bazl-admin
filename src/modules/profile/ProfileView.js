@@ -1,4 +1,5 @@
 import React from "react";
+import * as R from 'ramda';
 import View from 'react-flux-state';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
@@ -24,30 +25,31 @@ class ProfileView extends View {
     }
   }
 
-  onEdit = () => {
+  onDeleteBankAccount = (bank) => {
+    const { bankAccounts } = R.clone(this.state.user);
+    const result = bankAccounts.filter(index => index.Id !== bank.Id);    
+    this.setState(state => ({
+      ...state,
+      user: { ...state.user, bankAccounts: result }
+    }))    
+    this.flagEdit();
+  }
+
+  flagEdit = () => {
     this.setState(prevState => ({
       editProfile: !prevState.editProfile
     }));
   }
 
-  onUpdateUser = (newUser) => {
+  onUpdateUser = (updateUser) => {
+    var user = R.clone(this.state.user);
+    user.name = updateUser.name;
+    user.description = updateUser.description;
+    user.picture = updateUser.picture;
     this.setState({
       editProfile: false,
-      user: newUser
-    })
-  }
-
-  onDelete = (bank) => {
-    const { bankAccounts } = this.state.user;
-    const data = this.state.user;
-    bankAccounts.map(function (bankAccount) {
-      if (bank.Id === bankAccount.Id) {
-        const i = bankAccounts.indexOf(bankAccount);
-        bankAccounts.splice(i, 1);       
-      }
-    });   
-    this.setState({ data });
-    this.onEdit();
+      user
+    });
   }
 
   render() {
@@ -56,9 +58,9 @@ class ProfileView extends View {
       <React.Fragment>
         {
           !editProfile ? (
-            <Profile onClickEdit={this.onEdit} user={user}></Profile>
+            <Profile flagEdit={this.flagEdit} user={user}></Profile>
           ) : (
-              <EditProfile onSave={this.onUpdateUser} onCancel={this.onEdit} onDelete={this.onDelete} user={user}></EditProfile>
+              <EditProfile onSave={this.onUpdateUser} flagEdit={this.flagEdit} onDelete={this.onDeleteBankAccount} user={user}></EditProfile>
             )
         }
       </React.Fragment>
