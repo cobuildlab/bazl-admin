@@ -9,8 +9,9 @@ export const SaleModel = {
     color: '',
     size: '',
     status: false,
-    picture: null,
+    receiptPic: null,
+    recepitComment: '',
     productID: [],
-    buyerID : ''
-
+    buyerID : '',
+    receipt: null
 }
