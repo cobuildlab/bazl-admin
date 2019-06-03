@@ -1,7 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import SidebarComponent from "../../components/SidebarComponent";
+import {
+  MDBIcon,
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBCard,
+  MDBCardBody,
+  MDBCardText,
+  MDBCardTitle,
+  MDBBtn,
+  MDBAnimation
+} from "mdbreact";
 import View from 'react-flux-state';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
+
 
 class ProfileView extends View {
   constructor(props) {
