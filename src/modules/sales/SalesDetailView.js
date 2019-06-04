@@ -8,7 +8,7 @@ import ImgProfile from "../../assets/img/profile-table.jpg";
 import { salesStore, DETAIL_EVENT, STAT_EVENT } from "./sales-store";
 import {detailFetch, changeStatus} from './sales-action';
 
-class SalesDetailScreen extends View {
+class SalesDetailView extends View {
   constructor(props){
     super(props);
     this.state={
@@ -27,16 +27,16 @@ class SalesDetailScreen extends View {
            key : key
          })
        })
-       detailFetch(this.props.match.params.id);
        this.subscribe(salesStore, STAT_EVENT, (sale)=>{
          const detailSale = sale;
          const key = sale.id;
          this.setState({
            sale: detailSale,
            key : key
-         })
-       })
-      
+          })
+        })
+        detailFetch(this.props.match.params.id);
+        
       }
 
       closeSale(){
@@ -155,4 +155,4 @@ class SalesDetailScreen extends View {
   }
 }
 
-export default SalesDetailScreen;
+export default SalesDetailView;

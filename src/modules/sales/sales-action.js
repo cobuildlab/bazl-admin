@@ -9,7 +9,10 @@ import {
 } from './sales-store';
 import Flux from 'flux-state';
 
-
+/**
+ * Get all the sales
+ * @returns {Promise<SalesModel>}Sale info or null if unexisting
+ */
 export const fetchSales =  () => {
     const DB = firebase.firestore();
     const salesCollection =  DB.collection('sales');
@@ -43,6 +46,10 @@ export const fetchSales =  () => {
         });
 }
 
+/**
+ * Get detailed info of an specific Sale
+ * @returns {Promise<SalesModel>}Sale info or null if unexisting
+ */
 export const detailFetch =  (id) =>{
     const DB = firebase.firestore();
     const salesCollection =  DB.collection('sales').doc(id);
@@ -63,6 +70,10 @@ export const detailFetch =  (id) =>{
     })
 }
 
+/**
+ * Update the State of a Sale to closed and get the modified data
+ * @returns {Promise<SalesModel>}Sale info or null if unexisting
+ */
 export const changeStatus = (id) =>{
     const DB = firebase.firestore();
     const salesCollection = DB.collection('sales').doc(id);
@@ -70,10 +81,8 @@ export const changeStatus = (id) =>{
     let data = [];
         salesCollection.update({
             status : false
-           
-           
-
     })
+
     salesCollection.get()
         .then((doc) => {
             
