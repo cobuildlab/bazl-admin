@@ -42,7 +42,7 @@ class App extends Component {
           {/*home, profile, sales*/}
           <Route path={'/new-product'} component={NewProductView} />
           {/* sales */}
-          <Route path={'/order-details'} component={SalesDetailView} />
+          <Route path={'/order-details/:id'} component={SalesDetailView} />
 
 
 
