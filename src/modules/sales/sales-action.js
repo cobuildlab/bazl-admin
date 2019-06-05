@@ -5,7 +5,10 @@ import {
     DETAIL_EVENT,
     DETAIL_ERROR,
     STAT_EVENT,
-    STAT_ERROR
+    STAT_ERROR,
+    RECEIPT_EVENT,
+    RECEIPT_ERROR
+    
 } from './sales-store';
 import Flux from 'flux-state';
 
@@ -44,6 +47,10 @@ export const fetchSales =  () => {
             console.log('Error getting documents', e);
             Flux.dispatchEvent(SALE_ERROR, new Error(e));
         });
+        // var storage = firebase.storage();
+        // var storageRef = storage.ref();
+        // var imagesRef = storageRef.child('receipts');
+
 }
 
 /**
@@ -97,6 +104,44 @@ export const changeStatus = (id) =>{
 
 
         })
+
+        
 };
 
 
+export const receiptUpdate = (id, image) => {
+
+    const DB = firebase.firestore();
+    const salesCollection = DB.collection('sales').doc(id);
+    const storageRef = firebase.storage().ref(`/receipts/${image.name}`);
+    const task = storageRef.put(image);
+    let data = [];
+
+    task.on('state_changed', snapshot =>{
+        console.log("Image Successfully Uploaded");
+
+    }, error => { 
+        console.log("error", error.message);
+        }, () => {
+            task.snapshot.ref.getDownloadURL().then((downloadURL) =>{     
+        
+                salesCollection.update({
+            receiptPic: downloadURL
+          
+        });
+    });
+}
+    )
+    
+    salesCollection.get()
+        .then((doc) => {
+            if (doc.exists) {
+                data = doc.data();
+                data.id = doc.id;
+                Flux.dispatchEvent(RECEIPT_EVENT, data);
+            } else {
+                console.log("No such Document");
+                Flux.dispatchEvent(RECEIPT_ERROR, data);
+            }
+        })
+    }

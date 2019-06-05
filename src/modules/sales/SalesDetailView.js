@@ -5,16 +5,18 @@ import View from 'react-flux-state';
 import SidebarComponent from "../../components/SidebarComponent";
 import ImgCardDama from "../../assets/img/ropa-dama.jpg";
 import ImgProfile from "../../assets/img/profile-table.jpg";
-import { salesStore, DETAIL_EVENT, STAT_EVENT } from "./sales-store";
-import {detailFetch, changeStatus} from './sales-action';
+import { salesStore, DETAIL_EVENT, STAT_EVENT, RECEIPT_EVENT } from "./sales-store";
+import {detailFetch, changeStatus, receiptUpdate} from './sales-action';
 
 class SalesDetailView extends View {
   constructor(props){
     super(props);
     this.state={
       sale : [],
-      key : ''
+      key : '',
+      uploadValue: 0
     }
+    
   }
   componentDidMount(){
 
@@ -35,13 +37,31 @@ class SalesDetailView extends View {
            key : key
           })
         })
+    this.subscribe(salesStore, RECEIPT_EVENT, (sale) => {
+      const detailSale = sale;
+      const key = sale.id;
+      this.setState({
+        sale: detailSale,
+        key: key
+      })
+    })
+
+       
+    console.log(this.props.match.params.id);
         detailFetch(this.props.match.params.id);
         
       }
 
-      closeSale(){
-        changeStatus(this.props.match.params.id);
+      onReceiptUpload = (e) =>{
+        const file = e.target.files[0]
+        console.log(this.props.match.params.id);
+        receiptUpdate(this.props.match.params.id, file);
+
       }
+
+       closeSale(){
+         changeStatus(this.props.match.params.id);
+       }
   render() {
     let statBtn;
     if (this.state.sale.status) {
@@ -49,6 +69,27 @@ class SalesDetailView extends View {
     } else {
       statBtn = <MDBBtn className="btn btn-circle-danger" onClick={() => this.closeSale()} disabled>Closed Sale</MDBBtn>
     };
+    let receiptLabel;
+    if (this.state.sale.receiptPic == null){
+      receiptLabel = <div>
+        <label
+          className="CustomlabelSales text-center"
+          htmlFor="upload-photo"
+        >
+          <MDBIcon icon="file-upload" /> Upload Image
+                </label>
+        <input  type="file" name="receipt" id="upload-photo" onChange={this.onReceiptUpload} />
+      </div> 
+    }else{
+      receiptLabel = <div>
+        <label
+          className="Customlabel text-center"
+          htmlFor="upload-photo"
+        >
+        <img width="200" src={this.state.sale.receiptPic} alt='' />
+                </label>
+      </div>
+    }
     return (
       <React.Fragment>
         <SidebarComponent>
@@ -130,13 +171,10 @@ class SalesDetailView extends View {
                 </div>
                 <small className="text-black-50">Status</small>
                 <hr />
-                <label
-                  className="CustomlabelSales text-center"
-                  htmlFor="upload-photo"
-                >
-                  <MDBIcon icon="file-upload" /> Upload Image
-                </label>
-                <input type="file" name="photo" id="upload-photo" />
+              </MDBCol>
+              <MDBCol md="4">
+
+                {receiptLabel}
                 <div className="d-flex justify-content-center mt-4">
                   <MDBBtn className="btn btn-circle">Send</MDBBtn>
                 </div>
