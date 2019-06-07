@@ -11,27 +11,47 @@ export class BankAccount extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      Id: this.props.account.Id,
+      id: this.props.account.id,
+      type: this.props.account.type,
       title: this.props.account.title,
       number: this.props.account.number,
+      routingNumber: this.props.account.routingNumber,
     }
   }
 
   onChange = ({ target: { name, value } }) => {
-    this.setState({
-      [name]: value
-    });
+    if (name === 'type') {
+      this.setState(prevState => ({
+        type: !prevState.type
+      }))
+    } else {
+      this.setState({
+        [name]: value
+      });
+    }
   };
 
   render() {
     let { account, onDelete, editAccount, flagEdit } = this.props;
-    let { title, number } = this.state;
-    
+    let { type, title, number, routingNumber } = this.state;
+    let style = {
+      position: 'relative'
+    }
     return (
       <div >
         <MDBRow className="d-flex justify-content-around align-items-center mb-3">
           <MDBInput
-            label="Bank Name"
+            label="Business Account"
+            className="mt-0"
+            type="checkbox"
+            name="type"
+            onChange={this.onChange}
+            disabled={flagEdit}
+            style={style}
+            checked={type}
+          />
+          <MDBInput
+            label="Holder's name"
             className="mt-0"
             type="text"
             name="title"
@@ -40,11 +60,20 @@ export class BankAccount extends Component {
             disabled={flagEdit}
           />
           <MDBInput
-            label="Bank Number"
+            label="Account number"
             className="mt-0"
             type="text"
             name="number"
             value={number}
+            onChange={this.onChange}
+            disabled={flagEdit}
+          />
+          <MDBInput
+            label="Routing number"
+            className="mt-0"
+            type="text"
+            name="routingNumber"
+            value={routingNumber}
             onChange={this.onChange}
             disabled={flagEdit}
           />

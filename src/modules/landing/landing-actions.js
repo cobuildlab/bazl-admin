@@ -19,9 +19,7 @@ import { UserModel } from './landing-models';
  * @returns {Promise<{user: UserModel} || void>}
  */
 export const onLogin = async ({ email, password }) => {
-
   const AUTH = firebase.auth();
-
   let data;
   try {
     data = await AUTH.signInWithEmailAndPassword(email, password);
@@ -53,9 +51,11 @@ export const onSignup = async ({ email, password }) => {
   try {
     data = await AUTH.createUserWithEmailAndPassword(email, password);    
     const { user: firebaseUser } = data;
+    console.log('data from action', data);
     let user = await createUser(firebaseUser);
-
-    return Flux.dispatchEvent(LOGIN_EVENT, { user });
+    user = await fetchUser(firebaseUser.email);
+    log('onLogin:fetchUser');
+    return Flux.dispatchEvent(LOGIN_EVENT, { user }); 
   } catch (err) {    
     return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
   }
@@ -98,9 +98,6 @@ export const onLogout = async () => {
   Flux.dispatchEvent(LOGOUT_EVENT, {});
 
 };
-
-
-
 
 /**
  * Creates a new user in the system
