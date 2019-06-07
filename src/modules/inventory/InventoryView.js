@@ -2,8 +2,26 @@ import React from "react";
 import { MDBContainer, MDBBtn, MDBIcon, MDBAnimation } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
 import TableInventory from "./components/TableInventory";
+import View from 'react-flux-state';
+import {INVENTORY_EVENT, INVENTORY_EVENT_ERROR, inventoryStore} from './inventory-store';
+import { fetchUserProducts} from './inventory-actions';
+class InventoryView extends View {
+  constructor(props){
+    super(props);
+    this.state ={
+      products : []
+    }
+  }
+  componentDidMount() {
+    this.subscribe(inventoryStore, INVENTORY_EVENT, (product) => {
+      const products = product;
 
-class InventoryView extends React.Component {
+      this.setState({
+        products: product
+      });
+    });
+    fetchUserProducts();
+  }
   render() {
     return (
       <React.Fragment>
@@ -26,7 +44,7 @@ class InventoryView extends React.Component {
           </div>
           <MDBAnimation type='fadeIn' >
             <MDBContainer className="body" fluid>
-              <TableInventory />
+              <TableInventory products ={this.state.products} />
             </MDBContainer>
           </MDBAnimation>
         </SidebarComponent>
