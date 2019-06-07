@@ -72,13 +72,13 @@ export const addAccountAction = async (accountData) => {
   log('updateProfileAction:user', user);
   const profileRef = profilesCollection.doc(user.email);
   
-  profileRef.update({
-    "bankAccounts": accountData
-  }).then(function () {
-    console.log("Document successfully updated!");
-  });
+  // profileRef.set({
+  //   bankAccounts: { accountData }
+  // }).then(function () {
+  //   console.log("Document successfully updated!");
+  // });
 
-  // await profileRef.set(accountData, { merge: true })
+  await profileRef.set(accountData, { merge: true })
   Flux.dispatchEvent(UPDATE_USER_EVENT, accountData);
   return accountData;
 }

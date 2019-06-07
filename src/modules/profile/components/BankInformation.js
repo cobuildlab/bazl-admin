@@ -47,13 +47,26 @@ class BasicInformation extends React.Component {
     let style = {
       position: 'relative'
     }
+    let arrayVacio = false;
+    console.log("bankAccounts",bankAccounts);
+    console.log("bankAccounts tamaño",bankAccounts.length);
+    if (bankAccounts.length > 0) {
+      console.log("bankAccounts tamaño",bankAccounts.length);
+      arrayVacio = true
+    }
+    
     return (
       <React.Fragment>
         <div className="mt-3 mb-5">
           <h5>Bank Accounts</h5>
-          {bankAccounts.map((account, i) => (
-            <BankAccount key={i} account={account} editAccount={editAccount} flagEdit={flagInformation} onDelete={onDelete}></BankAccount>
-          ))}
+          {
+            arrayVacio ? (
+              bankAccounts.map((account, i) => (
+                <BankAccount key={i} account={account} editAccount={editAccount} flagEdit={flagInformation} onDelete={onDelete}></BankAccount>
+              ))
+            ) : 
+            <div></div>           
+          }
           <div className="d-flex justify-content-center align-items-center">
             <MDBBtn disabled={flagInformation} onClick={() => this.changeFlag()} className="btn btn-circle">Add Accounts</MDBBtn>
           </div>
