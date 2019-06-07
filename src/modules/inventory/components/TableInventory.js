@@ -7,72 +7,72 @@ import {
   MDBTableHead,
   MDBBtn
 } from "mdbreact";
+import { Link } from "react-router-dom";
 import ImgProduct from '../../../assets/img/ropa-dama.jpg';
+import { inventoryStore } from "../inventory-store";
 
 class TableInventory extends React.Component {
+  
   render() {
-    return (
-      <MDBRow>
-        <MDBCol md="12" className="p-0">
-          <MDBTable borderless responsive>
-            <MDBTableHead>
-              <tr>
-                <th>Product Name</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Comissions</th>
-                <th>Additional Fee</th>
-                <th># of posts</th>
-                <th> </th>
-              </tr>
-            </MDBTableHead>
-            <MDBTableBody>
+    const inventory = this.props.products;
+
+    const table = inventory.map(product =>{
+      
+       return (
+            <MDBTableBody key = {product.productID}>
               <tr>
                 <td>
                   <div
                     className="img-profile-table"
-                    style={{ backgroundImage: `url(${ImgProduct})` }}
+                    style={{ backgroundImage: `url(${product.picture})` }}
                   />
-                  <span className="username-table">@username</span>
+                  <span className="username-table">{product.name}</span>
                 </td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-                <td>15</td>
-                <td>$30</td>
-                <td>3%</td>
-                <td>1%</td>
+                <td>{product.description}</td>
+                <td>{product.quantity}</td>
+                <td>{product.price}</td>
+                <td>{product.commision}</td>
+                <td>{product.additionalFee}</td>
                 <td>5</td>
                 <td>
-                  <MDBBtn color="default" className="btn btn-circle m-0">
-                    Details
-                  </MDBBtn>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div
-                    className="img-profile-table"
-                    style={{ backgroundImage: `url(${ImgProduct})` }}
-                  />
-                  <span className="username-table">@username</span>
-                </td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
-                <td>15</td>
-                <td>$30</td>
-                <td>3%</td>
-                <td>1%</td>
-                <td>5</td>
-                <td>
-                  <MDBBtn color="default" className="btn btn-circle m-0">
-                    Details
-                  </MDBBtn>
+               <Link
+                 to={`/inventory-details/${product.productID}`}
+                 className="btn btn-circle btn-circle-link"
+               >
+                 Order Details
+                  </Link>
                 </td>
               </tr>
             </MDBTableBody>
+         
+    );
+       });
+
+    return (
+    <MDBRow>
+      <MDBCol md="12" className="p-0">
+        <MDBTable borderless responsive>
+          <MDBTableHead>
+            <tr>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Comissions</th>
+              <th>Additional Fee</th>
+              <th># of posts</th>
+              <th> </th>
+            </tr>
+          </MDBTableHead>
+          {table}
           </MDBTable>
         </MDBCol>
-      </MDBRow>
-    );
+      </MDBRow>);
+
+
+    
+
+   
   }
 }
 export default TableInventory;

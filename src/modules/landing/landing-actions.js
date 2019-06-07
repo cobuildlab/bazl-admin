@@ -35,6 +35,7 @@ export const onLogin = async ({ email, password }) => {
   console.log('data from action', data);
   let user = await fetchUser(firebaseUser.email);
   log('onLogin:fetchUser');
+  console.log(user);
 
   Flux.dispatchEvent(LOGIN_EVENT, { user });
 };

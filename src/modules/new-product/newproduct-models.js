@@ -1,17 +1,15 @@
-import { number } from "prop-types";
 
-export const productModel = {
-  picture: '',
+export const ProductModel = {
+  picture: null,
   name: '',
   category: '',
   description: '',
   size: '',
-  quantity: number,
+  quantity: '',
   color: '',
-  newColor: '',
   price: '',
   commission: '',
   additionalFee: '',
   shippingFee: '',
-  userId: '',
+  totalPrice : ''
 }
