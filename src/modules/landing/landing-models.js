@@ -1,5 +1,5 @@
 export const UserModel = {
-  Id: null,
+  id: null,
   name: '',
   email: '',
   description: '',

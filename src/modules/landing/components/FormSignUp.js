@@ -50,6 +50,7 @@ class FormSignUp extends View {
 
   render() {
     const { email, password, loading} = this.state;
+    console.log("Form Sign Up en uso")
     return (
       <MDBContainer>
         <MDBRow>

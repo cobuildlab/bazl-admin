@@ -10,6 +10,7 @@ import SidebarComponent from "../../../components/SidebarComponent";
 import SliderCards from "../../../components/SliderCards";
 import BasicInformation from './BasicInformation';
 import BankInformation from './BankInformation'
+import { addAccountAction } from '../profile-actions';
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -20,11 +21,14 @@ class EditProfile extends React.Component {
   }
 
   newAccount = (account) => {
-    const { title, number } = account
+    const { type, title, number, routingNumber } = account
     const newAccount = {
+      'type': type,
       'title': title,
-      'number': number
+      'number': number,
+      'routingNumber': routingNumber
     }
+    addAccountAction(newAccount); 
     const data = this.state.user.bankAccounts;
     this.setState({
       data: data.push(newAccount)
@@ -35,7 +39,7 @@ class EditProfile extends React.Component {
     let { bankAccounts } = this.state.user;
     // eslint-disable-next-line
     bankAccounts.map(function (bankAccount, i) {
-      if (bank.Id === bankAccount.Id) {
+      if (bank.id === bankAccount.id) {
         bankAccounts[i] = bank;
       }
     });
@@ -66,11 +70,17 @@ class EditProfile extends React.Component {
           </MDBRow>
 
           <MDBRow>
-            <MDBCol md="2"></MDBCol>
-            <MDBCol md="8">
-              <BankInformation editAccount={this.editAccount} newAccount={this.newAccount} bankAccounts={bankAccounts} flagInformation={false} onDelete={onDelete} />
+            <MDBCol md="1"></MDBCol>
+            <MDBCol md="10">
+              <BankInformation
+                editAccount={this.editAccount}
+                newAccount={this.newAccount}
+                bankAccounts={bankAccounts}
+                flagInformation={false}
+                onDelete={onDelete}
+              />
             </MDBCol>
-            <MDBCol md="2"></MDBCol>
+            <MDBCol md="1"></MDBCol>
           </MDBRow>
 
           <MDBRow>

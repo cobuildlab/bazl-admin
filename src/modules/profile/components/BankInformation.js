@@ -10,29 +10,43 @@ class BasicInformation extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      type: false,
       title: '',
       number: '',
+      routingNumber: '',
       flagInformation: this.props.flagInformation,
       flagAccounts: false
     }
   }
 
   onChangeBank = ({ target: { name, value } }) => {
-    const data = this.state;
-    data[name] = value;
-    this.setState({ data });
+    if (name === 'type') {
+      this.setState(prevState => ({
+        type: !prevState.type
+      }))
+    } else {
+      this.setState({
+        [name]: value
+      });
+    }
   };
 
   changeFlag = () => {
     this.setState(prevState => ({
-      flagAccounts: !prevState.flagAccounts
+      flagAccounts: !prevState.flagAccounts,
+      type: false,
+      title: '',
+      number: '',
+      routingNumber: '',
     }));
   }
 
   render() {
     const { bankAccounts, onDelete, newAccount, editAccount } = this.props;
-    let { title, number, flagAccounts, flagInformation } = this.state;
-    
+    let { type, title, number, routingNumber, flagAccounts, flagInformation } = this.state;
+    let style = {
+      position: 'relative'
+    }
     return (
       <React.Fragment>
         <div className="mt-3 mb-5">
@@ -47,9 +61,19 @@ class BasicInformation extends React.Component {
             flagAccounts ? (
               <div>
                 <h5>New Accounts</h5>
-                <MDBRow className="d-flex justify-content-around align-items-center mb-3">
+                <MDBRow className="d-flex justify-content-around align-items-center mb-3" >
                   <MDBInput
-                    label="Bank Name"
+                    label="Business Account"
+                    className="mt-0"
+                    type="checkbox"
+                    name="type"
+                    onChange={this.onChangeBank}
+                    disabled={flagInformation}
+                    style={style}
+                    checked={type}
+                  />
+                  <MDBInput
+                    label="Holder's name"
                     className="mt-0"
                     type="text"
                     name="title"
@@ -58,7 +82,7 @@ class BasicInformation extends React.Component {
                     disabled={flagInformation}
                   />
                   <MDBInput
-                    label="Bank Number"
+                    label="Account number"
                     className="mt-0"
                     type="text"
                     name="number"
@@ -66,7 +90,16 @@ class BasicInformation extends React.Component {
                     onChange={this.onChangeBank}
                     disabled={flagInformation}
                   />
-                  <MDBBtn onClick={() => { newAccount(this.state);this.changeFlag()}} className="btn btn-circle">Add</MDBBtn>
+                  <MDBInput
+                    label="Routing number"
+                    className="mt-0"
+                    type="text"
+                    name="routingNumber"
+                    value={routingNumber}
+                    onChange={this.onChangeBank}
+                    disabled={flagInformation}
+                  />
+                  <MDBBtn onClick={() => { newAccount(this.state); this.changeFlag() }} className="btn btn-circle">Add</MDBBtn>
                 </MDBRow>
               </div>
 
