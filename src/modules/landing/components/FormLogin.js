@@ -11,6 +11,7 @@ import { error } from "pure-logger";
 import { toast } from "react-toastify";
 import { ClipLoader } from 'react-spinners';
 
+
 class FormLogin extends View {
   constructor(props) {
     super(props);
@@ -37,7 +38,10 @@ class FormLogin extends View {
     const { email, password } = this.state;
     e.preventDefault();
     if (!this.state.forgot) {
-      requestPasswordReset(email)
+      requestPasswordReset(email);
+      this.setState({
+        forgot : true
+      })
 
     } else {
       // this.setState({ loading: true }, () => {
@@ -68,6 +72,8 @@ class FormLogin extends View {
         <MDBRow>
           <MDBCol md="12" className="p-0">
             {forgot ? (
+              <div>
+
               <form className="p-3">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
@@ -84,6 +90,7 @@ class FormLogin extends View {
                     placeholder="Email"
                     aria-label="Email"
                     aria-describedby="basic-addon1"
+                    
                   />
                 </div>
                 <div className="input-group mb-3">
@@ -101,11 +108,25 @@ class FormLogin extends View {
                     placeholder="Password"
                     aria-label="Password"
                     aria-describedby="basic-addon1"
-                  />
+                    />
                 </div>
                 <p onClick={this.onFlagForgot} className="btnLink btn btn-link">Don't remember your password?</p>
               </form>
+              <div className="text-center">
+                {loading ? (
+                  <ClipLoader
+                  sizeUnit={'px'}
+                  size={120}
+                  color={'#44c1f6'}
+                    loading={true} />
+                    ) : (
+                      <MDBBtn type={"submit"} className="btn-auth" onClick={this.onSubmit}>Log in<Icon size={24} icon={ic_keyboard_arrow_right} /></MDBBtn>
+                      )}
+              </div>
+                      </div>
             ) : (
+              <div>
+
                 <form className="p-3">
                   <p className="text-center">
                     Enter your email address and we'll send you a Password reset link.
@@ -128,19 +149,10 @@ class FormLogin extends View {
                     />
                   </div>
                   <p onClick={this.onFlagForgot} className="btnLink btn btn-link">Already have an account? Log in.</p>
+                  <MDBBtn type={"submit"} className="btn-auth" onClick={this.onSubmit}>Send Email<Icon size={24} icon={ic_keyboard_arrow_right} /></MDBBtn>
                 </form>
-              )}
-            <div className="text-center">
-              {loading ? (
-                <ClipLoader
-                  sizeUnit={'px'}
-                  size={120}
-                  color={'#44c1f6'}
-                  loading={true} />
-              ) : (
-                  <MDBBtn type={"submit"} className="btn-auth" onClick={this.onSubmit}>Sign Up<Icon size={24} icon={ic_keyboard_arrow_right} /></MDBBtn>
-                )}
-            </div>
+                  </div>
+                  )}
           </MDBCol>
         </MDBRow>
       </MDBContainer>

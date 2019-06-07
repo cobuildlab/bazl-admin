@@ -34,10 +34,8 @@ const ContentSidebar = ({ routes }) => {
             </MDBListGroupItem>
           </Link>
         ))}
-      </MDBListGroup>
-      <Link to="/" className="link-logout">
+      <Link to="/" className="link-logout text-left">
         Go Out
-      </Link>
       <Button
         active={false}
         className="link-logout text-left"
@@ -46,6 +44,9 @@ const ContentSidebar = ({ routes }) => {
         >
         Go out
       </Button>
+      </Link>
+
+        </MDBListGroup>
     </MDBContainer>
   );
 };
