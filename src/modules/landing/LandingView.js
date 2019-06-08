@@ -28,6 +28,7 @@ class LandingView extends React.Component {
       collapsed: !this.state.collapsed
     });
   };
+  
   render() {
     return (
       <div
@@ -56,7 +57,7 @@ class LandingView extends React.Component {
                 <MDBNavItem active>
                   <ModalComponent linkName="Login" history={this.props.history} />
                 </MDBNavItem>
-                <MDBNavItem>
+                <MDBNavItem active>
                   <ModalComponent linkName="Sign Up" history={this.props.history} />
                 </MDBNavItem>
               </MDBNavbarNav>

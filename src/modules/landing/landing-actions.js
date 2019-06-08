@@ -24,13 +24,9 @@ export const onLogin = async ({ email, password }) => {
   try {
     data = await AUTH.signInWithEmailAndPassword(email, password);
   } catch (err) {
-    console.log('LOGIN_EVENT');
-    console.log(err);
-    // error('onLogin', e)
     return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
   }
   const { user: firebaseUser } = data;
-  console.log('data from action', data);
   let user = await fetchUser(firebaseUser.email);
   log('onLogin:fetchUser');
   console.log(user);
@@ -51,12 +47,12 @@ export const onSignup = async ({ email, password }) => {
   try {
     data = await AUTH.createUserWithEmailAndPassword(email, password);    
     const { user: firebaseUser } = data;
-    console.log('data from action', data);
     let user = await createUser(firebaseUser);
     user = await fetchUser(firebaseUser.email);
-    log('onLogin:fetchUser');
+    
     return Flux.dispatchEvent(LOGIN_EVENT, { user }); 
   } catch (err) {    
+    log("Error en onSignUp",err)
     return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
   }
 

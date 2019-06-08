@@ -13,21 +13,22 @@ import { ClipLoader } from 'react-spinners';
 
 class FormSignUp extends View {
   constructor(props) {
-    super(props) 
+    super(props)
     this.state = {
-        email: '',
-        password: '',
-        loading: false
+      email: '',
+      password: '',
+      loading: false
     }
     this.onError = error.bind(this);
   }
 
   componentDidMount() {
-    this.subscribe( landingStore, SIGNUP_EVENT, () => {
+    this.subscribe(landingStore, SIGNUP_EVENT, () => {
       this.props.history.push('/home')
     })
-    this.subscribe( landingStore, LOGIN_ERROR_EVENT, (err) => {
+    this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
+      this.setState({ loading: false });
     });
     this.subscribe(landingStore, REQUEST_PASSWORD_RESET, () =>{
       this.props.history.push('/');
@@ -35,27 +36,24 @@ class FormSignUp extends View {
     this.subscribe(landingStore, USER_ERROR_EVENT , (e) =>{
       toast.error(e.message);
     } )
-
   }
 
   onSubmit = (e) => {
-    const { email, password} = this.state
+    const { email, password } = this.state
     e.preventDefault();
-    this.setState({loading: true},() => {
-      onSignup({email, password})
+    this.setState({ loading: true }, () => {
+      onSignup({ email, password })
     });
   }
 
-  onChange = ({ target: { name, value }}) => {
+  onChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value
     })
   }
 
-
-
   render() {
-    const { email, password, loading} = this.state;
+    const { email, password, loading } = this.state;
     console.log("Form Sign Up en uso")
     return (
       <MDBContainer>
@@ -102,22 +100,20 @@ class FormSignUp extends View {
               </p>
             </form>
             <div className="text-center">
-
-            {loading ? (
-              <ClipLoader 
-              sizeUnit={'px'} 
-              size={120} 
-              color={'#44c1f6'} 
-              loading={true} />
-            ) : (
-              <MDBBtn 
-                type={'submit'} 
-                className="btn-auth" 
-                onClick={this.onSubmit}>
-                Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
-              </MDBBtn>
-
-            )}
+              {loading ? (
+                <ClipLoader
+                  sizeUnit={'px'}
+                  size={120}
+                  color={'#44c1f6'}
+                  loading={true} />
+              ) : (
+                  <MDBBtn
+                    type={'submit'}
+                    className="btn-auth"
+                    onClick={this.onSubmit}>
+                    Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
+                  </MDBBtn>
+                )}
             </div>
           </MDBCol>
         </MDBRow>
