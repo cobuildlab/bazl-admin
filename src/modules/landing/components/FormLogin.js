@@ -21,7 +21,6 @@ class FormLogin extends View {
       forgot: true
     };
     this.onError = error.bind(this);
-
   }
 
   componentDidMount() {
@@ -30,6 +29,7 @@ class FormLogin extends View {
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, err => {
       toast.error(err.message);
+      this.setState({ loading: false });
     });
   }
 
@@ -40,12 +40,10 @@ class FormLogin extends View {
       requestPasswordReset(email)
 
     } else {
-      // this.setState({ loading: true }, () => {
-      //   onLogin({ email, password });
-      // });
-      onLogin({ email, password });
+      this.setState({ loading: true }, () => {
+        onLogin({ email, password });
+      });      
     }
-    console.log(email);
   };
 
   onChange = ({ target: { name, value } }) => {
@@ -138,7 +136,7 @@ class FormLogin extends View {
                   color={'#44c1f6'}
                   loading={true} />
               ) : (
-                  <MDBBtn type={"submit"} className="btn-auth" onClick={this.onSubmit}>Sign Up<Icon size={24} icon={ic_keyboard_arrow_right} /></MDBBtn>
+                  <MDBBtn type={"submit"} className="btn-auth" onClick={this.onSubmit}>Log In<Icon size={24} icon={ic_keyboard_arrow_right} /></MDBBtn>
                 )}
             </div>
           </MDBCol>
