@@ -42,7 +42,7 @@ class FormLogin extends View {
     } else {
       this.setState({ loading: true }, () => {
         onLogin({ email, password });
-      });      
+      });
     }
   };
 
@@ -60,7 +60,6 @@ class FormLogin extends View {
 
   render() {
     let { email, password, loading, forgot } = this.state;
-    console.log("Form Login en uso")
     return (
       <MDBContainer>
         <MDBRow>

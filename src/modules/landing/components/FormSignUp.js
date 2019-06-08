@@ -10,6 +10,7 @@ import { onSignup } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
+import ModalTerms from './ModalTerms';
 
 class FormSignUp extends View {
   constructor(props) {
@@ -48,7 +49,6 @@ class FormSignUp extends View {
 
   render() {
     const { email, password, loading } = this.state;
-    console.log("Form Sign Up en uso")
     return (
       <MDBContainer>
         <MDBRow>
@@ -88,10 +88,9 @@ class FormSignUp extends View {
                   onChange={this.onChange}
                 />
               </div>
-              <p className="text-center">
-                by signing up, you agree to our terms of services and privacy
-                policy.
-              </p>
+              <ModalTerms
+                linkName="by signing up, you agree to our terms of services and privacy policy."
+              />
             </form>
             <div className="text-center">
               {loading ? (
