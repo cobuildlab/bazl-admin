@@ -5,7 +5,7 @@ import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from 'react-flux-state';
-import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT} from "../landing-store";
+import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT } from "../landing-store";
 import { onSignup } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
@@ -13,43 +13,41 @@ import { ClipLoader } from 'react-spinners';
 
 class FormSignUp extends View {
   constructor(props) {
-    super(props) 
+    super(props)
     this.state = {
-        email: '',
-        password: '',
-        loading: false
+      email: '',
+      password: '',
+      loading: false
     }
     this.onError = error.bind(this);
   }
 
   componentDidMount() {
-    this.subscribe( landingStore, SIGNUP_EVENT, () => {
+    this.subscribe(landingStore, SIGNUP_EVENT, () => {
       this.props.history.push('/home')
     })
-    this.subscribe( landingStore, LOGIN_ERROR_EVENT, (err) => {
+    this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
+      this.setState({ loading: false });
     });
-
   }
 
   onSubmit = (e) => {
-    const { email, password} = this.state
+    const { email, password } = this.state
     e.preventDefault();
-    this.setState({loading: true},() => {
-      onSignup({email, password})
+    this.setState({ loading: true }, () => {
+      onSignup({ email, password })
     });
   }
 
-  onChange = ({ target: { name, value }}) => {
+  onChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value
     })
   }
 
-
-
   render() {
-    const { email, password, loading} = this.state;
+    const { email, password, loading } = this.state;
     console.log("Form Sign Up en uso")
     return (
       <MDBContainer>
@@ -96,22 +94,20 @@ class FormSignUp extends View {
               </p>
             </form>
             <div className="text-center">
-
-            {loading ? (
-              <ClipLoader 
-              sizeUnit={'px'} 
-              size={120} 
-              color={'#44c1f6'} 
-              loading={true} />
-            ) : (
-              <MDBBtn 
-                type={'submit'} 
-                className="btn-auth" 
-                onClick={this.onSubmit}>
-                Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
-              </MDBBtn>
-
-            )}
+              {loading ? (
+                <ClipLoader
+                  sizeUnit={'px'}
+                  size={120}
+                  color={'#44c1f6'}
+                  loading={true} />
+              ) : (
+                  <MDBBtn
+                    type={'submit'}
+                    className="btn-auth"
+                    onClick={this.onSubmit}>
+                    Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
+                  </MDBBtn>
+                )}
             </div>
           </MDBCol>
         </MDBRow>
