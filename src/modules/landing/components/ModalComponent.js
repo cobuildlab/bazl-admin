@@ -86,10 +86,4 @@ class ModalComponent extends View {
   };
 }
 
-
-// ModalComponent.propTypes = {
-//   linkName: PropTypes.string.isRequired,
-//   history: PropTypes.string
-// };
-
 export default ModalComponent;

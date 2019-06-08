@@ -1,12 +1,13 @@
 import React from "react";
-import { MDBIcon, MDBContainer } from "mdbreact";
+import { MDBIcon, MDBContainer, MDBAnimation } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
-
 import { Link } from "react-router-dom";
-import TableSales from "../../components/TableSales";
+import TableSales from "./TableSalesView";
 
 class SalesView extends React.Component {
   render() {
+    
+
     return (
       <React.Fragment>
         <SidebarComponent>
@@ -23,9 +24,11 @@ class SalesView extends React.Component {
               </Link>
             </div>
           </div>
-          <MDBContainer fluid className="body">
-            <TableSales />
-          </MDBContainer>
+          <MDBAnimation type='fadeIn' >
+            <MDBContainer fluid className="body">
+              <TableSales />
+            </MDBContainer>
+          </MDBAnimation>
         </SidebarComponent>
       </React.Fragment>
     );

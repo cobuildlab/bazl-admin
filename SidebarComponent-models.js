@@ -1,4 +1,4 @@
-export const RoutesModel = {
+export const routesModel = {
   path: '',
   name: '',
   image: '',

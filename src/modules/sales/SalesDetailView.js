@@ -1,14 +1,54 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MDBIcon, MDBContainer, MDBCol, MDBRow, MDBBtn } from "mdbreact";
-
+import View from 'react-flux-state';
 import SidebarComponent from "../../components/SidebarComponent";
-
 import ImgCardDama from "../../assets/img/ropa-dama.jpg";
 import ImgProfile from "../../assets/img/profile-table.jpg";
+import { salesStore, DETAIL_EVENT, STAT_EVENT } from "./sales-store";
+import {detailFetch, changeStatus} from './sales-action';
 
-class SalesDetailScreen extends React.Component {
+class SalesDetailView extends View {
+  constructor(props){
+    super(props);
+    this.state={
+      sale : [],
+      key : ''
+    }
+  }
+  componentDidMount(){
+
+   
+       this.subscribe(salesStore, DETAIL_EVENT, (sale)=>{
+         const detailSale = sale;
+         const key = sale.id;
+         this.setState({
+           sale : detailSale,
+           key : key
+         })
+       })
+       this.subscribe(salesStore, STAT_EVENT, (sale)=>{
+         const detailSale = sale;
+         const key = sale.id;
+         this.setState({
+           sale: detailSale,
+           key : key
+          })
+        })
+        detailFetch(this.props.match.params.id);
+        
+      }
+
+      closeSale(){
+        changeStatus(this.props.match.params.id);
+      }
   render() {
+    let statBtn;
+    if (this.state.sale.status) {
+      statBtn = <MDBBtn className="btn btn-circle-success" onClick={() => this.closeSale()}>Active Sale</MDBBtn>
+    } else {
+      statBtn = <MDBBtn className="btn btn-circle-danger" onClick={() => this.closeSale()} disabled>Closed Sale</MDBBtn>
+    };
     return (
       <React.Fragment>
         <SidebarComponent>
@@ -27,7 +67,7 @@ class SalesDetailScreen extends React.Component {
           </div>
           <MDBContainer className="body">
             <div className="d-flex justify-content-end mb-4">
-              <MDBBtn className="btn btn-circle-danger">Closed Sale</MDBBtn>
+              {statBtn}
             </div>
             <MDBRow>
               <MDBCol md="2">
@@ -57,12 +97,12 @@ class SalesDetailScreen extends React.Component {
                   <div>
                     <h6>
                       <span className="d-inline font-weight-bold ml-4">
-                        @Username
+                        {this.state.sale.buyerID}
                       </span>
                     </h6>
                     <h6>
                       <span className="d-inline font-weight-bold ml-4">
-                        0187654321
+                        {this.state.sale.nOrder}
                       </span>
                     </h6>
                     <h6>
@@ -75,16 +115,16 @@ class SalesDetailScreen extends React.Component {
                     </h6>
                     <h6>
                       <span className="d-inline font-weight-bold ml-4">
-                        $100
+                        {this.state.sale.price}
                       </span>
                     </h6>
                     <h6>
                       <span className="d-inline font-weight-bold ml-4">
-                        Black
+                        {this.state.sale.color}
                       </span>
                     </h6>
                     <h6>
-                      <span className="d-inline font-weight-bold ml-4">XS</span>
+                      <span className="d-inline font-weight-bold ml-4">{this.state.sale.size}</span>
                     </h6>
                   </div>
                 </div>
@@ -115,4 +155,4 @@ class SalesDetailScreen extends React.Component {
   }
 }
 
-export default SalesDetailScreen;
+export default SalesDetailView;

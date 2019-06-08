@@ -1,10 +1,20 @@
 import React from "react";
 import { MDBListGroup, MDBListGroupItem, MDBContainer } from "mdbreact";
+import { Button } from 'reactstrap';
 import { Link } from "react-router-dom";
+import { onLogout } from '../modules/landing/landing-actions'
 
 import Logo from "../assets/img/Bazl-logo-w.png";
+import { landingStore, LOGOUT_EVENT } from "../modules/landing/landing-store";
 
 const ContentSidebar = ({ routes }) => {
+
+  React.useEffect((e) => {
+    landingStore.subscribe(LOGOUT_EVENT, (e) => {
+
+    });
+  }, []);
+
   function isCurrentRoute(pathname) {
     return pathname === window.location.pathname;
   }
@@ -28,6 +38,14 @@ const ContentSidebar = ({ routes }) => {
       <Link to="/" className="link-logout">
         Go Out
       </Link>
+      <Button
+        active={false}
+        className="link-logout text-left"
+        onClick={onLogout}
+        color='link'
+        >
+        Go out
+      </Button>
     </MDBContainer>
   );
 };

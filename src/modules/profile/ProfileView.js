@@ -10,6 +10,7 @@ import {
   updateProfileAction 
 } from './profile-actions';
 
+
 class ProfileView extends View {
   constructor(props) {
     super(props);
