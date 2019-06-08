@@ -29,6 +29,7 @@ export const onLogin = async ({ email, password }) => {
   const { user: firebaseUser } = data;
   let user = await fetchUser(firebaseUser.email);
   log('onLogin:fetchUser');
+  console.log(user);
 
   Flux.dispatchEvent(LOGIN_EVENT, { user });
 };
@@ -91,6 +92,7 @@ export const onLogout = async () => {
   const AUTH = firebase.auth();
   await AUTH.signOut();
   Flux.dispatchEvent(LOGOUT_EVENT, {});
+
 };
 
 /**

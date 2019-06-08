@@ -6,6 +6,7 @@ import ProfileView from "./modules/profile/ProfileView";
 import SalesView from "./modules/sales/SalesView";
 import NotificationsView from "./modules/notifications/NotificationsView";
 import InventoryView from "./modules/inventory/InventoryView";
+import InventoryDetailView from './modules/inventory/InventoryDetailView';
 import { ToastContainer } from "react-toastify";
 import NewProductView from "./modules/new-product/NewProductView";
 import SalesDetailView from "./modules/sales/SalesDetailView";
@@ -14,7 +15,6 @@ import SalesDetailView from "./modules/sales/SalesDetailView";
  * @typedef {[ component: any, pathname: string ]} publicRoutes
  * Defines all public routes
  */
-
 
 class App extends Component {
   render() {
@@ -42,7 +42,8 @@ class App extends Component {
           {/*home, profile, sales*/}
           <Route path={'/new-product'} component={NewProductView} />
           {/* sales */}
-          <Route path={'/order-details'} component={SalesDetailView} />
+          <Route path={'/order-details/:id'} component={SalesDetailView} />
+          <Route path={'/inventory-details/:id'} component={InventoryDetailView} />
 
 
 
