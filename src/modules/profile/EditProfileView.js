@@ -1,25 +1,32 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { MDBCol, MDBContainer, MDBIcon, MDBRow } from 'mdbreact';
-import SidebarComponent from '../../../components/SidebarComponent';
-import SliderCards from '../../../components/SliderCards';
-import BasicInformation from './BasicInformation';
-import BankInformation from './BankInformation';
-import { addAccountAction } from '../profile-actions';
-import { Loader } from '../../../components/Loader';
+import { MDBCol, MDBContainer, MDBRow } from 'mdbreact';
+import SidebarComponent from '../../components/SidebarComponent';
+import SliderCards from '../../components/SliderCards';
+import { EditBasicInformation } from './components/EditBasicInformation';
+import {
+  addAccountAction,
+  fetchProfileAction,
+  updateProfileAction,
+} from './profile-actions';
+import { Loader } from '../../components/Loader';
 import View from 'react-flux-state';
 import {
   ACCOUNT_ERROR_EVENT,
   NEW_ACCOUNT_EVENT,
   profileStore,
-} from '../profile-store';
-import { toast } from 'react-toastify';
+} from './profile-store';
+import { toast } from 'react-toastify/index';
+import * as R from 'ramda';
+import { landingStore, USER_EVENT } from '../landing/landing-store';
+import EditBankInformation from './components/EditBankInformation';
+import { userModel } from './Profile-models';
 
-class EditProfile extends View {
+class EditProfileView extends View {
   constructor(props) {
     super(props);
+    const user = landingStore.getState(USER_EVENT);
     this.state = {
-      user: this.props.user,
+      user: { ...R.clone(userModel), ...user },
       loadingBankAccounts: false,
     };
   }
@@ -38,12 +45,68 @@ class EditProfile extends View {
         user,
       });
     });
+
+    this.subscribe(landingStore, USER_EVENT, (state) => {
+      const { data } = this.state;
+      const { user } = data;
+      data.user = R.mergeRight(user, state);
+      this.setState({ loading: false }, () => {
+        this.props.history.push('/profile');
+      });
+    });
+    this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
+      toast.error(e.message);
+      this.setState({ loadingBankAccounts: false });
+    });
+
+    this.subscribe(profileStore, NEW_ACCOUNT_EVENT, (bankAccount) => {
+      const { user } = this.state;
+      user.bankAccounts.push(bankAccount);
+      this.setState({
+        loading: false,
+        user,
+      });
+    });
+    fetchProfileAction();
   }
 
   newAccount = (account) => {
     this.setState({ loadingBankAccounts: true }, () => {
       addAccountAction({ ...account });
     });
+  };
+
+  editAccount = (bank) => {
+    let { bankAccounts } = this.state.user;
+    // eslint-disable-next-line
+    bankAccounts.map(function(bankAccount, i) {
+      if (bank.id === bankAccount.id) {
+        bankAccounts[i] = bank;
+      }
+    });
+    this.setState({});
+  };
+
+  onDeleteBankAccount = (bank) => {
+    const { bankAccounts } = R.clone(this.state.user);
+    const result = bankAccounts.filter((index) => index.Id !== bank.Id);
+    this.setState((state) => ({
+      ...state,
+      user: { ...state.user, bankAccounts: result },
+    }));
+    this.flagEdit();
+  };
+
+  onUpdateUser = (updateUser) => {
+    var user = R.clone(this.state.user);
+    user.name = updateUser.name;
+    user.description = updateUser.description;
+    user.picture = updateUser.picture;
+    this.setState({
+      editProfile: false,
+      user,
+    });
+    updateProfileAction(user);
   };
 
   editAccount = (bank) => {
@@ -72,16 +135,10 @@ class EditProfile extends View {
           <div>
             <h2 className="m-0">Edit Profile</h2>
           </div>
-          <div>
-            <Link onClick={flagEdit} className="btn btn-circle btn-circle-link">
-              Profile
-              <MDBIcon icon="upload" className="ml-1" />
-            </Link>
-          </div>
         </div>
         <MDBContainer>
           <MDBRow>
-            <BasicInformation
+            <EditBasicInformation
               name={name}
               description={description}
               picture={picture}
@@ -90,14 +147,13 @@ class EditProfile extends View {
               onSave={onSave}
             />
           </MDBRow>
-
           <MDBRow>
             <MDBCol md="1" />
             <MDBCol md="10">
               {loadingBankAccounts ? (
                 <Loader />
               ) : (
-                <BankInformation
+                <EditBankInformation
                   editAccount={this.editAccount}
                   newAccount={this.newAccount}
                   bankAccounts={bankAccounts}
@@ -108,7 +164,6 @@ class EditProfile extends View {
             </MDBCol>
             <MDBCol md="1" />
           </MDBRow>
-
           <MDBRow>
             <MDBCol md="2" />
             <MDBCol md="8">
@@ -124,4 +179,4 @@ class EditProfile extends View {
   }
 }
 
-export default EditProfile;
+export default EditProfileView;
