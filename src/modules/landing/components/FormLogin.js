@@ -24,15 +24,16 @@ class FormLogin extends View {
   }
 
   componentDidMount() {
-    this.subscribe(landingStore, LOGIN_EVENT, () => {
+    this.subscribe(landingStore, LOGIN_EVENT, (user) => {
+      toast.info("Welcome: " + user.email);      
       this.props.history.push('/home');
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
       this.setState({ loading: false });
     });
-    this.subscribe(landingStore, REQUEST_PASSWORD_RESET, (send) => {
-      toast.info('Request for Recover Password processed');
+    this.subscribe(landingStore, REQUEST_PASSWORD_RESET, () => {
+      toast.info('Request for Recover Password Processed');
       this.setState({ loading: false });
     });
     this.subscribe(landingStore, USER_ERROR_EVENT , (err) =>{

@@ -29,7 +29,7 @@ export const onLogin = async ({ email, password }) => {
   const { user: firebaseUser } = data;
   let user = await fetchUser(firebaseUser.email);
   log('onLogin:fetchUser');
-  Flux.dispatchEvent(LOGIN_EVENT, { user });
+  Flux.dispatchEvent(LOGIN_EVENT, user);
 };
 
 /**
@@ -47,7 +47,7 @@ export const onSignup = async ({ email, password }) => {
     let user = await createUser(firebaseUser);
     user = await fetchUser(firebaseUser.email);
 
-    return Flux.dispatchEvent(LOGIN_EVENT, { user });
+    return Flux.dispatchEvent(LOGIN_EVENT, user);
   } catch (err) {
     log('Error en onSignUp', err);
     return Flux.dispatchEvent(LOGIN_ERROR_EVENT, new Error(err.message));
@@ -106,8 +106,7 @@ export const createUser = async (firebaseUser) => {
   try {
     await userRef.set(user, { merge: true });
   } catch (err) {
-    console.log(err);
-    Flux.dispatchEvent(USER_ERROR_EVENT, user);
+    Flux.dispatchEvent(USER_ERROR_EVENT, new Error(err.message));
     throw err;
   }
   Flux.dispatchEvent(SIGNUP_EVENT, user);

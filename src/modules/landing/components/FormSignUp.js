@@ -24,7 +24,8 @@ class FormSignUp extends View {
   }
 
   componentDidMount() {
-    this.subscribe(landingStore, SIGNUP_EVENT, () => {
+    this.subscribe(landingStore, SIGNUP_EVENT, (user) => {
+      toast.info("Welcome: " + user.email);
       this.props.history.push('/home')
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
