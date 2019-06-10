@@ -81,7 +81,7 @@ export const addAccountAction = async (accountData) => {
   // We query the user from Firestore
   const userRef = usersCollection.doc(sessionUser.email);
   const user = await userRef.get();
-  if (!user.exist) {
+  if (!user.exists) {
     const e = new Error(
       `User with email: ${sessionUser.email}, does not exist!`,
     );
