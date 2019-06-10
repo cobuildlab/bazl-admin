@@ -5,11 +5,12 @@ import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from 'react-flux-state';
-import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT, REQUEST_PASSWORD_RESET, USER_ERROR_EVENT} from "../landing-store";
+import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT, USER_ERROR_EVENT } from "../landing-store";
 import { onSignup } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
 import { ClipLoader } from 'react-spinners';
+import ModalTerms from './ModalTerms';
 
 class FormSignUp extends View {
   constructor(props) {
@@ -23,19 +24,17 @@ class FormSignUp extends View {
   }
 
   componentDidMount() {
-    this.subscribe(landingStore, SIGNUP_EVENT, () => {
+    this.subscribe(landingStore, SIGNUP_EVENT, (user) => {
+      toast.info("Welcome: " + user.email);
       this.props.history.push('/home')
-    })
+    });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
       this.setState({ loading: false });
     });
-    this.subscribe(landingStore, REQUEST_PASSWORD_RESET, () =>{
-      this.props.history.push('/');
-    })
-    this.subscribe(landingStore, USER_ERROR_EVENT , (e) =>{
-      toast.error(e.message);
-    } )
+    this.subscribe(landingStore, USER_ERROR_EVENT, (err) => {
+      toast.error(err.message);
+    });
   }
 
   onSubmit = (e) => {
@@ -54,7 +53,6 @@ class FormSignUp extends View {
 
   render() {
     const { email, password, loading } = this.state;
-    console.log("Form Sign Up en uso")
     return (
       <MDBContainer>
         <MDBRow>
@@ -94,10 +92,9 @@ class FormSignUp extends View {
                   onChange={this.onChange}
                 />
               </div>
-              <p className="text-center">
-                by signing up, you agree to our terms of services and privacy
-                policy.
-              </p>
+              <ModalTerms
+                linkName="by signing up, you agree to our terms of services and privacy policy."
+              />
             </form>
             <div className="text-center">
               {loading ? (
