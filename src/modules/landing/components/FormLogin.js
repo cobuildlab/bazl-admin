@@ -52,9 +52,9 @@ class FormLogin extends View {
       })
 
     } else {
-      // this.setState({ loading: true }, () => {
-      //   onLogin({ email, password });
-      // });
+       this.setState({ loading: true }, () => {
+         onLogin({ email, password });
+       });
       onLogin({ email, password });
     }
     console.log(email);

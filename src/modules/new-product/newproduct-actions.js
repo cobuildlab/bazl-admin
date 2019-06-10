@@ -8,11 +8,11 @@ import { PRODUCT_EVENT, PRODUCT_ERROR_EVENT } from './newproduct-store';
  */
 
 export const createProduct = async (product, image)  => {
-  if(image != null){
-    const DB = firebase.firestore();
-    const storage = firebase.storage();
-    const storageRef = storage.ref(`/productImages/${image.name}`);
+  const DB = firebase.firestore();
+  const storage = firebase.storage();
   const productCollection = DB.collection('products');
+  if(image != null){
+    const storageRef = storage.ref(`/productImages/${image.name}`);
   const { picture,
     name,
     category,
@@ -58,8 +58,6 @@ export const createProduct = async (product, image)  => {
     
   } )
 }else{
-    const DB = firebase.firestore();
-    const productCollection = DB.collection('products');
     const { picture,
       name,
       category,

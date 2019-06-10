@@ -82,11 +82,11 @@ export const fetchDetailProduct = (id) =>{
  * @returns {Promise<{userProducts}>}
  */
 export const updateProduct = (product, image, id) =>{
+  const DB = firebase.firestore();
+  const storage = firebase.storage();
+  const productCollection = DB.collection('products').doc(id);
   if (image != null) {
-    const DB = firebase.firestore();
-    const storage = firebase.storage();
     const storageRef = storage.ref(`/productImages/${image.name}`);
-    const productCollection = DB.collection('products').doc(id);
     const {
       name,
       category,
@@ -131,8 +131,6 @@ export const updateProduct = (product, image, id) =>{
 
     })
   } else {
-    const DB = firebase.firestore();
-    const productCollection = DB.collection('products').doc(id);
     const { picture,
       name,
       category,
