@@ -32,7 +32,7 @@ class FormLogin extends View {
       this.setState({ loading: false });
     });
     this.subscribe(landingStore, REQUEST_PASSWORD_RESET, (send) => {
-      toast.success('Request for Recover Password processed');
+      toast.info('Request for Recover Password processed');
       this.setState({ loading: false });
     });
     this.subscribe(landingStore, USER_ERROR_EVENT , (err) =>{
