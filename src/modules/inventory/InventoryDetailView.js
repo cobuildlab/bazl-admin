@@ -54,12 +54,10 @@ class InventoryDetailView extends View {
     }
 
     onChange = (e) => {
-        console.log(this.state);
+        
         e.preventDefault();
-        console.log(e.target.name, e.target.value);
         const data = this.state.data;
         data[e.target.name] = e.target.value;
-        console.log(data);
 
         this.setState({
             data: data,
@@ -74,14 +72,14 @@ class InventoryDetailView extends View {
         const picture = e.target.files[0];
         reader.onloadend = () => {
             data.picture = reader.result;
-            console.log(data);
+            
             this.setState({
                 data: data,
                 image: picture
             })
         }
         reader.readAsDataURL(image);
-        console.log(this.state);
+        
     }
     onUpdate = () => {
         updateProduct(R.clone(this.state.data), this.state.image, this.props.match.params.id);

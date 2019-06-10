@@ -5,7 +5,7 @@ import {INVENTORY_EVENT, INVENTORY_ERROR_EVENT,INVENTORY_DETAIL_EVENT,
   INVENTORY_DELETE_EVENT, INVENTORY_DELETE_ERROR} from './inventory-store';
 /**
  * fetches the products belonging to the user
- * @param {string} email the user's email
+ * 
  * @returns {Promise<{userProducts}>}
  */
 export const fetchUserProducts = () => {
@@ -52,7 +52,11 @@ export const fetchUserProducts = () => {
       Flux.dispatchEvent(INVENTORY_ERROR_EVENT, new Error(e));
     });
 }
-
+/**
+ * fetches all the info of a determinated product
+ *
+ * @returns {Promise<{userProducts}>}
+ */
 export const fetchDetailProduct = (id) =>{
   const DB = firebase.firestore();
   const productsCollection = DB.collection('products').doc(id);
@@ -72,7 +76,11 @@ export const fetchDetailProduct = (id) =>{
 
     })
 }
-
+/**
+ * Update the info of a product
+ * 
+ * @returns {Promise<{userProducts}>}
+ */
 export const updateProduct = (product, image, id) =>{
   if (image != null) {
     const DB = firebase.firestore();
@@ -160,7 +168,11 @@ export const updateProduct = (product, image, id) =>{
   }
 
 }
-
+/**
+ * Delete a determinated Product
+ * 
+ * @returns {Promise<{userProducts}>}
+ */
 export const deleteProduct = (id) => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products').doc(id);

@@ -48,7 +48,7 @@ export const createProduct = async (product, image)  => {
         shippingFee,
         totalPrice
       }).then( doc =>{
-        console.log("Document writen whit ID: ", doc.id);
+        console.log("Document writen with ID: ", doc.id);
         Flux.dispatchEvent(PRODUCT_EVENT, doc)
       }).catch( e =>{
         console.log("Error Adding document: ", e);
@@ -87,7 +87,7 @@ export const createProduct = async (product, image)  => {
           shippingFee,
           totalPrice
         }).then(doc => {
-          console.log("Document writen whit ID: ", doc.id);
+          console.log("Document writen with ID: ", doc.id);
           Flux.dispatchEvent(PRODUCT_EVENT, doc)
         }).catch(e => {
           console.log("Error Adding document: ", e);
