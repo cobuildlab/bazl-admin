@@ -72,14 +72,6 @@ class FormLogin extends View {
       forgot: !prevState.forgot
     }));
   }
-  validateEmail = () => {
-const {email} = this.state;
-this.setState({
-  emailError:
-    // eslint-disable-next-line no-useless-escape
-    (/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(email) ? '' : "Error, Must be a valid E-mail"
-})
-  }
 
   render() {
 
@@ -103,11 +95,11 @@ this.setState({
                     onChange={this.onChange}
                     type="email"
                     name="email"
-                      className={`form-control ${this.state.emailError ? 'is-invalid' : ''}`}
+                      className="form-control"
                     placeholder="Email"
                     aria-label="Email"
                     aria-describedby="basic-addon1"
-                    onBlur={this.validateEmail}
+                    
                     
                   />
                   <div className='invalid-feedback'>{this.state.emailError}</div>
@@ -161,11 +153,11 @@ this.setState({
                         value={email}
                         type="email"
                         name="email"
-                        className={`form-control ${this.state.emailError ? 'is-invalid' : ''}`}
+                        className="form-control"
                         placeholder="Email"
                         aria-label="Email"
                         aria-describedby="basic-addon1"
-                        onBlur={this.validateEmail}
+                      
 
                       />
                       <div className='invalid-feedback'>{this.state.emailError}</div>

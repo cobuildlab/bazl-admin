@@ -81,35 +81,31 @@ export const fetchDetailProduct = (id) =>{
  * 
  * @returns {Promise<{userProducts}>}
  */
-export const updateProduct = (product, image, id) =>{
+export const updateProduct = async (product, image, id) =>{
   const DB = firebase.firestore();
-  const storage = firebase.storage();
   const productCollection = DB.collection('products').doc(id);
-  if (image != null) {
+  let imageURL = null;
+  const storage = firebase.storage();
+  if (image) {
     const storageRef = storage.ref(`/productImages/${image.name}`);
-    const {
-      name,
-      category,
-      description,
-      size,
-      quantity,
-      color,
-      price,
-      commission,
-      additionalFee,
-      shippingFee,
-      totalPrice } = product;
-    const task = storageRef.put(image);
-
-    task.on('state_changed', () => {
-      console.log('image Successfully Uploaded');
-    }, error => {
-      console.log("error", error.message);
-    }, () => {
-      task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-
+    const task = await storageRef.put(image);
+    imageURL = await task.ref.getDownloadURL();
+  }
+  const {
+  name,
+  category,
+  description,
+  size,
+  quantity,
+  color,
+  price,
+  commission,
+  additionalFee,
+  shippingFee,
+  totalPrice } = product;
+  
         productCollection.update({
-          picture: downloadURL,
+          picture: imageURL,
           name,
           category,
           description,
@@ -127,46 +123,10 @@ export const updateProduct = (product, image, id) =>{
           console.log("Error Updating document: ", e);
           Flux.dispatchEvent(INVENTORY_UPDATE_ERROR, e);
         })
-      })
-
-    })
-  } else {
-    const { picture,
-      name,
-      category,
-      description,
-      size,
-      quantity,
-      color,
-      price,
-      commission,
-      additionalFee,
-      shippingFee,
-      totalPrice } = product;
-
-    productCollection.update({
-      picture,
-      name,
-      category,
-      description,
-      size,
-      quantity,
-      color,
-      price,
-      commission,
-      additionalFee,
-      shippingFee,
-      totalPrice
-    }).then((doc) => {
-      Flux.dispatchEvent(INVENTORY_UPDATE_EVENT, doc)
-    }).catch(e => {
-      console.log("Error updating document: ", e);
-      Flux.dispatchEvent(INVENTORY_UPDATE_ERROR, e);
-    })
-  }
-
-}
-/**
+  
+    }
+    
+    /**
  * Delete a determinated Product
  * 
  * @returns {Promise<{userProducts}>}

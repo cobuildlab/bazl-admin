@@ -313,8 +313,8 @@ class NewProductView extends View {
                     <small>Commission percentage Minimum commission 3%</small>
                   </MDBCol>
                   <MDBCol md="2">
-                    <select className="browser-default custom-select mt-1" name="commission" selected="3" onChange={this.onChange}>
-                      <option disabled>Select Your Commission</option>
+                    <select className="browser-default custom-select mt-1" name="commission"  onChange={this.onChange}>
+                      <option>Select</option>
                       <option value="3%">3%</option>
                       <option value="4%">4%</option>
                       <option value="5%">5%</option>

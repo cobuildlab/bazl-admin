@@ -8,36 +8,19 @@ import { PRODUCT_EVENT, PRODUCT_ERROR_EVENT } from './newproduct-store';
  */
 
 export const createProduct = async (product, image)  => {
-  const DB = firebase.firestore();
-  const storage = firebase.storage();
-  const productCollection = DB.collection('products');
-  if(image != null){
-    const storageRef = storage.ref(`/productImages/${image.name}`);
-  const { picture,
-    name,
-    category,
-    description,
-    size,
-    quantity,
-    color,
-    price,
-    commission,
-    additionalFee,
-    shippingFee,
-    totalPrice } = product;
-    const task = storageRef.put(image);
-
-    task.on('state_changed', snapshot=>{
-      console.log('image Successfully Uploaded');
-  },error =>{
-    console.log("error", error.message);
-  }, () =>{
-    task.snapshot.ref.getDownloadURL().then((downloadURL) =>{
-      
-      productCollection.add({
-        picture : downloadURL,
+    const DB = firebase.firestore();
+    const productCollection = DB.collection('products');
+    let imageURL =null;
+    const storage = firebase.storage();
+    if(image){
+      const storageRef = storage.ref(`/productImages/${image.name}`);
+      const task = await storageRef.put(image);
+     imageURL = await task.ref.getDownloadURL();
+    }
+    console.log(imageURL);
+      const {
         name,
-        category,
+       category,
         description,
         size,
         quantity,
@@ -46,50 +29,28 @@ export const createProduct = async (product, image)  => {
         commission,
         additionalFee,
         shippingFee,
-        totalPrice
-      }).then( doc =>{
-        console.log("Document writen with ID: ", doc.id);
-        Flux.dispatchEvent(PRODUCT_EVENT, doc)
-      }).catch( e =>{
-        console.log("Error Adding document: ", e);
-        Flux.dispatchEvent(PRODUCT_ERROR_EVENT,e);
-      })
-    })
-    
-  } )
-}else{
-    const { picture,
-      name,
-      category,
-      description,
-      size,
-      quantity,
-      color,
-      price,
-      commission,
-      additionalFee,
-      shippingFee,
-      totalPrice } = product;
+        totalPrice } = product;  
 
-        productCollection.add({
-          picture,
-          name,
-          category,
-          description,
-          size,
-          quantity,
-          color,
-          price,
-          commission,
-          additionalFee,
-          shippingFee,
-          totalPrice
-        }).then(doc => {
-          console.log("Document writen with ID: ", doc.id);
-          Flux.dispatchEvent(PRODUCT_EVENT, doc)
-        }).catch(e => {
-          console.log("Error Adding document: ", e);
-          Flux.dispatchEvent(PRODUCT_ERROR_EVENT, e);
-        })
-}
- }
+       await productCollection.add({
+       picture: imageURL,
+         name,
+         category,
+         description,
+         size,
+         quantity,
+         color,
+         price,
+         commission,
+         additionalFee,
+         shippingFee,
+         totalPrice
+       }).then(doc => {
+         console.log("Document writen with ID: ", doc.id);
+             Flux.dispatchEvent(PRODUCT_EVENT, doc)
+           }).catch(e => {
+             console.log("Error Adding document: ", e);
+             Flux.dispatchEvent(PRODUCT_ERROR_EVENT, e);
+           })
+       }
+
+      
