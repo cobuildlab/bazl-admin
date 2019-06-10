@@ -4,9 +4,13 @@ import SidebarComponent from "../../components/SidebarComponent";
 import ImgDefault from "../../assets/img/img-default.png";
 import { Link } from "react-router-dom";
 import View from 'react-flux-state';
-import { inventoryStore, INVENTORY_DETAIL_EVENT} from './inventory-store';
+import {toast} from 'react-toastify';
+import { inventoryStore, INVENTORY_DETAIL_EVENT, INVENTORY_DETAIL_ERROR, 
+INVENTORY_UPDATE_EVENT,INVENTORY_UPDATE_ERROR,
+INVENTORY_DELETE_EVENT,INVENTORY_DELETE_ERROR} from './inventory-store';
 import { error } from 'pure-logger';
-import { fetchDetailProduct } from "./inventory-actions";
+import { fetchDetailProduct, updateProduct,deleteProduct } from "./inventory-actions";
+import * as R from 'ramda';
 
 class InventoryDetailView extends View {
     constructor(props) {
@@ -26,7 +30,25 @@ class InventoryDetailView extends View {
                 data: data
             })
          })
-         console.log(this.props.match.params.id);
+         this.subscribe(inventoryStore, INVENTORY_DETAIL_ERROR, (e) =>{
+             toast.error(e.message);
+         })
+         this.subscribe(inventoryStore, INVENTORY_UPDATE_EVENT, () =>{
+             this.props.history.push('/inventory');
+             toast.success("Product Updated");
+             
+         })
+         this.subscribe(inventoryStore, INVENTORY_UPDATE_ERROR, (e) =>{
+             toast.error("Error Updating product" , e.message);
+         })
+         this.subscribe(inventoryStore, INVENTORY_DELETE_EVENT, () =>{
+             this.props.history.push('/inventory');
+             toast.success("Product Deleted");
+         })
+         this.subscribe(inventoryStore, INVENTORY_DELETE_ERROR, e =>{
+             toast.error("Error Deleting prouct", e.message);
+         })
+        
          fetchDetailProduct(this.props.match.params.id);
         
     }
@@ -61,11 +83,12 @@ class InventoryDetailView extends View {
         reader.readAsDataURL(image);
         console.log(this.state);
     }
-    onSubmit = (e) => {
-     console.log("Hey, Take it Easy Man, Isn't over Yet");
-        
+    onUpdate = () => {
+        updateProduct(R.clone(this.state.data), this.state.image, this.props.match.params.id);
     }
-
+    onDelete = () =>{
+        deleteProduct(this.props.match.params.id);
+    }
     render() {
         let picture = this.state.data.picture;
         if (picture != null) {
@@ -95,7 +118,7 @@ class InventoryDetailView extends View {
                                 to="/new-product"
                                 className="btn btn-circle btn-circle-link"
                             >
-                                New Publications
+                                Publication
               </Link>
                         </div>
 
@@ -126,21 +149,47 @@ class InventoryDetailView extends View {
                                                 className="mt-0" />
                                         </MDBCol>
                                         <MDBCol>
-                                            <select className="browser-default custom-select mt-1" name="category" onChange={this.onChange}>
-                                                <option>Choose your option</option>
-                                                <option value="Clock">Clock</option>
-                                                <option value="Accessories">Accessories</option>
-                                                <option value="Shoes">Shoes</option>
-                                                <option value="Dresses">Dresses</option>
-                                                <option value="Pants">Pants</option>
-                                                <option value="Jeans">Jeans</option>
-                                                <option value="Straps">Straps</option>
-                                                <option value="Handbags">Handbags</option>
-                                                <option value="Wallets">Wallets</option>
-                                                <option value="Scarves">Scarves</option>
-                                                <option value="Costumes">Costumes</option>
-                                                <option value="Sports Shoes">Sport Shoes</option>
-                                                <option value="Telephone">Telephone</option>
+                                            <select className="browser-default custom-select mt-1" name="category" onChange={this.onChange} value={this.state.data.category}>
+                                                <option disabled>Choose your option</option>
+                                                <option value="Clock">
+                                                    Clock
+                                                    </option>
+                                                <option value="Accessories" >
+                                                    Accessories
+                                                </option>
+                                                <option value="Shoes">
+                                                    Shoes
+                                                    </option>
+                                                <option value="Dresses">
+                                                    Dresses
+                                                    </option>
+                                                <option value="Pants">
+                                                    Pants
+                                                    </option>
+                                                <option value="Jeans">
+                                                    Jeans
+                                                    </option>
+                                                <option value="Straps">
+                                                    Straps
+                                                    </option>
+                                                <option value="Handbags">
+                                                    Handbags
+                                                    </option>
+                                                <option value="Wallets">
+                                                    Wallets
+                                                    </option>
+                                                <option value="Scarves">
+                                                    Scarves
+                                                    </option>
+                                                <option value="Costumes">
+                                                    Costumes
+                                                    </option>
+                                                <option value="Sports Shoes">
+                                                    Sport Shoes
+                                                    </option>
+                                                <option value="Telephone">
+                                                    Telephone
+                                                    </option>
                                             </select>
                                         </MDBCol>
                                     </MDBRow>
@@ -161,36 +210,36 @@ class InventoryDetailView extends View {
                                                     <div>
                                                         <h6 className="font-weight-bold mb-3">
                                                             Size Article
-                          </h6>
+                                                       </h6>
                                                     </div>
-                                                    <label className="container-radio" name="size" onChange={this.onChange} >
+                                                    <label className="container-radio" name="size" onChange={this.onChange}  >
                                                         XXS
-                          <input type="radio" name="size" value="XSS" onChange={this.onChange} />
+                                                        <input type="radio" name="size" value="XSS" onChange={this.onChange} checked={this.state.data.size === 'XSS'} />
                                                         <span className="checkmark" />
                                                     </label>
                                                     <label className="container-radio">
                                                         xS
-                          <input type="radio" name="size" value="XS" onChange={this.onChange} />
+                                                            <input type="radio" name="size" value="XS" onChange={this.onChange} checked={this.state.data.size === 'XS'} />
                                                         <span className="checkmark" />
                                                     </label>
                                                     <label className="container-radio">
                                                         S
-                          <input type="radio" name="size" value="S" onChange={this.onChange} />
+                                                        <input type="radio" name="size" value="S" onChange={this.onChange} checked={this.state.data.size === 'S'} />
                                                         <span className="checkmark" />
                                                     </label>
                                                     <label className="container-radio">
                                                         M
-                          <input type="radio" name="size" value="M" onChange={this.onChange} />
+                                                        <input type="radio" name="size" value="M" onChange={this.onChange} checked={this.state.data.size === 'M'}/>
                                                         <span className="checkmark" />
                                                     </label>
                                                     <label className="container-radio">
                                                         L
-                          <input type="radio" name="size" value="L" onChange={this.onChange} />
+                                                        <input type="radio" name="size" value="L" onChange={this.onChange} checked={this.state.data.size === 'L'}/>
                                                         <span className="checkmark" />
                                                     </label>
                                                     <label className="container-radio">
                                                         XL
-                          <input type="radio" name="size" value="XL" onChange={this.onChange} />
+                                                        <input type="radio" name="size" value="XL" onChange={this.onChange} checked={this.state.data.size === 'XL'} />
                                                         <span className="checkmark" />
                                                     </label>
                                                 </MDBCol>
@@ -198,7 +247,7 @@ class InventoryDetailView extends View {
                                                     <h6 className="font-weight-bold m-0">
                                                         Quantity Article
                         </h6>
-                                                    <input type="number" name="quantity" min="1" max="1000" label={this.state.data.number} onChange={this.onChange} />
+                                                    <input type="number" name="quantity" min="1" max="1000" defaultValue={this.state.data.quantity} onChange={this.onChange} />
                                                 </MDBCol>
                                             </MDBRow>
                                         </MDBCol>
@@ -212,64 +261,64 @@ class InventoryDetailView extends View {
                                         <MDBCol md="12">
                                             <label className="container-radio">
                                                 Black
-                      <input type="radio" name="color" value="Black" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Black" onChange={this.onChange} checked={this.state.data.color === 'Black'}/>
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 White
-                      <input type="radio" name="color" value="White" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="White" onChange={this.onChange} checked={this.state.data.color === 'White'} />
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Gray
-                      <input type="radio" name="color" value="Gray" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Gray" onChange={this.onChange} checked={this.state.data.color === 'Gray'} />
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Purple
-                      <input type="radio" name="color" value="Purple" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Purple" onChange={this.onChange} checked={this.state.data.color === 'Purple'} />
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Orange
-                      <input type="radio" name="color" value="Orange" onChange={this.onChange} />
+                                                 <input type="radio" name="color" value="Orange" onChange={this.onChange} checked={this.state.data.color === 'Orange'} />
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Beige
-                      <input type="radio" name="color" value="Beige" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Beige" onChange={this.onChange} checked={this.state.data.color === 'Beige'}/>
                                                 <span className="checkmark" />
                                             </label>
                                         </MDBCol>
                                         <MDBCol md="12">
                                             <label className="container-radio">
                                                 Green
-                      <input type="radio" name="color" value="Green" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Green" onChange={this.onChange} checked={this.state.data.color === 'Green'} />
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio" >
                                                 Yellow
-                      <input type="radio" name="color" value="Yellow" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Yellow" onChange={this.onChange} checked={this.state.data.color === 'Yellow'}/>
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Brown
-                      <input type="radio" name="color" value="Brown" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Brown" onChange={this.onChange} checked={this.state.data.color === 'Brown'} />
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Blue
-                      <input type="radio" name="color" value="Blue" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Blue" onChange={this.onChange} checked={this.state.data.color === 'Blue'}/>
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Red
-                      <input type="radio" name="radio" value="Red" onChange={this.onChange} />
+                                                <input type="radio" name="radio" value="Red" onChange={this.onChange} checked={this.state.data.color === 'Red'} />
                                                 <span className="checkmark" />
                                             </label>
                                             <label className="container-radio">
                                                 Pink
-                      <input type="radio" name="color" value="Pink" onChange={this.onChange} />
+                                                <input type="radio" name="color" value="Pink" onChange={this.onChange} checked={this.state.data.color === 'Pink'} />
                                                 <span className="checkmark" />
                                             </label>
                                         </MDBCol>
@@ -277,7 +326,7 @@ class InventoryDetailView extends View {
                                             <MDBInput
                                                 name='color'
                                                 onChange={this.onChange}
-                                                label="Other Color"
+                                                label={this.state.data.color}
                                                 className="mt-0" />
                                         </MDBCol>
                                     </MDBRow>
@@ -299,11 +348,11 @@ class InventoryDetailView extends View {
                                             <small>Commission percentage Minimum commission 3%</small>
                                         </MDBCol>
                                         <MDBCol md="2">
-                                            <select className="browser-default custom-select mt-1" name="commission" label={this.state.data.commission} onChange={this.onChange}>
-                                                <option value=''>  </option>
-                                                <option value="3">3%</option>
-                                                <option value="4">4%</option>
-                                                <option value="5">5%</option>
+                                            <select className="browser-default custom-select mt-1" name="commission" value={this.state.data.commission} onChange={this.onChange}>
+                                                <option disabled>Choose your Commission</option>
+                                                <option value="3%">3%</option>
+                                                <option value="4%">4%</option>
+                                                <option value="5%">5%</option>
                                             </select>
                                         </MDBCol>
                                         <MDBCol>
@@ -311,7 +360,7 @@ class InventoryDetailView extends View {
                                                 name='additionalFee'
 
                                                 onChange={this.onChange}
-                                                label="Additional Fee"
+                                                label={this.state.data.additionalFee}
                                                 className="mt-0" />
                                         </MDBCol>
                                         <MDBCol>
@@ -325,8 +374,11 @@ class InventoryDetailView extends View {
                                     </MDBRow>
                                     <MDBRow>
                                         <MDBCol className="text-center">
-                                            <MDBBtn onClick={this.onSubmit} className="btn btn-circle mt-4 mb-5">
-                                                Publish
+                                            <MDBBtn onClick={this.onUpdate} className="btn btn-circle mt-4 mb-5">
+                                                Update
+                    </MDBBtn>
+                                            <MDBBtn onClick={this.onDelete} className="btn btn-circle-danger mt-4 mb-5">
+                                                Delete
                     </MDBBtn>
                                         </MDBCol>
                                     </MDBRow>

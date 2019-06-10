@@ -33,7 +33,7 @@ class NewProductView extends View {
   }
   componentDidMount() {
     this.subscribe( productStore, PRODUCT_EVENT, () => {
-      this.props.history.push('/home');
+      this.props.history.push('/inventory');
       toast.success("Product Uploaded");
     })
     this.subscribe(productStore, PRODUCT_ERROR_EVENT, (e) => {
@@ -314,10 +314,10 @@ class NewProductView extends View {
                   </MDBCol>
                   <MDBCol md="2">
                     <select className="browser-default custom-select mt-1" name="commission" selected="3" onChange={this.onChange}>
-                      <option value =''>  </option>
-                      <option value="3">3%</option>
-                      <option value="4">4%</option>
-                      <option value="5">5%</option>
+                      <option disabled>Select Your Commission</option>
+                      <option value="3%">3%</option>
+                      <option value="4%">4%</option>
+                      <option value="5%">5%</option>
                     </select>
                   </MDBCol>
                   <MDBCol>

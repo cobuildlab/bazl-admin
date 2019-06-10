@@ -29,7 +29,7 @@ class TableInventory extends React.Component {
                 <td>{product.description}</td>
                 <td>{product.quantity}</td>
                 <td>{product.price}</td>
-                <td>{product.commision}</td>
+                <td>{product.commission}</td>
                 <td>{product.additionalFee}</td>
                 <td>5</td>
                 <td>
