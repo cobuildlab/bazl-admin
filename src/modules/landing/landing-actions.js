@@ -29,9 +29,9 @@ export const onLogin = async ({ email, password }) => {
   const { user: firebaseUser } = data;
   let user = await fetchUser(firebaseUser.email);
   log('onLogin:fetchUser');
-  console.log(user);
+  console.log(user.email);
 
-  Flux.dispatchEvent(LOGIN_EVENT, { user });
+  Flux.dispatchEvent(LOGIN_EVENT, user.email );
 };
 
 
@@ -112,7 +112,6 @@ export const createUser = async (firebaseUser) => {
   try {
     await userRef.set(user, { merge: true });
   } catch (err) {
-    console.log(err)
     Flux.dispatchEvent(USER_ERROR_EVENT, user)
     throw err;
   }
@@ -129,7 +128,7 @@ export const requestPasswordReset = async (email) => {
   const AUTH = firebase.auth();
   AUTH.sendPasswordResetEmail(email)
     .then((send) => Flux.dispatchEvent(REQUEST_PASSWORD_RESET, send))
-    .catch((err) => Flux.dispatchEvent(USER_ERROR_EVENT, err));
+    .catch((err) => Flux.dispatchEvent(USER_ERROR_EVENT, new Error(err.message)));
 };
 
 /**
