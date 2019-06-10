@@ -5,7 +5,7 @@ import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from 'react-flux-state';
-import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT, REQUEST_PASSWORD_RESET, USER_ERROR_EVENT} from "../landing-store";
+import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT} from "../landing-store";
 import { onSignup } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
@@ -30,12 +30,6 @@ class FormSignUp extends View {
       toast.error(err.message);
       this.setState({ loading: false });
     });
-    this.subscribe(landingStore, REQUEST_PASSWORD_RESET, () =>{
-      this.props.history.push('/');
-    })
-    this.subscribe(landingStore, USER_ERROR_EVENT , (e) =>{
-      toast.error(e.message);
-    } )
   }
 
   onSubmit = (e) => {

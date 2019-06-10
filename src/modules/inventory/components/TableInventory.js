@@ -5,11 +5,9 @@ import {
   MDBTable,
   MDBTableBody,
   MDBTableHead,
-  MDBBtn
 } from "mdbreact";
 import { Link } from "react-router-dom";
-import ImgProduct from '../../../assets/img/ropa-dama.jpg';
-import { inventoryStore } from "../inventory-store";
+
 
 class TableInventory extends React.Component {
   
@@ -39,7 +37,7 @@ class TableInventory extends React.Component {
                  to={`/inventory-details/${product.productID}`}
                  className="btn btn-circle btn-circle-link"
                >
-                 Order Details
+                   Details
                   </Link>
                 </td>
               </tr>

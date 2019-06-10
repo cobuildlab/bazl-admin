@@ -6,10 +6,11 @@ import * as R from 'ramda';
 import { Link } from "react-router-dom";
 import View from 'react-flux-state';
 import {ProductModel} from './newproduct-models';
-import { productStore, PRODUCT_EVENT } from './newproduct-store';
+import { productStore, PRODUCT_EVENT, PRODUCT_ERROR_EVENT } from './newproduct-store';
 import { landingStore, LOGIN_EVENT} from '../landing/landing-store';
 import { error } from 'pure-logger';
 import { createProduct } from "./newproduct-actions";
+import {toast} from 'react-toastify';
 
 class NewProductView extends View {
   constructor(props) {
@@ -31,7 +32,14 @@ class NewProductView extends View {
     })
   }
   componentDidMount() {
-    this.subscribe( productStore, PRODUCT_EVENT, () => {})
+    this.subscribe( productStore, PRODUCT_EVENT, () => {
+      this.props.history.push('/home');
+      toast.success("Product Uploaded");
+    })
+    this.subscribe(productStore, PRODUCT_ERROR_EVENT, (e) => {
+  
+      toast.error(e.message);
+    });
     this.subscribe(landingStore, LOGIN_EVENT, (user) => {
       this.setState({
         userID: user.id
@@ -40,12 +48,9 @@ class NewProductView extends View {
   }
   
   onChange = (e) => {
-    console.log(this.state);
     e.preventDefault();
-    console.log(e.target.name, e.target.value);
     const data = this.state.data;
     data[e.target.name] = e.target.value;
-    console.log(data);
    
     this.setState({
       data : data,
@@ -60,17 +65,15 @@ class NewProductView extends View {
     const picture = e.target.files[0];
     reader.onloadend = () =>{
       data.picture = reader.result;
-      console.log(data);
       this.setState({
         data: data,
         image: picture
       })
     }
     reader.readAsDataURL(image);
-    console.log(this.state);
+
   }
   onSubmit = (e) => {
-    console.log(this.state);
     e.preventDefault();
     this.setState(() => {
      createProduct(R.clone(this.state.data), this.state.image)

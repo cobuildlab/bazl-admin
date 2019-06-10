@@ -5,7 +5,7 @@ import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
 import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
 import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
 import View from "react-flux-state";
-import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT } from "../landing-store";
+import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT, REQUEST_PASSWORD_RESET, USER_ERROR_EVENT } from "../landing-store";
 import { onLogin, requestPasswordReset } from "../landing-actions";
 import { error } from "pure-logger";
 import { toast } from "react-toastify";
@@ -19,9 +19,11 @@ class FormLogin extends View {
       email: "",
       password: "",
       loading: false,
-      forgot: true
+      forgot: true,
+      emailError : ""
     };
     this.onError = error.bind(this);
+
   }
 
   componentDidMount() {
@@ -30,8 +32,14 @@ class FormLogin extends View {
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, err => {
       toast.error(err.message);
-      this.setState({ loading: false });
     });
+    this.subscribe(landingStore, REQUEST_PASSWORD_RESET, () => {
+      this.props.history.push('/');
+      toast.success("Email sended");
+    })
+    this.subscribe(landingStore, USER_ERROR_EVENT, (e) => {
+      toast.error(e.message);
+    })
   }
 
   onSubmit = e => {
@@ -44,16 +52,19 @@ class FormLogin extends View {
       })
 
     } else {
-      this.setState({ loading: true }, () => {
-        onLogin({ email, password });
-      });      
+      // this.setState({ loading: true }, () => {
+      //   onLogin({ email, password });
+      // });
+      onLogin({ email, password });
     }
+    console.log(email);
   };
 
   onChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value
-    });
+    
+    })
   };
 
   onFlagForgot = () => {
@@ -61,8 +72,16 @@ class FormLogin extends View {
       forgot: !prevState.forgot
     }));
   }
+  validateEmail = () => {
+const {email} = this.state;
+this.setState({
+  emailError:
+    (/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,4})+$/).test(email) ? '' : "Error, Must be a valid E-mail"
+})
+  }
 
   render() {
+
     let { email, password, loading, forgot } = this.state;
     console.log("Form Login en uso")
     return (
@@ -83,13 +102,14 @@ class FormLogin extends View {
                     onChange={this.onChange}
                     type="email"
                     name="email"
-                    value={email}
-                    className="form-control"
+                      className={`form-control ${this.state.emailError ? 'is-invalid' : ''}`}
                     placeholder="Email"
                     aria-label="Email"
                     aria-describedby="basic-addon1"
+                    onBlur={this.validateEmail}
                     
                   />
+                  <div className='invalid-feedback'>{this.state.emailError}</div>
                 </div>
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
@@ -135,21 +155,24 @@ class FormLogin extends View {
                         <Icon icon={ic_mail_outline} />
                       </span>
                     </div>
-                    <input
-                      onChange={this.onChange}
-                      type="email"
-                      name="email"
-                      value={email}
-                      className="form-control"
-                      placeholder="Email"
-                      aria-label="Email"
-                      aria-describedby="basic-addon1"
-                    />
+                      <input
+                        onChange={this.onChange}
+                        value={email}
+                        type="email"
+                        name="email"
+                        className={`form-control ${this.state.emailError ? 'is-invalid' : ''}`}
+                        placeholder="Email"
+                        aria-label="Email"
+                        aria-describedby="basic-addon1"
+                        onBlur={this.validateEmail}
+
+                      />
+                      <div className='invalid-feedback'>{this.state.emailError}</div>
                   </div>
+        
                   <p onClick={this.onFlagForgot} className="btnLink btn btn-link">Already have an account? Log in.</p>
                   <MDBBtn type={"submit"} className="btn-auth" onClick={this.onSubmit}>Send Email<Icon size={24} icon={ic_keyboard_arrow_right} /></MDBBtn>
                 </form>
-
                   </div>
                   )}
           </MDBCol>
