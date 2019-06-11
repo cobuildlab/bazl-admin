@@ -27,7 +27,7 @@ export class EditableBankAccount extends Component {
   };
 
   render() {
-    let { account, onDelete, editAccount, flagEdit } = this.props;
+    let { onDelete, editAccount, flagEdit, i } = this.props;
     let { type, title, number, routingNumber } = this.state;
     let style = {
       position: 'relative',
@@ -82,7 +82,7 @@ export class EditableBankAccount extends Component {
             <MDBBtn
               disabled={flagEdit}
               className="btn-delete"
-              onClick={() => onDelete(account)}>
+              onClick={() => onDelete(i)}>
               <MDBIcon icon="times" />
             </MDBBtn>
           </div>

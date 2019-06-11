@@ -58,10 +58,14 @@ class EditProfileView extends View {
         user,
       });
     });
-    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (bankAccount) => {
-      const { user } = this.state;      
-      let result = user.bankAccounts.filter((index) => ((index.number !== bankAccount.number) && (index.title !== bankAccount.title)) && (index.routingNumber !== bankAccount.routingNumber));
-      user.bankAccounts = R.clone(result);
+    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
+      const { user } = this.state;
+      // let result = user.bankAccounts.filter((index) => ((index.number !== bankAccount.number) && (index.title !== bankAccount.title)) && (index.routingNumber !== bankAccount.routingNumber));
+      // user.bankAccounts = [];
+      // console.log(user.bankAccounts);
+      // user.bankAccounts = R.clone(bankAccount);
+      // console.log(user.bankAccounts);
+      user.bankAccounts.splice(i, 1)
       this.setState({
         loadingBankAccounts: false,
         user,
@@ -89,9 +93,9 @@ class EditProfileView extends View {
     this.setState({});
   };
 
-  onDeleteBankAccount = (account) => {
+  onDeleteBankAccount = (i) => {
     this.setState({ loadingBankAccounts: true }, () => {
-      deleteAccountAction({ ...account });
+      deleteAccountAction(i);
     });
   };
 
@@ -150,7 +154,13 @@ class EditProfileView extends View {
             <MDBCol md="1" />
             <MDBCol md="10">
               {loadingBankAccounts ? (
-                <Loader />
+                // <Loader />
+                <ClipLoader
+                  sizeUnit={'px'}
+                  size={120}
+                  color={'#44c1f6'}
+                  loading={true}
+                />
               ) : (
                   <EditBankInformation
                     editAccount={this.editAccount}

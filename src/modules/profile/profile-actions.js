@@ -104,21 +104,19 @@ export const addAccountAction = async (accountData) => {
   return accountData;
 };
 
-export const deleteAccountAction = async (accountData) => {
+export const deleteAccountAction = async (i) => {
   try {
     // TODO: Account Validator
     // profileValidator(accountData);
-    log('addAccountAction(accountData);');
   } catch (e) {
     error('addAccountAction', e);
     Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
     throw e;
   }
-
   const DB = firebase.firestore();
   const usersCollection = DB.collection('users');
   const sessionUser = landingStore.getState(USER_EVENT);
-  log('updateProfileAction:user', sessionUser);
+
   // We query the user from Firestore
   const userRef = usersCollection.doc(sessionUser.email);
   const user = await userRef.get();
@@ -132,8 +130,7 @@ export const deleteAccountAction = async (accountData) => {
 
   const userData = user.data();
   let { bankAccounts } = userData;
-  let result = bankAccounts.filter((index) => ((index.number !== accountData.number) && (index.title !== accountData.title)) && (index.routingNumber !== accountData.routingNumber));
-  bankAccounts = R.clone(result)
+  bankAccounts.splice(i, 1)
 
   try {
     await userRef.set({ bankAccounts }, { merge: true });
@@ -142,6 +139,6 @@ export const deleteAccountAction = async (accountData) => {
     throw e;
   }
 
-  Flux.dispatchEvent(DELETE_ACCOUNT_EVENT, accountData);
-  return accountData;
+  Flux.dispatchEvent(DELETE_ACCOUNT_EVENT, i);
+  return i;
 }
