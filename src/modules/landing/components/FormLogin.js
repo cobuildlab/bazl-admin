@@ -5,7 +5,13 @@ import { ic_mail_outline } from 'react-icons-kit/md/ic_mail_outline';
 import { ic_lock_outline } from 'react-icons-kit/md/ic_lock_outline';
 import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
 import View from 'react-flux-state';
-import { landingStore, LOGIN_EVENT, LOGIN_ERROR_EVENT, REQUEST_PASSWORD_RESET, USER_ERROR_EVENT } from '../landing-store';
+import {
+  landingStore,
+  LOGIN_EVENT,
+  LOGIN_ERROR_EVENT,
+  REQUEST_PASSWORD_RESET,
+  USER_ERROR_EVENT,
+} from '../landing-store';
 import { onLogin, requestPasswordReset } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
@@ -18,6 +24,7 @@ class FormLogin extends View {
       email: '',
       password: '',
       loading: false,
+      emailError: '',
       forgot: true,
     };
     this.onError = error.bind(this);
@@ -25,8 +32,12 @@ class FormLogin extends View {
 
   componentDidMount() {
     this.subscribe(landingStore, LOGIN_EVENT, (user) => {
-      toast.info("Welcome: " + user.email);      
+      toast.info('Welcome: ' + user.email);
       this.props.history.push('/home');
+    });
+    this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
+      toast.error(err.message);
+      this.setState({ loading: false });
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
@@ -34,9 +45,11 @@ class FormLogin extends View {
     });
     this.subscribe(landingStore, REQUEST_PASSWORD_RESET, () => {
       toast.info('Request for Recover Password Processed');
-      this.setState({ loading: false });
+      this.setState({ loading: false }, () => {
+        this.props.history.push('/');
+      });
     });
-    this.subscribe(landingStore, USER_ERROR_EVENT , (err) =>{
+    this.subscribe(landingStore, USER_ERROR_EVENT, (err) => {
       toast.error(err.message);
       this.setState({ loading: false });
     });
@@ -46,7 +59,7 @@ class FormLogin extends View {
     const { email, password } = this.state;
     e.preventDefault();
     if (!this.state.forgot) {
-      this.setState({ loading: true,forgot: true, }, () => {
+      this.setState({ loading: true, forgot: true }, () => {
         requestPasswordReset(email);
       });
     } else {
@@ -93,6 +106,9 @@ class FormLogin extends View {
                       aria-label="Email"
                       aria-describedby="basic-addon1"
                     />
+                    <div className="invalid-feedback">
+                      {this.state.emailError}
+                    </div>
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
@@ -126,65 +142,65 @@ class FormLogin extends View {
                       loading={true}
                     />
                   ) : (
-                      <MDBBtn
-                        type={'submit'}
-                        className="btn-auth"
-                        onClick={this.onSubmit}>
-                        Log in
+                    <MDBBtn
+                      type={'submit'}
+                      className="btn-auth"
+                      onClick={this.onSubmit}>
+                      Log in
                       <Icon size={24} icon={ic_keyboard_arrow_right} />
-                      </MDBBtn>
-                    )}
+                    </MDBBtn>
+                  )}
                 </div>
               </div>
             ) : (
-                <div>
-                  <form className="p-3">
-                    <p className="text-center">
-                      {`Enter your email address and we'll send you a Password reset link.`}
-                    </p>
-                    <div className="input-group mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon1">
-                          <Icon icon={ic_mail_outline} />
-                        </span>
-                      </div>
-                      <input
-                        onChange={this.onChange}
-                        type="email"
-                        name="email"
-                        value={email}
-                        className="form-control"
-                        placeholder="Email"
-                        aria-label="Email"
-                        aria-describedby="basic-addon1"
-                      />
+              <div>
+                <form className="p-3">
+                  <p className="text-center">
+                    {`Enter your email address and we'll send you a Password reset link.`}
+                  </p>
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text" id="basic-addon1">
+                        <Icon icon={ic_mail_outline} />
+                      </span>
                     </div>
-                    <p
-                      onClick={this.onFlagForgot}
-                      className="btnLink btn btn-link">
-                      {'Already have an account? Log in.'}
-                    </p>
-                  </form>
-                  <div className="text-center">
-                    {loading ? (
-                      <ClipLoader
-                        sizeUnit={'px'}
-                        size={120}
-                        color={'#44c1f6'}
-                        loading={true}
-                      />
-                    ) : (
-                        <MDBBtn
-                          type={'submit'}
-                          className="btn-auth"
-                          onClick={this.onSubmit}>
-                          {'Send Email'}
-                          <Icon size={24} icon={ic_keyboard_arrow_right} />
-                        </MDBBtn>
-                      )}
+                    <input
+                      onChange={this.onChange}
+                      type="email"
+                      name="email"
+                      value={email}
+                      className="form-control"
+                      placeholder="Email"
+                      aria-label="Email"
+                      aria-describedby="basic-addon1"
+                    />
                   </div>
+                  <p
+                    onClick={this.onFlagForgot}
+                    className="btnLink btn btn-link">
+                    {'Already have an account? Log in.'}
+                  </p>
+                </form>
+                <div className="text-center">
+                  {loading ? (
+                    <ClipLoader
+                      sizeUnit={'px'}
+                      size={120}
+                      color={'#44c1f6'}
+                      loading={true}
+                    />
+                  ) : (
+                    <MDBBtn
+                      type={'submit'}
+                      className="btn-auth"
+                      onClick={this.onSubmit}>
+                      {'Send Email'}
+                      <Icon size={24} icon={ic_keyboard_arrow_right} />
+                    </MDBBtn>
+                  )}
                 </div>
-              )}
+              </div>
+            )}
           </MDBCol>
         </MDBRow>
       </MDBContainer>

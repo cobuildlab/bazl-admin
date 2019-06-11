@@ -3,7 +3,9 @@ import Flux from 'flux-state'
 export const INVENTORY_EVENT = 'INVENTORY_EVENT';
 export const INVENTORY_ERROR_EVENT = 'INVENTORY_ERROR_EVENT';
 export const INVENTORY_DETAIL_EVENT= 'INVENTORY_DETAIL_EVENT';
-export const INVENTORY_DETAIL_ERROR = 'INVENTORY_DETAIL_ERROR';
+export const INVENTORY_UPDATE_EVENT = 'INVENTORY_UPDATE_EVENT';
+export const INVENTORY_DELETE_EVENT = "INVENTORY_DELETE_EVENT";
+
 
 class InventoryStore extends Flux.DashStore {
   constructor() {
@@ -11,7 +13,9 @@ class InventoryStore extends Flux.DashStore {
     this.addEvent(INVENTORY_EVENT);
     this.addEvent(INVENTORY_ERROR_EVENT);
     this.addEvent(INVENTORY_DETAIL_EVENT);
-    this.addEvent(INVENTORY_DETAIL_ERROR);
+    this.addEvent(INVENTORY_UPDATE_EVENT);
+    this.addEvent(INVENTORY_DELETE_EVENT);
+    
   }
 }
 

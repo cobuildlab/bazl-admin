@@ -1,11 +1,16 @@
-import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from "mdbreact";
-import { Icon } from "react-icons-kit";
-import { ic_mail_outline } from "react-icons-kit/md/ic_mail_outline";
-import { ic_lock_outline } from "react-icons-kit/md/ic_lock_outline";
-import { ic_keyboard_arrow_right } from "react-icons-kit/md/ic_keyboard_arrow_right";
+import React from 'react';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { Icon } from 'react-icons-kit';
+import { ic_mail_outline } from 'react-icons-kit/md/ic_mail_outline';
+import { ic_lock_outline } from 'react-icons-kit/md/ic_lock_outline';
+import { ic_keyboard_arrow_right } from 'react-icons-kit/md/ic_keyboard_arrow_right';
 import View from 'react-flux-state';
-import { landingStore, SIGNUP_EVENT, LOGIN_ERROR_EVENT, USER_ERROR_EVENT } from "../landing-store";
+import {
+  landingStore,
+  SIGNUP_EVENT,
+  LOGIN_ERROR_EVENT,
+  USER_ERROR_EVENT,
+} from '../landing-store';
 import { onSignup } from '../landing-actions';
 import { error } from 'pure-logger';
 import { toast } from 'react-toastify';
@@ -14,19 +19,19 @@ import ModalTerms from './ModalTerms';
 
 class FormSignUp extends View {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       email: '',
       password: '',
-      loading: false
-    }
+      loading: false,
+    };
     this.onError = error.bind(this);
   }
 
   componentDidMount() {
     this.subscribe(landingStore, SIGNUP_EVENT, (user) => {
-      toast.info("Welcome: " + user.email);
-      this.props.history.push('/home')
+      toast.info('Welcome: ' + user.email);
+      this.props.history.push('/home');
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
       toast.error(err.message);
@@ -38,18 +43,18 @@ class FormSignUp extends View {
   }
 
   onSubmit = (e) => {
-    const { email, password } = this.state
+    const { email, password } = this.state;
     e.preventDefault();
     this.setState({ loading: true }, () => {
-      onSignup({ email, password })
+      onSignup({ email, password });
     });
-  }
+  };
 
   onChange = ({ target: { name, value } }) => {
     this.setState({
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   render() {
     const { email, password, loading } = this.state;
@@ -66,7 +71,7 @@ class FormSignUp extends View {
                 </div>
                 <input
                   type="email"
-                  name='email'
+                  name="email"
                   value={email}
                   className="form-control"
                   placeholder="Email"
@@ -83,7 +88,7 @@ class FormSignUp extends View {
                 </div>
                 <input
                   type="password"
-                  name='password'
+                  name="password"
                   value={password}
                   className="form-control"
                   placeholder="Password"
@@ -92,9 +97,7 @@ class FormSignUp extends View {
                   onChange={this.onChange}
                 />
               </div>
-              <ModalTerms
-                linkName="by signing up, you agree to our terms of services and privacy policy."
-              />
+              <ModalTerms linkName="by signing up, you agree to our terms of services and privacy policy." />
             </form>
             <div className="text-center">
               {loading ? (
@@ -102,15 +105,16 @@ class FormSignUp extends View {
                   sizeUnit={'px'}
                   size={120}
                   color={'#44c1f6'}
-                  loading={true} />
+                  loading={true}
+                />
               ) : (
-                  <MDBBtn
-                    type={'submit'}
-                    className="btn-auth"
-                    onClick={this.onSubmit}>
-                    Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
-                  </MDBBtn>
-                )}
+                <MDBBtn
+                  type={'submit'}
+                  className="btn-auth"
+                  onClick={this.onSubmit}>
+                  Sign Up <Icon size={24} icon={ic_keyboard_arrow_right} />
+                </MDBBtn>
+              )}
             </div>
           </MDBCol>
         </MDBRow>
