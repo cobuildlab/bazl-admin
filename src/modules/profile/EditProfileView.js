@@ -6,6 +6,7 @@ import { EditBasicInformation } from './components/EditBasicInformation';
 import {
   addAccountAction,
   deleteAccountAction,
+  updateAccountAction,
   fetchProfileAction,
   updateProfileAction,
 } from './profile-actions';
@@ -15,6 +16,7 @@ import {
   ACCOUNT_ERROR_EVENT,
   NEW_ACCOUNT_EVENT,
   DELETE_ACCOUNT_EVENT,
+  UPDATE_ACCOUNT_EVENT,
   profileStore,
 } from './profile-store';
 import { toast } from 'react-toastify/index';
@@ -24,6 +26,7 @@ import EditBankInformation from './components/EditBankInformation';
 import { userModel } from './Profile-models';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import ModalConfirm from './components/ModalConfirm';
 
 class EditProfileView extends View {
   constructor(props) {
@@ -32,7 +35,8 @@ class EditProfileView extends View {
     this.state = {
       user: { ...R.clone(userModel), ...user },
       loadingBankAccounts: false,
-      loadingUser: false
+      loadingUser: false,
+      modal: false
     };
   }
 
@@ -60,18 +64,20 @@ class EditProfileView extends View {
     });
     this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
       const { user } = this.state;
-      // let result = user.bankAccounts.filter((index) => ((index.number !== bankAccount.number) && (index.title !== bankAccount.title)) && (index.routingNumber !== bankAccount.routingNumber));
-      // user.bankAccounts = [];
-      // console.log(user.bankAccounts);
-      // user.bankAccounts = R.clone(bankAccount);
-      // console.log(user.bankAccounts);
       user.bankAccounts.splice(i, 1)
       this.setState({
         loadingBankAccounts: false,
         user,
       });
     });
-
+    this.subscribe(profileStore, UPDATE_ACCOUNT_EVENT, (bankAccount) => {
+      let { user } = this.state;
+      user.bankAccounts[bankAccount.id] = bankAccount;
+      this.setState({
+        loadingBankAccounts: false,
+        user,
+      });
+    });
 
     fetchProfileAction();
   }
@@ -82,18 +88,14 @@ class EditProfileView extends View {
     });
   };
 
-  editAccount = (bank) => {
-    let { bankAccounts } = this.state.user;
-    // eslint-disable-next-line
-    bankAccounts.map(function (bankAccount, i) {
-      if (bank.id === bankAccount.id) {
-        bankAccounts[i] = bank;
-      }
+  editAccount = (account) => {
+    this.setState({ loadingBankAccounts: true }, () => {
+      updateAccountAction({ ...account });
     });
-    this.setState({});
   };
 
   onDeleteBankAccount = (i) => {
+    this.toggleModal();
     this.setState({ loadingBankAccounts: true }, () => {
       deleteAccountAction(i);
     });
@@ -108,6 +110,13 @@ class EditProfileView extends View {
       updateProfileAction(user);
     });
   };
+
+  toggleModal = () => {
+    console.log("toggleModal = () => {");    
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
 
   render() {
     let {
@@ -162,12 +171,16 @@ class EditProfileView extends View {
                   loading={true}
                 />
               ) : (
-                  <EditBankInformation
-                    editAccount={this.editAccount}
-                    newAccount={this.newAccount}
-                    bankAccounts={bankAccounts}
-                    onDelete={this.onDeleteBankAccount}
-                  />
+                  <div>
+                    <ModalConfirm toggleModal={this.toggleModal} modal={this.modal}/>
+                    <EditBankInformation
+                      editAccount={this.editAccount}
+                      newAccount={this.newAccount}
+                      bankAccounts={bankAccounts}
+                      onDelete={this.onDeleteBankAccount}
+                    />
+                  </div>
+
                 )}
             </MDBCol>
             <MDBCol md="1" />

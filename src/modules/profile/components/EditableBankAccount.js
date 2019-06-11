@@ -6,7 +6,7 @@ export class EditableBankAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.account.id,
+      i: this.props.i,
       type: this.props.account.type,
       title: this.props.account.title,
       number: this.props.account.number,
@@ -27,8 +27,8 @@ export class EditableBankAccount extends Component {
   };
 
   render() {
-    let { onDelete, editAccount, flagEdit, i } = this.props;
-    let { type, title, number, routingNumber } = this.state;
+    const { onDelete, editAccount, flagEdit } = this.props;
+    let { type, title, number, routingNumber, i } = this.state;
     let style = {
       position: 'relative',
     };

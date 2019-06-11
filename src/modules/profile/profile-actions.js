@@ -8,6 +8,7 @@ import {
   ACCOUNT_ERROR_EVENT,
   NEW_ACCOUNT_EVENT,
   DELETE_ACCOUNT_EVENT,
+  UPDATE_ACCOUNT_EVENT
 } from './profile-store';
 // import { profileValidator } from './profile-validators';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
@@ -141,4 +142,44 @@ export const deleteAccountAction = async (i) => {
 
   Flux.dispatchEvent(DELETE_ACCOUNT_EVENT, i);
   return i;
+}
+
+export const updateAccountAction = async (accountData) => {
+  try {
+    // TODO: Account Validator
+    // profileValidator(accountData);
+  } catch (e) {
+    error('addAccountAction', e);
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+  const DB = firebase.firestore();
+  const usersCollection = DB.collection('users');
+  const sessionUser = landingStore.getState(USER_EVENT);
+
+  // We query the user from Firestore
+  const userRef = usersCollection.doc(sessionUser.email);
+  const user = await userRef.get();
+  if (!user.exists) {
+    const e = new Error(
+      `User with email: ${sessionUser.email}, does not exist!`,
+    );
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+
+  const userData = user.data();
+  let { bankAccounts } = userData;
+  bankAccounts[accountData.i] = accountData;
+
+
+  try {
+    await userRef.set({ bankAccounts }, { merge: true });
+  } catch (e) {
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+
+  Flux.dispatchEvent(UPDATE_ACCOUNT_EVENT, accountData);
+  return accountData;
 }
