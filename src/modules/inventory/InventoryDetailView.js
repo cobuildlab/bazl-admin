@@ -5,9 +5,9 @@ import ImgDefault from "../../assets/img/img-default.png";
 import { Link } from "react-router-dom";
 import View from 'react-flux-state';
 import {toast} from 'react-toastify';
-import { inventoryStore, INVENTORY_DETAIL_EVENT, INVENTORY_DETAIL_ERROR, 
-INVENTORY_UPDATE_EVENT,INVENTORY_UPDATE_ERROR,
-INVENTORY_DELETE_EVENT,INVENTORY_DELETE_ERROR} from './inventory-store';
+import { inventoryStore, INVENTORY_DETAIL_EVENT, INVENTORY_ERROR_EVENT, 
+INVENTORY_UPDATE_EVENT,
+INVENTORY_DELETE_EVENT} from './inventory-store';
 import { error } from 'pure-logger';
 import { fetchDetailProduct, updateProduct,deleteProduct } from "./inventory-actions";
 import * as R from 'ramda';
@@ -30,7 +30,7 @@ class InventoryDetailView extends View {
                 data: data
             })
          })
-         this.subscribe(inventoryStore, INVENTORY_DETAIL_ERROR, (e) =>{
+         this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (e) =>{
              toast.error(e.message);
          })
          this.subscribe(inventoryStore, INVENTORY_UPDATE_EVENT, () =>{
@@ -38,16 +38,12 @@ class InventoryDetailView extends View {
              toast.success("Product Updated");
              
          })
-         this.subscribe(inventoryStore, INVENTORY_UPDATE_ERROR, (e) =>{
-             toast.error("Error Updating product" , e.message);
-         })
+         
          this.subscribe(inventoryStore, INVENTORY_DELETE_EVENT, () =>{
              this.props.history.push('/inventory');
              toast.success("Product Deleted");
          })
-         this.subscribe(inventoryStore, INVENTORY_DELETE_ERROR, e =>{
-             toast.error("Error Deleting prouct", e.message);
-         })
+         
         
          fetchDetailProduct(this.props.match.params.id);
         

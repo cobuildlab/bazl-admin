@@ -1,8 +1,8 @@
 import firebase from 'firebase'
 import Flux from 'flux-state';
 import {INVENTORY_EVENT, INVENTORY_ERROR_EVENT,INVENTORY_DETAIL_EVENT,
-   INVENTORY_DETAIL_ERROR, INVENTORY_UPDATE_EVENT, INVENTORY_UPDATE_ERROR,
-  INVENTORY_DELETE_EVENT, INVENTORY_DELETE_ERROR} from './inventory-store';
+  INVENTORY_UPDATE_EVENT,
+  INVENTORY_DELETE_EVENT} from './inventory-store';
 /**
  * fetches the products belonging to the user
  * 
@@ -70,7 +70,7 @@ export const fetchDetailProduct = (id) =>{
         Flux.dispatchEvent(INVENTORY_DETAIL_EVENT, data);
       } else {
         console.log("No such Document");
-        Flux.dispatchEvent(INVENTORY_DETAIL_ERROR, data);
+        Flux.dispatchEvent(INVENTORY_ERROR_EVENT, data);
       }
 
 
@@ -121,7 +121,7 @@ export const updateProduct = async (product, image, id) =>{
           Flux.dispatchEvent(INVENTORY_UPDATE_EVENT, doc)
         }).catch(e => {
           console.log("Error Updating document: ", e);
-          Flux.dispatchEvent(INVENTORY_UPDATE_ERROR, e);
+          Flux.dispatchEvent(INVENTORY_ERROR_EVENT, e);
         })
   
     }
@@ -140,6 +140,6 @@ export const deleteProduct = (id) => {
       Flux.dispatchEvent(INVENTORY_DELETE_EVENT, doc)
     }).catch(e => {
       console.log("Error deleting document: ", e);
-      Flux.dispatchEvent(INVENTORY_DELETE_ERROR, e);
+      Flux.dispatchEvent(INVENTORY_ERROR_EVENT, e);
     })
 }
