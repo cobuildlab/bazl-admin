@@ -80,7 +80,7 @@ class InventoryDetailView extends View {
         
     }
      onUpdate = (confirm) => {
-         if(confirm == true){
+         if(confirm){
 
              updateProduct(R.clone(this.state.data), this.state.image, this.props.match.params.id);
             }

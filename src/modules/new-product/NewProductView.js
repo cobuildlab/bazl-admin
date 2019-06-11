@@ -74,7 +74,7 @@ class NewProductView extends View {
 
   }
   onSubmit = (confirm) => {
-    if(confirm === true){
+    if(confirm){
       this.setState(() => {
         createProduct(R.clone(this.state.data), this.state.image)
       })
