@@ -3,8 +3,9 @@ import { MDBContainer, MDBBtn, MDBIcon, MDBAnimation } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
 import TableInventory from "./components/TableInventory";
 import View from 'react-flux-state';
-import {INVENTORY_EVENT, INVENTORY_EVENT_ERROR, inventoryStore} from './inventory-store';
+import {INVENTORY_EVENT, INVENTORY_ERROR_EVENT, inventoryStore} from './inventory-store';
 import { fetchUserProducts} from './inventory-actions';
+import {toast} from 'react-toastify';
 class InventoryView extends View {
   constructor(props){
     super(props);
@@ -15,11 +16,13 @@ class InventoryView extends View {
   componentDidMount() {
     this.subscribe(inventoryStore, INVENTORY_EVENT, (product) => {
       const products = product;
-
       this.setState({
-        products: product
+        products: products
       });
     });
+    this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (error) =>{
+      toast.error(error.message);
+    })
     fetchUserProducts();
   }
   render() {

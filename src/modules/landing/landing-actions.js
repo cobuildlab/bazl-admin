@@ -122,7 +122,9 @@ export const requestPasswordReset = async (email) => {
   const AUTH = firebase.auth();
   AUTH.sendPasswordResetEmail(email)
     .then((send) => Flux.dispatchEvent(REQUEST_PASSWORD_RESET, send))
-    .catch((err) => Flux.dispatchEvent(USER_ERROR_EVENT, new Error(err.message)));
+    .catch((err) =>
+      Flux.dispatchEvent(USER_ERROR_EVENT, new Error(err.message)),
+    );
 };
 
 /**

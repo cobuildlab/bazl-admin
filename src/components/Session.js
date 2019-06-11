@@ -20,14 +20,16 @@ class Session extends View {
   }
 
   async componentDidMount() {
-    const that = this;
-    firebase.auth().onAuthStateChanged(async function(firebaseUser) {
+    firebase.auth().onAuthStateChanged(async (firebaseUser) => {
+      console.log(`DEBUG:firebaseUSer:`, firebaseUser);
       if (firebaseUser) {
-        await fetchUser(firebaseUser.email);
-      } else that.setState({ firebaseAcquired: true });
+        return await fetchUser(firebaseUser.email);
+      }
+      window.location.href = '/';
     });
 
     this.subscribe(landingStore, USER_EVENT, (user) => {
+      console.log(`DEBUG:firebaseUSer:`, user);
       this.setState({ firebaseAcquired: true }, () => {});
     });
   }
