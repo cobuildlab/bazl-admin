@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { MDBIcon, MDBRow, MDBBtn, MDBInput } from 'mdbreact';
 
-export class BankAccount extends Component {
+export class EditableBankAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -91,4 +91,4 @@ export class BankAccount extends Component {
     );
   }
 }
-export default BankAccount;
+export default EditableBankAccount;

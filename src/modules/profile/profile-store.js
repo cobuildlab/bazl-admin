@@ -11,7 +11,7 @@ export const PROFILE_ERROR_EVENT = 'PROFILE_ERROR_EVENT';
 export const PROFILE_EVENT = 'PROFILE_EVENT';
 export const ACCOUNT_ERROR_EVENT = 'ACCOUNT_ERROR_EVENT';
 export const NEW_ACCOUNT_EVENT = 'NEW_ACCOUNT_EVENT';
-
+export const DELETE_ACCOUNT_EVENT = 'DELETE_ACCOUNT_EVENT';
 /**
  * This store manages the events that triggers on all user actions
  */
@@ -23,6 +23,7 @@ class ProfileStore extends Flux.DashStore {
     this.addEvent(PROFILE_EVENT);
     this.addEvent(ACCOUNT_ERROR_EVENT);
     this.addEvent(NEW_ACCOUNT_EVENT);
+    this.addEvent(DELETE_ACCOUNT_EVENT);
   }
 }
 

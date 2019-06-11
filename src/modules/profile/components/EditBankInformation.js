@@ -1,6 +1,6 @@
 import React from 'react';
 import { MDBBtn, MDBInput, MDBRow } from 'mdbreact';
-import { BankAccount } from './BankAccount';
+import { EditableBankAccount } from './EditableBankAccount';
 
 class EditBankInformation extends React.Component {
   constructor(props) {
@@ -10,7 +10,6 @@ class EditBankInformation extends React.Component {
       title: '',
       number: '',
       routingNumber: '',
-      flagInformation: this.props.flagInformation,
       flagAccounts: false,
     };
   }
@@ -45,7 +44,6 @@ class EditBankInformation extends React.Component {
       number,
       routingNumber,
       flagAccounts,
-      flagInformation,
     } = this.state;
     let style = {
       position: 'relative',
@@ -56,16 +54,15 @@ class EditBankInformation extends React.Component {
         <div className="mt-3 mb-5">
           <h5>Bank Accounts</h5>
           {bankAccounts.map((account, i) => (
-            <BankAccount
+            <EditableBankAccount
               key={i}
               account={account}
               editAccount={editAccount}
-              flagEdit={flagInformation}
-              onDelete={onDelete}></BankAccount>
+              onDelete={onDelete}
+            />
           ))}
           <div className="d-flex justify-content-center align-items-center">
             <MDBBtn
-              disabled={flagInformation}
               onClick={() => this.changeFlag()}
               className="btn btn-circle">
               Add Accounts
@@ -81,7 +78,6 @@ class EditBankInformation extends React.Component {
                   type="checkbox"
                   name="type"
                   onChange={this.onChangeBank}
-                  disabled={flagInformation}
                   style={style}
                   checked={type}
                 />
@@ -92,7 +88,6 @@ class EditBankInformation extends React.Component {
                   name="title"
                   value={title}
                   onChange={this.onChangeBank}
-                  disabled={flagInformation}
                 />
                 <MDBInput
                   label="Account number"
@@ -101,7 +96,6 @@ class EditBankInformation extends React.Component {
                   name="number"
                   value={number}
                   onChange={this.onChangeBank}
-                  disabled={flagInformation}
                 />
                 <MDBInput
                   label="Routing number"
@@ -110,7 +104,6 @@ class EditBankInformation extends React.Component {
                   name="routingNumber"
                   value={routingNumber}
                   onChange={this.onChangeBank}
-                  disabled={flagInformation}
                 />
                 <MDBBtn
                   onClick={() => {
@@ -123,8 +116,8 @@ class EditBankInformation extends React.Component {
               </MDBRow>
             </div>
           ) : (
-            <div></div>
-          )}
+              <div></div>
+            )}
         </div>
       </React.Fragment>
     );

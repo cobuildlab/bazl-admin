@@ -25,7 +25,7 @@ class FormLogin extends View {
 
   componentDidMount() {
     this.subscribe(landingStore, LOGIN_EVENT, (user) => {
-      toast.info("Welcome: " + user.email);      
+      toast.info("Welcome: " + user.email);
       this.props.history.push('/home');
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
@@ -36,7 +36,7 @@ class FormLogin extends View {
       toast.info('Request for Recover Password Processed');
       this.setState({ loading: false });
     });
-    this.subscribe(landingStore, USER_ERROR_EVENT , (err) =>{
+    this.subscribe(landingStore, USER_ERROR_EVENT, (err) => {
       toast.error(err.message);
       this.setState({ loading: false });
     });
@@ -46,7 +46,7 @@ class FormLogin extends View {
     const { email, password } = this.state;
     e.preventDefault();
     if (!this.state.forgot) {
-      this.setState({ loading: true,forgot: true, }, () => {
+      this.setState({ loading: true, forgot: true, }, () => {
         requestPasswordReset(email);
       });
     } else {
