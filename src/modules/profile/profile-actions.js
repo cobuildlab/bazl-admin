@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import Flux from 'flux-state';
-import * as R from 'ramda';
+// import * as R from 'ramda';
 import { log, error } from 'pure-logger';
 import {
   PROFILE_EVENT,

@@ -10,7 +10,7 @@ import {
   fetchProfileAction,
   updateProfileAction,
 } from './profile-actions';
-import { Loader } from '../../components/Loader';
+// import { Loader } from '../../components/Loader';
 import View from 'react-flux-state';
 import {
   ACCOUNT_ERROR_EVENT,
@@ -65,6 +65,8 @@ class EditProfileView extends View {
     this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
       const { user } = this.state;
       user.bankAccounts.splice(i, 1)
+      console.log("user",user);
+      
       this.setState({
         loadingBankAccounts: false,
         user,
@@ -95,7 +97,10 @@ class EditProfileView extends View {
   };
 
   onDeleteBankAccount = (i) => {
-    this.toggleModal();
+
+    // this.toggleModal();
+    console.log("i",i);
+    
     this.setState({ loadingBankAccounts: true }, () => {
       deleteAccountAction(i);
     });
@@ -172,7 +177,7 @@ class EditProfileView extends View {
                 />
               ) : (
                   <div>
-                    <ModalConfirm toggleModal={this.toggleModal} modal={this.modal}/>
+                    <ModalConfirm toggleModal={this.toggleModal} modal={this.state.modal}/>
                     <EditBankInformation
                       editAccount={this.editAccount}
                       newAccount={this.newAccount}

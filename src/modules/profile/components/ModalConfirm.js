@@ -7,16 +7,18 @@ class ModalComponentTerms extends View {
   constructor(props) {
     super(props);
     this.state = {
-      status: this.props.modal
+      modal: this.props.modal
     };
   }
 
   render() {
     const { toggleModal } = this.props;
-    let { status } = this.state;
+    let { modal } = this.state;
+    console.log("Estado de la modal",modal);
+    
     return (
       <MDBContainer className="p-0">
-        <MDBModal isOpen={status} toggle={toggleModal} size="lg">
+        <MDBModal isOpen={modal} toggle={toggleModal} size="lg">
           <MDBModalBody className="p-0">
             <div className="d-flex justify-content-center p-4">
               <img src={Logo} alt="Bazl" className="img-fluid" />              
