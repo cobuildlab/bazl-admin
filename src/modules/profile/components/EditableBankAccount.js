@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { MDBIcon, MDBRow, MDBBtn, MDBInput } from 'mdbreact';
 
-export class BankAccount extends Component {
+export class EditableBankAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.account.id,
+      i: this.props.i,
       type: this.props.account.type,
       title: this.props.account.title,
       number: this.props.account.number,
@@ -27,8 +27,8 @@ export class BankAccount extends Component {
   };
 
   render() {
-    let { account, onDelete, editAccount, flagEdit } = this.props;
-    let { type, title, number, routingNumber } = this.state;
+    const { onDelete, editAccount, flagEdit } = this.props;
+    let { type, title, number, routingNumber, i } = this.state;
     let style = {
       position: 'relative',
     };
@@ -82,7 +82,7 @@ export class BankAccount extends Component {
             <MDBBtn
               disabled={flagEdit}
               className="btn-delete"
-              onClick={() => onDelete(account)}>
+              onClick={() => onDelete(i)}>
               <MDBIcon icon="times" />
             </MDBBtn>
           </div>
@@ -91,4 +91,4 @@ export class BankAccount extends Component {
     );
   }
 }
-export default BankAccount;
+export default EditableBankAccount;

@@ -1,10 +1,12 @@
 import React from 'react';
-import { MDBCol, MDBContainer, MDBRow } from 'mdbreact';
+import { MDBCol, MDBContainer, MDBRow, MDBIcon } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import SliderCards from '../../components/SliderCards';
 import { EditBasicInformation } from './components/EditBasicInformation';
 import {
   addAccountAction,
+  deleteAccountAction,
+  updateAccountAction,
   fetchProfileAction,
   updateProfileAction,
 } from './profile-actions';
@@ -13,6 +15,8 @@ import View from 'react-flux-state';
 import {
   ACCOUNT_ERROR_EVENT,
   NEW_ACCOUNT_EVENT,
+  DELETE_ACCOUNT_EVENT,
+  UPDATE_ACCOUNT_EVENT,
   profileStore,
 } from './profile-store';
 import { toast } from 'react-toastify/index';
@@ -20,6 +24,9 @@ import * as R from 'ramda';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 import EditBankInformation from './components/EditBankInformation';
 import { userModel } from './Profile-models';
+import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
+import ModalConfirm from './components/ModalConfirm';
 
 class EditProfileView extends View {
   constructor(props) {
@@ -28,6 +35,8 @@ class EditProfileView extends View {
     this.state = {
       user: { ...R.clone(userModel), ...user },
       loadingBankAccounts: false,
+      loadingUser: false,
+      modal: false
     };
   }
 
@@ -36,21 +45,8 @@ class EditProfileView extends View {
       toast.error(e.message);
       this.setState({ loadingBankAccounts: false });
     });
-
-    this.subscribe(profileStore, NEW_ACCOUNT_EVENT, (bankAccount) => {
-      const { user } = this.state;
-      user.bankAccounts.push(bankAccount);
-      this.setState({
-        loading: false,
-        user,
-      });
-    });
-
     this.subscribe(landingStore, USER_EVENT, (state) => {
-      const { data } = this.state;
-      const { user } = data;
-      data.user = R.mergeRight(user, state);
-      this.setState({ loading: false }, () => {
+      this.setState({ loadingUser: false }, () => {
         this.props.history.push('/profile');
       });
     });
@@ -58,15 +54,31 @@ class EditProfileView extends View {
       toast.error(e.message);
       this.setState({ loadingBankAccounts: false });
     });
-
     this.subscribe(profileStore, NEW_ACCOUNT_EVENT, (bankAccount) => {
       const { user } = this.state;
       user.bankAccounts.push(bankAccount);
       this.setState({
-        loading: false,
+        loadingBankAccounts: false,
         user,
       });
     });
+    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
+      const { user } = this.state;
+      user.bankAccounts.splice(i, 1)
+      this.setState({
+        loadingBankAccounts: false,
+        user,
+      });
+    });
+    this.subscribe(profileStore, UPDATE_ACCOUNT_EVENT, (bankAccount) => {
+      let { user } = this.state;
+      user.bankAccounts[bankAccount.id] = bankAccount;
+      this.setState({
+        loadingBankAccounts: false,
+        user,
+      });
+    });
+
     fetchProfileAction();
   }
 
@@ -76,25 +88,17 @@ class EditProfileView extends View {
     });
   };
 
-  editAccount = (bank) => {
-    let { bankAccounts } = this.state.user;
-    // eslint-disable-next-line
-    bankAccounts.map(function(bankAccount, i) {
-      if (bank.id === bankAccount.id) {
-        bankAccounts[i] = bank;
-      }
+  editAccount = (account) => {
+    this.setState({ loadingBankAccounts: true }, () => {
+      updateAccountAction({ ...account });
     });
-    this.setState({});
   };
 
-  onDeleteBankAccount = (bank) => {
-    const { bankAccounts } = R.clone(this.state.user);
-    const result = bankAccounts.filter((index) => index.Id !== bank.Id);
-    this.setState((state) => ({
-      ...state,
-      user: { ...state.user, bankAccounts: result },
-    }));
-    this.flagEdit();
+  onDeleteBankAccount = (i) => {
+    this.toggleModal();
+    this.setState({ loadingBankAccounts: true }, () => {
+      deleteAccountAction(i);
+    });
   };
 
   onUpdateUser = (updateUser) => {
@@ -102,32 +106,26 @@ class EditProfileView extends View {
     user.name = updateUser.name;
     user.description = updateUser.description;
     user.picture = updateUser.picture;
-    this.setState({
-      editProfile: false,
-      user,
+    this.setState({ loadingUser: true }, () => {
+      updateProfileAction(user);
     });
-    updateProfileAction(user);
   };
 
-  editAccount = (bank) => {
-    let { bankAccounts } = this.state.user;
-    // eslint-disable-next-line
-    bankAccounts.map(function(bankAccount, i) {
-      if (bank.id === bankAccount.id) {
-        bankAccounts[i] = bank;
-      }
-    });
-    this.setState({});
-  };
+  toggleModal = () => {
+    console.log("toggleModal = () => {");    
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
+  }
 
   render() {
-    const { flagEdit, onSave, onDelete } = this.props;
     let {
       name,
       description,
       picture,
       bankAccounts,
       loadingBankAccounts,
+      loadingUser
     } = this.state.user;
     return (
       <SidebarComponent>
@@ -135,32 +133,55 @@ class EditProfileView extends View {
           <div>
             <h2 className="m-0">Edit Profile</h2>
           </div>
+          <div>
+            <Link to={'/profile'} className="btn btn-circle btn-circle-link">
+              Profile
+            <MDBIcon icon="upload" className="ml-1" />
+            </Link>
+          </div>
         </div>
         <MDBContainer>
           <MDBRow>
-            <EditBasicInformation
-              name={name}
-              description={description}
-              picture={picture}
-              flagInformation={false}
-              onCancel={flagEdit}
-              onSave={onSave}
-            />
+            {loadingUser ? (
+              <ClipLoader
+                sizeUnit={'px'}
+                size={120}
+                color={'#44c1f6'}
+                loading={true}
+              />
+            ) : (
+                <EditBasicInformation
+                  name={name}
+                  description={description}
+                  picture={picture}
+                  onCancel={this.flagEdit}
+                  onSave={this.onUpdateUser}
+                />
+              )}
           </MDBRow>
           <MDBRow>
             <MDBCol md="1" />
             <MDBCol md="10">
               {loadingBankAccounts ? (
-                <Loader />
-              ) : (
-                <EditBankInformation
-                  editAccount={this.editAccount}
-                  newAccount={this.newAccount}
-                  bankAccounts={bankAccounts}
-                  flagInformation={false}
-                  onDelete={onDelete}
+                // <Loader />
+                <ClipLoader
+                  sizeUnit={'px'}
+                  size={120}
+                  color={'#44c1f6'}
+                  loading={true}
                 />
-              )}
+              ) : (
+                  <div>
+                    <ModalConfirm toggleModal={this.toggleModal} modal={this.modal}/>
+                    <EditBankInformation
+                      editAccount={this.editAccount}
+                      newAccount={this.newAccount}
+                      bankAccounts={bankAccounts}
+                      onDelete={this.onDeleteBankAccount}
+                    />
+                  </div>
+
+                )}
             </MDBCol>
             <MDBCol md="1" />
           </MDBRow>
