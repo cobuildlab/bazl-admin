@@ -11,7 +11,7 @@ import { landingStore, LOGIN_EVENT} from '../landing/landing-store';
 import { error } from 'pure-logger';
 import { createProduct } from "./newproduct-actions";
 import {toast} from 'react-toastify';
-
+import ModalComponent from './components/ModalComponent'
 class NewProductView extends View {
   constructor(props) {
     super(props);
@@ -73,11 +73,12 @@ class NewProductView extends View {
     reader.readAsDataURL(image);
 
   }
-  onSubmit = (e) => {
-    e.preventDefault();
-    this.setState(() => {
-     createProduct(R.clone(this.state.data), this.state.image)
-     })
+  onSubmit = (confirm) => {
+    if(confirm === true){
+      this.setState(() => {
+        createProduct(R.clone(this.state.data), this.state.image)
+      })
+    }
    }
 
   render() {
@@ -339,9 +340,10 @@ class NewProductView extends View {
                 </MDBRow>
                 <MDBRow>
                   <MDBCol className="text-center">
-                    <MDBBtn onClick={this.onSubmit} className="btn btn-circle mt-4 mb-5">
+                    <ModalComponent callbackFromParent = {this.onSubmit}/>
+                    {/* <MDBBtn onClick={this.onSubmit} className="btn btn-circle mt-4 mb-5">
                       Publish
-                    </MDBBtn>
+                    </MDBBtn> */}
                   </MDBCol>
                 </MDBRow>
               </MDBCol>
