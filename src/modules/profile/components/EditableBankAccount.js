@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import { MDBRow, MDBInput } from 'mdbreact';
+import * as R from 'ramda';
+import { MDBIcon, MDBRow, MDBBtn, MDBInput } from 'mdbreact';
 
-class BankAccount extends Component {
+export class BankAccount extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...this.props.account };
+    this.state = {
+      id: this.props.account.id,
+      type: this.props.account.type,
+      title: this.props.account.title,
+      number: this.props.account.number,
+      routingNumber: this.props.account.routingNumber,
+    };
   }
 
+  onChange = ({ target: { name, value } }) => {
+    if (name === 'type') {
+      this.setState((prevState) => ({
+        type: !prevState.type,
+      }));
+    } else {
+      this.setState({
+        [name]: value,
+      });
+    }
+  };
+
   render() {
+    let { account, onDelete, editAccount, flagEdit } = this.props;
     let { type, title, number, routingNumber } = this.state;
     let style = {
       position: 'relative',
     };
-    const flagEdit = true;
     return (
       <div>
         <MDBRow className="d-flex justify-content-around align-items-center mb-3">
@@ -21,6 +40,7 @@ class BankAccount extends Component {
             className="mt-0"
             type="checkbox"
             name="type"
+            onChange={this.onChange}
             disabled={flagEdit}
             style={style}
             checked={type}
@@ -31,6 +51,7 @@ class BankAccount extends Component {
             type="text"
             name="title"
             value={title}
+            onChange={this.onChange}
             disabled={flagEdit}
           />
           <MDBInput
@@ -39,6 +60,7 @@ class BankAccount extends Component {
             type="text"
             name="number"
             value={number}
+            onChange={this.onChange}
             disabled={flagEdit}
           />
           <MDBInput
@@ -50,10 +72,23 @@ class BankAccount extends Component {
             onChange={this.onChange}
             disabled={flagEdit}
           />
+          <div>
+            <MDBBtn
+              disabled={flagEdit}
+              className="btn-edit"
+              onClick={() => editAccount(R.clone(this.state))}>
+              <MDBIcon icon="pencil-alt" />
+            </MDBBtn>
+            <MDBBtn
+              disabled={flagEdit}
+              className="btn-delete"
+              onClick={() => onDelete(account)}>
+              <MDBIcon icon="times" />
+            </MDBBtn>
+          </div>
         </MDBRow>
       </div>
     );
   }
 }
-
-export { BankAccount };
+export default BankAccount;
