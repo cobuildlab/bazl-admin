@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 import Flux from 'flux-state';
-// import * as R from 'ramda';
 import { log, error } from 'pure-logger';
 import {
   PROFILE_EVENT,
@@ -8,7 +7,7 @@ import {
   ACCOUNT_ERROR_EVENT,
   NEW_ACCOUNT_EVENT,
   DELETE_ACCOUNT_EVENT,
-  UPDATE_ACCOUNT_EVENT
+  UPDATE_ACCOUNT_EVENT,
 } from './profile-store';
 // import { profileValidator } from './profile-validators';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
@@ -21,11 +20,11 @@ import { landingStore, USER_EVENT } from '../landing/landing-store';
 export const updateProfileAction = async (user) => {
   try {
     // profileValidator(user);
-    console.log("export const updateProfileAction = async (user) => {", user);
-
+    console.log('export const updateProfileAction = async (user) => {', user);
   } catch (e) {
     error('updateProfileAction', e);
-    return Flux.dispatchEvent(PROFILE_ERROR_EVENT, e);
+    Flux.dispatchEvent(PROFILE_ERROR_EVENT, e);
+    throw e;
   }
 
   const DB = firebase.firestore();
@@ -131,7 +130,7 @@ export const deleteAccountAction = async (i) => {
 
   const userData = user.data();
   let { bankAccounts } = userData;
-  bankAccounts.splice(i, 1)
+  bankAccounts.splice(i, 1);
 
   try {
     await userRef.set({ bankAccounts }, { merge: true });
@@ -142,7 +141,7 @@ export const deleteAccountAction = async (i) => {
 
   Flux.dispatchEvent(DELETE_ACCOUNT_EVENT, i);
   return i;
-}
+};
 
 export const updateAccountAction = async (accountData) => {
   try {
@@ -172,7 +171,6 @@ export const updateAccountAction = async (accountData) => {
   let { bankAccounts } = userData;
   bankAccounts[accountData.i] = accountData;
 
-
   try {
     await userRef.set({ bankAccounts }, { merge: true });
   } catch (e) {
@@ -182,4 +180,4 @@ export const updateAccountAction = async (accountData) => {
 
   Flux.dispatchEvent(UPDATE_ACCOUNT_EVENT, accountData);
   return accountData;
-}
+};

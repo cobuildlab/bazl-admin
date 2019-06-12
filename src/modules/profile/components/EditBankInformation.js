@@ -10,7 +10,7 @@ class EditBankInformation extends React.Component {
       title: '',
       number: '',
       routingNumber: '',
-      flagAccounts: false,
+      showNewAccountForm: false,
     };
   }
 
@@ -28,7 +28,7 @@ class EditBankInformation extends React.Component {
 
   changeFlag = () => {
     this.setState((prevState) => ({
-      flagAccounts: !prevState.flagAccounts,
+      showNewAccountForm: !prevState.showNewAccountForm,
       type: false,
       title: '',
       number: '',
@@ -38,7 +38,7 @@ class EditBankInformation extends React.Component {
 
   render() {
     const { bankAccounts, onDelete, newAccount, editAccount } = this.props;
-    let { type, title, number, routingNumber, flagAccounts } = this.state;
+    let { type, title, number, routingNumber, showNewAccountForm } = this.state;
     let style = {
       position: 'relative',
     };
@@ -50,7 +50,6 @@ class EditBankInformation extends React.Component {
           {bankAccounts.map((account, i) => (
             <EditableBankAccount
               key={i}
-              i={i}
               account={account}
               editAccount={editAccount}
               onDelete={() => onDelete(i)}
@@ -60,10 +59,10 @@ class EditBankInformation extends React.Component {
             <MDBBtn
               onClick={() => this.changeFlag()}
               className="btn btn-circle">
-              Add Accounts
+              Add Account
             </MDBBtn>
           </div>
-          {flagAccounts ? (
+          {showNewAccountForm ? (
             <div>
               <h5>New Account</h5>
               <MDBRow className="d-flex justify-content-around align-items-center mb-3">
