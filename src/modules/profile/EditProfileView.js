@@ -72,16 +72,14 @@ class EditProfileView extends View {
     /**
      * @typedef {number} bankAccount
      */
-    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (bankAccount) => {
+    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
       const { user } = this.state;
-      const bankAccounts = user.bankAccounts.filter(
-        (_, index) => index !== bankAccount,
-      );
-      console.log(bankAccounts);
-      const newUserInformation = { ...user, bankAccounts: bankAccounts };
+      console.log("user",user);      
+      user.bankAccounts.splice(i, 1)
+      console.log("user",user);
       this.setState({
         loadingBankAccounts: false,
-        user: newUserInformation,
+        user,
       });
     });
 
@@ -151,15 +149,10 @@ class EditProfileView extends View {
    * @param {number} accountStashIndex
    */
   getStashAccountToDelete = (accountStashIndex) => {
-    /**
-     * @type { [] } bankAccounts
-     */
-    const {
-      user: { bankAccounts },
-    } = this.state;
-    return bankAccounts.find(
-      (_, accountIndex) => accountIndex === accountStashIndex,
-    );
+    this.toggleModal();
+    this.setState({ loadingBankAccounts: true }, () => {
+      deleteAccountAction(accountStashIndex);
+    });
   };
 
   render() {
