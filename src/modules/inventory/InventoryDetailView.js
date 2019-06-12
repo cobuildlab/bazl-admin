@@ -1,10 +1,11 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import { Container,MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBAnimation } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import ImgDefault from '../../assets/img/img-default.png';
 import { Link } from 'react-router-dom';
 import View from 'react-flux-state';
 import { toast } from 'react-toastify';
+import {ClipLoader} from 'react-spinners';
 import { inventoryStore, INVENTORY_DETAIL_EVENT, INVENTORY_ERROR_EVENT, 
   INVENTORY_UPDATE_EVENT,
   INVENTORY_DELETE_EVENT } from './inventory-store';
@@ -20,6 +21,7 @@ class InventoryDetailView extends View {
     this.state = {
       data: {},
       image: null,
+      loading: true
     };
     this.onError = error.bind(this);
 
@@ -30,6 +32,7 @@ class InventoryDetailView extends View {
     this.subscribe(inventoryStore, INVENTORY_DETAIL_EVENT, (data) => {
       this.setState({
         data: data,
+        loading: false
       })
     })
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (e) =>{
@@ -113,8 +116,10 @@ class InventoryDetailView extends View {
         />
       }
       return (
+        
         <React.Fragment>
-          <SidebarComponent>
+
+            <SidebarComponent>
             <div className="d-flex justify-content-between nav-admin body">
               <div>
                 <h2 className="m-0">Product {this.state.data.name}</h2>
@@ -123,12 +128,25 @@ class InventoryDetailView extends View {
                 <Link
                   to="/new-product"
                   className="btn btn-circle btn-circle-link"
-                >
+                  >
                                 Publication
                 </Link>
               </div>
 
             </div>
+                <MDBAnimation type="fadeIn" duration="1s">
+            {this.state.loading ? (
+              <Container
+            fluid
+            className="h-100 d-flex align-items-center d-flex justify-content-center bg-left">
+            <ClipLoader
+              sizeUnit={'px'}
+              size={150}
+              color={'#123abc'}
+              loading={true}
+            />
+          </Container>
+            ):(
             <form>
               <MDBContainer className="body" fluid>
                 <MDBRow>
@@ -205,7 +223,7 @@ class InventoryDetailView extends View {
                           name="description"
                           onChange={this.onChange}
                           label={this.state.data.description}
-
+                          
                           className="mt-0" />
                       </MDBCol>
                     </MDBRow>
@@ -364,7 +382,7 @@ class InventoryDetailView extends View {
                       <MDBCol>
                         <MDBInput
                           name="additionalFee"
-
+                          
                           onChange={this.onChange}
                           label={this.state.data.additionalFee}
                           className="mt-0" />
@@ -372,7 +390,7 @@ class InventoryDetailView extends View {
                       <MDBCol>
                         <MDBInput
                           name="shippingFee"
-
+                          
                           onChange={this.onChange}
                           label={this.state.data.shippingFee}
                           className="mt-0" />
@@ -390,6 +408,8 @@ class InventoryDetailView extends View {
                 </MDBRow>
               </MDBContainer>
             </form>
+              )}
+           </MDBAnimation>
           </SidebarComponent>
         </React.Fragment>
       );

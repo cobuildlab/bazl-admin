@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBAnimation } from "mdbreact";
 import SidebarComponent from "../../components/SidebarComponent";
 import ImgDefault from "../../assets/img/img-default.png";
 import * as R from 'ramda';
@@ -99,6 +99,7 @@ class NewProductView extends View {
      />
    }
     return (
+      
       <React.Fragment>
         <SidebarComponent>
           <div className="d-flex justify-content-between nav-admin body">
@@ -109,12 +110,13 @@ class NewProductView extends View {
               <Link
                 to="/new-product"
                 className="btn btn-circle btn-circle-link"
-              >
+                >
                 New Publications
               </Link>
             </div>
               
           </div>
+        <MDBAnimation type="fadeIn" dutarion="1s">
             <form>
           <MDBContainer className="body" fluid>
             <MDBRow>
@@ -350,6 +352,7 @@ class NewProductView extends View {
             </MDBRow>
           </MDBContainer>
              </form>
+                    </MDBAnimation>
         </SidebarComponent>
       </React.Fragment>
     );
