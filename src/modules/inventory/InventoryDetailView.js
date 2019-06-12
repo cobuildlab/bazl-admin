@@ -101,6 +101,9 @@ class InventoryDetailView extends View {
        if(confirm == true){
 
          deleteProduct(this.props.match.params.id);
+         this.setState({
+           loading:true,
+         })
        }
      }
      onAccept(){
