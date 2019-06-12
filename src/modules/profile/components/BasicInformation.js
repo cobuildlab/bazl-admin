@@ -26,11 +26,7 @@ const BasicInformation = ({ user }) => {
     );
   } else {
     imagePreview = (
-      <img
-        alt={'User Profile'}
-        src={ImgDefault}
-        className="img-fluid img-label"
-      />
+      <img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />
     );
   }
 

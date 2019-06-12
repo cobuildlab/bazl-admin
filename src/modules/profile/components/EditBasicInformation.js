@@ -9,7 +9,11 @@ import {
   MDBInput,
 } from 'mdbreact';
 import ImgDefault from '../../../assets/img/img-default.png';
+import PropTypes from 'prop-types';
 
+/**
+ *
+ */
 class EditBasicInformation extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +21,6 @@ class EditBasicInformation extends React.Component {
       name: this.props.name,
       description: this.props.description,
       picture: this.props.picture,
-      flagInformation: this.props.flagInformation,
     };
     this.onImageChange = this.onImageChange.bind(this);
   }
@@ -48,7 +51,7 @@ class EditBasicInformation extends React.Component {
 
   render() {
     const { onCancel, onSave } = this.props;
-    let { name, description, picture, flagInformation } = this.state;
+    let { name, description, picture } = this.state;
     let imagePreview = null;
 
     if (picture) {
@@ -72,7 +75,6 @@ class EditBasicInformation extends React.Component {
             {imagePreview}
           </label>
           <input
-            disabled={flagInformation}
             type="file"
             name="picture"
             id="upload-photo"
@@ -91,7 +93,6 @@ class EditBasicInformation extends React.Component {
             name="name"
             value={name}
             onChange={this.onChange}
-            disabled={flagInformation}
           />
           <h5>Description</h5>
           <MDBInput
@@ -100,19 +101,16 @@ class EditBasicInformation extends React.Component {
             name="description"
             value={description}
             onChange={this.onChange}
-            disabled={flagInformation}
             rows="5"
           />
           <MDBCol className="text-center">
             <MDBBtn
-              disabled={flagInformation}
               onClick={() => onSave(this.state)}
               color="success"
               className="btn btn-circle mt-4 mb-5">
               Save
             </MDBBtn>
             <MDBBtn
-              disabled={flagInformation}
               onClick={onCancel}
               color="danger"
               className="btn btn-circle mt-4 mb-5">
@@ -132,5 +130,13 @@ class EditBasicInformation extends React.Component {
     );
   }
 }
+
+EditBasicInformation.propTypes = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
 
 export { EditBasicInformation };

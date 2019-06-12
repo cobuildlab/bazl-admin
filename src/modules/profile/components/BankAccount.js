@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBRow, MDBInput } from 'mdbreact';
+import { MDBRow, MDBInput, MDBTableBody, MDBTableHead } from 'mdbreact';
 
 class BankAccount extends Component {
   constructor(props) {
@@ -9,49 +9,52 @@ class BankAccount extends Component {
 
   render() {
     let { type, title, number, routingNumber } = this.state;
-    let style = {
-      position: 'relative',
-    };
     const flagEdit = true;
     return (
-      <div>
-        <MDBRow className="d-flex justify-content-around align-items-center mb-3">
-          <MDBInput
-            label="Business Account"
-            className="mt-0"
-            type="checkbox"
-            name="type"
-            disabled={flagEdit}
-            style={style}
-            checked={type}
-          />
-          <MDBInput
-            label="Holder's name"
-            className="mt-0"
-            type="text"
-            name="title"
-            value={title}
-            disabled={flagEdit}
-          />
-          <MDBInput
-            label="Account number"
-            className="mt-0"
-            type="text"
-            name="number"
-            value={number}
-            disabled={flagEdit}
-          />
-          <MDBInput
-            label="Routing number"
-            className="mt-0"
-            type="text"
-            name="routingNumber"
-            value={routingNumber}
-            onChange={this.onChange}
-            disabled={flagEdit}
-          />
-        </MDBRow>
-      </div>
+      // <MDBRow className="d-flex justify-content-around align-items-center mb-3">
+      //   <MDBInput
+      //     label="Business Account"
+      //     className="mt-0"
+      //     type="checkbox"
+      //     name="type"
+      //     disabled={flagEdit}
+      //     style={style}
+      //     checked={type}
+      //   />
+      //   <MDBInput
+      //     label="Holder's name"
+      //     className="mt-0"
+      //     type="text"
+      //     name="title"
+      //     value={title}
+      //     disabled={flagEdit}
+      //   />
+      //   <MDBInput
+      //     label="Account number"
+      //     className="mt-0"
+      //     type="text"
+      //     name="number"
+      //     value={number}
+      //     disabled={flagEdit}
+      //   />
+      //   <MDBInput
+      //     label="Routing number"
+      //     className="mt-0"
+      //     type="text"
+      //     name="routingNumber"
+      //     value={routingNumber}
+      //     onChange={this.onChange}
+      //     disabled={flagEdit}
+      //   />
+      // </MDBRow>
+      <MDBTableBody>
+        <tr>
+          <td>{type === true ? 'Business' : 'Personal'}</td>
+          <td>{title}</td>
+          <td>{number}</td>
+          <td>{routingNumber}</td>
+        </tr>
+      </MDBTableBody>
     );
   }
 }

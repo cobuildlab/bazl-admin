@@ -39,10 +39,6 @@ class FormLogin extends View {
       toast.error(err.message);
       this.setState({ loading: false });
     });
-    this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
-      toast.error(err.message);
-      this.setState({ loading: false });
-    });
     this.subscribe(landingStore, REQUEST_PASSWORD_RESET, () => {
       toast.info('Request for Recover Password Processed');
       this.setState({ loading: false }, () => {

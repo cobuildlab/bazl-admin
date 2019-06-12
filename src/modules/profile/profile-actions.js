@@ -3,38 +3,37 @@ import Flux from 'flux-state';
 import { log, error } from 'pure-logger';
 import {
   PROFILE_EVENT,
-  UPDATE_USER_EVENT,
   PROFILE_ERROR_EVENT,
   ACCOUNT_ERROR_EVENT,
   NEW_ACCOUNT_EVENT,
+  DELETE_ACCOUNT_EVENT,
+  UPDATE_ACCOUNT_EVENT,
 } from './profile-store';
 // import { profileValidator } from './profile-validators';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 
 /**
  *
- * @param {ProfileModel} profileData
+ * @param {ProfileModel} user
  * @return {Promise<ProfileModel>}
  */
-export const updateProfileAction = async (profileData) => {
-  log('updateProfileAction1', profileData);
+export const updateProfileAction = async (user) => {
   try {
-    // profileValidator(profileData);
-    log('profileValidator(profileData);');
+    // profileValidator(user);
+    console.log('export const updateProfileAction = async (user) => {', user);
   } catch (e) {
     error('updateProfileAction', e);
-    return Flux.dispatchEvent(PROFILE_ERROR_EVENT, e);
+    Flux.dispatchEvent(PROFILE_ERROR_EVENT, e);
+    throw e;
   }
 
   const DB = firebase.firestore();
   const profilesCollection = DB.collection('users');
-  const user = landingStore.getState(USER_EVENT);
-  log('updateProfileAction:user', user);
-  const profileRef = profilesCollection.doc(user.email);
-  // logProfile(user.email, profileData, new Date().getTime());
-  await profileRef.set(profileData, { merge: true });
-  Flux.dispatchEvent(UPDATE_USER_EVENT, profileData);
-  return profileData;
+  const oldUser = landingStore.getState(USER_EVENT);
+  const profileRef = profilesCollection.doc(oldUser.email);
+  await profileRef.set(user, { merge: true });
+  Flux.dispatchEvent(USER_EVENT, user);
+  return user;
 };
 
 /**
@@ -53,7 +52,7 @@ export const fetchProfileAction = async (email = null) => {
   log('fetchProfileAction:email', email);
   const profileRef = profilesCollection.doc(email.toLowerCase());
   const query = await profileRef.get();
-  log('fetchProfileAction:query', query);
+
   let profileData = {};
   if (query.exists) {
     profileData = query.data();
@@ -63,6 +62,7 @@ export const fetchProfileAction = async (email = null) => {
 };
 
 export const addAccountAction = async (accountData) => {
+  delete accountData.flagAccounts;
   log('addAccountAction', accountData);
   try {
     // TODO: Account Validator
@@ -101,5 +101,83 @@ export const addAccountAction = async (accountData) => {
   }
 
   Flux.dispatchEvent(NEW_ACCOUNT_EVENT, accountData);
+  return accountData;
+};
+
+export const deleteAccountAction = async (i) => {
+  try {
+    // TODO: Account Validator
+    // profileValidator(accountData);
+  } catch (e) {
+    error('addAccountAction', e);
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+  const DB = firebase.firestore();
+  const usersCollection = DB.collection('users');
+  const sessionUser = landingStore.getState(USER_EVENT);
+
+  // We query the user from Firestore
+  const userRef = usersCollection.doc(sessionUser.email);
+  const user = await userRef.get();
+  if (!user.exists) {
+    const e = new Error(
+      `User with email: ${sessionUser.email}, does not exist!`,
+    );
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+
+  const userData = user.data();
+  let { bankAccounts } = userData;
+  bankAccounts.splice(i, 1);
+
+  try {
+    await userRef.set({ bankAccounts }, { merge: true });
+  } catch (e) {
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+
+  Flux.dispatchEvent(DELETE_ACCOUNT_EVENT, i);
+  return i;
+};
+
+export const updateAccountAction = async (accountData) => {
+  try {
+    // TODO: Account Validator
+    // profileValidator(accountData);
+  } catch (e) {
+    error('addAccountAction', e);
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+  const DB = firebase.firestore();
+  const usersCollection = DB.collection('users');
+  const sessionUser = landingStore.getState(USER_EVENT);
+
+  // We query the user from Firestore
+  const userRef = usersCollection.doc(sessionUser.email);
+  const user = await userRef.get();
+  if (!user.exists) {
+    const e = new Error(
+      `User with email: ${sessionUser.email}, does not exist!`,
+    );
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+
+  const userData = user.data();
+  let { bankAccounts } = userData;
+  bankAccounts[accountData.i] = accountData;
+
+  try {
+    await userRef.set({ bankAccounts }, { merge: true });
+  } catch (e) {
+    Flux.dispatchEvent(ACCOUNT_ERROR_EVENT, e);
+    throw e;
+  }
+
+  Flux.dispatchEvent(UPDATE_ACCOUNT_EVENT, accountData);
   return accountData;
 };
