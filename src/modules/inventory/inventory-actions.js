@@ -3,6 +3,7 @@ import Flux from 'flux-state';
 import {INVENTORY_EVENT, INVENTORY_ERROR_EVENT,INVENTORY_DETAIL_EVENT,
   INVENTORY_UPDATE_EVENT,
   INVENTORY_DELETE_EVENT} from './inventory-store';
+  import {landingStore, USER_EVENT} from '../landing/landing-store';
 /**
  * fetches the products belonging to the user
  * 
@@ -11,9 +12,10 @@ import {INVENTORY_EVENT, INVENTORY_ERROR_EVENT,INVENTORY_DETAIL_EVENT,
 export const fetchUserProducts = () => {
   const DB = firebase.firestore();
   const productsCollection = DB.collection('products');
+  const userData = landingStore.getState(USER_EVENT);
 
   let data = [];
-  productsCollection.get()
+  productsCollection.where("user", "==", userData.email).get()
     .then(snapshot => {
       snapshot.forEach(doc => {
         const { picture,
@@ -27,7 +29,8 @@ export const fetchUserProducts = () => {
           commission,
           additionalFee,
           shippingFee,
-          totalPrice } = doc.data();
+          totalPrice,
+          user       } = doc.data();
         data.push({
           picture,
           name,
@@ -41,6 +44,7 @@ export const fetchUserProducts = () => {
           additionalFee,
           shippingFee,
           totalPrice,
+          user,
           productID: doc.id
         })
       });
@@ -84,7 +88,7 @@ export const fetchDetailProduct = (id) =>{
 export const updateProduct = async (product, image, id) =>{
   const DB = firebase.firestore();
   const productCollection = DB.collection('products').doc(id);
-  let imageURL = null;
+  let imageURL = product.picture;
   const storage = firebase.storage();
   if (image) {
     const storageRef = storage.ref(`/productImages/${image.name}`);
@@ -102,7 +106,8 @@ export const updateProduct = async (product, image, id) =>{
   commission,
   additionalFee,
   shippingFee,
-  totalPrice } = product;
+  totalPrice,
+  user } = product;
   
         productCollection.update({
           picture: imageURL,
@@ -116,7 +121,8 @@ export const updateProduct = async (product, image, id) =>{
           commission,
           additionalFee,
           shippingFee,
-          totalPrice
+          totalPrice,
+          user
         }).then(doc => {
           Flux.dispatchEvent(INVENTORY_UPDATE_EVENT, doc)
         }).catch(e => {

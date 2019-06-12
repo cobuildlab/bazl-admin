@@ -14,8 +14,7 @@ export const createProduct = async (product, image)  => {
     let imageURL =null;
     const storage = firebase.storage();
     const userData = landingStore.getState(USER_EVENT);
-    const userEmail= userData.email;;
-    console.log(userEmail);
+    
     if(image){
       const storageRef = storage.ref(`/productImages/${image.name}`);
       const task = await storageRef.put(image);
@@ -34,7 +33,7 @@ export const createProduct = async (product, image)  => {
         additionalFee,
         shippingFee,
         totalPrice,
-      user } = product;  
+         } = product;  
 
        await productCollection.add({
        picture: imageURL,
@@ -49,7 +48,7 @@ export const createProduct = async (product, image)  => {
          additionalFee,
          shippingFee,
          totalPrice,
-          user: userEmail
+          user: userData.email
        }).then(doc => {
          console.log("Document writen with ID: ", doc.id);
              Flux.dispatchEvent(PRODUCT_EVENT, doc)

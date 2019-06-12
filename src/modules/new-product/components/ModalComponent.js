@@ -42,10 +42,10 @@ class ModalComponent extends Component {
           <MDBModalHeader toggle = {
             this.toggle
           }> Bazl </MDBModalHeader> <MDBModalBody>
-            ¿Are you shure to save this new product? </MDBModalBody> 
+            ¿Are you shure to publish this new product? </MDBModalBody> 
           <MDBModalFooter >
             < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
-             > Save changes </MDBBtn> 
+             > Publish </MDBBtn> 
             < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
             onClick = {
                 this.toggle

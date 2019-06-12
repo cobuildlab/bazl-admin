@@ -12,5 +12,5 @@ export const ProductModel = {
   additionalFee: '',
   shippingFee: '',
   totalPrice : '',
-  user : 'user'
+  user : ''
 }
