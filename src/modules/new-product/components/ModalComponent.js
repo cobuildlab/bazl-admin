@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  MDBContainer,
   MDBBtn,
   MDBModal,
   MDBModalBody,
@@ -29,7 +28,7 @@ class ModalComponent extends Component {
       
       <>
               < MDBBtn className = "btn btn-circle mt-4 mb-5"
-              onClick = {
+                onClick = {
                   this.toggle
                 } > Publish </MDBBtn> 
               
@@ -45,11 +44,11 @@ class ModalComponent extends Component {
             ¿Are you shure to publish this new product? </MDBModalBody> 
           <MDBModalFooter >
             < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
-             > Publish </MDBBtn> 
+            > Publish </MDBBtn> 
             < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
-            onClick = {
+              onClick = {
                 this.toggle
-            } > Cancel </MDBBtn> 
+              } > Cancel </MDBBtn> 
           </MDBModalFooter> </MDBModal></>
       );
     }
