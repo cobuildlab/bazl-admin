@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { MDBIcon, MDBRow, MDBBtn, MDBInput } from 'mdbreact';
+import PropTypes from 'prop-types';
 
 export class EditableBankAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      i: this.props.i,
       type: this.props.account.type,
       title: this.props.account.title,
       number: this.props.account.number,
@@ -27,8 +27,8 @@ export class EditableBankAccount extends Component {
   };
 
   render() {
-    const { onDelete, editAccount, flagEdit } = this.props;
-    let { type, title, number, routingNumber, i } = this.state;
+    const { onDelete, editAccount } = this.props;
+    const { type, title, number, routingNumber } = this.state;
     let style = {
       position: 'relative',
     };
@@ -41,7 +41,6 @@ export class EditableBankAccount extends Component {
             type="checkbox"
             name="type"
             onChange={this.onChange}
-            disabled={flagEdit}
             style={style}
             checked={type}
           />
@@ -52,7 +51,6 @@ export class EditableBankAccount extends Component {
             name="title"
             value={title}
             onChange={this.onChange}
-            disabled={flagEdit}
           />
           <MDBInput
             label="Account number"
@@ -61,7 +59,6 @@ export class EditableBankAccount extends Component {
             name="number"
             value={number}
             onChange={this.onChange}
-            disabled={flagEdit}
           />
           <MDBInput
             label="Routing number"
@@ -70,19 +67,14 @@ export class EditableBankAccount extends Component {
             name="routingNumber"
             value={routingNumber}
             onChange={this.onChange}
-            disabled={flagEdit}
           />
           <div>
             <MDBBtn
-              disabled={flagEdit}
               className="btn-edit"
               onClick={() => editAccount(R.clone(this.state))}>
               <MDBIcon icon="pencil-alt" />
             </MDBBtn>
-            <MDBBtn
-              disabled={flagEdit}
-              className="btn-delete"
-              onClick={() => onDelete(i)}>
+            <MDBBtn className="btn-delete" onClick={onDelete}>
               <MDBIcon icon="times" />
             </MDBBtn>
           </div>
@@ -91,4 +83,11 @@ export class EditableBankAccount extends Component {
     );
   }
 }
+
+EditableBankAccount.propTypes = {
+  account: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  editAccount: PropTypes.func.isRequired,
+};
+
 export default EditableBankAccount;
