@@ -51,10 +51,15 @@ class EditProfileView extends View {
         this.props.history.push('/profile');
       });
     });
+
     this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
       toast.error(e.message);
       this.setState({ loadingBankAccounts: false });
     });
+
+    /**
+     * @typedef {number} bankAccount
+     */
     this.subscribe(profileStore, NEW_ACCOUNT_EVENT, (bankAccount) => {
       const { user } = this.state;
       user.bankAccounts.push(bankAccount);
@@ -63,16 +68,23 @@ class EditProfileView extends View {
         user,
       });
     });
-    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
-      const { user } = this.state;
-      user.bankAccounts.splice(i, 1);
-      console.log('user', user);
 
+    /**
+     * @typedef {number} bankAccount
+     */
+    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (bankAccount) => {
+      const { user } = this.state;
+      const bankAccounts = user.bankAccounts.filter(
+        (_, index) => index !== bankAccount,
+      );
+      console.log(bankAccounts);
+      const newUserInformation = { ...user, bankAccounts: bankAccounts };
       this.setState({
         loadingBankAccounts: false,
-        user,
+        user: newUserInformation,
       });
     });
+
     this.subscribe(profileStore, UPDATE_ACCOUNT_EVENT, (bankAccount) => {
       let { user } = this.state;
       user.bankAccounts[bankAccount.id] = bankAccount;
@@ -112,6 +124,7 @@ class EditProfileView extends View {
    * Value passed from array to delete from accounts.
    */
   onStashDeleteBankAccount = (bankAccountIndex) => {
+    console.log(bankAccountIndex);
     this.setState({
       modal: true,
       bankAccountStash: bankAccountIndex,
@@ -214,7 +227,9 @@ class EditProfileView extends View {
                       onClick={this.deleteAccount}>
                       Delete
                     </MDBBtn>
-                    <MDBBtn size="sm">Cancel</MDBBtn>
+                    <MDBBtn size="sm" onClick={this.toggleModal}>
+                      Cancel
+                    </MDBBtn>
                   </ModalConfirm>
                   <EditBankInformation
                     editAccount={this.editAccount}

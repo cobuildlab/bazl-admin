@@ -38,13 +38,7 @@ class EditBankInformation extends React.Component {
 
   render() {
     const { bankAccounts, onDelete, newAccount, editAccount } = this.props;
-    let {
-      type,
-      title,
-      number,
-      routingNumber,
-      flagAccounts,
-    } = this.state;
+    let { type, title, number, routingNumber, flagAccounts } = this.state;
     let style = {
       position: 'relative',
     };
@@ -59,7 +53,7 @@ class EditBankInformation extends React.Component {
               i={i}
               account={account}
               editAccount={editAccount}
-              onDelete={onDelete}
+              onDelete={() => onDelete(i)}
             />
           ))}
           <div className="d-flex justify-content-center align-items-center">
@@ -117,8 +111,8 @@ class EditBankInformation extends React.Component {
               </MDBRow>
             </div>
           ) : (
-              <div></div>
-            )}
+            <div></div>
+          )}
         </div>
       </React.Fragment>
     );

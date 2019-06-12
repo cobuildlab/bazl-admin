@@ -32,8 +32,7 @@ export class EditableBankAccount extends Component {
     let style = {
       position: 'relative',
     };
-    console.log(i);
-    
+
     return (
       <div>
         <MDBRow className="d-flex justify-content-around align-items-center mb-3">
