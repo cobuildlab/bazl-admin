@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBCol, MDBContainer, MDBRow, MDBIcon } from 'mdbreact';
+import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBBtn } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import SliderCards from '../../components/SliderCards';
 import { EditBasicInformation } from './components/EditBasicInformation';
@@ -36,7 +36,8 @@ class EditProfileView extends View {
       user: { ...R.clone(userModel), ...user },
       loadingBankAccounts: false,
       loadingUser: false,
-      modal: false
+      modal: false,
+      bankAccountStash: null,
     };
   }
 
@@ -64,9 +65,9 @@ class EditProfileView extends View {
     });
     this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
       const { user } = this.state;
-      user.bankAccounts.splice(i, 1)
-      console.log("user",user);
-      
+      user.bankAccounts.splice(i, 1);
+      console.log('user', user);
+
       this.setState({
         loadingBankAccounts: false,
         user,
@@ -84,6 +85,16 @@ class EditProfileView extends View {
     fetchProfileAction();
   }
 
+  deleteAccount = () => {
+    /**
+     * This will confirm the submit for deletes a bank account.
+     * @typedef {number} bankAccountStash
+     */
+    const { bankAccountStash } = this.state;
+    deleteAccountAction(bankAccountStash);
+    this.toggleModal();
+  };
+
   newAccount = (account) => {
     this.setState({ loadingBankAccounts: true }, () => {
       addAccountAction({ ...account });
@@ -96,13 +107,14 @@ class EditProfileView extends View {
     });
   };
 
-  onDeleteBankAccount = (i) => {
-
-    // this.toggleModal();
-    console.log("i",i);
-    
-    this.setState({ loadingBankAccounts: true }, () => {
-      deleteAccountAction(i);
+  /**
+   * @param {number} bankAccountIndex
+   * Value passed from array to delete from accounts.
+   */
+  onStashDeleteBankAccount = (bankAccountIndex) => {
+    this.setState({
+      modal: true,
+      bankAccountStash: bankAccountIndex,
     });
   };
 
@@ -117,11 +129,25 @@ class EditProfileView extends View {
   };
 
   toggleModal = () => {
-    console.log("toggleModal = () => {");    
-    this.setState(prevState => ({
-      modal: !prevState.modal
+    this.setState((prevState) => ({
+      modal: !prevState.modal,
     }));
-  }
+  };
+
+  /**
+   * @param {number} accountStashIndex
+   */
+  getStashAccountToDelete = (accountStashIndex) => {
+    /**
+     * @type { [] } bankAccounts
+     */
+    const {
+      user: { bankAccounts },
+    } = this.state;
+    return bankAccounts.find(
+      (_, accountIndex) => accountIndex === accountStashIndex,
+    );
+  };
 
   render() {
     let {
@@ -130,8 +156,9 @@ class EditProfileView extends View {
       picture,
       bankAccounts,
       loadingBankAccounts,
-      loadingUser
+      loadingUser,
     } = this.state.user;
+    const { modal } = this.state;
     return (
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
@@ -141,7 +168,7 @@ class EditProfileView extends View {
           <div>
             <Link to={'/profile'} className="btn btn-circle btn-circle-link">
               Profile
-            <MDBIcon icon="upload" className="ml-1" />
+              <MDBIcon icon="upload" className="ml-1" />
             </Link>
           </div>
         </div>
@@ -155,14 +182,14 @@ class EditProfileView extends View {
                 loading={true}
               />
             ) : (
-                <EditBasicInformation
-                  name={name}
-                  description={description}
-                  picture={picture}
-                  onCancel={this.flagEdit}
-                  onSave={this.onUpdateUser}
-                />
-              )}
+              <EditBasicInformation
+                name={name}
+                description={description}
+                picture={picture}
+                onCancel={this.flagEdit}
+                onSave={this.onUpdateUser}
+              />
+            )}
           </MDBRow>
           <MDBRow>
             <MDBCol md="1" />
@@ -176,17 +203,27 @@ class EditProfileView extends View {
                   loading={true}
                 />
               ) : (
-                  <div>
-                    <ModalConfirm toggleModal={this.toggleModal} modal={this.state.modal}/>
-                    <EditBankInformation
-                      editAccount={this.editAccount}
-                      newAccount={this.newAccount}
-                      bankAccounts={bankAccounts}
-                      onDelete={this.onDeleteBankAccount}
-                    />
-                  </div>
-
-                )}
+                <React.Fragment>
+                  <ModalConfirm
+                    innerText={`Are you sure want to delete this account?`}
+                    isOpen={modal}
+                    onToggle={this.toggleModal}>
+                    <MDBBtn
+                      color="danger"
+                      size="sm"
+                      onClick={this.deleteAccount}>
+                      Delete
+                    </MDBBtn>
+                    <MDBBtn size="sm">Cancel</MDBBtn>
+                  </ModalConfirm>
+                  <EditBankInformation
+                    editAccount={this.editAccount}
+                    newAccount={this.newAccount}
+                    bankAccounts={bankAccounts}
+                    onDelete={this.onStashDeleteBankAccount}
+                  />
+                </React.Fragment>
+              )}
             </MDBCol>
             <MDBCol md="1" />
           </MDBRow>
