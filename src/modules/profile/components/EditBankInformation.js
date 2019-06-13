@@ -39,10 +39,7 @@ class EditBankInformation extends React.Component {
   render() {
     const { bankAccounts, onDelete, newAccount, editAccount } = this.props;
     let { type, title, number, routingNumber, showNewAccountForm } = this.state;
-    let style = {
-      position: 'relative',
-    };
-
+    let style = { position: 'relative' };
     return (
       <React.Fragment>
         <div className="mt-3 mb-5">
@@ -111,8 +108,8 @@ class EditBankInformation extends React.Component {
               </MDBRow>
             </div>
           ) : (
-            <div></div>
-          )}
+              <div></div>
+            )}
         </div>
       </React.Fragment>
     );

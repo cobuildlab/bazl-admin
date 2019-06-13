@@ -52,19 +52,18 @@ class EditBasicInformation extends React.Component {
     let imagePreview = null;
 
     if (picture) {
-      imagePreview = (
-        <img alt={'User Profile'} src={picture} className="img-fluid" />
-      );
+      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid" />);
     } else {
-      imagePreview = (
-        <img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />
-      );
+      imagePreview = (<img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />);
     }
+    let style = {
+      cursor: 'pointer'
+    };
 
     return (
       <React.Fragment>
         <MDBCol className="text-center" md="3">
-          <label className="Customlabel text-center" htmlFor="upload-photo">
+          <label style={style} className="text-center" htmlFor="upload-photo">
             {imagePreview}
           </label>
           <input
@@ -81,7 +80,7 @@ class EditBasicInformation extends React.Component {
         <MDBCol md="7">
           <h5>Name User</h5>
           <MDBInput
-            className="mt-0"
+            className="mb-0"
             type="text"
             name="name"
             value={name}
@@ -89,7 +88,7 @@ class EditBasicInformation extends React.Component {
           />
           <h5>Description</h5>
           <MDBInput
-            className="mt-0"
+            className="mb-0"
             type="textarea"
             name="description"
             value={description}
