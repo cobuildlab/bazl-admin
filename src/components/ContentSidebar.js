@@ -38,6 +38,7 @@ const ContentSidebar = ({ routes }) => {
           </Link>
         ))}
         <Button
+          color="info"
           active={false}
           className="link-logout text-left"
           onClick={onLogout}>

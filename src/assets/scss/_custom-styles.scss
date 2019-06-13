@@ -207,10 +207,11 @@
 }
 
 .link-logout {
-  color: #fff;
+  color: #fff !important;
   position: absolute;
   bottom: 15px;
   left: 55px;
+  
 }
 
 .link-logout:hoverc {
@@ -370,10 +371,10 @@ table.table thead th {
 .checkmark {
   border: 1px solid #ccc;
   position: absolute;
-  top: 0px;
+  top: 3px;
   left: 5px;
-  height: 25px;
-  width: 25px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   transition: all 0.2s ease;
   -moz-transition: 0.2s ease all;
