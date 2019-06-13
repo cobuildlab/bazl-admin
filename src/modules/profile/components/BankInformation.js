@@ -1,6 +1,6 @@
 import React from 'react';
 import { BankAccount } from './BankAccount';
-import { MDBRow, MDBInput, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import { MDBTable, MDBTableHead } from 'mdbreact';
 
 class BankInformation extends React.Component {
   render() {

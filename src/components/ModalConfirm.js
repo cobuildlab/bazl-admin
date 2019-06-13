@@ -7,27 +7,28 @@ import {
   MDBBtn,
 } from 'mdbreact';
 import Logo from '../assets/img/Bazl-logo.png';
-import { Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 const ModalConfirm = (props) => {
   const { onClose, text, onOk, open } = props;
   return (
     <MDBContainer className="p-0">
-      <MDBModal isOpen={open} size="lg">
+      <MDBModal isOpen={open} toggle={onClose} size="md">
         <MDBModalBody className="p-0">
           <div className="d-flex justify-content-center p-4">
             <img src={Logo} alt="Bazl" className="img-fluid" />
           </div>
-          <h1 className="d-flex justify-content-center p-4">{text}</h1>
+          <h6 className="d-flex justify-content-center p-4">{text}</h6>
           <MDBModalFooter>
-            <Button
-              active={false}
-              className="link-logout text-left"
+            <MDBBtn
+              color="danger"
+              size="sm"
               onClick={onOk}>
               OK
-            </Button>
-            <MDBBtn onClick={onClose}>Close</MDBBtn>
+            </MDBBtn>
+            <MDBBtn size="sm" onClick={onClose}>
+              CANCEL
+            </MDBBtn>
           </MDBModalFooter>
         </MDBModalBody>
       </MDBModal>
@@ -43,3 +44,4 @@ ModalConfirm.propTypes = {
 };
 
 export default ModalConfirm;
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBRow, MDBInput, MDBTableBody, MDBTableHead } from 'mdbreact';
+import { MDBTableBody } from 'mdbreact';
 
 class BankAccount extends Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class BankAccount extends Component {
 
   render() {
     let { type, title, number, routingNumber } = this.state;
-    const flagEdit = true;
+    // const flagEdit = true;
     return (
       // <MDBRow className="d-flex justify-content-around align-items-center mb-3">
       //   <MDBInput

@@ -8,6 +8,7 @@ import {
   updateAccountAction,
   fetchProfileAction,
   updateProfileAction,
+  // deleteAccountAction,
 } from './profile-actions';
 import View from 'react-flux-state';
 import {
@@ -17,7 +18,7 @@ import {
   UPDATE_ACCOUNT_EVENT,
   profileStore,
 } from './profile-store';
-import { toast } from 'react-toastify/index';
+import { toast } from 'react-toastify';
 import * as R from 'ramda';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 import EditBankInformation from './components/EditBankInformation';
@@ -36,7 +37,7 @@ class EditProfileView extends View {
       loadingUser: false,
       deleteBankAccountModalIsOpen: false,
       bankAccountIndex: 0,
-    };
+    }
   }
 
   componentDidMount() {
@@ -44,42 +45,58 @@ class EditProfileView extends View {
       toast.error(e.message);
       this.setState({ loadingBankAccounts: false });
     });
+
     this.subscribe(landingStore, USER_EVENT, (user) => {
+      
       this.setState({
         loadingUser: false,
         loadingBankAccounts: false,
         deleteBankAccountModalIsOpen: false,
         user,
+      }, () => {
+        toast.info("Successful")        
       });
     });
+
     this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
       toast.error(e.message);
       this.setState({ loadingBankAccounts: false });
     });
+
     this.subscribe(profileStore, NEW_ACCOUNT_EVENT, (bankAccount) => {
       const { user } = this.state;
       user.bankAccounts.push(bankAccount);
       this.setState({
         loadingBankAccounts: false,
-        user,
+        user
+      }, () => {
+        toast.info("New Account Successfully created")
       });
     });
+
     this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
       const { user } = this.state;
       user.bankAccounts.splice(i, 1);
       this.setState({
         loadingBankAccounts: false,
         user,
+      }, () => {
+        toast.info("Account Deleted")
       });
     });
+
     this.subscribe(profileStore, UPDATE_ACCOUNT_EVENT, (bankAccount) => {
       let { user } = this.state;
-      user.bankAccounts[bankAccount.id] = bankAccount;
+      let i = bankAccount[1];
+      user.bankAccounts[i] = bankAccount[0];
       this.setState({
         loadingBankAccounts: false,
-        user,
+        user
+      }, () => {
+        toast.info("Account Updated")
       });
     });
+
     fetchProfileAction();
   }
 
@@ -89,10 +106,10 @@ class EditProfileView extends View {
     });
   };
 
-  editAccount = (account) => {
-    this.setState({ loadingBankAccounts: true }, () => {
-      updateAccountAction({ ...account });
-    });
+  editAccount = (account, i) => {
+    // this.setState({ loadingBankAccounts: true }, () => {
+    updateAccountAction({ ...account }, i);
+    // });
   };
 
   onDeleteBankAccount = (i) => {
@@ -116,9 +133,9 @@ class EditProfileView extends View {
     user.name = updateUser.name;
     user.description = updateUser.description;
     user.picture = updateUser.picture;
-    this.setState({ loadingUser: true }, () => {
-      updateProfileAction(user);
-    });
+    // this.setState({ loadingUser: true }, () => {
+    updateProfileAction(user);
+    // });
   };
 
   toggleModal = () => {
@@ -127,14 +144,13 @@ class EditProfileView extends View {
     }));
   };
 
+  flagEdit = () => {
+    this.props.history.push('/profile');
+  }
+
   render() {
     const { name, description, picture, bankAccounts } = this.state.user;
-    const {
-      loadingBankAccounts,
-      loadingUser,
-      deleteBankAccountModalIsOpen,
-    } = this.state;
-
+    const { loadingBankAccounts, loadingUser, deleteBankAccountModalIsOpen } = this.state;
     return (
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
@@ -151,49 +167,52 @@ class EditProfileView extends View {
         <MDBContainer>
           <MDBRow>
             {loadingUser ? (
-              <ClipLoader
-                sizeUnit={'px'}
-                size={120}
-                color={'#44c1f6'}
-                loading={true}
-              />
-            ) : (
-              <EditBasicInformation
-                name={name}
-                description={description}
-                picture={picture}
-                onCancel={this.flagEdit}
-                onSave={this.onUpdateUser}
-              />
-            )}
-          </MDBRow>
-          <MDBRow>
-            <MDBCol md="1" />
-            <MDBCol md="10">
-              {loadingBankAccounts ? (
-                // <Loader />
+              <div className="text-center">
                 <ClipLoader
                   sizeUnit={'px'}
                   size={120}
                   color={'#44c1f6'}
                   loading={true}
                 />
-              ) : (
-                <div>
-                  <ModalConfirm
-                    open={deleteBankAccountModalIsOpen}
-                    onClose={this.toggleModal}
-                    text={'Are you sure you want to Delete the Bank Account?'}
-                    onOk={this.deleteBankAccount}
-                  />
-                  <EditBankInformation
-                    editAccount={this.editAccount}
-                    newAccount={this.newAccount}
-                    bankAccounts={bankAccounts}
-                    onDelete={this.onDeleteBankAccount}
+              </div>
+            ) : (
+                <EditBasicInformation
+                  name={name}
+                  description={description}
+                  picture={picture}
+                  onCancel={this.flagEdit}
+                  onSave={this.onUpdateUser}
+                />
+              )}
+          </MDBRow>
+          <MDBRow>
+            <MDBCol md="1" />
+            <MDBCol md="10">
+              {loadingBankAccounts ? (
+                <div className="text-center">
+                  <ClipLoader
+                    sizeUnit={'px'}
+                    size={120}
+                    color={'#44c1f6'}
+                    loading={true}
                   />
                 </div>
-              )}
+              ) : (
+                  <div>
+                    <ModalConfirm
+                      open={deleteBankAccountModalIsOpen}
+                      onClose={this.toggleModal}
+                      text={'Are you sure you want to Delete the Bank Account?'}
+                      onOk={this.deleteBankAccount}
+                    />
+                    <EditBankInformation
+                      editAccount={this.editAccount}
+                      newAccount={this.newAccount}
+                      bankAccounts={bankAccounts}
+                      onDelete={this.onDeleteBankAccount}
+                    />
+                  </div>
+                )}
             </MDBCol>
             <MDBCol md="1" />
           </MDBRow>
