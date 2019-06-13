@@ -70,7 +70,7 @@ class EditProfileView extends View {
         loadingBankAccounts: false,
         user
       }, () => {
-        toast.info("Account New Successful")
+        toast.info("New Account Successfully created")
       });
     });
 
@@ -81,8 +81,7 @@ class EditProfileView extends View {
         loadingBankAccounts: false,
         user,
       }, () => {
-        toast.info("Account Delete Successful")
-        console.log("DELETE_ACCOUNT_EVENT");
+        toast.info("Account Deleted")
       });
     });
 
@@ -94,7 +93,7 @@ class EditProfileView extends View {
         loadingBankAccounts: false,
         user
       }, () => {
-        toast.info("Account Update Successful")
+        toast.info("Account Updated")
       });
     });
 
