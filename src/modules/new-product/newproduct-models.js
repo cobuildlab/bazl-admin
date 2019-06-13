@@ -11,5 +11,6 @@ export const ProductModel = {
   commission: '',
   additionalFee: '',
   shippingFee: '',
-  totalPrice : ''
+  totalPrice : '',
+  user : '',
 }
