@@ -116,16 +116,19 @@ class InventoryDetailView extends View {
          picture = <img
            src={this.state.data.picture}
            alt="default"
-           className="img-fluid"
+           className="img-product"
            width="auto"
          />
        } else {
-         picture = <img
-           src={ImgDefault}
-           alt="default"
-           className="img-fluid img-label"
-           width="80"
-         />
+         picture = <label className = "Customlabel text-center"
+           htmlFor = "upload-photo" > 
+           <img
+             src={ImgDefault}
+             alt="default"
+             className="img-fluid img-label"
+             width="80"
+           />
+         </label>
        }
        return (
         
@@ -154,9 +157,7 @@ class InventoryDetailView extends View {
                    <MDBContainer className="body" fluid>
                      <MDBRow>
                        <MDBCol md="3">
-                         <label className="Customlabel text-center" htmlFor="upload-photo">
-                           {picture}
-                         </label>
+                         {picture}
                          <input
                            type="file"
                            name="picture"
