@@ -50,6 +50,7 @@ class EditBankInformation extends React.Component {
           {bankAccounts.map((account, i) => (
             <EditableBankAccount
               key={i}
+              i={i}
               account={account}
               editAccount={editAccount}
               onDelete={() => onDelete(i)}

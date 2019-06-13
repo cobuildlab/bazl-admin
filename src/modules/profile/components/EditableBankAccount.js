@@ -27,11 +27,12 @@ export class EditableBankAccount extends Component {
   };
 
   render() {
-    const { onDelete, editAccount } = this.props;
+    const { onDelete, editAccount, i } = this.props;
     const { type, title, number, routingNumber } = this.state;
     let style = {
       position: 'relative',
     };
+console.log("i",i);
 
     return (
       <div>
@@ -72,7 +73,7 @@ export class EditableBankAccount extends Component {
           <div>
             <MDBBtn
               className="btn-edit"
-              onClick={() => editAccount(R.clone(this.state))}>
+              onClick={() => editAccount(R.clone(this.state), i)}>
               <MDBIcon icon="pencil-alt" />
             </MDBBtn>
             <MDBBtn className="btn-delete" onClick={onDelete}>

@@ -11,9 +11,6 @@ import {
 import ImgDefault from '../../../assets/img/img-default.png';
 import PropTypes from 'prop-types';
 
-/**
- *
- */
 class EditBasicInformation extends React.Component {
   constructor(props) {
     super(props);
@@ -60,11 +57,7 @@ class EditBasicInformation extends React.Component {
       );
     } else {
       imagePreview = (
-        <img
-          alt={'User Profile'}
-          src={ImgDefault}
-          className="img-fluid img-label"
-        />
+        <img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />
       );
     }
 
