@@ -1,6 +1,5 @@
 import React from 'react';
 import { MDBListGroup, MDBListGroupItem, MDBContainer } from 'mdbreact';
-import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { onLogout } from '../modules/landing/landing-actions';
 import Logo from '../assets/img/Bazl-logo-w.png';
@@ -37,13 +36,13 @@ const ContentSidebar = ({ routes }) => {
             </MDBListGroupItem>
           </Link>
         ))}
-        <Button
+        <MDBListGroupItem
           color="info"
           active={false}
           className="link-logout text-left"
           onClick={onLogout}>
           Log out
-        </Button>
+        </MDBListGroupItem>
       </MDBListGroup>
     </MDBContainer>
   );
