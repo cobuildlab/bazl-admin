@@ -63,7 +63,7 @@ class EditBasicInformation extends React.Component {
 
     return (
       <React.Fragment>
-        <MDBCol md="3">
+        <MDBCol className="text-center" md="3">
           <label className="Customlabel text-center" htmlFor="upload-photo">
             {imagePreview}
           </label>
@@ -74,7 +74,7 @@ class EditBasicInformation extends React.Component {
             onChange={this.onImageChange}
           />
 
-          <small className="text-center">
+          <small >
             JPG or PNG with a maximum of 5mb
           </small>
         </MDBCol>

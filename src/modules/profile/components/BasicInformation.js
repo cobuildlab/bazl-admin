@@ -5,7 +5,7 @@ import {
   MDBCardBody,
   MDBCardText,
   MDBCardTitle,
-  MDBInput,
+  // MDBInput,
 } from 'mdbreact';
 import PropTypes from 'prop-types';
 import ImgDefault from '../../../assets/img/img-default.png';
@@ -33,29 +33,37 @@ const BasicInformation = ({ user }) => {
   return (
     <React.Fragment>
       <MDBCol md="3">
-        <label className="Customlabel text-center" htmlFor="upload-photo">
+        <label className="text-center" htmlFor="upload-photo">
           {imagePreview}
         </label>
-        <small className="text-center">JPG or PNG with a maximum of 5mb</small>
+        {/* <small className="text-center">JPG or PNG with a maximum of 5mb</small> */}
       </MDBCol>
       <MDBCol md="7">
-        <h5>Name User</h5>
+        {/* <h5>Name User</h5>
         <MDBInput
           className="mt-0"
           type="text"
           name="name"
           value={name}
           disabled={true}
-        />
+        /> */}
+        <h2 className="text-black-50 mb-0">{name}</h2>
+        
+        <small className="text-primary">@User</small>
+        <div className="mt-5">
         <h5>Description</h5>
-        <MDBInput
+        {/* <MDBInput
           className="mt-0"
           type="textarea"
           name="description"
           value={description}
           disabled={true}
           rows="5"
-        />
+        /> */}
+        <small>
+        {description}
+        </small>
+        </div>
       </MDBCol>
       <MDBCol md="2">
         <MDBCard>
