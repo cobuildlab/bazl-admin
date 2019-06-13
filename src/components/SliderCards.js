@@ -1,8 +1,8 @@
-import React from "react";
-import { MDBRow, MDBCol, MDBCard, MDBCardText } from "mdbreact";
+import React from 'react';
+import { MDBRow, MDBCol, MDBCard, MDBCardText } from 'mdbreact';
 
-import ImgCardDama from "../assets/img/ropa-dama.jpg";
-import ImgCardHombre from "../assets/img/ropa-hombre.jpg";
+import ImgCardDama from '../assets/img/ropa-dama.jpg';
+import ImgCardHombre from '../assets/img/ropa-hombre.jpg';
 
 class SliderCards extends React.Component {
   render() {
@@ -13,13 +13,13 @@ class SliderCards extends React.Component {
         </MDBCol>
         <div
           className="scrollbar scrollbar-primary "
-          style={{ overflow: "auto", whiteSpace: "nowrap" }}
+          style={{ overflow: 'auto', whiteSpace: 'nowrap' }}
         >
           <MDBCard
             style={{
-              width: "10rem",
-              margin: "15px",
-              display: "inline-block"
+              width: '10rem',
+              margin: '15px',
+              display: 'inline-block',
             }}
           >
             <div
@@ -30,9 +30,9 @@ class SliderCards extends React.Component {
           </MDBCard>
           <MDBCard
             style={{
-              width: "10rem",
-              margin: "15px",
-              display: "inline-block"
+              width: '10rem',
+              margin: '15px',
+              display: 'inline-block',
             }}
           >
             <div
@@ -43,9 +43,9 @@ class SliderCards extends React.Component {
           </MDBCard>
           <MDBCard
             style={{
-              width: "10rem",
-              margin: "15px",
-              display: "inline-block"
+              width: '10rem',
+              margin: '15px',
+              display: 'inline-block',
             }}
           >
             <div
@@ -56,9 +56,9 @@ class SliderCards extends React.Component {
           </MDBCard>
           <MDBCard
             style={{
-              width: "10rem",
-              margin: "15px",
-              display: "inline-block"
+              width: '10rem',
+              margin: '15px',
+              display: 'inline-block',
             }}
           >
             <div
@@ -69,9 +69,9 @@ class SliderCards extends React.Component {
           </MDBCard>
           <MDBCard
             style={{
-              width: "10rem",
-              margin: "15px",
-              display: "inline-block"
+              width: '10rem',
+              margin: '15px',
+              display: 'inline-block',
             }}
           >
             <div
@@ -82,9 +82,9 @@ class SliderCards extends React.Component {
           </MDBCard>
           <MDBCard
             style={{
-              width: "10rem",
-              margin: "15px",
-              display: "inline-block"
+              width: '10rem',
+              margin: '15px',
+              display: 'inline-block',
             }}
           >
             <div
