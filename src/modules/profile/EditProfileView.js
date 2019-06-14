@@ -1,7 +1,7 @@
 import React from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBIcon } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
-import SliderCards from '../../components/SliderCards';
+import SliderCardsMap from '../../components/SliderCardsMap';
 import { EditBasicInformation } from './components/EditBasicInformation';
 import {
   addAccountAction,
@@ -26,6 +26,8 @@ import { userModel } from './Profile-models';
 import { Link } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import ModalConfirm from '../../components/ModalConfirm';
+import { fetchUserProducts } from '../inventory/inventory-actions'
+import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store'
 
 class EditProfileView extends View {
   constructor(props) {
@@ -37,17 +39,25 @@ class EditProfileView extends View {
       loadingUser: false,
       deleteBankAccountModalIsOpen: false,
       bankAccountIndex: 0,
+      inventory: []
     }
   }
 
   componentDidMount() {
+    this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {      
+      let { inventory } = this.state;
+      inventory = R.clone(data);
+      this.setState({
+        inventory
+      })
+    });
+
     this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
       toast.error(e.message);
       this.setState({ loadingBankAccounts: false });
     });
 
-    this.subscribe(landingStore, USER_EVENT, (user) => {
-      
+    this.subscribe(landingStore, USER_EVENT, (user) => {      
       this.setState({
         loadingUser: false,
         loadingBankAccounts: false,
@@ -97,6 +107,7 @@ class EditProfileView extends View {
       });
     });
 
+    fetchUserProducts();
     fetchProfileAction();
   }
 
@@ -150,7 +161,7 @@ class EditProfileView extends View {
 
   render() {
     const { name, description, picture, bankAccounts } = this.state.user;
-    const { loadingBankAccounts, loadingUser, deleteBankAccountModalIsOpen } = this.state;
+    const { loadingBankAccounts, loadingUser, deleteBankAccountModalIsOpen, inventory } = this.state;
     return (
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
@@ -220,7 +231,7 @@ class EditProfileView extends View {
             <MDBCol md="2" />
             <MDBCol md="8">
               <div className="mt-3 mb-5">
-                <SliderCards />
+                <SliderCardsMap inventory={inventory} />
               </div>
             </MDBCol>
             <MDBCol md="2" />
