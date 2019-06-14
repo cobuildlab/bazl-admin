@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { MDBIcon, MDBRow, MDBBtn, MDBInput, MDBCol, MDBCard, MDBCardBody } from 'mdbreact';
+import {
+  MDBIcon,
+  MDBRow,
+  MDBBtn,
+  MDBInput,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+} from 'mdbreact';
 import PropTypes from 'prop-types';
 
-export class EditableBankAccount extends Component {
+class EditableBankAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +35,7 @@ export class EditableBankAccount extends Component {
   };
 
   render() {
-    const { onDelete, editAccount, i } = this.props;
+    const { onDelete, editAccount, index } = this.props;
     const { type, title, number, routingNumber } = this.state;
     let style = { position: 'relative' };
 
@@ -79,12 +87,10 @@ export class EditableBankAccount extends Component {
             <MDBCol md="1">
               <MDBBtn
                 className="btn-edit"
-                onClick={() => editAccount(R.clone(this.state), i)}>
+                onClick={() => editAccount(R.clone(this.state), index)}>
                 <MDBIcon icon="pencil-alt" />
               </MDBBtn>
-              <MDBBtn
-                className="btn-delete"
-                onClick={onDelete}>
+              <MDBBtn className="btn-delete" onClick={onDelete}>
                 <MDBIcon icon="times" />
               </MDBBtn>
             </MDBCol>
@@ -97,8 +103,9 @@ export class EditableBankAccount extends Component {
 
 EditableBankAccount.propTypes = {
   account: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
   editAccount: PropTypes.func.isRequired,
 };
 
-export default EditableBankAccount;
+export { EditableBankAccount };

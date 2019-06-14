@@ -1,22 +1,40 @@
-import React from "react";
-import SidebarComponent from "../../components/SidebarComponent";
-import { MDBIcon, MDBContainer, MDBRow, MDBCol, MDBAnimation } from "mdbreact";
-import SliderCards from "../../components/SliderCards";
-import TableSales from "../sales/TableSalesView";
+import React from 'react';
+import View from 'react-flux-state';
+import SidebarComponent from '../../components/SidebarComponent';
+import { MDBIcon, MDBContainer, MDBRow, MDBCol, MDBAnimation } from 'mdbreact';
+// import SliderCards from '../../components/SliderCards';
+import TableSales from '../sales/TableSalesView';
+import { Link } from 'react-router-dom';
+import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store';
+import { fetchUserProducts } from '../inventory/inventory-actions';
+import * as R from 'ramda';
+import SliderCardsMap from '../../components/SliderCardsMap';
 
-import { Link } from "react-router-dom";
-
-class HomeView extends React.Component {
+class HomeView extends View {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
-    }
+      loading: false,
+      inventory: [],
+    };
   }
+
+  componentDidMount() {
+    this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {
+      let { inventory } = this.state;
+      inventory = R.clone(data);
+      this.setState({
+        inventory,
+      });
+    });
+    fetchUserProducts();
+  }
+
   render() {
+    const { inventory } = this.state;
     return (
       <React.Fragment>
-        <MDBAnimation type='fadeIn' >
+        <MDBAnimation type="fadeIn">
           <SidebarComponent>
             <div className="d-flex justify-content-between nav-admin body">
               <div>
@@ -25,8 +43,7 @@ class HomeView extends React.Component {
               <div>
                 <Link
                   to="/new-product"
-                  className="btn btn-circle btn-circle-link"
-                >
+                  className="btn btn-circle btn-circle-link">
                   Upload <MDBIcon icon="upload" className="ml-1" />
                 </Link>
               </div>
@@ -49,7 +66,9 @@ class HomeView extends React.Component {
                   </h6>
                 </MDBCol>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">Total Sales</h4>
+                  <h4 className="font-weight-bold text-black-50">
+                    Total Sales
+                  </h4>
                   <h6 className="text-primary font-weight-bold">
                     80 <small>Sales</small>
                   </h6>
@@ -63,7 +82,8 @@ class HomeView extends React.Component {
                   </h6>
                 </MDBCol>
               </MDBRow>
-              <SliderCards />
+              {/* <SliderCards /> */}
+              <SliderCardsMap inventory={inventory} />
               <MDBCol md="12" className="p-0">
                 <h6 className="mt-5 mb-3">Recent Sales</h6>
               </MDBCol>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { MDBTableBody } from 'mdbreact';
 
 class BankAccount extends Component {
@@ -58,5 +59,13 @@ class BankAccount extends Component {
     );
   }
 }
+
+BankAccount.propTypes = {
+  account: PropTypes.object.isRequired,
+  // type: PropTypes.bool.isRequired,
+  // title: PropTypes.string.isRequired,
+  // number: PropTypes.string.isRequired,
+  // routingNumber: PropTypes.string.isRequired,
+};
 
 export { BankAccount };

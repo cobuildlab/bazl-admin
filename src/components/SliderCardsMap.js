@@ -34,7 +34,7 @@ const SliderCardsMap = (props) => {
 };
 
 SliderCardsMap.propTypes = {
-  inventory: PropTypes.string.isRequired,
+  inventory: PropTypes.array.isRequired,
 };
 
 export default SliderCardsMap;

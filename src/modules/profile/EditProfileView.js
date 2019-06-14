@@ -1,33 +1,32 @@
 import React from 'react';
+import View from 'react-flux-state';
+import { toast } from 'react-toastify';
+import * as R from 'ramda';
+import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import { MDBCol, MDBContainer, MDBRow, MDBIcon } from 'mdbreact';
-import SidebarComponent from '../../components/SidebarComponent';
-import SliderCardsMap from '../../components/SliderCardsMap';
-import { EditBasicInformation } from './components/EditBasicInformation';
+import { landingStore, USER_EVENT } from '../landing/landing-store';
+import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store';
+import {
+  profileStore,
+  ACCOUNT_ERROR_EVENT,
+  NEW_ACCOUNT_EVENT,
+  DELETE_ACCOUNT_EVENT,
+  UPDATE_ACCOUNT_EVENT,
+} from './profile-store';
 import {
   addAccountAction,
   updateAccountAction,
   fetchProfileAction,
   updateProfileAction,
-  // deleteAccountAction,
 } from './profile-actions';
-import View from 'react-flux-state';
-import {
-  ACCOUNT_ERROR_EVENT,
-  NEW_ACCOUNT_EVENT,
-  DELETE_ACCOUNT_EVENT,
-  UPDATE_ACCOUNT_EVENT,
-  profileStore,
-} from './profile-store';
-import { toast } from 'react-toastify';
-import * as R from 'ramda';
-import { landingStore, USER_EVENT } from '../landing/landing-store';
-import EditBankInformation from './components/EditBankInformation';
+import { fetchUserProducts } from '../inventory/inventory-actions';
 import { userModel } from './Profile-models';
-import { Link } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
-import ModalConfirm from '../../components/ModalConfirm';
-import { fetchUserProducts } from '../inventory/inventory-actions'
-import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store'
+import { ModalConfirm } from '../../components/ModalConfirm';
+import { EditBasicInformation } from './components/EditBasicInformation';
+import { EditBankInformation } from './components/EditBankInformation';
+import SidebarComponent from '../../components/SidebarComponent';
+import SliderCardsMap from '../../components/SliderCardsMap';
 
 class EditProfileView extends View {
   constructor(props) {
@@ -39,17 +38,17 @@ class EditProfileView extends View {
       loadingUser: false,
       deleteBankAccountModalIsOpen: false,
       bankAccountIndex: 0,
-      inventory: []
-    }
+      inventory: [],
+    };
   }
 
   componentDidMount() {
-    this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {      
+    this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {
       let { inventory } = this.state;
       inventory = R.clone(data);
       this.setState({
-        inventory
-      })
+        inventory,
+      });
     });
 
     this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
@@ -57,15 +56,18 @@ class EditProfileView extends View {
       this.setState({ loadingBankAccounts: false });
     });
 
-    this.subscribe(landingStore, USER_EVENT, (user) => {      
-      this.setState({
-        loadingUser: false,
-        loadingBankAccounts: false,
-        deleteBankAccountModalIsOpen: false,
-        user,
-      }, () => {
-        toast.info("Successful")        
-      });
+    this.subscribe(landingStore, USER_EVENT, (user) => {
+      this.setState(
+        {
+          loadingUser: false,
+          loadingBankAccounts: false,
+          deleteBankAccountModalIsOpen: false,
+          user,
+        },
+        () => {
+          toast.info('Successful');
+        },
+      );
     });
 
     this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
@@ -76,35 +78,44 @@ class EditProfileView extends View {
     this.subscribe(profileStore, NEW_ACCOUNT_EVENT, (bankAccount) => {
       const { user } = this.state;
       user.bankAccounts.push(bankAccount);
-      this.setState({
-        loadingBankAccounts: false,
-        user
-      }, () => {
-        toast.info("New Account Successfully created")
-      });
+      this.setState(
+        {
+          loadingBankAccounts: false,
+          user,
+        },
+        () => {
+          toast.info('New Account Successfully created');
+        },
+      );
     });
 
-    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
+    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (index) => {
       const { user } = this.state;
-      user.bankAccounts.splice(i, 1);
-      this.setState({
-        loadingBankAccounts: false,
-        user,
-      }, () => {
-        toast.info("Account Deleted")
-      });
+      user.bankAccounts.splice(index, 1);
+      this.setState(
+        {
+          loadingBankAccounts: false,
+          user,
+        },
+        () => {
+          toast.info('Account Deleted');
+        },
+      );
     });
 
     this.subscribe(profileStore, UPDATE_ACCOUNT_EVENT, (bankAccount) => {
       let { user } = this.state;
-      let i = bankAccount[1];
-      user.bankAccounts[i] = bankAccount[0];
-      this.setState({
-        loadingBankAccounts: false,
-        user
-      }, () => {
-        toast.info("Account Updated")
-      });
+      let index = bankAccount[1];
+      user.bankAccounts[index] = bankAccount[0];
+      this.setState(
+        {
+          loadingBankAccounts: false,
+          user,
+        },
+        () => {
+          toast.info('Account Updated');
+        },
+      );
     });
 
     fetchUserProducts();
@@ -117,16 +128,16 @@ class EditProfileView extends View {
     });
   };
 
-  editAccount = (account, i) => {
+  editAccount = (account, index) => {
     // this.setState({ loadingBankAccounts: true }, () => {
-    updateAccountAction({ ...account }, i);
+    updateAccountAction({ ...account }, index);
     // });
   };
 
-  onDeleteBankAccount = (i) => {
+  onDeleteBankAccount = (index) => {
     this.setState((prevState) => ({
       deleteBankAccountModalIsOpen: !prevState.deleteBankAccountModalIsOpen,
-      bankAccountIndex: i,
+      bankAccountIndex: index,
     }));
   };
 
@@ -157,11 +168,16 @@ class EditProfileView extends View {
 
   flagEdit = () => {
     this.props.history.push('/profile');
-  }
+  };
 
   render() {
     const { name, description, picture, bankAccounts } = this.state.user;
-    const { loadingBankAccounts, loadingUser, deleteBankAccountModalIsOpen, inventory } = this.state;
+    const {
+      loadingBankAccounts,
+      loadingUser,
+      deleteBankAccountModalIsOpen,
+      inventory,
+    } = this.state;
     return (
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
@@ -187,14 +203,14 @@ class EditProfileView extends View {
                 />
               </div>
             ) : (
-                <EditBasicInformation
-                  name={name}
-                  description={description}
-                  picture={picture}
-                  onCancel={this.flagEdit}
-                  onSave={this.onUpdateUser}
-                />
-              )}
+              <EditBasicInformation
+                name={name}
+                description={description}
+                picture={picture}
+                onCancel={this.flagEdit}
+                onSave={this.onUpdateUser}
+              />
+            )}
           </MDBRow>
           <MDBRow>
             <MDBCol md="1" />
@@ -209,21 +225,21 @@ class EditProfileView extends View {
                   />
                 </div>
               ) : (
-                  <div>
-                    <ModalConfirm
-                      open={deleteBankAccountModalIsOpen}
-                      onClose={this.toggleModal}
-                      text={'Are you sure you want to Delete the Bank Account?'}
-                      onOk={this.deleteBankAccount}
-                    />
-                    <EditBankInformation
-                      editAccount={this.editAccount}
-                      newAccount={this.newAccount}
-                      bankAccounts={bankAccounts}
-                      onDelete={this.onDeleteBankAccount}
-                    />
-                  </div>
-                )}
+                <div>
+                  <ModalConfirm
+                    open={deleteBankAccountModalIsOpen}
+                    onClose={this.toggleModal}
+                    text={'Are you sure you want to Delete the Bank Account?'}
+                    onOk={this.deleteBankAccount}
+                  />
+                  <EditBankInformation
+                    editAccount={this.editAccount}
+                    newAccount={this.newAccount}
+                    bankAccounts={bankAccounts}
+                    onDelete={this.onDeleteBankAccount}
+                  />
+                </div>
+              )}
             </MDBCol>
             <MDBCol md="1" />
           </MDBRow>

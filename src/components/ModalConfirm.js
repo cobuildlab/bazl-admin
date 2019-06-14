@@ -20,10 +20,7 @@ const ModalConfirm = (props) => {
           </div>
           <h6 className="d-flex justify-content-center p-4">{text}</h6>
           <MDBModalFooter>
-            <MDBBtn
-              color="danger"
-              size="sm"
-              onClick={onOk}>
+            <MDBBtn color="danger" size="sm" onClick={onOk}>
               OK
             </MDBBtn>
             <MDBBtn size="sm" onClick={onClose}>
@@ -43,5 +40,4 @@ ModalConfirm.propTypes = {
   onOk: PropTypes.func.isRequired,
 };
 
-export default ModalConfirm;
-
+export { ModalConfirm };
