@@ -26,7 +26,11 @@ const BasicInformation = ({ user }) => {
     );
   } else {
     imagePreview = (
-      <img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />
+      <img
+        alt={'User Profile'}
+        src={ImgDefault}
+        className="img-fluid img-label"
+      />
     );
   }
 
@@ -48,11 +52,11 @@ const BasicInformation = ({ user }) => {
           disabled={true}
         /> */}
         <h2 className="text-black-50 mb-0">{name}</h2>
-        
+
         <small className="text-primary">@User</small>
         <div className="mt-5">
-        <h5>Description</h5>
-        {/* <MDBInput
+          <h5>Description</h5>
+          {/* <MDBInput
           className="mt-0"
           type="textarea"
           name="description"
@@ -60,9 +64,7 @@ const BasicInformation = ({ user }) => {
           disabled={true}
           rows="5"
         /> */}
-        <small>
-        {description}
-        </small>
+          <small>{description}</small>
         </div>
       </MDBCol>
       <MDBCol md="2">

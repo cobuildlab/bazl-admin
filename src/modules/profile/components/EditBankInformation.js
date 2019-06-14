@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { MDBBtn, MDBInput, MDBRow } from 'mdbreact';
 import { EditableBankAccount } from './EditableBankAccount';
 
@@ -44,13 +45,13 @@ class EditBankInformation extends React.Component {
       <React.Fragment>
         <div className="mt-3 mb-5">
           <h5>Bank Accounts</h5>
-          {bankAccounts.map((account, i) => (
+          {bankAccounts.map((account, index) => (
             <EditableBankAccount
-              key={i}
-              i={i}
+              key={index}
+              index={index}
               account={account}
               editAccount={editAccount}
-              onDelete={() => onDelete(i)}
+              onDelete={() => onDelete(index)}
             />
           ))}
           <div className="d-flex justify-content-center align-items-center">
@@ -108,12 +109,19 @@ class EditBankInformation extends React.Component {
               </MDBRow>
             </div>
           ) : (
-              <div></div>
-            )}
+            <div></div>
+          )}
         </div>
       </React.Fragment>
     );
   }
 }
 
-export default EditBankInformation;
+EditBankInformation.propTypes = {
+  bankAccounts: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  newAccount: PropTypes.func.isRequired,
+  editAccount: PropTypes.func.isRequired,
+};
+
+export { EditBankInformation };
