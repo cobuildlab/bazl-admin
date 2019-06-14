@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {
-  MDBContainer,
   MDBBtn,
   MDBModal,
   MDBModalBody,
-  MDBModalHeader,
-  MDBModalFooter,
+  MDBRow,
+  MDBCol,
 } from 'mdbreact';
 
 class ModalUpdate extends Component {
@@ -31,28 +30,28 @@ class ModalUpdate extends Component {
         
 
               < MDBBtn className = "btn btn-circle-success mt-4 mb-5"
-              onClick = {
+                onClick = {
                   this.toggle
                 } > Update </MDBBtn> 
               
-        <MDBModal isOpen = {
+        <MDBModal centered size="sm" isOpen = {
           this.state.modal
         }
         toggle = {
           this.toggle
         } >
-          <MDBModalHeader toggle = {
-            this.toggle
-          }> Bazl </MDBModalHeader> <MDBModalBody>
-            ¿Are you shure to Update this product? </MDBModalBody> 
-          <MDBModalFooter >
-            < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
-             > Save changes </MDBBtn> 
-            < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
-            onClick = {
-                this.toggle
-            } > Cancel </MDBBtn> 
-          </MDBModalFooter> </MDBModal></>
+          <MDBModalBody>
+            ¿Are you shure to update this product? </MDBModalBody> 
+          <MDBRow>
+            <MDBCol>
+              < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
+              > Update </MDBBtn> 
+              < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
+                onClick = {
+                  this.toggle
+                } > Cancel </MDBBtn> 
+            </MDBCol>
+          </MDBRow> </MDBModal></>
       );
     }
 }
