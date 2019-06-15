@@ -38,7 +38,7 @@ class EditableBankAccount extends Component {
     const { onDelete, editAccount, index } = this.props;
     const { type, title, number, routingNumber } = this.state;
     return (
-      <MDBCard style={{ marginBottom: '20px' }}>
+      <MDBCard className="accountCard" style={{ marginBottom: '20px' }}>
         <MDBCardBody style={{ paddingBottom: '0px', paddingTop: '0px' }}>
           <MDBRow className="d-flex justify-content-around align-items-center text-center">
             <MDBCol md="2" style={{ paddingLeft: '0px' }}>
