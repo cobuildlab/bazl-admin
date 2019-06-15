@@ -52,12 +52,20 @@ class EditBasicInformation extends React.Component {
     let imagePreview = null;
 
     if (picture) {
-      imagePreview = (<img alt={'User Profile'} src={picture} className="img-fluid" />);
+      imagePreview = (
+        <img alt={'User Profile'} src={picture} className="img-fluid" />
+      );
     } else {
-      imagePreview = (<img alt={'User Profile'} src={ImgDefault} className="img-fluid img-label" />);
+      imagePreview = (
+        <img
+          alt={'User Profile'}
+          src={ImgDefault}
+          className="img-fluid img-label"
+        />
+      );
     }
     let style = {
-      cursor: 'pointer'
+      cursor: 'pointer',
     };
 
     return (
@@ -73,9 +81,7 @@ class EditBasicInformation extends React.Component {
             onChange={this.onImageChange}
           />
 
-          <small >
-            JPG or PNG with a maximum of 5mb
-          </small>
+          <small>JPG or PNG with a maximum of 5mb</small>
         </MDBCol>
         <MDBCol md="7">
           <h5>Name User</h5>
@@ -93,7 +99,7 @@ class EditBasicInformation extends React.Component {
             name="description"
             value={description}
             onChange={this.onChange}
-            rows="5"
+            rows="3"
           />
           <MDBCol className="text-center">
             <MDBBtn
