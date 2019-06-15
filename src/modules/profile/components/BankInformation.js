@@ -1,7 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { MDBTable, MDBTableHead } from 'mdbreact';
 import { BankAccount } from './BankAccount';
+import {
+  // MDBRow, MDBInput, MDBTableBody
+  MDBTable,
+  MDBTableHead,
+} from 'mdbreact';
+import PropTypes from 'prop-types';
 
 class BankInformation extends React.Component {
   render() {
@@ -13,10 +17,10 @@ class BankInformation extends React.Component {
           <MDBTable bordered>
             <MDBTableHead>
               <tr>
-                <th>{'Class'}</th>
-                <th>{'Holder\'s name'}</th>
-                <th>{'Account number'}</th>
-                <th>{'Routing number'}</th>
+                <th>Class</th>
+                <th>{encodeURIComponent(`Holders's`)} name</th>
+                <th>Account number</th>
+                <th>Routing number</th>
               </tr>
             </MDBTableHead>
             {bankAccounts.map((account, i) => (

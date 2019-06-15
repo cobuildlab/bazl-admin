@@ -1,54 +1,102 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { MDBIcon, MDBContainer, MDBCol, MDBRow, MDBBtn } from "mdbreact";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  MDBIcon,
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBBtn,
+  MDBInput,
+} from 'mdbreact';
 import View from 'react-flux-state';
-import SidebarComponent from "../../components/SidebarComponent";
-import ImgCardDama from "../../assets/img/ropa-dama.jpg";
-import ImgProfile from "../../assets/img/profile-table.jpg";
-import { salesStore, DETAIL_EVENT, STAT_EVENT } from "./sales-store";
-import {detailFetch, changeStatus} from './sales-action';
+import SidebarComponent from '../../components/SidebarComponent';
+import ImgCardDama from '../../assets/img/ropa-dama.jpg';
+import ImgProfile from '../../assets/img/profile-table.jpg';
+import {
+  salesStore,
+  DETAIL_EVENT,
+  STAT_EVENT,
+  UPLOAD_EVENT,
+  // UPLOAD_ERROR,
+} from './sales-store';
+import { detailFetch, changeStatus, detailUpload } from './sales-action';
 
 class SalesDetailView extends View {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      sale : [],
-      key : ''
-    }
+    this.state = {
+      sale: [],
+      key: '',
+      picture: '',
+    };
+    this.handleUpload = this.handleUpload.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
+    this.subscribe(salesStore, DETAIL_EVENT, (sale) => {
+      const detailSale = sale;
+      const key = sale.id;
+      this.setState({
+        sale: detailSale,
+        key: key,
+      });
+    });
+    this.subscribe(salesStore, STAT_EVENT, (sale) => {
+      const detailSale = sale;
+      const key = sale.id;
+      this.setState({
+        sale: detailSale,
+        key: key,
+      });
+    });
+    detailFetch(this.props.match.params.id);
 
-   
-       this.subscribe(salesStore, DETAIL_EVENT, (sale)=>{
-         const detailSale = sale;
-         const key = sale.id;
-         this.setState({
-           sale : detailSale,
-           key : key
-         })
-       })
-       this.subscribe(salesStore, STAT_EVENT, (sale)=>{
-         const detailSale = sale;
-         const key = sale.id;
-         this.setState({
-           sale: detailSale,
-           key : key
-          })
-        })
-        detailFetch(this.props.match.params.id);
-        
-      }
+    this.subscribe(salesStore, UPLOAD_EVENT, (upload) => {
+      const url = upload;
+      this.setState({
+        picture: url,
+      });
+    });
+  }
 
-      closeSale(){
-        changeStatus(this.props.match.params.id);
-      }
+  closeSale() {
+    changeStatus(this.props.match.params.id);
+  }
+
+  handleUpload = (e) => {
+    detailUpload(e);
+  };
+
   render() {
     let statBtn;
     if (this.state.sale.status) {
-      statBtn = <MDBBtn className="btn btn-circle-success" onClick={() => this.closeSale()}>Active Sale</MDBBtn>
+      statBtn = (
+        <MDBBtn
+          className="btn btn-circle-success"
+          onClick={() => this.closeSale()}>
+          Active Sale
+        </MDBBtn>
+      );
     } else {
-      statBtn = <MDBBtn className="btn btn-circle-danger" onClick={() => this.closeSale()} disabled>Closed Sale</MDBBtn>
-    };
+      statBtn = (
+        <MDBBtn
+          className="btn btn-circle-danger"
+          onClick={() => this.closeSale()}
+          disabled>
+          Closed Sale
+        </MDBBtn>
+      );
+    }
+    let uploadFile = (
+      <div>
+        <input
+          type="file"
+          name="photo"
+          id="upload-photo"
+          style={{ opacity: 0 }}
+          onChange={this.handleUpload}
+        />
+      </div>
+    );
     return (
       <React.Fragment>
         <SidebarComponent>
@@ -59,16 +107,13 @@ class SalesDetailView extends View {
             <div>
               <Link
                 to="/new-product"
-                className="btn btn-circle btn-circle-link"
-              >
+                className="btn btn-circle btn-circle-link">
                 Upload <MDBIcon icon="upload" className="ml-1" />
               </Link>
             </div>
           </div>
           <MDBContainer className="body">
-            <div className="d-flex justify-content-end mb-4">
-              {statBtn}
-            </div>
+            <div className="d-flex justify-content-end mb-4">{statBtn}</div>
             <MDBRow>
               <MDBCol md="2">
                 <div
@@ -124,7 +169,9 @@ class SalesDetailView extends View {
                       </span>
                     </h6>
                     <h6>
-                      <span className="d-inline font-weight-bold ml-4">{this.state.sale.size}</span>
+                      <span className="d-inline font-weight-bold ml-4">
+                        {this.state.sale.size}
+                      </span>
                     </h6>
                   </div>
                 </div>
@@ -132,11 +179,36 @@ class SalesDetailView extends View {
                 <hr />
                 <label
                   className="CustomlabelSales text-center"
-                  htmlFor="upload-photo"
-                >
-                  <MDBIcon icon="file-upload" /> Upload Image
+                  htmlFor="upload-photo">
+                  <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload
+                  Image
                 </label>
-                <input type="file" name="photo" id="upload-photo" />
+                {uploadFile}
+                <img
+                  width="100%"
+                  src={this.state.picture}
+                  className="mt-2 pt-2"
+                  alt=""
+                />
+                {this.state.picture ? (
+                  <p className="text-center">
+                    <a
+                      href={this.state.picture}
+                      rel="noopener noreferrer"
+                      target="_blank">
+                      Download
+                    </a>
+                  </p>
+                ) : (
+                  ''
+                )}
+
+                <MDBInput
+                  type="textarea"
+                  label="Comment"
+                  rows="2"
+                  className="mt-2 pt-2"
+                />
                 <div className="d-flex justify-content-center mt-4">
                   <MDBBtn className="btn btn-circle">Send</MDBBtn>
                 </div>
