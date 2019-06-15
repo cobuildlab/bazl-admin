@@ -66,6 +66,7 @@ const BasicInformation = ({ user }) => {
         /> */}
           <small>{description}</small>
         </div>
+        <br></br>
       </MDBCol>
       <MDBCol md="2">
         <MDBCard>
