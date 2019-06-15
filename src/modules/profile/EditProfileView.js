@@ -1,30 +1,32 @@
 import React from 'react';
+import View from 'react-flux-state';
+import { toast } from 'react-toastify';
+import * as R from 'ramda';
+import { Link } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 import { MDBCol, MDBContainer, MDBRow, MDBIcon } from 'mdbreact';
-import SidebarComponent from '../../components/SidebarComponent';
-import SliderCards from '../../components/SliderCards';
-import { EditBasicInformation } from './components/EditBasicInformation';
+import { landingStore, USER_EVENT } from '../landing/landing-store';
+import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store';
+import {
+  profileStore,
+  ACCOUNT_ERROR_EVENT,
+  NEW_ACCOUNT_EVENT,
+  DELETE_ACCOUNT_EVENT,
+  UPDATE_ACCOUNT_EVENT,
+} from './profile-store';
 import {
   addAccountAction,
   updateAccountAction,
   fetchProfileAction,
   updateProfileAction,
 } from './profile-actions';
-import View from 'react-flux-state';
-import {
-  ACCOUNT_ERROR_EVENT,
-  NEW_ACCOUNT_EVENT,
-  DELETE_ACCOUNT_EVENT,
-  UPDATE_ACCOUNT_EVENT,
-  profileStore,
-} from './profile-store';
-import { toast } from 'react-toastify/index';
-import * as R from 'ramda';
-import { landingStore, USER_EVENT } from '../landing/landing-store';
-import EditBankInformation from './components/EditBankInformation';
+import { fetchUserProducts } from '../inventory/inventory-actions';
 import { userModel } from './Profile-models';
-import { Link } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
-import ModalConfirm from '../../components/ModalConfirm';
+import { ModalConfirm } from '../../components/ModalConfirm';
+import { EditBasicInformation } from './components/EditBasicInformation';
+import { EditBankInformation } from './components/EditBankInformation';
+import SidebarComponent from '../../components/SidebarComponent';
+import SliderCardsMap from '../../components/SliderCardsMap';
 
 class EditProfileView extends View {
   constructor(props) {
@@ -36,50 +38,87 @@ class EditProfileView extends View {
       loadingUser: false,
       deleteBankAccountModalIsOpen: false,
       bankAccountIndex: 0,
+      inventory: [],
     };
   }
 
   componentDidMount() {
-    this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
-      toast.error(e.message);
-      this.setState({ loadingBankAccounts: false });
-    });
-    this.subscribe(landingStore, USER_EVENT, (user) => {
+    this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {
+      let { inventory } = this.state;
+      inventory = R.clone(data);
       this.setState({
-        loadingUser: false,
-        loadingBankAccounts: false,
-        deleteBankAccountModalIsOpen: false,
-        user,
+        inventory,
       });
     });
+
     this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
       toast.error(e.message);
       this.setState({ loadingBankAccounts: false });
     });
+
+    this.subscribe(landingStore, USER_EVENT, (user) => {
+      this.setState(
+        {
+          loadingUser: false,
+          loadingBankAccounts: false,
+          deleteBankAccountModalIsOpen: false,
+          user,
+        },
+        () => {
+          toast.info('Successful');
+        },
+      );
+    });
+
+    this.subscribe(profileStore, ACCOUNT_ERROR_EVENT, (e) => {
+      toast.error(e.message);
+      this.setState({ loadingBankAccounts: false });
+    });
+
     this.subscribe(profileStore, NEW_ACCOUNT_EVENT, (bankAccount) => {
       const { user } = this.state;
       user.bankAccounts.push(bankAccount);
-      this.setState({
-        loadingBankAccounts: false,
-        user,
-      });
+      this.setState(
+        {
+          loadingBankAccounts: false,
+          user,
+        },
+        () => {
+          toast.info('New Account Successfully created');
+        },
+      );
     });
-    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (i) => {
+
+    this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (index) => {
       const { user } = this.state;
-      user.bankAccounts.splice(i, 1);
-      this.setState({
-        loadingBankAccounts: false,
-        user,
-      });
+      user.bankAccounts.splice(index, 1);
+      this.setState(
+        {
+          loadingBankAccounts: false,
+          user,
+        },
+        () => {
+          toast.info('Account Deleted');
+        },
+      );
     });
+
     this.subscribe(profileStore, UPDATE_ACCOUNT_EVENT, (bankAccount) => {
       let { user } = this.state;
-      user.bankAccounts[bankAccount.id] = bankAccount;
-      this.setState({
-        loadingBankAccounts: false,
-        user,
-      });
+      let index = bankAccount[1];
+      user.bankAccounts[index] = bankAccount[0];
+      this.setState(
+        {
+          loadingBankAccounts: false,
+          user,
+        },
+        () => {
+          toast.info('Account Updated');
+        },
+      );
     });
+
+    fetchUserProducts();
     fetchProfileAction();
   }
 
@@ -89,16 +128,16 @@ class EditProfileView extends View {
     });
   };
 
-  editAccount = (account) => {
-    this.setState({ loadingBankAccounts: true }, () => {
-      updateAccountAction({ ...account });
-    });
+  editAccount = (account, index) => {
+    // this.setState({ loadingBankAccounts: true }, () => {
+    updateAccountAction({ ...account }, index);
+    // });
   };
 
-  onDeleteBankAccount = (i) => {
+  onDeleteBankAccount = (index) => {
     this.setState((prevState) => ({
       deleteBankAccountModalIsOpen: !prevState.deleteBankAccountModalIsOpen,
-      bankAccountIndex: i,
+      bankAccountIndex: index,
     }));
   };
 
@@ -116,9 +155,9 @@ class EditProfileView extends View {
     user.name = updateUser.name;
     user.description = updateUser.description;
     user.picture = updateUser.picture;
-    this.setState({ loadingUser: true }, () => {
-      updateProfileAction(user);
-    });
+    // this.setState({ loadingUser: true }, () => {
+    updateProfileAction(user);
+    // });
   };
 
   toggleModal = () => {
@@ -127,14 +166,18 @@ class EditProfileView extends View {
     }));
   };
 
+  flagEdit = () => {
+    this.props.history.push('/profile');
+  };
+
   render() {
     const { name, description, picture, bankAccounts } = this.state.user;
     const {
       loadingBankAccounts,
       loadingUser,
       deleteBankAccountModalIsOpen,
+      inventory,
     } = this.state;
-
     return (
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
@@ -151,12 +194,14 @@ class EditProfileView extends View {
         <MDBContainer>
           <MDBRow>
             {loadingUser ? (
-              <ClipLoader
-                sizeUnit={'px'}
-                size={120}
-                color={'#44c1f6'}
-                loading={true}
-              />
+              <div className="text-center">
+                <ClipLoader
+                  sizeUnit={'px'}
+                  size={120}
+                  color={'#44c1f6'}
+                  loading={true}
+                />
+              </div>
             ) : (
               <EditBasicInformation
                 name={name}
@@ -171,13 +216,14 @@ class EditProfileView extends View {
             <MDBCol md="1" />
             <MDBCol md="10">
               {loadingBankAccounts ? (
-                // <Loader />
-                <ClipLoader
-                  sizeUnit={'px'}
-                  size={120}
-                  color={'#44c1f6'}
-                  loading={true}
-                />
+                <div className="text-center">
+                  <ClipLoader
+                    sizeUnit={'px'}
+                    size={120}
+                    color={'#44c1f6'}
+                    loading={true}
+                  />
+                </div>
               ) : (
                 <div>
                   <ModalConfirm
@@ -201,7 +247,7 @@ class EditProfileView extends View {
             <MDBCol md="2" />
             <MDBCol md="8">
               <div className="mt-3 mb-5">
-                <SliderCards />
+                <SliderCardsMap inventory={inventory} />
               </div>
             </MDBCol>
             <MDBCol md="2" />
