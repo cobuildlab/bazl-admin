@@ -6,28 +6,32 @@ import {
   MDBRow,
   MDBCol,
 } from 'mdbreact';
+import PropTypes from 'prop-types';
 
 class ModalUpdate extends Component {
-    state = {
-      modal: false,
-    }
+  state = {
+    modal: false,
+  };
 
-    toggle = () => {
-      this.setState({
-        modal: !this.state.modal,
-      });
-    }
-    confirmAction = () =>{
-      
-      const isConfirmed = true;
-      this.props.callbackFromParent(isConfirmed);
-    }
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+  confirmAction = () => {
+    const isConfirmed = true;
+    this.props.callbackFromParent(isConfirmed);
+  };
 
-    render() {
-      return ( 
-      
+  render() {
+    return (
       <>
-        
+        <MDBBtn
+          className="btn btn-circle-success mt-4 mb-5"
+          onClick={this.toggle}>
+          {' '}
+          Update{' '}
+        </MDBBtn>
 
               < MDBBtn className = "btn btn-circle-success mt-4 mb-5"
                 onClick = {
@@ -55,5 +59,9 @@ class ModalUpdate extends Component {
       );
     }
 }
+
+ModalUpdate.propTypes = {
+  callbackFromParent: PropTypes.func.isRequired,
+};
 
 export default ModalUpdate;

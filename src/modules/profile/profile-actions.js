@@ -20,7 +20,6 @@ import { landingStore, USER_EVENT } from '../landing/landing-store';
 export const updateProfileAction = async (user) => {
   try {
     // profileValidator(user);
-    console.log('export const updateProfileAction = async (user) => {', user);
   } catch (e) {
     error('updateProfileAction', e);
     Flux.dispatchEvent(PROFILE_ERROR_EVENT, e);

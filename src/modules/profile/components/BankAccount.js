@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { MDBTableBody } from 'mdbreact';
+import {
+  //MDBRow, MDBInput, MDBTableHead ,
+  MDBTableBody,
+} from 'mdbreact';
+import PropTypes from 'prop-types';
 
 class BankAccount extends Component {
   constructor(props) {
@@ -58,5 +62,9 @@ class BankAccount extends Component {
     );
   }
 }
+
+BankAccount.propTypes = {
+  account: PropTypes.object.isRequired,
+};
 
 export { BankAccount };
