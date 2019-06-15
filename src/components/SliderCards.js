@@ -13,15 +13,13 @@ class SliderCards extends React.Component {
         </MDBCol>
         <div
           className="scrollbar scrollbar-primary "
-          style={{ overflow: 'auto', whiteSpace: 'nowrap' }}
-        >
+          style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>
           <MDBCard
             style={{
               width: '10rem',
               margin: '15px',
               display: 'inline-block',
-            }}
-          >
+            }}>
             <div
               className="img-card"
               style={{ backgroundImage: `url(${ImgCardDama})` }}
@@ -33,8 +31,7 @@ class SliderCards extends React.Component {
               width: '10rem',
               margin: '15px',
               display: 'inline-block',
-            }}
-          >
+            }}>
             <div
               className="img-card"
               style={{ backgroundImage: `url(${ImgCardHombre})` }}
@@ -46,8 +43,7 @@ class SliderCards extends React.Component {
               width: '10rem',
               margin: '15px',
               display: 'inline-block',
-            }}
-          >
+            }}>
             <div
               className="img-card"
               style={{ backgroundImage: `url(${ImgCardDama})` }}
@@ -59,8 +55,7 @@ class SliderCards extends React.Component {
               width: '10rem',
               margin: '15px',
               display: 'inline-block',
-            }}
-          >
+            }}>
             <div
               className="img-card"
               style={{ backgroundImage: `url(${ImgCardHombre})` }}
@@ -72,8 +67,7 @@ class SliderCards extends React.Component {
               width: '10rem',
               margin: '15px',
               display: 'inline-block',
-            }}
-          >
+            }}>
             <div
               className="img-card"
               style={{ backgroundImage: `url(${ImgCardDama})` }}
@@ -85,8 +79,7 @@ class SliderCards extends React.Component {
               width: '10rem',
               margin: '15px',
               display: 'inline-block',
-            }}
-          >
+            }}>
             <div
               className="img-card"
               style={{ backgroundImage: `url(${ImgCardHombre})` }}

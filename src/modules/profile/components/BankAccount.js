@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import {
+  //MDBRow, MDBInput, MDBTableHead ,
+  MDBTableBody,
+} from 'mdbreact';
 import PropTypes from 'prop-types';
-import { MDBTableBody } from 'mdbreact';
 
 class BankAccount extends Component {
   constructor(props) {
@@ -62,10 +65,6 @@ class BankAccount extends Component {
 
 BankAccount.propTypes = {
   account: PropTypes.object.isRequired,
-  // type: PropTypes.bool.isRequired,
-  // title: PropTypes.string.isRequired,
-  // number: PropTypes.string.isRequired,
-  // routingNumber: PropTypes.string.isRequired,
 };
 
 export { BankAccount };

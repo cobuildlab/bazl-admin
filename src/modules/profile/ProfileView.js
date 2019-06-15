@@ -9,8 +9,8 @@ import { BasicInformation } from './components/BasicInformation';
 import { BankInformation } from './components/BankInformation';
 import SliderCardsMap from '../../components/SliderCardsMap';
 import { userModel } from './Profile-models';
-import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store'
-import { fetchUserProducts } from '../inventory/inventory-actions'
+import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store';
+import { fetchUserProducts } from '../inventory/inventory-actions';
 
 class ProfileView extends View {
   constructor(props) {
@@ -18,16 +18,16 @@ class ProfileView extends View {
     const user = landingStore.getState(USER_EVENT);
     this.state = {
       user: { ...R.clone(userModel), ...user },
-      inventory: []
-    }
+      inventory: [],
+    };
   }
   componentDidMount() {
     this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {
       let { inventory } = this.state;
       inventory = R.clone(data);
       this.setState({
-        inventory
-      })
+        inventory,
+      });
     });
     fetchUserProducts();
   }
@@ -41,9 +41,11 @@ class ProfileView extends View {
             <h2 className="m-0">Profile</h2>
           </div>
           <div>
-            <Link to={'/edit-profile'} className="btn btn-circle btn-circle-link">
+            <Link
+              to={'/edit-profile'}
+              className="btn btn-circle btn-circle-link">
               Edit Profile
-            <MDBIcon icon="upload" className="ml-1" />
+              <MDBIcon icon="upload" className="ml-1" />
             </Link>
           </div>
         </div>
@@ -74,6 +76,6 @@ class ProfileView extends View {
         </MDBContainer>
       </SidebarComponent>
     );
-  };
+  }
 }
 export default ProfileView;
