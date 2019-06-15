@@ -14,8 +14,8 @@ class BankInformation extends React.Component {
       <React.Fragment>
         <div className="mt-3 mb-5">
           <h5>Bank Accounts</h5>
-          <MDBTable bordered>
-            <MDBTableHead>
+          <MDBTable bordered hover responsive>
+            <MDBTableHead color={'primary-plantilla'} textWhite>
               <tr>
                 <th>Class</th>
                 <th>{encodeURIComponent(`Holders's`)} name</th>

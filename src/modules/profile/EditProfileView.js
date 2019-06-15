@@ -84,7 +84,7 @@ class EditProfileView extends View {
           user,
         },
         () => {
-          toast.info('New Account Successfully created');
+          toast.info('New Account Successfully Created');
         },
       );
     });

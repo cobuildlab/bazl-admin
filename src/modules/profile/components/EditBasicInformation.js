@@ -99,7 +99,7 @@ class EditBasicInformation extends React.Component {
             name="description"
             value={description}
             onChange={this.onChange}
-            rows="5"
+            rows="3"
           />
           <MDBCol className="text-center">
             <MDBBtn

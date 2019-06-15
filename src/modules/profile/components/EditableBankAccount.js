@@ -37,20 +37,18 @@ class EditableBankAccount extends Component {
   render() {
     const { onDelete, editAccount, index } = this.props;
     const { type, title, number, routingNumber } = this.state;
-    let style = { position: 'relative' };
-
     return (
-      <MDBCard className="text-center">
-        <MDBCardBody>
-          <MDBRow className="d-flex justify-content-around align-items-center text-center mb-3">
-            <MDBCol md="2">
+      <MDBCard style={{ marginBottom: '20px' }}>
+        <MDBCardBody style={{ paddingBottom: '0px', paddingTop: '0px' }}>
+          <MDBRow className="d-flex justify-content-around align-items-center text-center">
+            <MDBCol md="2" style={{ paddingLeft: '0px' }}>
               <MDBInput
                 label="Business Account"
-                className="mt-0"
+                className="mt-0 text-center"
                 type="checkbox"
                 name="type"
                 onChange={this.onChange}
-                style={style}
+                style={{ position: 'relative', marginLeft: '0px' }}
                 checked={type}
               />
             </MDBCol>

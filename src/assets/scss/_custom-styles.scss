@@ -83,6 +83,15 @@
   margin-right: 15px;
 }
 
+.btn-add {
+  border-radius: 100px;
+  padding: 5px;
+  height: 30px;
+  width: 30px;
+  font-size: 12px;
+  // background-color: #52df78 !important;
+}
+
 .btn-edit {
   border-radius: 100px;
   padding: 5px;
@@ -434,4 +443,12 @@ td {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.form-check-label {
+  padding-left: 0px !important;
+}
+
+.mr-5 {
+  margin-right: 0px !important;
 }

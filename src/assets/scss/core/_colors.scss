@@ -613,6 +613,7 @@ $stylish-rgba: (
 );
 
 // Material colors
+$primary-plantilla:    #44c1f6 !default;
 $primary-color:        #4285f4 !default;
 $primary-color-dark:   #0d47a1 !default;
 $secondary-color:      #aa66cc !default;
@@ -641,6 +642,7 @@ $error-color:          $red-base !default;
 
 $material-colors: () !default;
 $material-colors: map-merge((
+  "primary-plantilla":    $primary-plantilla,
   "primary-color":        $primary-color,
   "primary-color-dark":   $primary-color-dark,
   "secondary-color":      $secondary-color,
