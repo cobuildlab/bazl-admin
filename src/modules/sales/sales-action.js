@@ -8,6 +8,9 @@ import {
   STAT_ERROR,
   UPLOAD_EVENT,
   UPLOAD_ERROR,
+
+  // // PRODUCT_EVENT,
+  // // PRODUCT_ERROR_EVENT
 } from './sales-store';
 import Flux from 'flux-state';
 
@@ -36,6 +39,7 @@ export const fetchSales = () => {
           size,
           status,
           productID,
+          statusShipped,
         } = doc.data();
         data.push({
           saleID: doc.id,
@@ -50,6 +54,7 @@ export const fetchSales = () => {
           size,
           status,
           productID,
+          statusShipped,
         });
       });
       Flux.dispatchEvent(SALE_EVENT, data);
@@ -99,6 +104,35 @@ export const detailUpload = async (e) => {
     console.log('No such Document');
     Flux.dispatchEvent(UPLOAD_ERROR, imageURL);
   }
+  //   const DB = firebase.firestore();
+  //   const productCollection = DB.collection('sales');
+  //   await productCollection.add({
+  //     name: 'test',
+  //     category: 'test',
+  //     description : 'desc',
+  //     size :' 30',
+  //     quantity :'30',
+  //     color: 'blue',
+  //     price: "300",
+  //     commission: "100",
+  //     additionalFee : "100",
+  //     shippingFee :"50",
+  //     totalPrice:"1000",
+  //     user:"ma2urbina@gmail.com",
+  //     statusShipped: false,
+  //     nOrden: '000256356738'
+  //   }).then(doc => {
+  //     console.log('statusShipped added: ', doc.statusShipped);
+  //     console.log('statusShipped added: ', doc);
+  //     Flux.dispatchEvent(PRODUCT_EVENT, doc)
+  //   }).catch(e => {
+  //     console.log('Error Adding document: ', e);
+  //   })
+
+  // } else {
+  //   console.log('No such Document');
+  //   Flux.dispatchEvent(UPLOAD_ERROR, imageURL);
+  // }
 };
 
 /**
@@ -110,6 +144,7 @@ export const changeStatus = (id) => {
   const salesCollection = DB.collection('sales').doc(id);
 
   let data = [];
+
   salesCollection.update({
     status: false,
   });

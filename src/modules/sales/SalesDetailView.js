@@ -28,8 +28,10 @@ class SalesDetailView extends View {
       sale: [],
       key: '',
       picture: '',
+      shippeStatus: false,
     };
     this.handleUpload = this.handleUpload.bind(this);
+    this.shippedSale = this.shippedSale.bind(this);
   }
   componentDidMount() {
     this.subscribe(salesStore, DETAIL_EVENT, (sale) => {
@@ -61,19 +63,29 @@ class SalesDetailView extends View {
   closeSale() {
     changeStatus(this.props.match.params.id);
   }
-
+  shippedSale = () => {
+    this.setState({
+      shippeStatus: true,
+    });
+  };
   handleUpload = (e) => {
     detailUpload(e);
   };
 
   render() {
     let statBtn;
-    if (this.state.sale.status) {
+    if (this.state.sale.status && this.state.shippeStatus === false) {
+      statBtn = (
+        <MDBBtn className="btn btn-circle-success" onClick={this.shippedSale}>
+          Active Sale
+        </MDBBtn>
+      );
+    } else if (this.state.sale.status && this.state.shippeStatus === true) {
       statBtn = (
         <MDBBtn
           className="btn btn-circle-success"
           onClick={() => this.closeSale()}>
-          Active Sale
+          Shipped Sale
         </MDBBtn>
       );
     } else {
