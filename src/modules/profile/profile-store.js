@@ -1,10 +1,11 @@
 import Flux from 'flux-state';
-
 /**
  * @property {string} UPDATE_USER_EVENT triggers when a user login into the system
  * @property {string} PROFILE_ERROR_EVENT triggers when a user fails to login
  * @property {string} PROFILE_EVENT triggers when a user fails to login
  * @property {string} ACCOUNT_ERROR_EVENT triggers when a user fails to login
+ * @property {string} NEW_ACCOUNT_EVENT triggers when a user fails to login
+ * @property {string} DELETE_ACCOUNT_EVENT triggers when a user fails to login
  * @property {string} UPDATE_ACCOUNT_EVENT triggers when a user fails to login
  */
 export const UPDATE_USER_EVENT = 'UPDATE_USER_EVENT';
