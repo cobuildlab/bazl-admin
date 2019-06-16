@@ -20,7 +20,6 @@ import { landingStore, USER_EVENT } from '../landing/landing-store';
 export const updateProfileAction = async (user) => {
   try {
     // profileValidator(user);
-    console.log('export const updateProfileAction = async (user) => {', user);
   } catch (e) {
     error('updateProfileAction', e);
     Flux.dispatchEvent(PROFILE_ERROR_EVENT, e);
@@ -143,7 +142,7 @@ export const deleteAccountAction = async (i) => {
   return i;
 };
 
-export const updateAccountAction = async (accountData) => {
+export const updateAccountAction = async (accountData, i) => {
   try {
     // TODO: Account Validator
     // profileValidator(accountData);
@@ -169,7 +168,7 @@ export const updateAccountAction = async (accountData) => {
 
   const userData = user.data();
   let { bankAccounts } = userData;
-  bankAccounts[accountData.i] = accountData;
+  bankAccounts[i] = accountData;
 
   try {
     await userRef.set({ bankAccounts }, { merge: true });
@@ -178,6 +177,6 @@ export const updateAccountAction = async (accountData) => {
     throw e;
   }
 
-  Flux.dispatchEvent(UPDATE_ACCOUNT_EVENT, accountData);
+  Flux.dispatchEvent(UPDATE_ACCOUNT_EVENT, [accountData, i]);
   return accountData;
 };

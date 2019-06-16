@@ -11,9 +11,6 @@ import {
 import ImgDefault from '../../../assets/img/img-default.png';
 import PropTypes from 'prop-types';
 
-/**
- *
- */
 class EditBasicInformation extends React.Component {
   constructor(props) {
     super(props);
@@ -67,11 +64,14 @@ class EditBasicInformation extends React.Component {
         />
       );
     }
+    let style = {
+      cursor: 'pointer',
+    };
 
     return (
       <React.Fragment>
-        <MDBCol md="3">
-          <label className="Customlabel text-center" htmlFor="upload-photo">
+        <MDBCol className="text-center" md="3">
+          <label style={style} className="text-center" htmlFor="upload-photo">
             {imagePreview}
           </label>
           <input
@@ -81,14 +81,12 @@ class EditBasicInformation extends React.Component {
             onChange={this.onImageChange}
           />
 
-          <small className="text-center">
-            JPG or PNG with a maximum of 5mb
-          </small>
+          <small>JPG or PNG with a maximum of 5mb</small>
         </MDBCol>
         <MDBCol md="7">
           <h5>Name User</h5>
           <MDBInput
-            className="mt-0"
+            className="mb-0"
             type="text"
             name="name"
             value={name}
@@ -96,7 +94,7 @@ class EditBasicInformation extends React.Component {
           />
           <h5>Description</h5>
           <MDBInput
-            className="mt-0"
+            className="mb-0"
             type="textarea"
             name="description"
             value={description}

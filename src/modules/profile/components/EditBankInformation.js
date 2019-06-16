@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { MDBBtn, MDBInput, MDBRow } from 'mdbreact';
 import { EditableBankAccount } from './EditableBankAccount';
 
@@ -39,20 +40,18 @@ class EditBankInformation extends React.Component {
   render() {
     const { bankAccounts, onDelete, newAccount, editAccount } = this.props;
     let { type, title, number, routingNumber, showNewAccountForm } = this.state;
-    let style = {
-      position: 'relative',
-    };
-
+    let style = { position: 'relative' };
     return (
       <React.Fragment>
         <div className="mt-3 mb-5">
           <h5>Bank Accounts</h5>
-          {bankAccounts.map((account, i) => (
+          {bankAccounts.map((account, index) => (
             <EditableBankAccount
-              key={i}
+              key={index}
+              index={index}
               account={account}
               editAccount={editAccount}
-              onDelete={() => onDelete(i)}
+              onDelete={() => onDelete(index)}
             />
           ))}
           <div className="d-flex justify-content-center align-items-center">
@@ -118,4 +117,11 @@ class EditBankInformation extends React.Component {
   }
 }
 
-export default EditBankInformation;
+EditBankInformation.propTypes = {
+  bankAccounts: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  newAccount: PropTypes.func.isRequired,
+  editAccount: PropTypes.func.isRequired,
+};
+
+export { EditBankInformation };
