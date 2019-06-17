@@ -26,13 +26,7 @@ class ModalUpdate extends Component {
   render() {
     return (
       <>
-        <MDBBtn
-          className="btn btn-circle-success mt-4 mb-5"
-          onClick={this.toggle}>
-          {' '}
-          Update{' '}
-        </MDBBtn>
-
+        
               < MDBBtn className = "btn btn-circle-success mt-4 mb-5"
                 onClick = {
                   this.toggle
@@ -56,8 +50,8 @@ class ModalUpdate extends Component {
                 } > Cancel </MDBBtn> 
             </MDBCol>
           </MDBRow> </MDBModal></>
-      );
-    }
+    );
+  }
 }
 
 ModalUpdate.propTypes = {
