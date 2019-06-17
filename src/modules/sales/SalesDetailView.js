@@ -17,7 +17,6 @@ import {
   DETAIL_EVENT,
   STAT_EVENT,
   UPLOAD_EVENT,
-  // UPLOAD_ERROR,
 } from './sales-store';
 import { detailFetch, changeStatus, detailUpload } from './sales-action';
 
@@ -28,10 +27,9 @@ class SalesDetailView extends View {
       sale: [],
       key: '',
       picture: '',
-      shippeStatus: false,
+      shippedStatus: '2',
     };
     this.handleUpload = this.handleUpload.bind(this);
-    this.shippedSale = this.shippedSale.bind(this);
   }
   componentDidMount() {
     this.subscribe(salesStore, DETAIL_EVENT, (sale) => {
@@ -60,31 +58,30 @@ class SalesDetailView extends View {
     });
   }
 
-  closeSale() {
-    changeStatus(this.props.match.params.id);
+  closeSale(e) {
+    let value = e.target.value;
+    changeStatus(this.props.match.params.id, value);
   }
-  shippedSale = () => {
-    this.setState({
-      shippeStatus: true,
-    });
-  };
   handleUpload = (e) => {
     detailUpload(e);
   };
 
   render() {
     let statBtn;
-    if (this.state.sale.status && this.state.shippeStatus === false) {
-      statBtn = (
-        <MDBBtn className="btn btn-circle-success" onClick={this.shippedSale}>
-          Active Sale
-        </MDBBtn>
-      );
-    } else if (this.state.sale.status && this.state.shippeStatus === true) {
+    if (this.state.sale.status && this.state.sale.shippedStatus === '1') {
       statBtn = (
         <MDBBtn
           className="btn btn-circle-success"
-          onClick={() => this.closeSale()}>
+          value={this.state.shippedStatus}
+          onClick={(e) => this.closeSale(e)}>
+          Active Sale
+        </MDBBtn>
+      );
+    } else if (this.state.sale.status && this.state.shippedStatus === '2') {
+      statBtn = (
+        <MDBBtn
+          className="btn btn-circle-success"
+          onClick={(e) => this.closeSale(e)}>
           Shipped Sale
         </MDBBtn>
       );
