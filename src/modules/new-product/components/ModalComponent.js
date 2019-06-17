@@ -3,8 +3,8 @@ import {
   MDBBtn,
   MDBModal,
   MDBModalBody,
-  MDBModalHeader,
-  MDBModalFooter,
+  MDBRow,
+  MDBCol,
 } from 'mdbreact';
 
 class ModalComponent extends Component {
@@ -32,24 +32,26 @@ class ModalComponent extends Component {
                   this.toggle
                 } > Publish </MDBBtn> 
               
-        <MDBModal isOpen = {
+        <MDBModal size="sm" centered className="modal-notify" isOpen = {
           this.state.modal
         }
         toggle = {
           this.toggle
         } >
-          <MDBModalHeader toggle = {
-            this.toggle
-          }> Bazl </MDBModalHeader> <MDBModalBody>
+          <MDBModalBody>
             ¿Are you shure to publish this new product? </MDBModalBody> 
-          <MDBModalFooter >
-            < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
-            > Publish </MDBBtn> 
-            < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
-              onClick = {
-                this.toggle
-              } > Cancel </MDBBtn> 
-          </MDBModalFooter> </MDBModal></>
+          <MDBRow>
+            <MDBCol>
+
+              < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
+              > Publish </MDBBtn> 
+              < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
+                onClick = {
+                  this.toggle
+                } > Cancel </MDBBtn> 
+            </MDBCol>
+          </MDBRow>
+        </MDBModal></>
       );
     }
 }

@@ -5,6 +5,7 @@ import { onLogout } from '../modules/landing/landing-actions';
 import Logo from '../assets/img/Bazl-logo-w.png';
 import { landingStore, LOGOUT_EVENT } from '../modules/landing/landing-store';
 import PropTypes from 'prop-types';
+import logouticon from '../assets/img/logout.png'
 
 const ContentSidebar = ({ routes }) => {
   React.useEffect(() => {
@@ -41,7 +42,10 @@ const ContentSidebar = ({ routes }) => {
           active={false}
           className="link-logout text-left"
           onClick={onLogout}>
-          Log out
+          < img src = {logouticon}
+            alt = "icon"
+            className = "icon-list-item" />
+          <span>Log out</span>
         </MDBListGroupItem>
       </MDBListGroup>
     </MDBContainer>

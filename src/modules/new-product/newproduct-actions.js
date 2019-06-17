@@ -11,7 +11,7 @@ import { landingStore, USER_EVENT } from '../landing/landing-store';
 export const createProduct = async (product, image)  => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products');
-  let imageURL =null;
+  let imageURL = null;
   const storage = firebase.storage();
   const userData = landingStore.getState(USER_EVENT);
     
