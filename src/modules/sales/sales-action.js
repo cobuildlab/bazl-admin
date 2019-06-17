@@ -8,9 +8,6 @@ import {
   STAT_ERROR,
   UPLOAD_EVENT,
   UPLOAD_ERROR,
-
-  // // PRODUCT_EVENT,
-  // // PRODUCT_ERROR_EVENT
 } from './sales-store';
 import Flux from 'flux-state';
 
@@ -38,6 +35,7 @@ export const fetchSales = () => {
           quantity,
           size,
           status,
+          shippedStatus,
           productID,
           statusShipped,
         } = doc.data();
@@ -53,6 +51,7 @@ export const fetchSales = () => {
           quantity,
           size,
           status,
+          shippedStatus,
           productID,
           statusShipped,
         });
@@ -79,6 +78,15 @@ export const detailFetch = (id) => {
       data = doc.data();
       data.id = doc.id;
       Flux.dispatchEvent(DETAIL_EVENT, data);
+
+      //update test
+      //   salesCollection.set({
+      //     // status: false,
+      //     user: 'mau',
+      //     nOrder: '000122226',
+      //     buyerID: '@maurbina',
+      //     influencer: '@maurbina'
+      // }, { merge: true });
     } else {
       console.log('No such Document');
       Flux.dispatchEvent(DETAIL_ERROR, data);
@@ -100,34 +108,37 @@ export const detailUpload = async (e) => {
     const task = await storageRef.put(image);
     imageURL = await task.ref.getDownloadURL();
     Flux.dispatchEvent(UPLOAD_EVENT, imageURL);
+
+    //Add sale with code
+    // const DB = firebase.firestore();
+    // const productCollection = DB.collection('sales');
+    // await productCollection.add({
+    //   name: 'Sophie',
+    //   category: 'service',
+    //   description : 'description',
+    //   size : '10',
+    //   quantity :'3',
+    //   color: 'blue',
+    //   price: "300$",
+    //   commission: "5$",
+    //   additionalFee : "10$",
+    //   shippingFee :"50",
+    //   totalPrice:"305$",
+    //   user:"@maurbina",
+    //   nOrden: '',
+    //   shippedStatus : '1',
+    //   status: true
+    // }).then(doc => {
+    //   console.log("agregado");
+    //   console.log('statusShipped added: ', doc);
+    //   Flux.dispatchEvent(PRODUCT_EVENT, doc)
+    // }).catch(e => {
+    //   console.log('Error Adding document: ', e);
+    // })
   } else {
     console.log('No such Document');
     Flux.dispatchEvent(UPLOAD_ERROR, imageURL);
   }
-  //   const DB = firebase.firestore();
-  //   const productCollection = DB.collection('sales');
-  //   await productCollection.add({
-  //     name: 'test',
-  //     category: 'test',
-  //     description : 'desc',
-  //     size :' 30',
-  //     quantity :'30',
-  //     color: 'blue',
-  //     price: "300",
-  //     commission: "100",
-  //     additionalFee : "100",
-  //     shippingFee :"50",
-  //     totalPrice:"1000",
-  //     user:"ma2urbina@gmail.com",
-  //     statusShipped: false,
-  //     nOrden: '000256356738'
-  //   }).then(doc => {
-  //     console.log('statusShipped added: ', doc.statusShipped);
-  //     console.log('statusShipped added: ', doc);
-  //     Flux.dispatchEvent(PRODUCT_EVENT, doc)
-  //   }).catch(e => {
-  //     console.log('Error Adding document: ', e);
-  //   })
 
   // } else {
   //   console.log('No such Document');
@@ -139,15 +150,20 @@ export const detailUpload = async (e) => {
  * Update the State of a Sale to closed and get the modified data
  * @returns {Promise<SalesModel>}Sale info or null if unexisting
  */
-export const changeStatus = (id) => {
+export const changeStatus = (id, e) => {
   const DB = firebase.firestore();
   const salesCollection = DB.collection('sales').doc(id);
 
   let data = [];
-
-  salesCollection.update({
-    status: false,
-  });
+  if (e === '2') {
+    salesCollection.update({
+      shippedStatus: '2',
+    });
+  } else {
+    salesCollection.update({
+      status: false,
+    });
+  }
 
   salesCollection.get().then((doc) => {
     if (doc.exists) {
