@@ -7,7 +7,9 @@ const SliderCardsMap = (props) => {
   return (
     <React.Fragment>
       <MDBCol md="12">
-        <h6 className="mt-4 mb-3 font-body"><strong>Recently Tagged Publications</strong></h6>
+        <h6 className="mt-4 mb-3 font-body">
+          <strong>Recently Publications</strong>
+        </h6>
       </MDBCol>
       <div
         className="scrollbar scrollbar-primary "

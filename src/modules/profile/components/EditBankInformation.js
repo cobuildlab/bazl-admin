@@ -52,7 +52,9 @@ class EditBankInformation extends React.Component {
     return (
       <React.Fragment>
         <MDBCol md="12">
-          <h6 className="mt-4 mb-3">Bank Accounts</h6>
+          <h6 className="mt-4 mb-3 font-body">
+            <strong>Bank Accounts</strong>
+          </h6>
         </MDBCol>
         {bankAccounts.length !== 0 ? (
           <div>
