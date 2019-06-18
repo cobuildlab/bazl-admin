@@ -18,7 +18,8 @@ class BankInformation extends React.Component {
           <h6 className="mt-4 mb-3">Bank Accounts</h6>
         </MDBCol>
         {bankAccounts.length !== 0 ? (
-          <MDBTable bordered hover responsive>
+          <MDBTable hover responsive>
+            {/* <MDBTable bordered hover responsive> */}
             <MDBTableHead color={'primary-plantilla'} textWhite>
               {/* <tr>
                 <th>Class</th>

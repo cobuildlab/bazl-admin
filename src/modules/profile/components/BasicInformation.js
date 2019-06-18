@@ -60,7 +60,7 @@ const BasicInformation = ({ user }) => {
         <MDBCard>
           <MDBCardBody>
             <MDBCardText className="text-center">Total Sales</MDBCardText>
-            <MDBCardTitle className="text-center">$1000</MDBCardTitle>
+            <MDBCardTitle className="text-center">$0</MDBCardTitle>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>

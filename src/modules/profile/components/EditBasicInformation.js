@@ -109,7 +109,7 @@ class EditBasicInformation extends React.Component {
             onChange={this.onChange}
             rows="3"
           />
-          <MDBCol className="text-center">
+          <MDBCol style={{ height: '75px' }} className="text-center">
             <MDBBtn
               onClick={() => onSave(this.state)}
               color="success"
@@ -128,7 +128,7 @@ class EditBasicInformation extends React.Component {
           <MDBCard>
             <MDBCardBody>
               <MDBCardText className="text-center">Total Sales</MDBCardText>
-              <MDBCardTitle className="text-center">$1000</MDBCardTitle>
+              <MDBCardTitle className="text-center">$0</MDBCardTitle>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
