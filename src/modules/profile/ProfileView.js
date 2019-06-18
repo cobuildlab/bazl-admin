@@ -54,24 +54,20 @@ class ProfileView extends View {
             <BasicInformation user={user} />
           </MDBRow>
           <MDBRow>
-            <MDBCol md="1" />
-            <MDBCol md="10">
+            <MDBCol md="3" />
+            <MDBCol md="9">
               <BankInformation
                 bankAccounts={bankAccounts}
                 flagInformation={false}
               />
             </MDBCol>
-            <MDBCol md="1" />
           </MDBRow>
 
           <MDBRow>
-            <MDBCol md="2" />
-            <MDBCol md="8">
-              <div className="mt-3 mb-5">
-                <SliderCardsMap inventory={inventory} />
-              </div>
+            <MDBCol md="3" />
+            <MDBCol md="9">
+              <SliderCardsMap inventory={inventory} />
             </MDBCol>
-            <MDBCol md="2" />
           </MDBRow>
         </MDBContainer>
       </SidebarComponent>

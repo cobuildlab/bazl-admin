@@ -19,51 +19,39 @@ import ImgDefault from '../../../assets/img/img-default.png';
 const BasicInformation = ({ user }) => {
   let { name, description, picture } = user;
   let imagePreview = null;
-
   if (picture) {
     imagePreview = (
-      <img alt={'User Profile'} src={picture} className="img-fluid" />
+      <label width="80" className="text-center" htmlFor="upload-photo">
+        <img alt={'User Profile'} src={picture} className="img-fluid" />
+      </label>
     );
   } else {
     imagePreview = (
-      <img
-        alt={'User Profile'}
-        src={ImgDefault}
-        className="img-fluid img-label"
-      />
+      <label
+        width="80"
+        className="CustomlabelProfile text-center"
+        htmlFor="upload-photo">
+        <img
+          alt={'User Profile'}
+          src={ImgDefault}
+          className="img-fluid img-label"
+        />
+      </label>
     );
   }
 
   return (
     <React.Fragment>
-      <MDBCol md="3">
-        <label className="text-center" htmlFor="upload-photo">
-          {imagePreview}
-        </label>
-        {/* <small className="text-center">JPG or PNG with a maximum of 5mb</small> */}
-      </MDBCol>
+      <MDBCol md="3">{imagePreview}</MDBCol>
       <MDBCol md="7">
-        {/* <h5>Name User</h5>
-        <MDBInput
-          className="mt-0"
-          type="text"
-          name="name"
-          value={name}
-          disabled={true}
-        /> */}
-        <h2 className="text-black-50 mb-0">{name}</h2>
-
+        <h4
+          style={{ margin: '0px' }}
+          className="font-weight-bold text-black-50">
+          {name}
+        </h4>
         <small className="text-primary">@User</small>
         <div className="mt-5">
           <h5>Description</h5>
-          {/* <MDBInput
-          className="mt-0"
-          type="textarea"
-          name="description"
-          value={description}
-          disabled={true}
-          rows="5"
-        /> */}
           <small>{description}</small>
         </div>
         <br></br>
@@ -72,7 +60,7 @@ const BasicInformation = ({ user }) => {
         <MDBCard>
           <MDBCardBody>
             <MDBCardText className="text-center">Total Sales</MDBCardText>
-            <MDBCardTitle className="text-center">$1000</MDBCardTitle>
+            <MDBCardTitle className="text-center">$0</MDBCardTitle>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
