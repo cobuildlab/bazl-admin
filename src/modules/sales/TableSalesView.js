@@ -81,6 +81,7 @@ class TableSales extends View {
       );
     });
   }
+
   render() {
     return (
       <MDBRow>

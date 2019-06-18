@@ -1,11 +1,11 @@
-import React from "react";
-import Sidebar from "react-sidebar";
-import ContentSidebar from "./ContentSidebar";
-import HomeIcon from "../assets/img/home.png";
-import ProfileIcon from "../assets/img/profile.png";
-import SalesIcon from "../assets/img/cart.png";
-import NotificationIcon from "../assets/img/notifications.png";
-import InvetoryIcon from "../assets/img/invetory.png";
+import React from 'react';
+import Sidebar from 'react-sidebar';
+import ContentSidebar from './ContentSidebar';
+import HomeIcon from '../assets/img/home.png';
+import ProfileIcon from '../assets/img/profile.png';
+import SalesIcon from '../assets/img/cart.png';
+// import NotificationIcon from '../assets/img/notifications.png';
+import InvetoryIcon from '../assets/img/invetory.png';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -14,7 +14,7 @@ class SidebarComponent extends React.Component {
     super(props);
     this.state = {
       sidebarDocked: mql.matches,
-      sidebarOpen: false
+      sidebarOpen: false,
     };
 
     this.mediaQueryChanged = this.mediaQueryChanged.bind(this);
@@ -45,52 +45,52 @@ class SidebarComponent extends React.Component {
             <ContentSidebar
               routes={[
                 {
-                  path: "/home",
-                  name: "Home",
+                  path: '/home',
+                  name: 'Home',
                   image: HomeIcon,
-                  className: "title-list-item"
+                  className: 'title-list-item',
                 },
                 {
-                  path: "/profile",
-                  name: "Profile",
+                  path: '/profile',
+                  name: 'Profile',
                   image: ProfileIcon,
-                  className: "title-list-item"
+                  className: 'title-list-item',
                 },
                 {
-                  path: "/sales",
-                  name: "Sales",
+                  path: '/sales',
+                  name: 'Sales',
                   image: SalesIcon,
-                  className: "title-list-item"
+                  className: 'title-list-item',
                 },
+                // {
+                //   path: "/notifications",
+                //   name: "Notifications",
+                //   image: NotificationIcon,
+                //   className: "title-list-item"
+                // },
                 {
-                  path: "/notifications",
-                  name: "Notifications",
-                  image: NotificationIcon,
-                  className: "title-list-item"
-                },
-                {
-                  path: "/inventory",
-                  name: "Inventory",
+                  path: '/inventory',
+                  name: 'Inventory',
                   image: InvetoryIcon,
-                  className: "title-list-item"
+                  className: 'title-list-item',
                 },
                 {
-                  path: "/privacy-police",
-                  name: "Privacy Police",
-                  className: "title-list-item-no-icon"
+                  path: '/privacy-police',
+                  name: 'Privacy Police',
+                  className: 'title-list-item-no-icon',
                 },
                 {
-                  path: "/terms-and-conditions",
-                  name: "Terms and Conditions",
-                  className: "title-list-item-no-icon"
-                }
+                  path: '/terms-and-conditions',
+                  name: 'Terms and Conditions',
+                  className: 'title-list-item-no-icon',
+                },
               ]}
             />
           }
           open={this.state.sidebarOpen}
           docked={this.state.sidebarDocked}
           onSetOpen={this.onSetSidebarOpen}
-          sidebarClassName={"sidebarStyles"}
+          sidebarClassName={'sidebarStyles'}
           transitions={false}
         >
           {this.props.children}

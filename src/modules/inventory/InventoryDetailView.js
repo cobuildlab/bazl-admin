@@ -44,6 +44,7 @@ class InventoryDetailView extends View {
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (e) => {
       toast.error(e.message);
     });
+    
     this.subscribe(inventoryStore, INVENTORY_UPDATE_EVENT, () => {
       this.props.history.push('/inventory');
       toast.success('Product Updated');

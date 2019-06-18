@@ -38,7 +38,7 @@ class HomeView extends View {
           <SidebarComponent>
             <div className="d-flex justify-content-between nav-admin body">
               <div>
-                <h2 className="m-0">Home</h2>
+                <h2 className="m-0 font-body"><strong>Home</strong></h2>
               </div>
               <div>
                 <Link
@@ -53,7 +53,7 @@ class HomeView extends View {
                 <MDBCol>
                   <h4 className="font-weight-bold text-black-50">Total Tags</h4>
                   <h6 className="text-primary font-weight-bold">
-                    30
+                    0
                     <small className="font-weight-normal"> Tag</small>
                   </h6>
                 </MDBCol>
@@ -62,7 +62,7 @@ class HomeView extends View {
                     Total Impressions
                   </h4>
                   <h6 className="text-primary font-weight-bold">
-                    30 <small>Impressions</small>
+                    0 <small>Impressions</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
@@ -70,7 +70,7 @@ class HomeView extends View {
                     Total Sales
                   </h4>
                   <h6 className="text-primary font-weight-bold">
-                    80 <small>Sales</small>
+                    0 <small>Sales</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
@@ -78,14 +78,14 @@ class HomeView extends View {
                     Total Products
                   </h4>
                   <h6 className="text-primary font-weight-bold">
-                    30 <small>View</small>
+                    0 <small>View</small>
                   </h6>
                 </MDBCol>
               </MDBRow>
               {/* <SliderCards /> */}
               <SliderCardsMap inventory={inventory} />
               <MDBCol md="12" className="p-0">
-                <h6 className="mt-5 mb-3">Recent Sales</h6>
+                <h6 className="mt-5 mb-3 font-body"><strong>Recent Sales</strong></h6>
               </MDBCol>
               <TableSales />
             </MDBContainer>

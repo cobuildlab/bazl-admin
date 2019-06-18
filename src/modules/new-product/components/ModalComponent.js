@@ -40,7 +40,7 @@ class ModalComponent extends Component {
         } >
           <MDBModalBody>
             ¿Are you shure to publish this new product? </MDBModalBody> 
-          <MDBRow>
+          <MDBRow middle="true">
             <MDBCol>
 
               < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
