@@ -1,16 +1,12 @@
 import React from 'react';
-import { MDBCol, MDBCard, MDBCardText, MDBContainer } from 'mdbreact';
+import { MDBCard, MDBCardText, MDBContainer } from 'mdbreact';
 import PropTypes from 'prop-types';
 
 const SliderCardsMap = (props) => {
   const { inventory } = props;
   return (
     <React.Fragment>
-      <MDBCol md="12">
-        <h6 className="mt-4 mb-3 font-body">
-          <strong>Recently Publications</strong>
-        </h6>
-      </MDBCol>
+      <h4 className="font-weight-bold text-black-50">Recently Publications</h4>
       <div
         className="scrollbar scrollbar-primary "
         style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>

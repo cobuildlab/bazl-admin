@@ -1,11 +1,10 @@
 import React from 'react';
 import { BankAccount } from './BankAccount';
 import {
-  // MDBRow, MDBInput, MDBTableBody
+  // MDBRow, MDBInput, MDBTableBody, MDBCol,
   MDBContainer,
   MDBTable,
   MDBTableHead,
-  MDBCol,
 } from 'mdbreact';
 import PropTypes from 'prop-types';
 
@@ -14,9 +13,7 @@ class BankInformation extends React.Component {
     const { bankAccounts } = this.props;
     return (
       <React.Fragment>
-        <MDBCol md="12">
-          <h6 className="mt-4 mb-3">Bank Accounts</h6>
-        </MDBCol>
+        <h4 className="font-weight-bold text-black-50">Bank Accounts</h4>
         {bankAccounts.length !== 0 ? (
           <MDBTable hover responsive>
             {/* <MDBTable bordered hover responsive> */}
