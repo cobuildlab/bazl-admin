@@ -129,9 +129,9 @@ class EditProfileView extends View {
   };
 
   editAccount = (account, index) => {
-    // this.setState({ loadingBankAccounts: true }, () => {
-    updateAccountAction({ ...account }, index);
-    // });
+    this.setState({ loadingBankAccounts: true }, () => {
+      updateAccountAction({ ...account }, index);
+    });
   };
 
   onDeleteBankAccount = (index) => {
@@ -155,9 +155,9 @@ class EditProfileView extends View {
     user.name = updateUser.name;
     user.description = updateUser.description;
     user.picture = updateUser.picture;
-    // this.setState({ loadingUser: true }, () => {
-    updateProfileAction(user);
-    // });
+    this.setState({ loadingUser: true }, () => {
+      updateProfileAction(user);
+    });
   };
 
   toggleModal = () => {
@@ -193,25 +193,26 @@ class EditProfileView extends View {
         </div>
         <MDBContainer>
           <MDBRow>
-            {loadingUser ? (
-              <div className="text-center">
-                <ClipLoader
-                  sizeUnit={'px'}
-                  size={120}
-                  color={'#44c1f6'}
-                  loading={true}
-                />
-              </div>
-            ) : (
-              <EditBasicInformation
-                name={name}
-                description={description}
-                picture={picture}
-                onCancel={this.flagEdit}
-                onSave={this.onUpdateUser}
-              />
-            )}
+            <EditBasicInformation
+              name={name}
+              description={description}
+              picture={picture}
+              onCancel={this.flagEdit}
+              onSave={this.onUpdateUser}
+            />
           </MDBRow>
+          {loadingUser ? (
+            <div className="text-center">
+              <ClipLoader
+                sizeUnit={'px'}
+                size={120}
+                color={'#44c1f6'}
+                loading={true}
+              />
+            </div>
+          ) : (
+            <div></div>
+          )}
           <MDBRow>
             <MDBCol md="1" />
             <MDBCol md="10">
@@ -244,13 +245,13 @@ class EditProfileView extends View {
             <MDBCol md="1" />
           </MDBRow>
           <MDBRow>
-            <MDBCol md="2" />
-            <MDBCol md="8">
+            <MDBCol md="1" />
+            <MDBCol md="10">
               <div className="mt-3 mb-5">
                 <SliderCardsMap inventory={inventory} />
               </div>
             </MDBCol>
-            <MDBCol md="2" />
+            <MDBCol md="1" />
           </MDBRow>
         </MDBContainer>
       </SidebarComponent>

@@ -71,16 +71,27 @@ class EditBasicInformation extends React.Component {
     return (
       <React.Fragment>
         <MDBCol className="text-center" md="3">
-          <label style={style} className="text-center" htmlFor="upload-photo">
+          <label
+            style={style}
+            width="80"
+            className="CustomlabelProfile text-center"
+            htmlFor="upload-photo">
             {imagePreview}
           </label>
+          {/* <label className="Customlabel text-center" for="upload-photo">	
+                  <img	
+                    src={ImgDefault}	
+                    alt="default"	
+                    className="img-fluid img-label"	
+                    width="80"	
+                  />	
+                </label> */}
           <input
             type="file"
             name="picture"
             id="upload-photo"
             onChange={this.onImageChange}
           />
-
           <small>JPG or PNG with a maximum of 5mb</small>
         </MDBCol>
         <MDBCol md="7">
