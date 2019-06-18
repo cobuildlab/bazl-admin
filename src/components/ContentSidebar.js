@@ -1,11 +1,10 @@
 import React from 'react';
-import { MDBListGroup, MDBListGroupItem, MDBContainer } from 'mdbreact';
+import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import { onLogout } from '../modules/landing/landing-actions';
 import Logo from '../assets/img/Bazl-logo-w.png';
 import { landingStore, LOGOUT_EVENT } from '../modules/landing/landing-store';
 import PropTypes from 'prop-types';
-
 const ContentSidebar = ({ routes }) => {
   React.useEffect(() => {
     const logOutsubscription = landingStore.subscribe(LOGOUT_EVENT, () => {
@@ -36,14 +35,14 @@ const ContentSidebar = ({ routes }) => {
             </MDBListGroupItem>
           </Link>
         ))}
-        <MDBListGroupItem
-          color="info"
-          active={false}
-          className="link-logout text-left"
-          onClick={onLogout}>
-          Log out
-        </MDBListGroupItem>
       </MDBListGroup>
+      <MDBContainer>
+        <MDBRow>
+          < MDBCol className = "logout-btn" >
+            <span onClick={onLogout} className="logout">Log Out</span>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     </MDBContainer>
   );
 };

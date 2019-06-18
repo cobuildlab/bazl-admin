@@ -198,6 +198,25 @@
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
+.logout-btn {
+margin-top: 34vh;
+margin-left: 5vh;
+
+}
+.logout{
+  color: #fff;
+
+   
+}
+.logout:hover{
+  color: #fff;
+  border-left: 2px solid $primary;
+  transition: all 0.2s ease;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: all 0.2s ease;
+  cursor: pointer;
+
+}
 
 .icon-list-item {
   margin-right: 15px;
@@ -466,4 +485,17 @@ td {
 
 .accountCard:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.empty-inventory{
+  margin-top: 30vh;
+  text-align: center;
+
+} 
+.inventory-link{
+  color: #fff;
+}
+
+.font-body{
+  color: #727272;
+
 }

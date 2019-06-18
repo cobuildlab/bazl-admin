@@ -3,8 +3,8 @@ import {
   MDBBtn,
   MDBModal,
   MDBModalBody,
-  MDBModalHeader,
-  MDBModalFooter,
+  MDBRow,
+  MDBCol,
 } from 'mdbreact';
 
 class ModalDelete extends Component {
@@ -21,39 +21,39 @@ class ModalDelete extends Component {
 
      confirmAction = () =>{
       
-      const isConfirmed = true;
-      this.props.callbackFromParent(isConfirmed);
-    }
+       const isConfirmed = true;
+       this.props.callbackFromParent(isConfirmed);
+     }
 
-    render() {
-      return ( 
+     render() {
+       return ( 
       
       <>
                 < MDBBtn className = "btn btn-circle-danger mt-4 mb-5"
-                    onClick = {
-                        this.toggle
-                    } > Delete </MDBBtn> 
+                  onClick = {
+                    this.toggle
+                  } > Delete </MDBBtn> 
                
-        <MDBModal isOpen = {
+        <MDBModal centered size="sm" className="modal-notify modal-danger" isOpen = {
           this.state.modal
         }
         toggle = {
           this.toggle
         } >
-          <MDBModalHeader toggle = {
-            this.toggle
-          }> Bazl </MDBModalHeader> <MDBModalBody>
+          <MDBModalBody>
             ¿Are you shure to delete this product? </MDBModalBody> 
-          <MDBModalFooter >
-            < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
-             > Delete </MDBBtn> 
-            < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
-            onClick = {
-                this.toggle
-            } > Cancel </MDBBtn> 
-          </MDBModalFooter> </MDBModal></>
-      );
-    }
+          <MDBRow>
+            <MDBCol>
+              < MDBBtn className = "btn btn-circle-success mt-4 mb-6" onClick = {this.confirmAction}
+              > Delete </MDBBtn> 
+              < MDBBtn className = "btn btn-circle-danger mt-4 mb-6"
+                onClick = {
+                  this.toggle
+                } > Cancel </MDBBtn> 
+            </MDBCol>
+          </MDBRow> </MDBModal></>
+       );
+     }
 }
 
 export default ModalDelete;

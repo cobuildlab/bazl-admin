@@ -44,6 +44,7 @@ class InventoryDetailView extends View {
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (e) => {
       toast.error(e.message);
     });
+    
     this.subscribe(inventoryStore, INVENTORY_UPDATE_EVENT, () => {
       this.props.history.push('/inventory');
       toast.success('Product Updated');
@@ -116,18 +117,22 @@ class InventoryDetailView extends View {
         <img
           src={this.state.data.picture}
           alt="default"
-          className="img-fluid"
+          className="img-product"
           width="auto"
         />
       );
     } else {
       picture = (
-        <img
-          src={ImgDefault}
-          alt="default"
-          className="img-fluid img-label"
-          width="80"
-        />
+        <label
+          className = "Customlabel text-center"
+          htmlFor = "upload-photo" >
+          <img
+            src={ImgDefault}
+            alt="default"
+            className="img-fluid img-label"
+            width="80"
+          />
+        </label>
       );
     }
     return (
@@ -153,11 +158,7 @@ class InventoryDetailView extends View {
                 <MDBContainer className="body" fluid>
                   <MDBRow>
                     <MDBCol md="3">
-                      <label
-                        className="Customlabel text-center"
-                        htmlFor="upload-photo">
-                        {picture}
-                      </label>
+                      {picture}
                       <input
                         type="file"
                         name="picture"
