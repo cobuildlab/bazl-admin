@@ -118,8 +118,7 @@ class LandingView extends React.Component {
           color="primary-plantilla"
           className="footer-copyright text-center py-3">
           Copyright: &copy; Blaz {new Date().getFullYear()} |{' '}
-          <a href="https://www.MDBootstrap.com">Privacy Policy</a> | Terms and
-          Conditions
+          <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a>
         </MDBFooter>
       </div>
     );

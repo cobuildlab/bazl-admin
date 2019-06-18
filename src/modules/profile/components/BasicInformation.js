@@ -19,30 +19,30 @@ import ImgDefault from '../../../assets/img/img-default.png';
 const BasicInformation = ({ user }) => {
   let { name, description, picture } = user;
   let imagePreview = null;
-
   if (picture) {
     imagePreview = (
-      <img alt={'User Profile'} src={picture} className="img-fluid" />
+      <label width="80" className="text-center" htmlFor="upload-photo">
+        <img alt={'User Profile'} src={picture} className="img-fluid" />
+      </label>
     );
   } else {
     imagePreview = (
-      <img
-        alt={'User Profile'}
-        src={ImgDefault}
-        className="img-fluid img-label"
-      />
+      <label
+        width="80"
+        className="CustomlabelProfile text-center"
+        htmlFor="upload-photo">
+        <img
+          alt={'User Profile'}
+          src={ImgDefault}
+          className="img-fluid img-label"
+        />
+      </label>
     );
   }
 
   return (
     <React.Fragment>
-      <MDBCol md="3">
-        <label
-          className="CustomlabelProfile text-center"
-          htmlFor="upload-photo">
-          {imagePreview}
-        </label>
-      </MDBCol>
+      <MDBCol md="3">{imagePreview}</MDBCol>
       <MDBCol md="7">
         <h4
           style={{ margin: '0px' }}

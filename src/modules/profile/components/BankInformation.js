@@ -20,12 +20,12 @@ class BankInformation extends React.Component {
         {bankAccounts.length !== 0 ? (
           <MDBTable bordered hover responsive>
             <MDBTableHead color={'primary-plantilla'} textWhite>
-              <tr>
+              {/* <tr>
                 <th>Class</th>
                 <th>{encodeURIComponent(`Holders's`)} name</th>
                 <th>Account number</th>
                 <th>Routing number</th>
-              </tr>
+              </tr> */}
             </MDBTableHead>
             {bankAccounts.map((account, i) => (
               <BankAccount key={i} account={account} />

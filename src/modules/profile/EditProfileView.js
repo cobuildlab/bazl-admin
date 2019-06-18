@@ -214,8 +214,8 @@ class EditProfileView extends View {
             <div></div>
           )}
           <MDBRow>
-            <MDBCol md="1" />
-            <MDBCol md="10">
+            <MDBCol md="3" />
+            <MDBCol md="9">
               {loadingBankAccounts ? (
                 <div className="text-center">
                   <ClipLoader
@@ -242,16 +242,14 @@ class EditProfileView extends View {
                 </div>
               )}
             </MDBCol>
-            <MDBCol md="1" />
           </MDBRow>
           <MDBRow>
-            <MDBCol md="1" />
-            <MDBCol md="10">
+            <MDBCol md="3" />
+            <MDBCol md="9">
               <div className="mt-3 mb-5">
                 <SliderCardsMap inventory={inventory} />
               </div>
             </MDBCol>
-            <MDBCol md="1" />
           </MDBRow>
         </MDBContainer>
       </SidebarComponent>
