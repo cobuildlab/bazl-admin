@@ -53,7 +53,7 @@ const BasicInformation = ({ user }) => {
         <br></br>
       </MDBCol>
       <MDBCol md="2">
-        <MDBCard>
+        <MDBCard style={{ marginBottom: '30px' }}>
           <MDBCardBody>
             <MDBCardText className="text-center">Total Sales</MDBCardText>
             <MDBCardTitle className="text-center">$0</MDBCardTitle>

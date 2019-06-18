@@ -51,12 +51,11 @@ class EditBankInformation extends React.Component {
     let { type, title, number, routingNumber, showNewAccountForm } = this.state;
     return (
       <React.Fragment>
-        <MDBCol md="12">
-          {/* <h6 className="mt-4 mb-3 font-body">
-            <strong>Bank Accounts</strong>
-          </h6> */}
-          <h4 className="font-weight-bold text-black-50">Bank Accounts</h4>
-        </MDBCol>
+        <h4
+          style={{ marginBottom: '20px' }}
+          className="font-weight-bold text-black-50">
+          Bank Accounts
+        </h4>
         {bankAccounts.length !== 0 ? (
           <div>
             {bankAccounts.map((account, index) => (
