@@ -53,7 +53,7 @@ class LandingView extends React.Component {
                 alt="Bazl"
                 className="img-fluid"
                 width="80"
-                style={{ marginTop: '30px' }}
+                // style={{ marginTop: '30px' }}
               />
             </MDBNavbarBrand>
             <MDBNavbarToggler onClick={this.handleTogglerClick} />
