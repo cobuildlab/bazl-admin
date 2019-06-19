@@ -51,32 +51,32 @@ class HomeView extends View {
             <MDBContainer className="body" fluid>
               <MDBRow>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">Total Tags</h4>
+                  <h5 className="font-weight-bold text-black-50">Total Tags</h5>
                   <h6 className="text-primary font-weight-bold">
                     0
                     <small className="font-weight-normal"> Tag</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">
+                  <h5 className="font-weight-bold text-black-50">
                     Total Impressions
-                  </h4>
+                  </h5>
                   <h6 className="text-primary font-weight-bold">
                     0 <small>Impressions</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">
+                  <h5 className="font-weight-bold text-black-50">
                     Total Sales
-                  </h4>
+                  </h5>
                   <h6 className="text-primary font-weight-bold">
                     0 <small>Sales</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">
+                  <h5 className="font-weight-bold text-black-50">
                     Total Products
-                  </h4>
+                  </h5>
                   <h6 className="text-primary font-weight-bold">
                     0 <small>View</small>
                   </h6>

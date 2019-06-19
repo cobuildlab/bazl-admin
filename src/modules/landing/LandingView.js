@@ -37,7 +37,8 @@ class LandingView extends React.Component {
           background: `url(${bgLanding})`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
-          height: '100vh',
+          width: '100%',
+          height: '50px',
         }}>
         <MDBNavbar
           className="z-depth-0"
@@ -52,8 +53,7 @@ class LandingView extends React.Component {
                 src={Logo}
                 alt="Bazl"
                 className="img-fluid"
-                width="100"
-                style={{ width: '100px', marginTop: '60px' }}
+                style={{ width: '80px', marginTop: '10px' }}
               />
             </MDBNavbarBrand>
             <MDBNavbarToggler onClick={this.handleTogglerClick} />
@@ -83,7 +83,7 @@ class LandingView extends React.Component {
                   <MDBAnimation type="fadeInLeft">
                     <h1
                       className="h1-reponsive mb-4 pt-md-5 pt-5 text-primary"
-                      style={{ fontSize: '59px' }}>
+                      style={{ fontSize: '35px' }}>
                       Lorem <b>ipsum</b> dolor sit amet, consectetur{' '}
                       <b>adipiscing</b> elit
                     </h1>
@@ -105,7 +105,7 @@ class LandingView extends React.Component {
                       src={PhoneApp}
                       alt="phone"
                       className="img-fluid"
-                      width="100%"
+                      width="250"
                     />
                   </MDBAnimation>
                 </MDBCol>
@@ -118,7 +118,7 @@ class LandingView extends React.Component {
           color="primary-plantilla"
           className="footer-copyright text-center py-3">
           Copyright: &copy; Blaz {new Date().getFullYear()} |{' '}
-          <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a>
+          <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms and Conditions</a>
         </MDBFooter>
       </div>
     );
