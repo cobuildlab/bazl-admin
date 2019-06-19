@@ -198,11 +198,7 @@
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
 }
-.logout-btn {
-margin-top: 34vh;
-margin-left: 5vh;
 
-}
 .logout{
   color: #fff;
 
@@ -238,15 +234,15 @@ margin-left: 5vh;
   color: #fff !important;
   position: absolute;
   bottom: 15px;
-  left: 55px;
+  padding-left: 55px;
   
 }
 
-.link-logout:hoverc {
+.link-logout:hover {
   color: #fff;
   position: absolute;
   bottom: 15px;
-  left: 55px;
+  padding-left: 55px;
 }
 
 // Nav Bar Admin
