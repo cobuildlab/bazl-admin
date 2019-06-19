@@ -38,7 +38,7 @@ class LandingView extends React.Component {
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           width: '100%',
-          height: '50px',
+          
         }}>
         <MDBNavbar
           className="z-depth-0"
@@ -79,11 +79,11 @@ class LandingView extends React.Component {
           <MDBMask className="d-flex justify-content-start align-items-center">
             <MDBContainer>
               <MDBRow>
-                <MDBCol md="8" className="mb-4">
+                <MDBCol md="8" className="mb-4 mt-5">
                   <MDBAnimation type="fadeInLeft">
                     <h1
                       className="h1-reponsive mb-4 pt-md-5 pt-5 text-primary"
-                      style={{ fontSize: '35px' }}>
+                      style={{ fontSize: '50px' }}>
                       Lorem <b>ipsum</b> dolor sit amet, consectetur{' '}
                       <b>adipiscing</b> elit
                     </h1>
