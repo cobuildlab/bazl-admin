@@ -85,7 +85,7 @@ class HomeView extends View {
               </MDBRow>
               <br></br>
               <SliderCardsMap inventory={inventory} />
-              <h4 className="font-weight-bold text-black-50">Recent Sales</h4>
+              <h5 className="font-weight-bold text-black-50">Recent Sales</h5>
               <TableSales />
             </MDBContainer>
           </SidebarComponent>
