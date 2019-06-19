@@ -38,7 +38,7 @@ const ContentSidebar = ({ routes }) => {
       </MDBListGroup>
       <MDBContainer>
         <MDBRow>
-          < MDBCol className = "logout-btn" >
+          < MDBCol className = "link-logout" >
             <span onClick={onLogout} className="logout">Log Out</span>
           </MDBCol>
         </MDBRow>

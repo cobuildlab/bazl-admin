@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBContainer, MDBBtn, MDBIcon, MDBAnimation, MDBRow, MDBCol } from 'mdbreact';
+import { MDBContainer, MDBBtn, MDBAnimation, MDBRow, MDBCol } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import { Loader } from '../../components/Loader';
 import TableInventory from './components/TableInventory';
@@ -89,9 +89,11 @@ class InventoryView extends View {
               />
             </div>
             <div>
-              <MDBBtn to="/new-product" className="btn btn-circle">
-                        Search <MDBIcon icon="search" className="ml-1" />
-              </MDBBtn>
+              <Link
+                to="/new-product"
+                className="btn btn-circle btn-circle-link">
+                  Upload 
+              </Link>
             </div>
           </div>
                  

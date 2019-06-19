@@ -1,7 +1,7 @@
 import React from 'react';
 import View from 'react-flux-state';
 import SidebarComponent from '../../components/SidebarComponent';
-import { MDBIcon, MDBContainer, MDBRow, MDBCol, MDBAnimation } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBAnimation } from 'mdbreact';
 // import SliderCards from '../../components/SliderCards';
 import TableSales from '../sales/TableSalesView';
 import { Link } from 'react-router-dom';
@@ -44,7 +44,7 @@ class HomeView extends View {
                 <Link
                   to="/new-product"
                   className="btn btn-circle btn-circle-link">
-                  Upload <MDBIcon icon="upload" className="ml-1" />
+                  Upload 
                 </Link>
               </div>
             </div>
