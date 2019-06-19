@@ -16,7 +16,7 @@ const SliderCardsMap = (props) => {
               <MDBCard
                 key={i}
                 item={item}
-                className="hover"
+                className="hover conten-img-card-publication"
                 style={{
                   width: '10rem',
                   margin: '15px',
