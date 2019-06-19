@@ -12,6 +12,7 @@ import NewProductView from './modules/new-product/NewProductView';
 import SalesDetailView from './modules/sales/SalesDetailView';
 import Session from './components/Session';
 import EditProfileView from './modules/profile/EditProfileView';
+import ChangePasswordView from './modules/landing/components/ChangePasswordView';
 
 /**
  * @typedef {[ component: any, pathname: string ]} publicRoutes
@@ -35,6 +36,7 @@ class App extends Component {
         />
         <Switch>
           <Route exact path={'/'} component={LandingView} />
+          <Route path="/change-password" component={ChangePasswordView} />
           {/*Sidebar*/}
           <Session>
             <Route path={'/home'} component={HomeView} />
