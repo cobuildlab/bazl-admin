@@ -47,7 +47,7 @@ class LandingView extends React.Component {
           expand="md"
           fixed="top"
           transparent>
-          <MDBContainer>
+          <MDBContainer style={{ paddingRight: '65px' }}>
             <MDBNavbarBrand>
               <img
                 src={Logo}
@@ -75,10 +75,10 @@ class LandingView extends React.Component {
             </MDBCollapse>
           </MDBContainer>
         </MDBNavbar>
-        <MDBView src={bgLanding}>
+        <MDBView style={{ alignItems: 'center' }} src={bgLanding}>
           <MDBMask className="d-flex justify-content-start align-items-center">
             <MDBContainer>
-              <MDBRow style={{ alignItems: 'center' }}>
+              <MDBRow>
                 <MDBCol md="8" className="mb-4">
                   <MDBAnimation type="fadeInLeft">
                     <h1
@@ -114,9 +114,9 @@ class LandingView extends React.Component {
           </MDBMask>
         </MDBView>
         <MDBFooter
-          style={{ position: 'fixed', width: '100%' }}
+          style={{ position: 'fixed', width: '100%', padding: '10px' }}
           color="primary-plantilla"
-          className="footer-copyright text-center py-3">
+          className="footer-copyright text-center">
           Copyright: &copy; Blaz {new Date().getFullYear()} |{' '}
           <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms and Conditions</a>
         </MDBFooter>

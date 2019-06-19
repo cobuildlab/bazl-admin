@@ -38,7 +38,9 @@ class HomeView extends View {
           <SidebarComponent>
             <div className="d-flex justify-content-between nav-admin body">
               <div>
-                <h2 className="m-0 font-body"><strong>Home</strong></h2>
+                <h2 className="m-0 font-body">
+                  <strong>Home</strong>
+                </h2>
               </div>
               <div>
                 <Link
@@ -53,8 +55,7 @@ class HomeView extends View {
                 <MDBCol>
                   <h5 className="font-weight-bold text-black-50">Total Tags</h5>
                   <h6 className="text-primary font-weight-bold">
-                    0
-                    <small className="font-weight-normal"> Tag</small>
+                    0<small className="font-weight-normal"> Tag</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
@@ -82,11 +83,9 @@ class HomeView extends View {
                   </h6>
                 </MDBCol>
               </MDBRow>
-              {/* <SliderCards /> */}
+              <br></br>
               <SliderCardsMap inventory={inventory} />
-              <MDBCol md="12" className="p-0">
-                <h6 className="mt-5 mb-3 font-body"><strong>Recent Sales</strong></h6>
-              </MDBCol>
+              <h4 className="font-weight-bold text-black-50">Recent Sales</h4>
               <TableSales />
             </MDBContainer>
           </SidebarComponent>
