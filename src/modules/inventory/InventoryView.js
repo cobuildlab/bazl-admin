@@ -56,8 +56,8 @@ class InventoryView extends View {
         <MDBContainer className = "empty-inventory" fluid >
           <MDBRow>
             <MDBCol >
-              <h2>Oh No! You have an empty Inventory</h2>
-              <h3>Create your first Product now</h3>
+              <h4>Oh No! You have an empty Inventory</h4>
+              <h5>Create your first Product now</h5>
               < MDBBtn className = "btn btn-circle-success " >
                 <Link to="/new-product" className="inventory-link">Publish Now</Link>
               </MDBBtn>
