@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBContainer, MDBBtn, MDBIcon, MDBAnimation, MDBRow, MDBCol } from 'mdbreact';
+import { MDBContainer, MDBBtn, MDBAnimation, MDBRow, MDBCol } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import { Loader } from '../../components/Loader';
 import TableInventory from './components/TableInventory';
@@ -56,8 +56,8 @@ class InventoryView extends View {
         <MDBContainer className = "empty-inventory" fluid >
           <MDBRow>
             <MDBCol >
-              <h2>Oh No! You have an empty Inventory</h2>
-              <h3>Create your first Product now</h3>
+              <h4>Oh No! You have an empty Inventory</h4>
+              <h5>Create your first Product now</h5>
               < MDBBtn className = "btn btn-circle-success " >
                 <Link to="/new-product" className="inventory-link">Publish Now</Link>
               </MDBBtn>
@@ -89,9 +89,11 @@ class InventoryView extends View {
               />
             </div>
             <div>
-              <MDBBtn to="/new-product" className="btn btn-circle">
-                        Search <MDBIcon icon="search" className="ml-1" />
-              </MDBBtn>
+              <Link
+                to="/new-product"
+                className="btn btn-circle btn-circle-link">
+                  Upload 
+              </Link>
             </div>
           </div>
                  

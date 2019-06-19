@@ -1,7 +1,7 @@
 import React from 'react';
 import View from 'react-flux-state';
 import SidebarComponent from '../../components/SidebarComponent';
-import { MDBIcon, MDBContainer, MDBRow, MDBCol, MDBAnimation } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBAnimation } from 'mdbreact';
 // import SliderCards from '../../components/SliderCards';
 import TableSales from '../sales/TableSalesView';
 import { Link } from 'react-router-dom';
@@ -46,38 +46,38 @@ class HomeView extends View {
                 <Link
                   to="/new-product"
                   className="btn btn-circle btn-circle-link">
-                  Upload <MDBIcon icon="upload" className="ml-1" />
+                  Upload 
                 </Link>
               </div>
             </div>
             <MDBContainer className="body" fluid>
               <MDBRow>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">Total Tags</h4>
+                  <h5 className="font-weight-bold text-black-50">Total Tags</h5>
                   <h6 className="text-primary font-weight-bold">
                     0<small className="font-weight-normal"> Tag</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">
+                  <h5 className="font-weight-bold text-black-50">
                     Total Impressions
-                  </h4>
+                  </h5>
                   <h6 className="text-primary font-weight-bold">
                     0 <small>Impressions</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">
+                  <h5 className="font-weight-bold text-black-50">
                     Total Sales
-                  </h4>
+                  </h5>
                   <h6 className="text-primary font-weight-bold">
                     0 <small>Sales</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
-                  <h4 className="font-weight-bold text-black-50">
+                  <h5 className="font-weight-bold text-black-50">
                     Total Products
-                  </h4>
+                  </h5>
                   <h6 className="text-primary font-weight-bold">
                     0 <small>View</small>
                   </h6>
@@ -85,7 +85,7 @@ class HomeView extends View {
               </MDBRow>
               <br></br>
               <SliderCardsMap inventory={inventory} />
-              <h4 className="font-weight-bold text-black-50">Recent Sales</h4>
+              <h5 className="font-weight-bold text-black-50">Recent Sales</h5>
               <TableSales />
             </MDBContainer>
           </SidebarComponent>

@@ -44,10 +44,10 @@ const BasicInformation = ({ user }) => {
     <React.Fragment>
       <MDBCol md="3">{imagePreview}</MDBCol>
       <MDBCol md="7">
-        <h2 className="font-weight-bold text-black-50">{name}</h2>
+        <h3 className="font-weight-bold text-black-50">{name}</h3>
         <small className="text-primary">@User</small>
         <div className="mt-5">
-          <h4 className="font-weight-bold text-black-50">Description</h4>
+          <h5 className="font-weight-bold text-black-50">Description</h5>
           <small>{description}</small>
         </div>
         <br></br>

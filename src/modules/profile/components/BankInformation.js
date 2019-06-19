@@ -13,7 +13,7 @@ class BankInformation extends React.Component {
     const { bankAccounts } = this.props;
     return (
       <React.Fragment>
-        <h4 className="font-weight-bold text-black-50">Bank Accounts</h4>
+        <h5 className="font-weight-bold text-black-50">Bank Accounts</h5>
         {bankAccounts.length !== 0 ? (
           <MDBTable hover responsive>
             {/* <MDBTable bordered hover responsive> */}
@@ -31,9 +31,9 @@ class BankInformation extends React.Component {
           </MDBTable>
         ) : (
           <MDBContainer className="body" fluid>
-            <h4 className="font-weight-bold text-black-50">
+            <h6 className="font-weight-bold text-black-50">
               There Are No Bank Accounts Yet
-            </h4>
+            </h6>
           </MDBContainer>
         )}
 

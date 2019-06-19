@@ -37,7 +37,8 @@ class LandingView extends React.Component {
           background: `url(${bgLanding})`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
-          height: '100vh',
+          width: '100%',
+          
         }}>
         <MDBNavbar
           className="z-depth-0"
@@ -52,8 +53,7 @@ class LandingView extends React.Component {
                 src={Logo}
                 alt="Bazl"
                 className="img-fluid"
-                width="80"
-                // style={{ marginTop: '30px' }}
+                style={{ width: '80px', marginTop: '10px' }}
               />
             </MDBNavbarBrand>
             <MDBNavbarToggler onClick={this.handleTogglerClick} />
@@ -79,11 +79,11 @@ class LandingView extends React.Component {
           <MDBMask className="d-flex justify-content-start align-items-center">
             <MDBContainer>
               <MDBRow>
-                <MDBCol md="8" className="mb-4">
+                <MDBCol md="8" className="mb-4 mt-5">
                   <MDBAnimation type="fadeInLeft">
                     <h1
                       className="h1-reponsive mb-4 pt-md-5 pt-5 text-primary"
-                      style={{ fontSize: '59px' }}>
+                      style={{ fontSize: '50px' }}>
                       Lorem <b>ipsum</b> dolor sit amet, consectetur{' '}
                       <b>adipiscing</b> elit
                     </h1>
@@ -105,7 +105,7 @@ class LandingView extends React.Component {
                       src={PhoneApp}
                       alt="phone"
                       className="img-fluid"
-                      width="85%"
+                      width="250"
                     />
                   </MDBAnimation>
                 </MDBCol>
@@ -118,7 +118,7 @@ class LandingView extends React.Component {
           color="primary-plantilla"
           className="footer-copyright text-center">
           Copyright: &copy; Blaz {new Date().getFullYear()} |{' '}
-          <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a>
+          <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms and Conditions</a>
         </MDBFooter>
       </div>
     );
