@@ -46,14 +46,14 @@ class LandingView extends React.Component {
           expand="md"
           fixed="top"
           transparent>
-          <MDBContainer>
+          <MDBContainer style={{ paddingRight: '60px' }}>
             <MDBNavbarBrand>
               <img
                 src={Logo}
                 alt="Bazl"
                 className="img-fluid"
                 width="100"
-                style={{ width: '100px', marginTop: '60px' }}
+                style={{ width: '100px', marginTop: '30px' }}
               />
             </MDBNavbarBrand>
             <MDBNavbarToggler onClick={this.handleTogglerClick} />
@@ -75,10 +75,10 @@ class LandingView extends React.Component {
             </MDBCollapse>
           </MDBContainer>
         </MDBNavbar>
-        <MDBView src={bgLanding}>
+        <MDBView style={{ alignItems: 'center' }} src={bgLanding}>
           <MDBMask className="d-flex justify-content-start align-items-center">
             <MDBContainer>
-              <MDBRow style={{ alignItems: 'center' }}>
+              <MDBRow>
                 <MDBCol md="8" className="mb-4">
                   <MDBAnimation type="fadeInLeft">
                     <h1
@@ -105,7 +105,7 @@ class LandingView extends React.Component {
                       src={PhoneApp}
                       alt="phone"
                       className="img-fluid"
-                      width="100%"
+                      width="85%"
                     />
                   </MDBAnimation>
                 </MDBCol>
