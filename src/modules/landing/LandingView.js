@@ -46,14 +46,14 @@ class LandingView extends React.Component {
           expand="md"
           fixed="top"
           transparent>
-          <MDBContainer style={{ paddingRight: '60px' }}>
+          <MDBContainer style={{ paddingRight: '65px' }}>
             <MDBNavbarBrand>
               <img
                 src={Logo}
                 alt="Bazl"
                 className="img-fluid"
-                width="100"
-                style={{ width: '100px', marginTop: '30px' }}
+                width="80"
+                style={{ marginTop: '30px' }}
               />
             </MDBNavbarBrand>
             <MDBNavbarToggler onClick={this.handleTogglerClick} />
@@ -114,9 +114,9 @@ class LandingView extends React.Component {
           </MDBMask>
         </MDBView>
         <MDBFooter
-          style={{ position: 'fixed', width: '100%' }}
+          style={{ position: 'fixed', width: '100%', padding: '10px' }}
           color="primary-plantilla"
-          className="footer-copyright text-center py-3">
+          className="footer-copyright text-center">
           Copyright: &copy; Blaz {new Date().getFullYear()} |{' '}
           <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a>
         </MDBFooter>
