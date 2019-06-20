@@ -51,11 +51,11 @@ class EditBankInformation extends React.Component {
     let { type, title, number, routingNumber, showNewAccountForm } = this.state;
     return (
       <React.Fragment>
-        <h4
+        <h5
           style={{ marginBottom: '20px' }}
           className="font-weight-bold text-black-50">
           Bank Accounts
-        </h4>
+        </h5>
         {bankAccounts.length !== 0 ? (
           <div>
             {bankAccounts.map((account, index) => (
@@ -70,9 +70,7 @@ class EditBankInformation extends React.Component {
           </div>
         ) : (
           <MDBContainer className="body" fluid>
-            <h4 className="font-weight-bold text-black-50">
-              There Are No Bank Accounts Yet
-            </h4>
+            <h4 className="text-black-50">There Are No Bank Accounts Yet</h4>
           </MDBContainer>
         )}
 

@@ -164,7 +164,7 @@ class ChangePasswordView extends View {
                       src={PhoneApp}
                       alt="phone"
                       className="img-fluid"
-                      width="85%"
+                      width="250"
                     />
                   </MDBAnimation>
                 </MDBCol>
