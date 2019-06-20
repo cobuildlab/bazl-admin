@@ -57,8 +57,8 @@ class LandingView extends React.Component {
               />
             </MDBNavbarBrand>
             <MDBNavbarToggler onClick={this.handleTogglerClick} />
-            <MDBCollapse is Open={this.state.collapsed} navbar>
-              <MDBNavbarNav right>
+            <MDBCollapse is Open={this.state.collapsed} style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar>
+              <MDBNavbarNav right style={{ marginRight: '-80px' }} >
                 <MDBNavItem active>
                   <ModalComponent
                     linkName="Login"
