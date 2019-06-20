@@ -31,13 +31,9 @@ class BankInformation extends React.Component {
           </MDBTable>
         ) : (
           <MDBContainer className="body" fluid>
-            <h6 className="font-weight-bold text-black-50">
-              There Are No Bank Accounts Yet
-            </h6>
+            <h4 className="text-black-50">There Are No Bank Accounts Yet</h4>
           </MDBContainer>
         )}
-
-        {/* </div> */}
       </React.Fragment>
     );
   }
