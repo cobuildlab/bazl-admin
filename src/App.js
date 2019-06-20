@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import LandingView from './modules/landing/LandingView';
 import HomeView from './modules/home/HomeView';
+import TermsView from './modules/terms/TermsView';
+import PrivacyView from './modules/privacy/PrivacyView';
 import ProfileView from './modules/profile/ProfileView';
 import SalesView from './modules/sales/SalesView';
 import NotificationsView from './modules/notifications/NotificationsView';
@@ -40,6 +42,8 @@ class App extends Component {
           {/*Sidebar*/}
           <Session>
             <Route path={'/home'} component={HomeView} />
+            <Route path={'/terms-and-conditions'} component={TermsView} />
+            <Route path={'/privacy-policy'} component={PrivacyView} />
             <Route path={'/profile'} component={ProfileView} />
             <Route path={'/edit-profile'} component={EditProfileView} />
             <Route exact path={'/sales'} component={SalesView} />

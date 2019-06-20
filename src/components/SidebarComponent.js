@@ -75,8 +75,8 @@ class SidebarComponent extends React.Component {
                   className: 'title-list-item',
                 },
                 {
-                  path: '/privacy-police',
-                  name: 'Privacy Police',
+                  path: '/privacy-policy',
+                  name: 'Privacy Policy',
                   className: 'title-list-item-no-icon',
                 },
                 {
@@ -91,8 +91,7 @@ class SidebarComponent extends React.Component {
           docked={this.state.sidebarDocked}
           onSetOpen={this.onSetSidebarOpen}
           sidebarClassName={'sidebarStyles'}
-          transitions={false}
-        >
+          transitions={false}>
           {this.props.children}
         </Sidebar>
       </React.Fragment>
