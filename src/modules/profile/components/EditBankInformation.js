@@ -70,7 +70,9 @@ class EditBankInformation extends React.Component {
           </div>
         ) : (
           <MDBContainer className="body" fluid>
-            <h4 className="text-black-50">There Are No Bank Accounts Yet</h4>
+            <h6 className="text-black-50 text-center">
+              There Are No Bank Accounts Yet
+            </h6>
           </MDBContainer>
         )}
 
