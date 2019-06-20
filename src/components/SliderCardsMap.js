@@ -10,7 +10,7 @@ const SliderCardsMap = (props) => {
       <div
         className="scrollbar scrollbar-primary"
         style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>
-        {inventory.length === 0 ? (
+        {inventory.length !== 0 ? (
           <div>
             {inventory.map((item, i) => (
               <MDBCard
