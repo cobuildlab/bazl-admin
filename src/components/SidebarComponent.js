@@ -4,6 +4,7 @@ import ContentSidebar from './ContentSidebar';
 import HomeIcon from '../assets/img/home.png';
 import ProfileIcon from '../assets/img/profile.png';
 import SalesIcon from '../assets/img/cart.png';
+import ReportIcon from '../assets/img/report.png';
 // import NotificationIcon from '../assets/img/notifications.png';
 import InvetoryIcon from '../assets/img/invetory.png';
 
@@ -77,12 +78,14 @@ class SidebarComponent extends React.Component {
                 {
                   path: '/privacy-policy',
                   name: 'Privacy Policy',
-                  className: 'title-list-item-no-icon',
+                  image: ReportIcon,
+                  className: 'title-list-item',
                 },
                 {
                   path: '/terms-and-conditions',
                   name: 'Terms and Conditions',
-                  className: 'title-list-item-no-icon',
+                  image: ReportIcon,
+                  className: 'title-list-item',
                 },
               ]}
             />

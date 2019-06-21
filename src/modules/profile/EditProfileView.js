@@ -3,8 +3,7 @@ import View from 'react-flux-state';
 import { toast } from 'react-toastify';
 import * as R from 'ramda';
 import { Link } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
-import { MDBCol, MDBContainer, MDBRow, MDBIcon } from 'mdbreact';
+import { MDBCol, MDBContainer, MDBRow, MDBIcon, MDBAnimation } from 'mdbreact';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store';
 import {
@@ -25,6 +24,7 @@ import { userModel } from './Profile-models';
 import { ModalConfirm } from '../../components/ModalConfirm';
 import { EditBasicInformation } from './components/EditBasicInformation';
 import { EditBankInformation } from './components/EditBankInformation';
+import { Loader } from '../../components/Loader';
 import SidebarComponent from '../../components/SidebarComponent';
 import SliderCardsMap from '../../components/SliderCardsMap';
 
@@ -36,6 +36,7 @@ class EditProfileView extends View {
       user: { ...R.clone(userModel), ...user },
       loadingBankAccounts: false,
       loadingUser: false,
+      loadingInventory: true,
       deleteBankAccountModalIsOpen: false,
       bankAccountIndex: 0,
       inventory: [],
@@ -48,6 +49,7 @@ class EditProfileView extends View {
       inventory = R.clone(data);
       this.setState({
         inventory,
+        loadingInventory: false,
       });
     });
 
@@ -175,6 +177,7 @@ class EditProfileView extends View {
     const {
       loadingBankAccounts,
       loadingUser,
+      loadingInventory,
       deleteBankAccountModalIsOpen,
       inventory,
     } = this.state;
@@ -191,67 +194,66 @@ class EditProfileView extends View {
             </Link>
           </div>
         </div>
-        <MDBContainer>
-          <MDBRow>
-            <EditBasicInformation
-              name={name}
-              description={description}
-              picture={picture}
-              onCancel={this.flagEdit}
-              onSave={this.onUpdateUser}
-            />
-          </MDBRow>
-          {loadingUser ? (
-            <div className="text-center">
-              <ClipLoader
-                sizeUnit={'px'}
-                size={120}
-                color={'#44c1f6'}
-                loading={true}
+        <MDBAnimation type="fadeIn">
+          <MDBContainer>
+            <MDBRow>
+              <EditBasicInformation
+                name={name}
+                description={description}
+                picture={picture}
+                onCancel={this.flagEdit}
+                onSave={this.onUpdateUser}
               />
-            </div>
-          ) : (
-            <div></div>
-          )}
-          <MDBRow>
-            <MDBCol md="3" />
-            <MDBCol md="9">
-              {loadingBankAccounts ? (
-                <div className="text-center">
-                  <ClipLoader
-                    sizeUnit={'px'}
-                    size={120}
-                    color={'#44c1f6'}
-                    loading={true}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <ModalConfirm
-                    open={deleteBankAccountModalIsOpen}
-                    onClose={this.toggleModal}
-                    text={'Are you sure you want to Delete the Bank Account?'}
-                    onOk={this.deleteBankAccount}
-                  />
-                  <EditBankInformation
-                    editAccount={this.editAccount}
-                    newAccount={this.newAccount}
-                    bankAccounts={bankAccounts}
-                    onDelete={this.onDeleteBankAccount}
-                  />
-                </div>
-              )}
-            </MDBCol>
-          </MDBRow>
-          <MDBRow>
-            <MDBCol md="3" />
-            <MDBCol md="9">
-              <div className="mt-3 mb-5">
-                <SliderCardsMap inventory={inventory} />
+            </MDBRow>
+            {loadingUser ? (
+              <div className="text-center">
+                <Loader />
               </div>
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
+            ) : (
+              <div></div>
+            )}
+            <MDBRow>
+              <MDBCol md="3" />
+              <MDBCol md="9">
+                {loadingBankAccounts ? (
+                  <div className="text-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  <div>
+                    <ModalConfirm
+                      open={deleteBankAccountModalIsOpen}
+                      onClose={this.toggleModal}
+                      text={'Are you sure you want to Delete the Bank Account?'}
+                      onOk={this.deleteBankAccount}
+                    />
+                    <EditBankInformation
+                      editAccount={this.editAccount}
+                      newAccount={this.newAccount}
+                      bankAccounts={bankAccounts}
+                      onDelete={this.onDeleteBankAccount}
+                    />
+                  </div>
+                )}
+              </MDBCol>
+            </MDBRow>
+            <MDBRow>
+              <MDBCol md="3" />
+              <MDBCol md="9">
+                <h5 className="font-weight-bold text-black-50">
+                  Recently Publications
+                </h5>
+                {loadingInventory ? (
+                  <div className="text-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  <SliderCardsMap inventory={inventory} />
+                )}
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </MDBAnimation>
       </SidebarComponent>
     );
   }
