@@ -4,8 +4,8 @@ import {
   MDBNavbarBrand,
   MDBNavbarNav,
   MDBNavItem,
-  MDBNavbarToggler,
-  MDBCollapse,
+  // MDBNavbarToggler,
+  // MDBCollapse,
   MDBContainer,
   MDBView,
   MDBMask,
@@ -38,7 +38,6 @@ class LandingView extends React.Component {
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           width: '100%',
-          
         }}>
         <MDBNavbar
           className="z-depth-0"
@@ -56,9 +55,11 @@ class LandingView extends React.Component {
                 style={{ width: '80px', marginTop: '10px' }}
               />
             </MDBNavbarBrand>
-            <MDBNavbarToggler onClick={this.handleTogglerClick} />
-            <MDBCollapse is Open={this.state.collapsed} style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar>
-              <MDBNavbarNav right style={{ marginRight: '-80px' }} >
+            {/* <MDBNavbarToggler onClick={this.handleTogglerClick} /> */}
+            {/* <MDBCollapse is Open={this.state.collapsed} style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar> */}
+            {/* <MDBCollapse style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar> */}
+            <div style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar>
+              <MDBNavbarNav right style={{ marginRight: '-80px' }}>
                 <MDBNavItem active>
                   <ModalComponent
                     linkName="Login"
@@ -69,10 +70,12 @@ class LandingView extends React.Component {
                   <ModalComponent
                     linkName="Sign Up"
                     history={this.props.history}
+                    style={{ marginRight: '0', marginLeft: '0' }}
                   />
                 </MDBNavItem>
               </MDBNavbarNav>
-            </MDBCollapse>
+            </div>
+            {/* </MDBCollapse> */}
           </MDBContainer>
         </MDBNavbar>
         <MDBView style={{ alignItems: 'center' }} src={bgLanding}>
@@ -81,9 +84,7 @@ class LandingView extends React.Component {
               <MDBRow>
                 <MDBCol md="8" className="mb-4 mt-5">
                   <MDBAnimation type="fadeInLeft">
-                    <h1
-                      className="h1-reponsive mb-4 pt-md-5 pt-5 text-primary"
-                      style={{ fontSize: '50px' }}>
+                    <h1 className="h1-reponsive mb-4 pt-md-5 pt-5 text-primary landing-letters">
                       Lorem <b>ipsum</b> dolor sit amet, consectetur{' '}
                       <b>adipiscing</b> elit
                     </h1>
@@ -100,7 +101,9 @@ class LandingView extends React.Component {
                   </MDBAnimation>
                 </MDBCol>
                 <MDBCol md="4">
-                  <MDBAnimation type="fadeInRight">
+                  <MDBAnimation
+                    style={{ display: 'flex', justifyContent: 'center' }}
+                    type="fadeInRight">
                     <img
                       src={PhoneApp}
                       alt="phone"
@@ -117,8 +120,9 @@ class LandingView extends React.Component {
           style={{ position: 'fixed', width: '100%', padding: '10px' }}
           color="primary-plantilla"
           className="footer-copyright text-center">
-          Copyright: &copy; Blaz {new Date().getFullYear()} |{' '}
-          <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms and Conditions</a>
+          Copyright: &copy; Bazl {new Date().getFullYear()} |{' '}
+          <a href="/privacy">Privacy Policy</a> |{' '}
+          <a href="/terms">Terms and Conditions</a>
         </MDBFooter>
       </div>
     );
