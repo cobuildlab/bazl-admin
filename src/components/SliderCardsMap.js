@@ -6,7 +6,6 @@ const SliderCardsMap = (props) => {
   const { inventory } = props;
   return (
     <React.Fragment>
-      <h5 className="font-weight-bold text-black-50">Recently Publications</h5>
       <div
         className="scrollbar scrollbar-primary"
         style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>

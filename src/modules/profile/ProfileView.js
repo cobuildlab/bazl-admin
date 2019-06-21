@@ -3,8 +3,9 @@ import View from 'react-flux-state';
 import * as R from 'ramda';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 import SidebarComponent from '../../components/SidebarComponent';
+import { Loader } from '../../components/Loader';
 import { Link } from 'react-router-dom';
-import { MDBCol, MDBContainer, MDBIcon, MDBRow } from 'mdbreact';
+import { MDBCol, MDBContainer, MDBIcon, MDBRow, MDBAnimation } from 'mdbreact';
 import { BasicInformation } from './components/BasicInformation';
 import { BankInformation } from './components/BankInformation';
 import SliderCardsMap from '../../components/SliderCardsMap';
@@ -19,6 +20,7 @@ class ProfileView extends View {
     this.state = {
       user: { ...R.clone(userModel), ...user },
       inventory: [],
+      loadingInventory: true,
     };
   }
   componentDidMount() {
@@ -27,12 +29,13 @@ class ProfileView extends View {
       inventory = R.clone(data);
       this.setState({
         inventory,
+        loadingInventory: false,
       });
     });
     fetchUserProducts();
   }
   render() {
-    const { inventory, user } = this.state;
+    const { inventory, user, loadingInventory } = this.state;
     const { bankAccounts } = this.state.user;
     return (
       <SidebarComponent>
@@ -49,27 +52,37 @@ class ProfileView extends View {
             </Link>
           </div>
         </div>
-        <MDBContainer>
-          <MDBRow>
-            <BasicInformation user={user} />
-          </MDBRow>
-          <MDBRow>
-            <MDBCol md="3" />
-            <MDBCol md="9">
-              <BankInformation
-                bankAccounts={bankAccounts}
-                flagInformation={false}
-              />
-            </MDBCol>
-          </MDBRow>
-
-          <MDBRow>
-            <MDBCol md="3" />
-            <MDBCol md="9">
-              <SliderCardsMap inventory={inventory} />
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
+        <MDBAnimation type="fadeIn">
+          <MDBContainer>
+            <MDBRow>
+              <BasicInformation user={user} />
+            </MDBRow>
+            <MDBRow>
+              <MDBCol md="3" />
+              <MDBCol md="9">
+                <BankInformation
+                  bankAccounts={bankAccounts}
+                  flagInformation={false}
+                />
+              </MDBCol>
+            </MDBRow>
+            <MDBRow>
+              <MDBCol md="3" />
+              <MDBCol md="9">
+                <h5 className="font-weight-bold text-black-50">
+                  Recently Publications
+                </h5>
+                {loadingInventory ? (
+                  <div className="text-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  <SliderCardsMap inventory={inventory} />
+                )}
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </MDBAnimation>
       </SidebarComponent>
     );
   }
