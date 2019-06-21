@@ -177,7 +177,7 @@ class ChangePasswordView extends View {
           style={{ position: 'fixed', width: '100%', padding: '10px' }}
           color="primary-plantilla"
           className="footer-copyright text-center">
-          Copyright: &copy; Blaz {new Date().getFullYear()} |{' '}
+          Copyright: &copy; Bazl {new Date().getFullYear()} |{' '}
           <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a>
         </MDBFooter>
       </div>

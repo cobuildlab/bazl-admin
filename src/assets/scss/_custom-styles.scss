@@ -513,5 +513,32 @@ td {
 
 .font-body{
   color: #727272;
+}
 
+.landing-letters {
+  font-size: 50px;
+}
+
+@media (max-width: 530px) {
+  .landing-letters {
+    font-size: 40px;
+  }
+
+  @media (max-width: 410px) {
+    .landing-letters {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 330px) {
+    .landing-letters {
+      font-size: 20px;
+    }
+  }
+
+  @media (max-width: 220px) {
+    .landing-letters {
+      font-size: 15px;
+    }
+  }
 }
