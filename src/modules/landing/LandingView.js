@@ -5,7 +5,7 @@ import {
   MDBNavbarNav,
   MDBNavItem,
   // MDBNavbarToggler,
-  // MDBCollapse,
+  MDBCollapse,
   MDBContainer,
   MDBView,
   MDBMask,
@@ -57,8 +57,10 @@ class LandingView extends React.Component {
             </MDBNavbarBrand>
             {/* <MDBNavbarToggler onClick={this.handleTogglerClick} /> */}
             {/* <MDBCollapse is Open={this.state.collapsed} style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar> */}
-            {/* <MDBCollapse style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar> */}
-            <div style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar>
+            <MDBCollapse
+              style={{ marginBottom: 'auto', marginRight: '-5px' }}
+              navbar>
+              {/* <div style={{ marginBottom: 'auto', marginRight: '-5px' }} navbar> */}
               <MDBNavbarNav right style={{ marginRight: '-80px' }}>
                 <MDBNavItem active>
                   <ModalComponent
@@ -74,8 +76,8 @@ class LandingView extends React.Component {
                   />
                 </MDBNavItem>
               </MDBNavbarNav>
-            </div>
-            {/* </MDBCollapse> */}
+              {/* </div> */}
+            </MDBCollapse>
           </MDBContainer>
         </MDBNavbar>
         <MDBView style={{ alignItems: 'center' }} src={bgLanding}>
