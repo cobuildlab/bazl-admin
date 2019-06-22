@@ -130,7 +130,7 @@ class EditBasicInformation extends React.Component {
             </MDBBtn>
           </MDBCol>
         </MDBCol>
-        <MDBCol md="3">
+        <MDBCol md="2">
           <br></br>
           <MDBCard style={{ marginBottom: '30px' }}>
             <MDBCardBody>
@@ -139,7 +139,7 @@ class EditBasicInformation extends React.Component {
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
-        <MDBCol md="1"></MDBCol>
+        <MDBCol md="2"></MDBCol>
       </React.Fragment>
     );
   }
