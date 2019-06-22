@@ -110,7 +110,7 @@ class LandingView extends React.Component {
                       src={PhoneApp}
                       alt="phone"
                       className="img-fluid"
-                      width="250"
+                      style={{ width: '250px', height: '500px' }}
                     />
                   </MDBAnimation>
                 </MDBCol>

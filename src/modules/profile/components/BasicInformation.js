@@ -22,7 +22,12 @@ const BasicInformation = ({ user }) => {
   if (picture) {
     imagePreview = (
       <label width="80" className="text-center" htmlFor="upload-photo">
-        <img alt={'User Profile'} src={picture} className="img-fluid" />
+        <img
+          alt={'User Profile'}
+          src={picture}
+          className="img-fluid"
+          style={{ borderRadius: '10px', width: '160px', height: '180px' }}
+        />
       </label>
     );
   } else {
@@ -35,6 +40,7 @@ const BasicInformation = ({ user }) => {
           alt={'User Profile'}
           src={ImgDefault}
           className="img-fluid img-label"
+          style={{ borderRadius: '10px', width: '160px', height: '180px' }}
         />
       </label>
     );
@@ -42,8 +48,10 @@ const BasicInformation = ({ user }) => {
 
   return (
     <React.Fragment>
-      <MDBCol md="3">{imagePreview}</MDBCol>
-      <MDBCol md="7">
+      <MDBCol md="3" style={{ display: 'flex', justifyContent: 'center' }}>
+        {imagePreview}
+      </MDBCol>
+      <MDBCol md="5">
         <h3 className="font-weight-bold text-black-50">{name}</h3>
         <small className="text-primary">@User</small>
         <div className="mt-5">
@@ -52,7 +60,8 @@ const BasicInformation = ({ user }) => {
         </div>
         <br></br>
       </MDBCol>
-      <MDBCol md="2">
+      <MDBCol md="3">
+        <br></br>
         <MDBCard style={{ marginBottom: '30px' }}>
           <MDBCardBody>
             <MDBCardText className="text-center">Total Sales</MDBCardText>
@@ -60,6 +69,7 @@ const BasicInformation = ({ user }) => {
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
+      <MDBCol md="1"></MDBCol>
     </React.Fragment>
   );
 };

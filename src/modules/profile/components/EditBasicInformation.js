@@ -50,23 +50,25 @@ class EditBasicInformation extends React.Component {
     const { onCancel, onSave } = this.props;
     let { name, description, picture } = this.state;
     let imagePreview = null;
-    let cursor = {
-      cursor: 'pointer',
-    };
     if (picture) {
       imagePreview = (
         <label
-          style={cursor}
+          style={{ cursor: 'pointer' }}
           width="80"
           className="text-center"
           htmlFor="upload-photo">
-          <img alt={'User Profile'} src={picture} className="img-fluid" />
+          <img
+            alt={'User Profile'}
+            src={picture}
+            className="img-fluid"
+            style={{ borderRadius: '10px', width: '160px', height: '180px' }}
+          />
         </label>
       );
     } else {
       imagePreview = (
         <label
-          style={cursor}
+          style={{ cursor: 'pointer' }}
           width="80"
           className="CustomlabelProfile text-center"
           htmlFor="upload-photo">
@@ -74,6 +76,7 @@ class EditBasicInformation extends React.Component {
             alt={'User Profile'}
             src={ImgDefault}
             className="img-fluid img-label"
+            style={{ borderRadius: '10px', width: '160px', height: '180px' }}
           />
         </label>
       );
@@ -81,7 +84,10 @@ class EditBasicInformation extends React.Component {
 
     return (
       <React.Fragment>
-        <MDBCol className="text-center" md="3">
+        <MDBCol
+          md="3"
+          style={{ display: 'flex', flexDirection: 'column' }}
+          className="text-center">
           {imagePreview}
           <input
             type="file"
@@ -91,7 +97,7 @@ class EditBasicInformation extends React.Component {
           />
           <small>JPG or PNG with a maximum of 5mb</small>
         </MDBCol>
-        <MDBCol md="7">
+        <MDBCol md="5">
           <h5>Name User</h5>
           <MDBInput
             className="mb-0"
@@ -124,7 +130,8 @@ class EditBasicInformation extends React.Component {
             </MDBBtn>
           </MDBCol>
         </MDBCol>
-        <MDBCol md="2">
+        <MDBCol md="3">
+          <br></br>
           <MDBCard style={{ marginBottom: '30px' }}>
             <MDBCardBody>
               <MDBCardText className="text-center">Total Sales</MDBCardText>
@@ -132,6 +139,7 @@ class EditBasicInformation extends React.Component {
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
+        <MDBCol md="1"></MDBCol>
       </React.Fragment>
     );
   }
