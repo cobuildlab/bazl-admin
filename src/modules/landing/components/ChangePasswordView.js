@@ -1,5 +1,6 @@
 import React from 'react';
 import View from 'react-flux-state';
+import { Link } from 'react-router-dom';
 import * as R from 'ramda';
 import {
   MDBContainer,
@@ -170,6 +171,11 @@ class ChangePasswordView extends View {
                 </MDBCol>
                 <MDBCol md="2"></MDBCol>
               </MDBRow>
+              <div className="container p-0 text-center">
+                <Link to="/" className="btnLink btn btn-link">
+                  Home
+                </Link>
+              </div>
             </MDBContainer>
           </MDBMask>
         </MDBView>
@@ -185,4 +191,4 @@ class ChangePasswordView extends View {
   }
 }
 
-export default ChangePasswordView;
+export { ChangePasswordView };
