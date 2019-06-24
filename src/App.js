@@ -12,6 +12,7 @@ import NewProductView from './modules/new-product/NewProductView';
 import SalesDetailView from './modules/sales/SalesDetailView';
 import Session from './components/Session';
 import EditProfileView from './modules/profile/EditProfileView';
+import DataImportView from './modules/new-product/DataImportView';
 
 /**
  * @typedef {[ component: any, pathname: string ]} publicRoutes
@@ -45,6 +46,7 @@ class App extends Component {
             <Route path={'/inventory'} component={InventoryView} />
             {/*home, profile, sales*/}
             <Route path={'/new-product'} component={NewProductView} />
+            <Route path={'/data-import'} component={DataImportView} />
             {/* sales */}
             <Route path={'/order-details/:id'} component={SalesDetailView} />
             <Route
