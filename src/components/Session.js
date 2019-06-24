@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import View from 'react-flux-state';
 import firebase from 'firebase';
-import { ClipLoader } from 'react-spinners';
+// import { ClipLoader } from 'react-spinners';
 import { Container } from 'reactstrap';
 import { withRouter } from 'react-router-dom';
 import { fetchUser } from '../modules/landing/landing-actions';
@@ -41,12 +41,12 @@ class Session extends View {
         <Container
           fluid
           className="h-100 d-flex align-items-center d-flex justify-content-center bg-left">
-          <ClipLoader
+          {/* <ClipLoader
             sizeUnit={'px'}
             size={150}
             color={'#123abc'}
             loading={true}
-          />
+          /> */}
         </Container>
       );
 

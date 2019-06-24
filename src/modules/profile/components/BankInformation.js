@@ -1,11 +1,6 @@
 import React from 'react';
 import { BankAccount } from './BankAccount';
-import {
-  // MDBRow, MDBInput, MDBTableBody, MDBCol,
-  MDBContainer,
-  MDBTable,
-  MDBTableHead,
-} from 'mdbreact';
+import { MDBContainer, MDBTable, MDBTableHead } from 'mdbreact';
 import PropTypes from 'prop-types';
 
 class BankInformation extends React.Component {
@@ -31,13 +26,11 @@ class BankInformation extends React.Component {
           </MDBTable>
         ) : (
           <MDBContainer className="body" fluid>
-            <h6 className="font-weight-bold text-black-50">
+            <h6 className="text-black-50 text-center">
               There Are No Bank Accounts Yet
             </h6>
           </MDBContainer>
         )}
-
-        {/* </div> */}
       </React.Fragment>
     );
   }

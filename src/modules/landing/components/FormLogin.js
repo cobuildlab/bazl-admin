@@ -123,11 +123,14 @@ class FormLogin extends View {
                       aria-describedby="basic-addon1"
                     />
                   </div>
-                  <p
-                    onClick={this.onFlagForgot}
-                    className="btnLink btn btn-link">
-                    {`Don't remember your password?`}
-                  </p>
+                  <div className="text-center">
+                    {' '}
+                    <p
+                      onClick={this.onFlagForgot}
+                      className="btnLink btn btn-link">
+                      {`Don't remember your password?`}
+                    </p>
+                  </div>
                 </form>
                 <div className="text-center">
                   {loading ? (

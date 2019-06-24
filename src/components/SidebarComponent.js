@@ -4,6 +4,7 @@ import ContentSidebar from './ContentSidebar';
 import HomeIcon from '../assets/img/home.png';
 import ProfileIcon from '../assets/img/profile.png';
 import SalesIcon from '../assets/img/cart.png';
+import ReportIcon from '../assets/img/report.png';
 // import NotificationIcon from '../assets/img/notifications.png';
 import InvetoryIcon from '../assets/img/invetory.png';
 
@@ -75,14 +76,16 @@ class SidebarComponent extends React.Component {
                   className: 'title-list-item',
                 },
                 {
-                  path: '/privacy-police',
-                  name: 'Privacy Police',
-                  className: 'title-list-item-no-icon',
+                  path: '/privacy-policy',
+                  name: 'Privacy Policy',
+                  image: ReportIcon,
+                  className: 'title-list-item',
                 },
                 {
                   path: '/terms-and-conditions',
                   name: 'Terms and Conditions',
-                  className: 'title-list-item-no-icon',
+                  image: ReportIcon,
+                  className: 'title-list-item',
                 },
               ]}
             />
@@ -91,8 +94,7 @@ class SidebarComponent extends React.Component {
           docked={this.state.sidebarDocked}
           onSetOpen={this.onSetSidebarOpen}
           sidebarClassName={'sidebarStyles'}
-          transitions={false}
-        >
+          transitions={false}>
           {this.props.children}
         </Sidebar>
       </React.Fragment>

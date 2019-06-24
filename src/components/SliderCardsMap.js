@@ -6,7 +6,6 @@ const SliderCardsMap = (props) => {
   const { inventory } = props;
   return (
     <React.Fragment>
-      <h5 className="font-weight-bold text-black-50">Recently Publications</h5>
       <div
         className="scrollbar scrollbar-primary"
         style={{ overflow: 'auto', whiteSpace: 'nowrap' }}>
@@ -31,8 +30,8 @@ const SliderCardsMap = (props) => {
             ))}
           </div>
         ) : (
-          <MDBContainer>
-            <h6 className="font-weight-bold text-black-50">
+          <MDBContainer className="body" fluid>
+            <h6 className="text-black-50  text-center">
               There Are No Publications Yet
             </h6>
           </MDBContainer>

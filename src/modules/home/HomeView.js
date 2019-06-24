@@ -2,7 +2,7 @@ import React from 'react';
 import View from 'react-flux-state';
 import SidebarComponent from '../../components/SidebarComponent';
 import { MDBContainer, MDBRow, MDBCol, MDBAnimation } from 'mdbreact';
-// import SliderCards from '../../components/SliderCards';
+import { Loader } from '../../components/Loader';
 import TableSales from '../sales/TableSalesView';
 import { Link } from 'react-router-dom';
 import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store';
@@ -14,7 +14,7 @@ class HomeView extends View {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loadingInventory: true,
       inventory: [],
     };
   }
@@ -25,31 +25,32 @@ class HomeView extends View {
       inventory = R.clone(data);
       this.setState({
         inventory,
+        loadingInventory: false,
       });
     });
     fetchUserProducts();
   }
 
   render() {
-    const { inventory } = this.state;
+    const { inventory, loadingInventory } = this.state;
     return (
       <React.Fragment>
-        <MDBAnimation type="fadeIn">
-          <SidebarComponent>
-            <div className="d-flex justify-content-between nav-admin body">
-              <div>
-                <h2 className="m-0 font-body">
-                  <strong>Home</strong>
-                </h2>
-              </div>
-              <div>
-                <Link
-                  to="/new-product"
-                  className="btn btn-circle btn-circle-link">
-                  Upload 
-                </Link>
-              </div>
+        <SidebarComponent>
+          <div className="d-flex justify-content-between nav-admin body">
+            <div>
+              <h2 className="m-0 font-body">
+                <strong>Home</strong>
+              </h2>
             </div>
+            <div>
+              <Link
+                to="/new-product"
+                className="btn btn-circle btn-circle-link">
+                Upload
+              </Link>
+            </div>
+          </div>
+          <MDBAnimation type="fadeIn">
             <MDBContainer className="body" fluid>
               <MDBRow>
                 <MDBCol>
@@ -84,12 +85,21 @@ class HomeView extends View {
                 </MDBCol>
               </MDBRow>
               <br></br>
-              <SliderCardsMap inventory={inventory} />
+              <h5 className="font-weight-bold text-black-50">
+                Recently Publications
+              </h5>
+              {loadingInventory ? (
+                <div className="text-center">
+                  <Loader />
+                </div>
+              ) : (
+                <SliderCardsMap inventory={inventory} />
+              )}
               <h5 className="font-weight-bold text-black-50">Recent Sales</h5>
               <TableSales />
             </MDBContainer>
-          </SidebarComponent>
-        </MDBAnimation>
+          </MDBAnimation>
+        </SidebarComponent>
       </React.Fragment>
     );
   }

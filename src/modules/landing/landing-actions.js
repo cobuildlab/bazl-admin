@@ -135,3 +135,23 @@ export const pushHome = async (props) => {
   const { history } = props;
   await history.push('/home');
 };
+
+export const confimrNewPassword = async (code, newPassword, email) => {
+  // update property
+  const DB = firebase.firestore();
+  const userRef = DB.collection('users').doc(email.toLowerCase());
+  await userRef.update({ needsPasswordReset: false });
+
+  const AUTH = await firebase.auth();
+  return AUTH.confirmPasswordReset(code, newPassword);
+};
+
+export const getUrlParam = (url, param) => {
+  const params = [];
+  const urlParams = new URLSearchParams(url);
+  for (const index of urlParams.entries()) {
+    params.push(index);
+  }
+  const findParamIndex = params.findIndex((value) => param === value[0]);
+  return findParamIndex === -1 ? '' : params[findParamIndex][1];
+};
