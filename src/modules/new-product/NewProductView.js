@@ -116,9 +116,9 @@ class NewProductView extends View {
             </div>
             <div>
               <Link
-                to="/new-product"
+                to="/data-import"
                 className="btn btn-circle btn-circle-link">
-                New Publications
+                Import Data
               </Link>
             </div>
           </div>
