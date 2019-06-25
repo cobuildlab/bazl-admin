@@ -65,11 +65,16 @@ export const createProduct = async (product, image) => {
     });
 };
 
+/**
+ * creates a list of products belonging to the user imported via csv
+ * @param {string} firebaseUser the firebase uid
+ * @returns {Promise<ProductModel>} product info or null if unexisting
+ */
+
 export const uploadData = (data) => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products');
   const userData = landingStore.getState(USER_EVENT);
-  console.log(data);
   let idProducts;
 
   data.forEach((product) => {
@@ -86,7 +91,7 @@ export const uploadData = (data) => {
       shippingFee,
     } = product;
     let imageUrl = null;
-    if (product.imageUrl != '') {
+    if (product.imageUrl !== '') {
       imageUrl = product.imageUrl;
     }
     productCollection
