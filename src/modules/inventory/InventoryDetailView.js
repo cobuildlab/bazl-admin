@@ -44,7 +44,7 @@ class InventoryDetailView extends View {
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (e) => {
       toast.error(e.message);
     });
-    
+
     this.subscribe(inventoryStore, INVENTORY_UPDATE_EVENT, () => {
       this.props.history.push('/inventory');
       toast.success('Product Updated');
@@ -114,18 +114,18 @@ class InventoryDetailView extends View {
     let picture = this.state.data.picture;
     if (picture != null) {
       picture = (
-        <img
-          src={this.state.data.picture}
-          alt="default"
-          className="img-product"
-          width="auto"
-        />
+        <label className="imgLabel" htmlFor="upload-photo">
+          <img
+            src={this.state.data.picture}
+            alt="default"
+            className="img-product"
+            width="auto"
+          />
+        </label>
       );
     } else {
       picture = (
-        <label
-          className = "Customlabel text-center"
-          htmlFor = "upload-photo" >
+        <label className="Customlabel text-center" htmlFor="upload-photo">
           <img
             src={ImgDefault}
             alt="default"
