@@ -85,9 +85,13 @@ export const uploadData = (data) => {
       additionalFee,
       shippingFee,
     } = product;
-
+    let imageUrl = null;
+    if (product.imageUrl != '') {
+      imageUrl = product.imageUrl;
+    }
     productCollection
       .add({
+        picture: imageUrl,
         name,
         category,
         description,
