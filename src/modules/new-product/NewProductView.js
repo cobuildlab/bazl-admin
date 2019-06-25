@@ -118,7 +118,7 @@ class NewProductView extends View {
               <Link
                 to="/data-import"
                 className="btn btn-circle btn-circle-link">
-                Import Data
+                Import Csv
               </Link>
             </div>
           </div>

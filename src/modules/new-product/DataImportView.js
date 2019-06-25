@@ -21,12 +21,17 @@ class DataImportView extends View {
       loading: false,
       file: null,
       data: [],
+      link:
+        'https://firebasestorage.googleapis.com/v0/b/bazl-web.appspot.com/o/csv%2Fbazl.csv?alt=media&token=6cf8ed6d-ec98-4e06-88cf-15a4ed35e77a',
+      disabled: false,
     };
   }
   componentDidMount() {
     this.subscribe(productStore, IMPORT_EVENT, () => {
       this.props.history.push('/inventory');
-      toast.success('Product Uploaded');
+      toast.success(
+        'Product Uploaded, remember upload the picture in the inventory',
+      );
     });
     this.subscribe(productStore, PRODUCT_ERROR_EVENT, (e) => {
       toast.error(e.message);
@@ -35,6 +40,7 @@ class DataImportView extends View {
   onFiles = (files) => {
     this.setState({
       file: files[0],
+      disabled: false,
     });
     console.log(this.state.file);
   };
@@ -50,8 +56,10 @@ class DataImportView extends View {
   updateData = (result) => {
     let data = result.data;
     const fields = Object.keys(data[0]);
+    console.log(data);
     if (
       !fields.includes(
+        'imageUrl',
         'name',
         'category',
         'description',
@@ -65,6 +73,9 @@ class DataImportView extends View {
       )
     ) {
       toast.error('Error, File is not properly formatted');
+      this.setState({
+        disabled: true,
+      });
     } else {
       uploadData(data);
     }
@@ -76,7 +87,7 @@ class DataImportView extends View {
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
           <div>
-            <h2 className="m-0">Import Data</h2>
+            <h2 className="m-0">Import Csv</h2>
           </div>
           <div>
             <Link to="/new-product" className="btn btn-circle btn-circle-link">
@@ -88,9 +99,22 @@ class DataImportView extends View {
           <Loader />
         ) : (
           <>
+            <MDBContainer fluid>
+              <MDBRow>
+                <MDBCol>
+                  <a
+                    className="btn btn-circle-success btn-circle-link"
+                    href={this.state.link}
+                    rel="noopener noreferrer"
+                    target="_blank">
+                    Download our csv format
+                  </a>
+                </MDBCol>
+              </MDBRow>
+            </MDBContainer>
             <MDBContainer className="data-import" fluid>
               <MDBRow>
-                <MDBCol size={10} className="data-dropzone">
+                <MDBCol md="10" className="data-dropzone">
                   <DropZone
                     onFiles={this.onFiles}
                     className={'m-2 d-inline-block'}
@@ -107,7 +131,8 @@ class DataImportView extends View {
                           style={{ position: 'relative', top: -2 }}
                           className=" btn btn-circle btn-circle-link"
                           size={'sm'}
-                          onClick={this.onSubmit}>
+                          onClick={this.onSubmit}
+                          disabled={this.state.disabled}>
                           <MDBIcon
                             style={{ position: 'relative' }}
                             icon="file-upload"

@@ -16,7 +16,7 @@ import ImgDefault from '../../../assets/img/img-default.png';
  * @returns {*}
  * @constructor
  */
-const BasicInformation = ({ user }) => {
+const BasicInformation = ({ user, data }) => {
   let { name, description, picture } = user;
   let imagePreview = null;
   if (picture) {
@@ -65,7 +65,9 @@ const BasicInformation = ({ user }) => {
         <MDBCard style={{ marginBottom: '30px' }}>
           <MDBCardBody>
             <MDBCardText className="text-center">Total Sales</MDBCardText>
-            <MDBCardTitle className="text-center">$0</MDBCardTitle>
+            <MDBCardTitle className="text-center">
+              ${data.totalSales}
+            </MDBCardTitle>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
@@ -76,6 +78,7 @@ const BasicInformation = ({ user }) => {
 
 BasicInformation.propTypes = {
   user: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export { BasicInformation };
