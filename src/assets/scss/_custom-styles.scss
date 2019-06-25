@@ -12,6 +12,12 @@
   width: 100%;
 }
 
+.view-icon-menu {
+  position: absolute;
+  top: 22px;
+  left: 15px;
+}
+
 .view-content-landing {
   margin-top: 15%;
 }
@@ -274,11 +280,27 @@
 .nav-admin {
   border-bottom: 1px solid #e6e6e6;
   margin-bottom: 25px;
+  padding: 15px 60px;
 }
 
 .body {
   padding: 15px 60px;
 }
+
+@media (max-width: 530px) {
+  .body {
+    padding: 15px 30px;
+  }
+
+  .nav-admin {
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 25px;
+    padding: 15px 60px;
+    padding-right: 15px;
+  }
+
+}
+
 
 .img-card {
   width: 100%;

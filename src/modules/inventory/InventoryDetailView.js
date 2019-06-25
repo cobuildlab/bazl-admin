@@ -44,7 +44,7 @@ class InventoryDetailView extends View {
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (e) => {
       toast.error(e.message);
     });
-    
+
     this.subscribe(inventoryStore, INVENTORY_UPDATE_EVENT, () => {
       this.props.history.push('/inventory');
       toast.success('Product Updated');
@@ -123,9 +123,7 @@ class InventoryDetailView extends View {
       );
     } else {
       picture = (
-        <label
-          className = "Customlabel text-center"
-          htmlFor = "upload-photo" >
+        <label className="Customlabel text-center" htmlFor="upload-photo">
           <img
             src={ImgDefault}
             alt="default"
@@ -138,7 +136,7 @@ class InventoryDetailView extends View {
     return (
       <React.Fragment>
         <SidebarComponent>
-          <div className="d-flex justify-content-between nav-admin body">
+          <div className="d-flex justify-content-between nav-admin">
             <div>
               <h2 className="m-0">Product {this.state.data.name}</h2>
             </div>

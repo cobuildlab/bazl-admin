@@ -110,7 +110,7 @@ class NewProductView extends View {
     return (
       <React.Fragment>
         <SidebarComponent>
-          <div className="d-flex justify-content-between nav-admin body">
+          <div className="d-flex justify-content-between nav-admin">
             <div>
               <h2 className="m-0">New Product</h2>
             </div>
