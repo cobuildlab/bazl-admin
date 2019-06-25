@@ -212,6 +212,7 @@ class EditProfileView extends View {
             ) : (
               <div></div>
             )}
+            <hr />
             <MDBRow>
               <MDBCol md="3" />
               <MDBCol md="9">
