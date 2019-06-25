@@ -42,7 +42,7 @@ class ProfileView extends View {
     const { bankAccounts } = this.state.user;
     return (
       <SidebarComponent>
-        <div className="d-flex justify-content-between nav-admin body">
+        <div className="d-flex justify-content-between nav-admin">
           <div>
             <h2 className="m-0">Profile</h2>
           </div>
