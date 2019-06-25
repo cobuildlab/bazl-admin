@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
 import { Icon } from 'react-icons-kit';
 import { ic_mail_outline } from 'react-icons-kit/md/ic_mail_outline';
 import { ic_lock_outline } from 'react-icons-kit/md/ic_lock_outline';
@@ -26,6 +26,7 @@ class FormLogin extends View {
       loading: false,
       emailError: '',
       forgot: true,
+      rememberMe: false,
     };
     this.onError = error.bind(this);
   }
@@ -52,7 +53,7 @@ class FormLogin extends View {
   }
 
   onSubmit = (e) => {
-    const { email, password } = this.state;
+    const { email, password, rememberMe } = this.state;
     e.preventDefault();
     if (!this.state.forgot) {
       this.setState({ loading: true, forgot: true }, () => {
@@ -60,15 +61,21 @@ class FormLogin extends View {
       });
     } else {
       this.setState({ loading: true }, () => {
-        onLogin({ email, password });
+        onLogin({ email, password, rememberMe });
       });
     }
   };
 
   onChange = ({ target: { name, value } }) => {
-    this.setState({
-      [name]: value,
-    });
+    if (name === 'rememberMe') {
+      this.setState((prevState) => ({
+        rememberMe: !prevState.rememberMe,
+      }));
+    } else {
+      this.setState({
+        [name]: value,
+      });
+    }
   };
 
   onFlagForgot = () => {
@@ -78,7 +85,7 @@ class FormLogin extends View {
   };
 
   render() {
-    let { email, password, loading, forgot } = this.state;
+    let { email, password, loading, forgot, rememberMe } = this.state;
     return (
       <MDBContainer>
         <MDBRow>
@@ -122,6 +129,25 @@ class FormLogin extends View {
                       aria-label="Password"
                       aria-describedby="basic-addon1"
                     />
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}>
+                    <MDBInput
+                      type="checkbox"
+                      name="rememberMe"
+                      value={rememberMe}
+                      style={{
+                        width: '25px',
+                        height: '25px',
+                        position: 'relative',
+                        marginRight: '20px',
+                      }}
+                      onChange={this.onChange}
+                    />
+                    <h6>Keep Session Active ?</h6>
                   </div>
                   <div className="text-center">
                     {' '}

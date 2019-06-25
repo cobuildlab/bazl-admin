@@ -18,7 +18,11 @@ import { UserModel } from './landing-models';
  * @param {string} password
  * @returns {Promise<{user: UserModel} || void>}
  */
-export const onLogin = async ({ email, password }) => {
+export const onLogin = async ({ email, password, rememberMe }) => {
+  const persistence = rememberMe
+    ? firebase.auth.Auth.Persistence.LOCAL
+    : firebase.auth.Auth.Persistence.SESSION;
+  await firebase.auth().setPersistence(persistence);
   const AUTH = firebase.auth();
   let data;
   try {
