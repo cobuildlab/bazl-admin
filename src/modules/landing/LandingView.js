@@ -41,19 +41,18 @@ class LandingView extends React.Component {
             <MDBContainer className="">
               <MDBRow className="view-content-landing">
                 <div className="text-center text-md-left col-md-8">
+                  <br />
+                  <br />
                   <h1 className="text-primary landing-letters">
-                    Lorem <b>ipsum</b> dolor sit amet, consectetur{' '}
-                    <b>adipiscing</b> elit
+                    <b>1.)</b> Upload Inventory
+                    <br />
+                    <b>2.)</b> Recruit Influencers (We can help with this)
+                    <br />
+                    <b>3.)</b> Make Sales
+                    <br />
                   </h1>
                   <h6 className="mb-4 text-primary">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.
+                    {`At Bazl, Merchants don't pay for ad space. We believe in growth through organic advertising, therefore, we enable your consumers, supporters, friends, family, etc to make money from posting a photo of your products. After all, word-of-mouth advertising will always be the most effective.`}
                   </h6>
                 </div>
                 <MDBCol md="4" xl="4" className="d-flex align-items-center">
