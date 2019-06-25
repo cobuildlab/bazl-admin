@@ -184,7 +184,8 @@ class ChangePasswordView extends View {
           color="primary-plantilla"
           className="footer-copyright text-center">
           Copyright: &copy; Bazl {new Date().getFullYear()} |{' '}
-          <a href="#">Privacy Policy</a> | <a href="#">Terms and Conditions</a>
+          <Link to="/terms-services">Privacy Policy</Link> |{' '}
+          <Link to="/terms-services">Terms and Conditions</Link>
         </MDBFooter>
       </div>
     );

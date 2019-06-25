@@ -8,9 +8,6 @@ import { withRouter } from 'react-router-dom';
 import { fetchUser } from '../modules/landing/landing-actions';
 import { landingStore, USER_EVENT } from '../modules/landing/landing-store';
 
-/**
- * User Session component
- */
 class Session extends View {
   constructor(props) {
     super(props);

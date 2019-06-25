@@ -108,9 +108,7 @@ class FormSignUp extends View {
               <div
                 style={{
                   display: 'flex',
-                  justifyContent: 'space-between',
                   alignItems: 'center',
-                  flexDirection: 'row',
                 }}>
                 <MDBInput
                   type="checkbox"
@@ -122,12 +120,9 @@ class FormSignUp extends View {
                     position: 'relative',
                     marginRight: '20px',
                   }}
-                  placeholder="Password"
-                  aria-label="Password"
-                  aria-describedby="basic-addon1"
                   onChange={this.onChange}
                 />
-                <h6>You agree to our terms of services and privacy policy.</h6>
+                <h6>You agree to our terms of services and privacy policy</h6>
               </div>
               {/* <ModalTerms linkName="by signing up, you agree to our terms of services and privacy policy." /> */}
               <div className="container p-0 text-center">
