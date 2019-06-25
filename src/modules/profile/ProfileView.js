@@ -21,6 +21,9 @@ class ProfileView extends View {
       user: { ...R.clone(userModel), ...user },
       inventory: [],
       loadingInventory: true,
+      data: {
+        totalSales: '0',
+      },
     };
   }
   componentDidMount() {
@@ -35,7 +38,7 @@ class ProfileView extends View {
     fetchUserProducts();
   }
   render() {
-    const { inventory, user, loadingInventory } = this.state;
+    const { inventory, user, loadingInventory, data } = this.state;
     const { bankAccounts } = this.state.user;
     return (
       <SidebarComponent>
@@ -55,7 +58,7 @@ class ProfileView extends View {
         <MDBAnimation type="fadeIn">
           <MDBContainer>
             <MDBRow>
-              <BasicInformation user={user} />
+              <BasicInformation user={user} data={data} />
             </MDBRow>
             <MDBRow>
               <MDBCol md="3" />

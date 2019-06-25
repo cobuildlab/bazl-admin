@@ -16,23 +16,34 @@ class HomeView extends View {
     this.state = {
       loadingInventory: true,
       inventory: [],
+      data: {
+        tags: '0',
+        impressions: '0',
+        sales: '0',
+        products: '0',
+      },
     };
   }
 
   componentDidMount() {
-    this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {
+    this.subscribe(inventoryStore, INVENTORY_EVENT, (datas) => {
       let { inventory } = this.state;
-      inventory = R.clone(data);
+      inventory = R.clone(datas);
+      let newData = R.clone(this.state.data);
+      let totalProducts = inventory.length;
+      newData.products = totalProducts;
+
       this.setState({
         inventory,
         loadingInventory: false,
+        data: newData,
       });
     });
     fetchUserProducts();
   }
 
   render() {
-    const { inventory, loadingInventory } = this.state;
+    const { inventory, loadingInventory, data } = this.state;
     return (
       <React.Fragment>
         <SidebarComponent>
@@ -56,7 +67,8 @@ class HomeView extends View {
                 <MDBCol>
                   <h5 className="font-weight-bold text-black-50">Total Tags</h5>
                   <h6 className="text-primary font-weight-bold">
-                    0<small className="font-weight-normal"> Tag</small>
+                    {data.tags}
+                    <small className="font-weight-normal"> Tag</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
@@ -64,7 +76,7 @@ class HomeView extends View {
                     Total Impressions
                   </h5>
                   <h6 className="text-primary font-weight-bold">
-                    0 <small>Impressions</small>
+                    {data.impressions} <small>Impressions</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
@@ -72,7 +84,7 @@ class HomeView extends View {
                     Total Sales
                   </h5>
                   <h6 className="text-primary font-weight-bold">
-                    0 <small>Sales</small>
+                    {data.sales} <small>Sales</small>
                   </h6>
                 </MDBCol>
                 <MDBCol>
@@ -80,7 +92,7 @@ class HomeView extends View {
                     Total Products
                   </h5>
                   <h6 className="text-primary font-weight-bold">
-                    0 <small>View</small>
+                    {data.products} <small>Products</small>
                   </h6>
                 </MDBCol>
               </MDBRow>
