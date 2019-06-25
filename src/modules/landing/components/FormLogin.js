@@ -1,5 +1,5 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import { Icon } from 'react-icons-kit';
 import { ic_mail_outline } from 'react-icons-kit/md/ic_mail_outline';
 import { ic_lock_outline } from 'react-icons-kit/md/ic_lock_outline';
@@ -134,20 +134,16 @@ class FormLogin extends View {
                     style={{
                       display: 'flex',
                       alignItems: 'center',
+                      justifyContent: 'start',
                     }}>
-                    <MDBInput
+                    <input
                       type="checkbox"
                       name="rememberMe"
                       value={rememberMe}
-                      style={{
-                        width: '25px',
-                        height: '25px',
-                        position: 'relative',
-                        marginRight: '20px',
-                      }}
+                      style={{ marginRight: '5px' }}
                       onChange={this.onChange}
                     />
-                    <h6>Keep Session Active ?</h6>
+                    <h6 style={{ margin: '0px' }}>Keep Session Active ?</h6>
                   </div>
                   <div className="text-center">
                     {' '}

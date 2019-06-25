@@ -40,7 +40,7 @@ const BasicInformation = ({ user, data }) => {
           alt={'User Profile'}
           src={ImgDefault}
           className="img-fluid img-label"
-          style={{ borderRadius: '10px', width: '160px', height: '180px' }}
+          style={{ borderRadius: '10px' }}
         />
       </label>
     );
@@ -51,7 +51,7 @@ const BasicInformation = ({ user, data }) => {
       <MDBCol md="3" style={{ display: 'flex', justifyContent: 'center' }}>
         {imagePreview}
       </MDBCol>
-      <MDBCol md="5">
+      <MDBCol md="6">
         <h3 className="font-weight-bold text-black-50">{name}</h3>
         <small className="text-primary">@User</small>
         <div className="mt-5">
@@ -71,7 +71,7 @@ const BasicInformation = ({ user, data }) => {
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
-      <MDBCol md="2"></MDBCol>
+      <MDBCol md="1"></MDBCol>
     </React.Fragment>
   );
 };

@@ -10,7 +10,7 @@ class BankInformation extends React.Component {
       <React.Fragment>
         <h5 className="font-weight-bold text-black-50">Bank Accounts</h5>
         {bankAccounts.length !== 0 ? (
-          <MDBTable hover responsive>
+          <MDBTable hover responsive borderless>
             {/* <MDBTable bordered hover responsive> */}
             <MDBTableHead color={'primary-plantilla'} textWhite>
               {/* <tr>

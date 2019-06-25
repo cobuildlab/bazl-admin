@@ -60,6 +60,7 @@ class ProfileView extends View {
             <MDBRow>
               <BasicInformation user={user} data={data} />
             </MDBRow>
+            <hr />
             <MDBRow>
               <MDBCol md="3" />
               <MDBCol md="9">

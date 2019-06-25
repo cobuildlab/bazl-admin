@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import { Icon } from 'react-icons-kit';
 import { ic_mail_outline } from 'react-icons-kit/md/ic_mail_outline';
 import { ic_lock_outline } from 'react-icons-kit/md/ic_lock_outline';
@@ -45,11 +45,15 @@ class FormSignUp extends View {
   }
 
   onSubmit = (e) => {
-    const { email, password } = this.state;
+    const { email, password, checkTerms } = this.state;
     e.preventDefault();
-    this.setState({ loading: true }, () => {
-      onSignup({ email, password });
-    });
+    if (checkTerms) {
+      this.setState({ loading: true }, () => {
+        onSignup({ email, password });
+      });
+    } else {
+      toast.error('You Must First Accept Terms and Conditions');
+    }
   };
 
   onChange = ({ target: { name, value } }) => {
@@ -109,20 +113,18 @@ class FormSignUp extends View {
                 style={{
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'start',
                 }}>
-                <MDBInput
+                <input
                   type="checkbox"
                   name="checkTerms"
                   value={checkTerms}
-                  style={{
-                    width: '25px',
-                    height: '25px',
-                    position: 'relative',
-                    marginRight: '20px',
-                  }}
+                  style={{ marginRight: '5px' }}
                   onChange={this.onChange}
                 />
-                <h6>You agree to our terms of services and privacy policy</h6>
+                <h6 style={{ margin: '0px' }}>
+                  You agree to our terms of services and privacy policy
+                </h6>
               </div>
               {/* <ModalTerms linkName="by signing up, you agree to our terms of services and privacy policy." /> */}
               <div className="container p-0 text-center">
@@ -143,7 +145,7 @@ class FormSignUp extends View {
                 <MDBBtn
                   type={'submit'}
                   className="btn-auth"
-                  disabled={!checkTerms}
+                  // disabled={!checkTerms}
                   onClick={this.onSubmit}>
                   Sign Up
                   <Icon size={24} icon={ic_keyboard_arrow_right} />

@@ -76,7 +76,7 @@ class EditBasicInformation extends React.Component {
             alt={'User Profile'}
             src={ImgDefault}
             className="img-fluid img-label"
-            style={{ borderRadius: '10px', width: '160px', height: '180px' }}
+            style={{ borderRadius: '10px' }}
           />
         </label>
       );
@@ -97,7 +97,7 @@ class EditBasicInformation extends React.Component {
           />
           <small>JPG or PNG with a maximum of 5mb</small>
         </MDBCol>
-        <MDBCol md="5">
+        <MDBCol md="6">
           <h5>Name User</h5>
           <MDBInput
             className="mb-0"
@@ -139,7 +139,7 @@ class EditBasicInformation extends React.Component {
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
-        <MDBCol md="2"></MDBCol>
+        <MDBCol md="1"></MDBCol>
       </React.Fragment>
     );
   }
