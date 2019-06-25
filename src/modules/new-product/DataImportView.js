@@ -87,7 +87,7 @@ class DataImportView extends View {
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
           <div>
-            <h2 className="m-0">Import Data</h2>
+            <h2 className="m-0">Import Csv</h2>
           </div>
           <div>
             <Link to="/new-product" className="btn btn-circle btn-circle-link">

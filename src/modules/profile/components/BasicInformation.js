@@ -78,6 +78,7 @@ const BasicInformation = ({ user, data }) => {
 
 BasicInformation.propTypes = {
   user: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export { BasicInformation };
