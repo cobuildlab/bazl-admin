@@ -14,7 +14,10 @@ const TermsOfServices = () => {
         backgroundSize: 'cover',
         height: '100vh',
       }}>
-      <MDBView style={{ alignItems: 'center' }} src={bgLanding}>
+      <MDBView
+        style={{ alignItems: 'center' }}
+        src={bgLanding}
+        className="overflow-auto">
         <MDBContainer>
           <MDBAnimation type="fadeIn">
             <div className="d-flex justify-content-center p-4">
@@ -24,7 +27,10 @@ const TermsOfServices = () => {
               <PrivacyPolicy />
             </b>
             <div className="container p-0 text-center">
-              <Link to="/" className="btnLink btn btn-link">
+              <Link
+                to="/"
+                className="btnLink btn btn-link"
+                style={{ marginBottom: '50px' }}>
                 Home
               </Link>
             </div>
@@ -32,7 +38,12 @@ const TermsOfServices = () => {
         </MDBContainer>
       </MDBView>
       <MDBFooter
-        style={{ position: 'fixed', width: '100%', padding: '10px' }}
+        style={{
+          position: 'fixed',
+          width: '100%',
+          padding: '10px',
+          marginTop: '90px',
+        }}
         color="primary-plantilla"
         className="footer-copyright text-center">
         Copyright: &copy; Bazl {new Date().getFullYear()} |{' '}
