@@ -42,7 +42,7 @@ class EditableBankAccount extends Component {
         <MDBCardBody style={{ paddingBottom: '0px', paddingTop: '0px' }}>
           <MDBRow className="d-flex justify-content-around align-items-center text-center">
             <MDBCol md="2" style={{ paddingLeft: '0px' }}>
-              <MDBInput
+              {/* <MDBInput
                 label="Business Account"
                 className="mt-0 text-center"
                 type="checkbox"
@@ -50,9 +50,16 @@ class EditableBankAccount extends Component {
                 onChange={this.onChange}
                 style={{ position: 'relative', marginLeft: '0px' }}
                 checked={type}
+              /> */}
+              <input
+                type="checkbox"
+                name="type"
+                checked={type}
+                onChange={this.onChange}
               />
+              <h6 style={{ margin: '0px' }}>Business Account</h6>
             </MDBCol>
-            <MDBCol md="3">
+            <MDBCol md="3" className="banco">
               <MDBInput
                 label="Holder's name"
                 className="mt-0"
@@ -62,7 +69,7 @@ class EditableBankAccount extends Component {
                 onChange={this.onChange}
               />
             </MDBCol>
-            <MDBCol md="3">
+            <MDBCol md="3" className="banco">
               <MDBInput
                 label="Account number"
                 className="mt-0"
@@ -72,7 +79,7 @@ class EditableBankAccount extends Component {
                 onChange={this.onChange}
               />
             </MDBCol>
-            <MDBCol md="3">
+            <MDBCol md="3" className="banco">
               <MDBInput
                 label="Routing number"
                 className="mt-0"
@@ -82,9 +89,10 @@ class EditableBankAccount extends Component {
                 onChange={this.onChange}
               />
             </MDBCol>
-            <MDBCol md="1">
+            <MDBCol md="1" style={{ padding: '0px' }}>
               <MDBBtn
                 className="btn-edit"
+                style={{ marginBottom: '0px' }}
                 onClick={() => editAccount(R.clone(this.state), index)}>
                 <MDBIcon icon="pencil-alt" />
               </MDBBtn>
