@@ -459,6 +459,14 @@ table.table thead th {
   margin-bottom: 1.5rem;
 }
 
+.banco {
+  .md-form {
+    position: relative;
+    margin-top: 0;
+    margin-bottom: 0rem;
+  } 
+}
+
 .custom-select:focus {
   border-color: #80bdff;
   outline: 0;
