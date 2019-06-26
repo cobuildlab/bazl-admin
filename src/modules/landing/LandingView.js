@@ -41,8 +41,6 @@ class LandingView extends React.Component {
             <MDBContainer className="">
               <MDBRow className="view-content-landing">
                 <div className="text-center text-md-left col-md-8">
-                  <br />
-                  <br />
                   <h1 className="text-primary landing-letters">
                     <b>1.)</b> Upload Inventory
                     <br />
