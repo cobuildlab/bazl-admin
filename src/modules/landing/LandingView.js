@@ -50,16 +50,6 @@ class LandingView extends React.Component {
                     <b>3.)</b> Make Sales
                     <br />
                   </h1>
-
-                  {/* <font className="text-primary landing-letters">
-                      <b>1.)</b> Upload Inventory
-                      <br />
-                      <b>2.)</b> Recruit Influencers <font size="5">(We can help with this)</font>
-                      <br />
-                      <b>3.)</b> Make Sales
-                      <br />
-                    </font> */}
-
                   <h6 className="mb-4 text-primary">
                     {`At Bazl, Merchants don't pay for ad space. We believe in growth through organic advertising, therefore, we enable your consumers, supporters, friends, family, etc to make money from posting a photo of your products. After all, word-of-mouth advertising will always be the most effective.`}
                   </h6>
