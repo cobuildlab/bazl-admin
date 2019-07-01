@@ -1,16 +1,13 @@
-
 export const ProductModel = {
   picture: null,
   name: '',
   category: '',
   description: '',
   size: '',
-  quantity: '',
-  color: '',
-  price: '',
+  products: [],
   commission: '',
   additionalFee: '',
   shippingFee: '',
-  totalPrice : '',
-  user : '',
-}
+  totalPrice: '',
+  user: '',
+};

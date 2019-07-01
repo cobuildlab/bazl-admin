@@ -343,7 +343,13 @@
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
     0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
-
+.product {
+    .md-form {
+      position: relative;
+      margin-top: 0;
+      margin-bottom: 0rem;
+    }
+}
 .scrollbar {
   overflow: scroll;
 }
@@ -371,6 +377,7 @@
 }
 
 //Table component
+
 
 table.table thead th {
   border-top: none;
@@ -466,6 +473,7 @@ table.table thead th {
     margin-bottom: 0rem;
   } 
 }
+
 
 .custom-select:focus {
   border-color: #80bdff;
