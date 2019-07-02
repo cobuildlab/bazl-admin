@@ -1,5 +1,15 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBAnimation } from 'mdbreact';
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBAnimation,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBIcon,
+} from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import ImgDefault from '../../assets/img/img-default.png';
 import * as R from 'ramda';
@@ -26,13 +36,14 @@ class NewProductView extends View {
       userID: '',
       image: null,
       loading: false,
+      showNewProductForm: false,
+      product: {},
     };
     this.onError = error.bind(this);
   }
 
   componentWillMount() {
     const model = R.clone(ProductModel);
-
     this.setState({
       data: model,
     });
@@ -53,6 +64,7 @@ class NewProductView extends View {
   }
 
   onChange = (e) => {
+    console.log('ejecutandose 2');
     e.preventDefault();
     const data = this.state.data;
     data[e.target.name] = e.target.value;
@@ -76,16 +88,51 @@ class NewProductView extends View {
     };
     reader.readAsDataURL(image);
   };
-  onSubmit = (confirm) => {
-    if (confirm) {
-      createProduct(R.clone(this.state.data), this.state.image);
-      this.setState({
-        loading: true,
-      });
-    }
+
+  onNewProduct = () => {
+    const data = this.state.data;
+    let products = data.products.slice();
+    products.push(this.state.product);
+    data.products = products;
+    console.log(data, 'data');
+    this.setState({
+      data: data,
+      showNewProductForm: false,
+    });
+  };
+
+  onChangeProduct = (e) => {
+    const product = R.clone(this.state.product);
+    product[e.target.name] = e.target.value;
+    this.setState({
+      product: product,
+    });
+  };
+
+  onDeleteProduct = (index) => {
+    const data = this.state.data;
+    data.products.splice(index, 1);
+    this.setState({
+      data,
+    });
+  };
+
+  changeFlag = () => {
+    this.setState((prevState) => ({
+      showNewProductForm: !prevState.showNewProductForm,
+    }));
+  };
+
+  onSubmit = () => {
+    console.log(this.state);
+    createProduct(R.clone(this.state.data), this.state.image);
+    this.setState({
+      loading: true,
+    });
   };
 
   render() {
+    const { data } = this.state;
     let picture = this.state.data.picture;
     if (picture != null) {
       picture = (
@@ -187,7 +234,85 @@ class NewProductView extends View {
                       </MDBRow>
                       <MDBRow>
                         <MDBCol md="9">
-                          <Products />
+                          {data.products.length !== 0 ? (
+                            <div>
+                              {data.products.map((product, index) => (
+                                <Products
+                                  key={index}
+                                  index={index}
+                                  product={product}
+                                  onDeleteProduct={() =>
+                                    this.onDeleteProduct(index)
+                                  }
+                                />
+                              ))}
+                            </div>
+                          ) : (
+                            <MDBContainer className="body" fluid>
+                              <h6 className="text-black-50 text-center">
+                                Add size, color and quantity per product
+                              </h6>
+                            </MDBContainer>
+                          )}
+
+                          <div className="d-flex justify-content-center align-items-center">
+                            <MDBBtn
+                              onClick={() => this.changeFlag()}
+                              className="btn btn-circle">
+                              Add Product
+                            </MDBBtn>
+                          </div>
+                          {this.state.showNewProductForm ? (
+                            <div>
+                              <h5>New Product</h5>
+                              <MDBCard style={{ marginBottom: '20px' }}>
+                                <MDBCardBody
+                                  style={{
+                                    paddingBottom: '0px',
+                                    paddingTop: '0px',
+                                  }}>
+                                  <MDBRow className="d-flex justify-content-around align-items-center text-center">
+                                    <MDBCol md="3">
+                                      <MDBInput
+                                        label="Size"
+                                        className="mt-0"
+                                        type="text"
+                                        name="size"
+                                        onChange={this.onChangeProduct}
+                                      />
+                                    </MDBCol>
+                                    <MDBCol md="3">
+                                      <MDBInput
+                                        label="Color"
+                                        className="mt-0"
+                                        type="text"
+                                        name="color"
+                                        onChange={this.onChangeProduct}
+                                      />
+                                    </MDBCol>
+                                    <MDBCol md="3">
+                                      <MDBInput
+                                        label="Quantity"
+                                        className="mt-0"
+                                        type="number"
+                                        name="quantity"
+                                        onChange={this.onChangeProduct}
+                                      />
+                                    </MDBCol>
+                                    <MDBCol md="1">
+                                      <MDBBtn
+                                        className="btn-add"
+                                        onClick={this.onNewProduct}>
+                                        <MDBIcon icon="plus" />
+                                      </MDBBtn>
+                                    </MDBCol>
+                                  </MDBRow>
+                                </MDBCardBody>
+                              </MDBCard>
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
                         </MDBCol>
                       </MDBRow>
                       <MDBRow>
@@ -243,6 +368,7 @@ class NewProductView extends View {
                           {/* <MDBBtn onClick={this.onSubmit} className="btn btn-circle mt-4 mb-5">
                       Publish
                     </MDBBtn> */}
+                          <MDBBtn onClick={this.onSubmit}></MDBBtn>
                         </MDBCol>
                       </MDBRow>
                     </MDBCol>

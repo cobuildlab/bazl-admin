@@ -1,9 +1,20 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBAnimation } from 'mdbreact';
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBAnimation,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBIcon,
+} from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import ImgDefault from '../../assets/img/img-default.png';
 import { Link } from 'react-router-dom';
 import View from 'react-flux-state';
+import { Products } from './components/Products';
 import { toast } from 'react-toastify';
 import { Loader } from '../../components/Loader';
 import {
@@ -30,6 +41,8 @@ class InventoryDetailView extends View {
       data: {},
       image: null,
       loading: true,
+      showNewProductForm: false,
+      product: {},
     };
     this.onError = error.bind(this);
   }
@@ -109,8 +122,42 @@ class InventoryDetailView extends View {
       });
     }
   };
-  onAccept() {}
+  onNewProduct = () => {
+    const data = this.state.data;
+    let products = data.products.slice();
+    products.push(this.state.product);
+    data.products = products;
+    console.log(data, 'data');
+    this.setState({
+      data: data,
+      showNewProductForm: false,
+    });
+  };
+
+  onChangeProduct = (e) => {
+    const product = R.clone(this.state.product);
+    product[e.target.name] = e.target.value;
+    this.setState({
+      product: product,
+    });
+  };
+
+  onDeleteProduct = (index) => {
+    const data = this.state.data;
+    data.products.splice(index, 1);
+    this.setState({
+      data,
+    });
+  };
+
+  changeFlag = () => {
+    this.setState((prevState) => ({
+      showNewProductForm: !prevState.showNewProductForm,
+    }));
+  };
+
   render() {
+    const { data } = this.state;
     let picture = this.state.data.picture;
     if (picture != null) {
       picture = (
@@ -215,249 +262,89 @@ class InventoryDetailView extends View {
                       </MDBRow>
                       <MDBRow>
                         <MDBCol>
-                          <MDBRow>
-                            <MDBCol md="9">
-                              <div>
-                                <h6 className="font-weight-bold mb-3">
-                                  Size Article
-                                </h6>
-                              </div>
-                              <label
-                                className="container-radio"
-                                name="size"
-                                onChange={this.onChange}>
-                                XXS
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="XSS"
-                                  onChange={this.onChange}
-                                  checked={this.state.data.size === 'XSS'}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                xS
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="XS"
-                                  onChange={this.onChange}
-                                  checked={this.state.data.size === 'XS'}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                S
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="S"
-                                  onChange={this.onChange}
-                                  checked={this.state.data.size === 'S'}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                M
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="M"
-                                  onChange={this.onChange}
-                                  checked={this.state.data.size === 'M'}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                L
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="L"
-                                  onChange={this.onChange}
-                                  checked={this.state.data.size === 'L'}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                XL
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="XL"
-                                  onChange={this.onChange}
-                                  checked={this.state.data.size === 'XL'}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                            </MDBCol>
-                            <MDBCol md="3">
-                              <h6 className="font-weight-bold m-0">
-                                Quantity Article
-                              </h6>
-                              <input
-                                type="number"
-                                name="quantity"
-                                min="1"
-                                max="1000"
-                                defaultValue={this.state.data.quantity}
-                                onChange={this.onChange}
-                              />
-                            </MDBCol>
-                          </MDBRow>
+                          <MDBRow></MDBRow>
                         </MDBCol>
                       </MDBRow>
                       <MDBRow>
-                        <MDBCol md="12">
-                          <h6 className="font-weight-bold mb-3 mt-3">
-                            Color Article
-                          </h6>
-                        </MDBCol>
-                        <MDBCol md="12">
-                          <label className="container-radio">
-                            Black
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Black"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Black'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            White
-                            <input
-                              type="radio"
-                              name="color"
-                              value="White"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'White'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Gray
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Gray"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Gray'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Purple
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Purple"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Purple'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Orange
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Orange"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Orange'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Beige
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Beige"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Beige'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                        </MDBCol>
-                        <MDBCol md="12">
-                          <label className="container-radio">
-                            Green
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Green"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Green'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Yellow
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Yellow"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Yellow'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Brown
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Brown"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Brown'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Blue
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Blue"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Blue'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Red
-                            <input
-                              type="radio"
-                              name="radio"
-                              value="Red"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Red'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Pink
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Pink"
-                              onChange={this.onChange}
-                              checked={this.state.data.color === 'Pink'}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                        </MDBCol>
-                        <MDBCol md="12">
-                          <MDBInput
-                            name="color"
-                            onChange={this.onChange}
-                            label={this.state.data.color}
-                            className="mt-0"
-                          />
-                        </MDBCol>
+                        {data.products.length !== 0 ? (
+                          <div>
+                            {data.products.map((product, index) => (
+                              <Products
+                                key={index}
+                                index={index}
+                                product={product}
+                                onDeleteProduct={() =>
+                                  this.onDeleteProduct(index)
+                                }
+                              />
+                            ))}
+                          </div>
+                        ) : (
+                          <MDBContainer className="body" fluid>
+                            <h6 className="text-black-50 text-center">
+                              Add size, color and quantity per product
+                            </h6>
+                          </MDBContainer>
+                        )}
+
+                        <div className="d-flex justify-content-center align-items-center">
+                          <MDBBtn
+                            onClick={() => this.changeFlag()}
+                            className="btn btn-circle">
+                            Add Product
+                          </MDBBtn>
+                        </div>
+                        {this.state.showNewProductForm ? (
+                          <div>
+                            <h5>New Product</h5>
+                            <MDBCard style={{ marginBottom: '20px' }}>
+                              <MDBCardBody
+                                style={{
+                                  paddingBottom: '0px',
+                                  paddingTop: '0px',
+                                }}>
+                                <MDBRow className="d-flex justify-content-around align-items-center text-center">
+                                  <MDBCol md="3">
+                                    <MDBInput
+                                      label="Size"
+                                      className="mt-0"
+                                      type="text"
+                                      name="size"
+                                      onChange={this.onChangeProduct}
+                                    />
+                                  </MDBCol>
+                                  <MDBCol md="3">
+                                    <MDBInput
+                                      label="Color"
+                                      className="mt-0"
+                                      type="text"
+                                      name="color"
+                                      onChange={this.onChangeProduct}
+                                    />
+                                  </MDBCol>
+                                  <MDBCol md="3">
+                                    <MDBInput
+                                      label="Quantity"
+                                      className="mt-0"
+                                      type="number"
+                                      name="quantity"
+                                      onChange={this.onChangeProduct}
+                                    />
+                                  </MDBCol>
+                                  <MDBCol md="1">
+                                    <MDBBtn
+                                      className="btn-add"
+                                      onClick={this.onNewProduct}>
+                                      <MDBIcon icon="plus" />
+                                    </MDBBtn>
+                                  </MDBCol>
+                                </MDBRow>
+                              </MDBCardBody>
+                            </MDBCard>
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
                       </MDBRow>
                       <MDBRow>
                         <MDBCol md="12">

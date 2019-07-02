@@ -29,14 +29,12 @@ export const createProduct = async (product, image) => {
     name,
     category,
     description,
-    size,
-    quantity,
-    color,
     price,
     commission,
     additionalFee,
     shippingFee,
     totalPrice,
+    products,
   } = product;
 
   await productCollection
@@ -45,14 +43,12 @@ export const createProduct = async (product, image) => {
       name,
       category,
       description,
-      size,
-      quantity,
-      color,
       price,
       commission,
       additionalFee,
       shippingFee,
       totalPrice,
+      products,
       user: userData.email,
     })
     .then((doc) => {
