@@ -30,14 +30,13 @@ export const fetchUserProducts = () => {
           name,
           category,
           description,
-          size,
-          quantity,
-          color,
+          products,
           price,
           commission,
           additionalFee,
           shippingFee,
           totalPrice,
+          totalQuantity,
           user,
         } = doc.data();
         data.push({
@@ -45,14 +44,13 @@ export const fetchUserProducts = () => {
           name,
           category,
           description,
-          size,
-          quantity,
-          color,
+          products,
           price,
           commission,
           additionalFee,
           shippingFee,
           totalPrice,
+          totalQuantity,
           user,
           productID: doc.id,
         });
@@ -90,6 +88,7 @@ export const searchProduct = async (search) => {
           additionalFee,
           shippingFee,
           totalPrice,
+          totalQuantity,
           user,
         } = doc.data();
         data.push({
@@ -103,6 +102,7 @@ export const searchProduct = async (search) => {
           additionalFee,
           shippingFee,
           totalPrice,
+          totalQuantity,
           user,
           productID: doc.id,
         });
@@ -141,7 +141,7 @@ export const fetchDetailProduct = (id) => {
  *
  * @returns {Promise<{userProducts}>}
  */
-export const updateProduct = async (product, image, id) => {
+export const updateProduct = async (product, image, quantity, id) => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products').doc(id);
   let imageURL = product.picture;
@@ -176,6 +176,7 @@ export const updateProduct = async (product, image, id) => {
       additionalFee,
       shippingFee,
       totalPrice,
+      totalQuantity: quantity,
       user,
     })
     .then((doc) => {

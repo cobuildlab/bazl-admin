@@ -1,23 +1,13 @@
 import React from 'react';
-import {
-  MDBRow,
-  MDBCol,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead,
-} from 'mdbreact';
+import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { Link } from 'react-router-dom';
 
-
 class TableInventory extends React.Component {
-  
   render() {
     const inventory = this.props.products;
-
-    const table = inventory.map(product =>{
-      
+    const table = inventory.map((product) => {
       return (
-        <MDBTableBody key = {product.productID}>
+        <MDBTableBody key={product.productID}>
           <tr>
             <td>
               <div
@@ -27,7 +17,7 @@ class TableInventory extends React.Component {
               <span className="username-table">{product.name}</span>
             </td>
             <td>{product.description}</td>
-            <td>{product.quantity}</td>
+            <td>{product.totalQuantity}</td>
             <td>{product.price}</td>
             <td>{product.commission}</td>
             <td>{product.additionalFee}</td>
@@ -35,14 +25,12 @@ class TableInventory extends React.Component {
             <td>
               <Link
                 to={`/inventory-details/${product.productID}`}
-                className="btn btn-circle btn-circle-link"
-              >
-                   Details
+                className="btn btn-circle btn-circle-link">
+                Details
               </Link>
             </td>
           </tr>
         </MDBTableBody>
-         
       );
     });
 
@@ -65,12 +53,8 @@ class TableInventory extends React.Component {
             {table}
           </MDBTable>
         </MDBCol>
-      </MDBRow>);
-
-
-    
-
-   
+      </MDBRow>
+    );
   }
 }
 export default TableInventory;

@@ -5,6 +5,7 @@ export const ProductModel = {
   description: '',
   size: '',
   products: [],
+  totalQuantity: '',
   commission: '',
   price: '',
   additionalFee: '',

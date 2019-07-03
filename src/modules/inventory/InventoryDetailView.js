@@ -15,6 +15,7 @@ import ImgDefault from '../../assets/img/img-default.png';
 import { Link } from 'react-router-dom';
 import View from 'react-flux-state';
 import { Products } from './components/Products';
+import { totalQuantity } from './inventory-utils';
 import { toast } from 'react-toastify';
 import { Loader } from '../../components/Loader';
 import {
@@ -103,10 +104,12 @@ class InventoryDetailView extends View {
     reader.readAsDataURL(image);
   };
   onUpdate = (confirm) => {
+    let finalQuantity = totalQuantity(this.state.data.products);
     if (confirm) {
       updateProduct(
         R.clone(this.state.data),
         this.state.image,
+        finalQuantity,
         this.props.match.params.id,
       );
       this.setState({
@@ -223,7 +226,8 @@ class InventoryDetailView extends View {
                             type="text"
                             name="name"
                             onChange={this.onChange}
-                            label={this.state.data.name}
+                            label="Name"
+                            value={this.state.data.name}
                             className="mt-0"
                           />
                         </MDBCol>
@@ -255,7 +259,8 @@ class InventoryDetailView extends View {
                           <MDBInput
                             name="description"
                             onChange={this.onChange}
-                            label={this.state.data.description}
+                            label="Description"
+                            value={this.state.data.description}
                             className="mt-0"
                           />
                         </MDBCol>
@@ -296,7 +301,6 @@ class InventoryDetailView extends View {
                         </div>
                         {this.state.showNewProductForm ? (
                           <div>
-                            <h5>New Product</h5>
                             <MDBCard style={{ marginBottom: '20px' }}>
                               <MDBCardBody
                                 style={{
@@ -356,7 +360,8 @@ class InventoryDetailView extends View {
                           <MDBInput
                             name="price"
                             onChange={this.onChange}
-                            label={this.state.data.price}
+                            label="Price"
+                            value={this.state.data.price}
                             className="mt-0"
                           />
                         </MDBCol>
@@ -381,7 +386,8 @@ class InventoryDetailView extends View {
                           <MDBInput
                             name="additionalFee"
                             onChange={this.onChange}
-                            label={this.state.data.additionalFee}
+                            label="Addtional Fee"
+                            value={this.state.data.additionalFee}
                             className="mt-0"
                           />
                         </MDBCol>
@@ -389,7 +395,8 @@ class InventoryDetailView extends View {
                           <MDBInput
                             name="shippingFee"
                             onChange={this.onChange}
-                            label={this.state.data.shippingFee}
+                            label="shippingFee"
+                            value={this.state.data.shippingFee}
                             className="mt-0"
                           />
                         </MDBCol>

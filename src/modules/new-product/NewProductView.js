@@ -28,6 +28,7 @@ import { createProduct } from './newproduct-actions';
 import { Products } from './components/Products';
 import { toast } from 'react-toastify';
 import ModalComponent from './components/ModalComponent';
+import { totalQuantity } from '../inventory/inventory-utils';
 class NewProductView extends View {
   constructor(props) {
     super(props);
@@ -125,7 +126,8 @@ class NewProductView extends View {
 
   onSubmit = () => {
     console.log(this.state);
-    createProduct(R.clone(this.state.data), this.state.image);
+    let finalQuantity = totalQuantity(this.state.data.products);
+    createProduct(R.clone(this.state.data), this.state.image, finalQuantity);
     this.setState({
       loading: true,
     });
@@ -264,7 +266,6 @@ class NewProductView extends View {
                           </div>
                           {this.state.showNewProductForm ? (
                             <div>
-                              <h5>New Product</h5>
                               <MDBCard style={{ marginBottom: '20px' }}>
                                 <MDBCardBody
                                   style={{
@@ -365,10 +366,6 @@ class NewProductView extends View {
                       <MDBRow>
                         <MDBCol className="text-center">
                           <ModalComponent callbackFromParent={this.onSubmit} />
-                          {/* <MDBBtn onClick={this.onSubmit} className="btn btn-circle mt-4 mb-5">
-                      Publish
-                    </MDBBtn> */}
-                          <MDBBtn onClick={this.onSubmit}></MDBBtn>
                         </MDBCol>
                       </MDBRow>
                     </MDBCol>
