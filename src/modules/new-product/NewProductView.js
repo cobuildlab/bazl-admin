@@ -1,5 +1,15 @@
 import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBAnimation } from 'mdbreact';
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBAnimation,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBIcon,
+} from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import ImgDefault from '../../assets/img/img-default.png';
 import * as R from 'ramda';
@@ -15,8 +25,10 @@ import { landingStore, LOGIN_EVENT } from '../landing/landing-store';
 import { error } from 'pure-logger';
 import { Loader } from '../../components/Loader';
 import { createProduct } from './newproduct-actions';
+import { Products } from './components/Products';
 import { toast } from 'react-toastify';
 import ModalComponent from './components/ModalComponent';
+import { totalQuantity } from '../inventory/inventory-utils';
 class NewProductView extends View {
   constructor(props) {
     super(props);
@@ -25,13 +37,14 @@ class NewProductView extends View {
       userID: '',
       image: null,
       loading: false,
+      showNewProductForm: false,
+      product: {},
     };
     this.onError = error.bind(this);
   }
 
   componentWillMount() {
     const model = R.clone(ProductModel);
-
     this.setState({
       data: model,
     });
@@ -52,6 +65,7 @@ class NewProductView extends View {
   }
 
   onChange = (e) => {
+    console.log('ejecutandose 2');
     e.preventDefault();
     const data = this.state.data;
     data[e.target.name] = e.target.value;
@@ -75,16 +89,52 @@ class NewProductView extends View {
     };
     reader.readAsDataURL(image);
   };
-  onSubmit = (confirm) => {
-    if (confirm) {
-      createProduct(R.clone(this.state.data), this.state.image);
-      this.setState({
-        loading: true,
-      });
-    }
+
+  onNewProduct = () => {
+    const data = this.state.data;
+    let products = data.products.slice();
+    products.push(this.state.product);
+    data.products = products;
+    console.log(data, 'data');
+    this.setState({
+      data: data,
+      showNewProductForm: false,
+    });
+  };
+
+  onChangeProduct = (e) => {
+    const product = R.clone(this.state.product);
+    product[e.target.name] = e.target.value;
+    this.setState({
+      product: product,
+    });
+  };
+
+  onDeleteProduct = (index) => {
+    const data = this.state.data;
+    data.products.splice(index, 1);
+    this.setState({
+      data,
+    });
+  };
+
+  changeFlag = () => {
+    this.setState((prevState) => ({
+      showNewProductForm: !prevState.showNewProductForm,
+    }));
+  };
+
+  onSubmit = () => {
+    console.log(this.state);
+    let finalQuantity = totalQuantity(this.state.data.products);
+    createProduct(R.clone(this.state.data), this.state.image, finalQuantity);
+    this.setState({
+      loading: true,
+    });
   };
 
   render() {
+    const { data } = this.state;
     let picture = this.state.data.picture;
     if (picture != null) {
       picture = (
@@ -185,230 +235,85 @@ class NewProductView extends View {
                         </MDBCol>
                       </MDBRow>
                       <MDBRow>
-                        <MDBCol>
-                          <MDBRow>
-                            <MDBCol md="9">
-                              <div>
-                                <h6 className="font-weight-bold mb-3">
-                                  Size Article
-                                </h6>
-                              </div>
-                              <label
-                                className="container-radio"
-                                name="size"
-                                onChange={this.onChange}>
-                                XXS
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="XSS"
-                                  onChange={this.onChange}
+                        <MDBCol md="9">
+                          {data.products.length !== 0 ? (
+                            <div>
+                              {data.products.map((product, index) => (
+                                <Products
+                                  key={index}
+                                  index={index}
+                                  product={product}
+                                  onDeleteProduct={() =>
+                                    this.onDeleteProduct(index)
+                                  }
                                 />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                xS
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="XS"
-                                  onChange={this.onChange}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                S
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="S"
-                                  onChange={this.onChange}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                M
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="M"
-                                  onChange={this.onChange}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                L
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="L"
-                                  onChange={this.onChange}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                              <label className="container-radio">
-                                XL
-                                <input
-                                  type="radio"
-                                  name="size"
-                                  value="XL"
-                                  onChange={this.onChange}
-                                />
-                                <span className="checkmark" />
-                              </label>
-                            </MDBCol>
-                            <MDBCol md="3">
-                              <h6 className="font-weight-bold m-0">
-                                Quantity Article
+                              ))}
+                            </div>
+                          ) : (
+                            <MDBContainer className="body" fluid>
+                              <h6 className="text-black-50 text-center">
+                                Add size, color and quantity per product
                               </h6>
-                              <input
-                                type="number"
-                                name="quantity"
-                                min="1"
-                                max="1000"
-                                onChange={this.onChange}
-                              />
-                            </MDBCol>
-                          </MDBRow>
-                        </MDBCol>
-                      </MDBRow>
-                      <MDBRow>
-                        <MDBCol md="12">
-                          <h6 className="font-weight-bold mb-3 mt-3">
-                            Color Article
-                          </h6>
-                        </MDBCol>
-                        <MDBCol md="12">
-                          <label className="container-radio">
-                            Black
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Black"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            White
-                            <input
-                              type="radio"
-                              name="color"
-                              value="White"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Gray
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Gray"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Purple
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Purple"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Orange
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Orange"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Beige
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Beige"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                        </MDBCol>
-                        <MDBCol md="12">
-                          <label className="container-radio">
-                            Green
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Green"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Yellow
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Yellow"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Brown
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Brown"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Blue
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Blue"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Red
-                            <input
-                              type="radio"
-                              name="radio"
-                              value="Red"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                          <label className="container-radio">
-                            Pink
-                            <input
-                              type="radio"
-                              name="color"
-                              value="Pink"
-                              onChange={this.onChange}
-                            />
-                            <span className="checkmark" />
-                          </label>
-                        </MDBCol>
-                        <MDBCol md="12">
-                          <MDBInput
-                            name="color"
-                            onChange={this.onChange}
-                            label="Other Color"
-                            className="mt-0"
-                          />
+                            </MDBContainer>
+                          )}
+
+                          <div className="d-flex justify-content-center align-items-center">
+                            <MDBBtn
+                              onClick={() => this.changeFlag()}
+                              className="btn btn-circle">
+                              Add Product
+                            </MDBBtn>
+                          </div>
+                          {this.state.showNewProductForm ? (
+                            <div>
+                              <MDBCard style={{ marginBottom: '20px' }}>
+                                <MDBCardBody
+                                  style={{
+                                    paddingBottom: '0px',
+                                    paddingTop: '0px',
+                                  }}>
+                                  <MDBRow className="d-flex justify-content-around align-items-center text-center">
+                                    <MDBCol md="3">
+                                      <MDBInput
+                                        label="Size"
+                                        className="mt-0"
+                                        type="text"
+                                        name="size"
+                                        onChange={this.onChangeProduct}
+                                      />
+                                    </MDBCol>
+                                    <MDBCol md="3">
+                                      <MDBInput
+                                        label="Color"
+                                        className="mt-0"
+                                        type="text"
+                                        name="color"
+                                        onChange={this.onChangeProduct}
+                                      />
+                                    </MDBCol>
+                                    <MDBCol md="3">
+                                      <MDBInput
+                                        label="Quantity"
+                                        className="mt-0"
+                                        type="number"
+                                        name="quantity"
+                                        onChange={this.onChangeProduct}
+                                      />
+                                    </MDBCol>
+                                    <MDBCol md="1">
+                                      <MDBBtn
+                                        className="btn-add"
+                                        onClick={this.onNewProduct}>
+                                        <MDBIcon icon="plus" />
+                                      </MDBBtn>
+                                    </MDBCol>
+                                  </MDBRow>
+                                </MDBCardBody>
+                              </MDBCard>
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
                         </MDBCol>
                       </MDBRow>
                       <MDBRow>
@@ -461,9 +366,6 @@ class NewProductView extends View {
                       <MDBRow>
                         <MDBCol className="text-center">
                           <ModalComponent callbackFromParent={this.onSubmit} />
-                          {/* <MDBBtn onClick={this.onSubmit} className="btn btn-circle mt-4 mb-5">
-                      Publish
-                    </MDBBtn> */}
                         </MDBCol>
                       </MDBRow>
                     </MDBCol>

@@ -12,7 +12,7 @@ import { landingStore, USER_EVENT } from '../landing/landing-store';
  * @returns {Promise<ProductModel>} product info or null if unexisting
  */
 
-export const createProduct = async (product, image) => {
+export const createProduct = async (product, image, quantity) => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products');
   let imageURL = null;
@@ -29,14 +29,12 @@ export const createProduct = async (product, image) => {
     name,
     category,
     description,
-    size,
-    quantity,
-    color,
     price,
     commission,
     additionalFee,
     shippingFee,
     totalPrice,
+    products,
   } = product;
 
   await productCollection
@@ -45,14 +43,13 @@ export const createProduct = async (product, image) => {
       name,
       category,
       description,
-      size,
-      quantity,
-      color,
       price,
       commission,
       additionalFee,
       shippingFee,
       totalPrice,
+      products,
+      totalQuantity: quantity,
       user: userData.email,
     })
     .then((doc) => {
@@ -82,9 +79,7 @@ export const uploadData = (data) => {
       name,
       category,
       description,
-      size,
-      quantity,
-      color,
+      products,
       price,
       commission,
       additionalFee,
@@ -100,9 +95,7 @@ export const uploadData = (data) => {
         name,
         category,
         description,
-        size,
-        quantity,
-        color,
+        products,
         price,
         commission,
         additionalFee,
