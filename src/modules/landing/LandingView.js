@@ -44,7 +44,8 @@ class LandingView extends React.Component {
                   <h1 className="text-primary landing-letters">
                     <b>1.)</b> Upload Inventory
                     <br />
-                    <b>2.)</b> Recruit Influencers (We can help with this)
+                    <b>2.)</b> Recruit Influencers{' '}
+                    <font size="5">(We can help with this)</font>
                     <br />
                     <b>3.)</b> Make Sales
                     <br />
