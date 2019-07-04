@@ -31,6 +31,7 @@
   box-shadow: 0 0 0 0rem #2e2e2e;
 }
 
+
 .view .mask {
   position: absolute;
   top: 0;
@@ -139,6 +140,7 @@
   font-size: 12px;
   background-color: #ff5a5a !important;
 }
+
 
 //navTabs Style material
 .nav-tabs {
@@ -346,10 +348,16 @@
 .product {
     .md-form {
       position: relative;
-      padding-top: 2px;
+      padding-top: 10px;
       margin-top: 0;
       margin-bottom: 0rem;
     }
+}
+.card-details{
+margin-left : 30px !important;
+}
+.details-btn{
+  margin-bottom: 10px;
 }
 .scrollbar {
   overflow: scroll;
@@ -602,6 +610,12 @@ td {
   font-size: 2.5rem;
   margin-top: 2.5rem;
 }
+.error-message{
+  color: #df0101;
+  margin-top: -20px;
+  margin-bottom: 20px;
+  position: absolute;
+}
 
 @media (max-width: 530px) {
   .landing-letters {
@@ -626,10 +640,27 @@ td {
   .img-logo {
     width: 48%;
   }
+ 
+
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .view-content-landing {
     margin-top: 40%;
   }
+  .details {
+    height: 75px;
+    overflow-y: scroll;
+
+  }
+ 
+}
+
+@media (min-width : 991px){
+  .details {
+    height: 75px;
+
+
+  }
+
 }
