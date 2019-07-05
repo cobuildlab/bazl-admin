@@ -17,9 +17,18 @@ class ModalComponent extends Component {
   };
 
   render() {
+    let disabled;
+    if (this.props.allValid === false) {
+      disabled = true;
+    } else {
+      disabled = false;
+    }
     return (
       <>
-        <MDBBtn className="btn btn-circle mt-4 mb-5" onClick={this.toggle}>
+        <MDBBtn
+          disabled={disabled}
+          className="btn btn-circle mt-4 mb-5"
+          onClick={this.toggle}>
           {' '}
           Publish{' '}
         </MDBBtn>

@@ -15,6 +15,8 @@ import ImgDefault from '../../assets/img/img-default.png';
 import * as R from 'ramda';
 import { Link } from 'react-router-dom';
 import View from 'react-flux-state';
+import Validate from 'react-validate-form';
+import { validations } from './newproduct-utils';
 import { ProductModel } from './newproduct-models';
 import {
   productStore,
@@ -39,6 +41,7 @@ class NewProductView extends View {
       loading: false,
       showNewProductForm: false,
       product: {},
+      btnDisabled: true,
     };
     this.onError = error.bind(this);
   }
@@ -65,11 +68,9 @@ class NewProductView extends View {
   }
 
   onChange = (e) => {
-    console.log('ejecutandose 2');
     e.preventDefault();
     const data = this.state.data;
     data[e.target.name] = e.target.value;
-
     this.setState({
       data: data,
     });
@@ -125,12 +126,34 @@ class NewProductView extends View {
   };
 
   onSubmit = () => {
-    console.log(this.state);
-    let finalQuantity = totalQuantity(this.state.data.products);
-    createProduct(R.clone(this.state.data), this.state.image, finalQuantity);
-    this.setState({
-      loading: true,
-    });
+    const {
+      name,
+      category,
+      description,
+      products,
+      price,
+      additionalFee,
+      shippingFee,
+      commission,
+    } = this.state.data;
+    let finalQuantity = totalQuantity(products);
+    if (
+      name === '' ||
+      category === '' ||
+      description === '' ||
+      products.length === 0 ||
+      price === '' ||
+      additionalFee === '' ||
+      shippingFee === '' ||
+      commission === ''
+    ) {
+      toast.error('All Fields are Required');
+    } else {
+      createProduct(R.clone(this.state.data), this.state.image, finalQuantity);
+      this.setState({
+        loading: true,
+      });
+    }
   };
 
   render() {
@@ -176,202 +199,265 @@ class NewProductView extends View {
             <Loader />
           ) : (
             <MDBAnimation type="fadeIn" dutarion="1s">
-              <form>
-                <MDBContainer className="body" fluid>
-                  <MDBRow>
-                    <MDBCol md="3">
-                      {picture}
-                      <input
-                        type="file"
-                        name="picture"
-                        id="upload-photo"
-                        onChange={this.onImageChange}
-                      />
-                      <small className="text-center">
-                        JPG or PNG format with a maximum of 5mb
-                      </small>
-                    </MDBCol>
-                    <MDBCol md="9">
+              <Validate validations={validations}>
+                {({ validate, errorMessages, allValid }) => (
+                  <form>
+                    <MDBContainer className="body" fluid>
                       <MDBRow>
-                        <MDBCol>
-                          <MDBInput
-                            type="text"
-                            name="name"
-                            onChange={this.onChange}
-                            label="Product Name"
-                            className="mt-0"
+                        <MDBCol md="3">
+                          {picture}
+                          <input
+                            type="file"
+                            name="picture"
+                            id="upload-photo"
+                            onChange={this.onImageChange}
                           />
-                        </MDBCol>
-                        <MDBCol>
-                          <select
-                            className="browser-default custom-select mt-1"
-                            name="category"
-                            onChange={this.onChange}>
-                            <option>Choose your option</option>
-                            <option value="Clock">Clock</option>
-                            <option value="Accessories">Accessories</option>
-                            <option value="Shoes">Shoes</option>
-                            <option value="Dresses">Dresses</option>
-                            <option value="Pants">Pants</option>
-                            <option value="Jeans">Jeans</option>
-                            <option value="Straps">Straps</option>
-                            <option value="Handbags">Handbags</option>
-                            <option value="Wallets">Wallets</option>
-                            <option value="Scarves">Scarves</option>
-                            <option value="Costumes">Costumes</option>
-                            <option value="Sports Shoes">Sport Shoes</option>
-                            <option value="Telephone">Telephone</option>
-                          </select>
-                        </MDBCol>
-                      </MDBRow>
-                      <MDBRow>
-                        <MDBCol>
-                          <MDBInput
-                            name="description"
-                            onChange={this.onChange}
-                            label="Description"
-                            className="mt-0"
-                          />
-                        </MDBCol>
-                      </MDBRow>
-                      <MDBRow>
-                        <MDBCol md="9">
-                          {data.products.length !== 0 ? (
-                            <div>
-                              {data.products.map((product, index) => (
-                                <Products
-                                  key={index}
-                                  index={index}
-                                  product={product}
-                                  onDeleteProduct={() =>
-                                    this.onDeleteProduct(index)
-                                  }
-                                />
-                              ))}
-                            </div>
-                          ) : (
-                            <MDBContainer className="body" fluid>
-                              <h6 className="text-black-50 text-center">
-                                Add size, color and quantity per product
-                              </h6>
-                            </MDBContainer>
-                          )}
-
-                          <div className="d-flex justify-content-center align-items-center">
-                            <MDBBtn
-                              onClick={() => this.changeFlag()}
-                              className="btn btn-circle">
-                              Add Product
-                            </MDBBtn>
-                          </div>
-                          {this.state.showNewProductForm ? (
-                            <div>
-                              <MDBCard style={{ marginBottom: '20px' }}>
-                                <MDBCardBody
-                                  style={{
-                                    paddingBottom: '0px',
-                                    paddingTop: '0px',
-                                  }}>
-                                  <MDBRow className="d-flex justify-content-around align-items-center text-center">
-                                    <MDBCol md="3">
-                                      <MDBInput
-                                        label="Size"
-                                        className="mt-0"
-                                        type="text"
-                                        name="size"
-                                        onChange={this.onChangeProduct}
-                                      />
-                                    </MDBCol>
-                                    <MDBCol md="3">
-                                      <MDBInput
-                                        label="Color"
-                                        className="mt-0"
-                                        type="text"
-                                        name="color"
-                                        onChange={this.onChangeProduct}
-                                      />
-                                    </MDBCol>
-                                    <MDBCol md="3">
-                                      <MDBInput
-                                        label="Quantity"
-                                        className="mt-0"
-                                        type="number"
-                                        name="quantity"
-                                        onChange={this.onChangeProduct}
-                                      />
-                                    </MDBCol>
-                                    <MDBCol md="1">
-                                      <MDBBtn
-                                        className="btn-add"
-                                        onClick={this.onNewProduct}>
-                                        <MDBIcon icon="plus" />
-                                      </MDBBtn>
-                                    </MDBCol>
-                                  </MDBRow>
-                                </MDBCardBody>
-                              </MDBCard>
-                            </div>
-                          ) : (
-                            <div></div>
-                          )}
-                        </MDBCol>
-                      </MDBRow>
-                      <MDBRow>
-                        <MDBCol md="12">
-                          <h5 className="text-center font-weight-bold">
-                            *Bazl Fee 15%
-                          </h5>
-                        </MDBCol>
-                        <MDBCol md="2">
-                          <MDBInput
-                            name="price"
-                            onChange={this.onChange}
-                            label="Price"
-                            className="mt-0"
-                          />
-                        </MDBCol>
-                        <MDBCol>
-                          <small>
-                            Commission percentage Minimum commission 3%
+                          <small className="text-center">
+                            JPG or PNG format with a maximum of 5mb
                           </small>
                         </MDBCol>
-                        <MDBCol md="2">
-                          <select
-                            className="browser-default custom-select mt-1"
-                            name="commission"
-                            onChange={this.onChange}>
-                            <option>Select</option>
-                            <option value="3%">3%</option>
-                            <option value="4%">4%</option>
-                            <option value="5%">5%</option>
-                          </select>
-                        </MDBCol>
-                        <MDBCol>
-                          <MDBInput
-                            name="additionalFee"
-                            onChange={this.onChange}
-                            label="Additional Fee"
-                            className="mt-0"
-                          />
-                        </MDBCol>
-                        <MDBCol>
-                          <MDBInput
-                            name="shippingFee"
-                            onChange={this.onChange}
-                            label="Shipping Fee"
-                            className="mt-0"
-                          />
+                        <MDBCol md="9">
+                          <MDBRow style={{ marginBottom: '20px' }}>
+                            <MDBCol>
+                              <MDBInput
+                                type="text"
+                                name="name"
+                                onChange={this.onChange}
+                                onKeyUp={validate}
+                                value={this.state.data.name}
+                                label="Product Name"
+                                className="mt-0"
+                                required
+                              />
+                              <p className="error-message">
+                                {errorMessages.name}
+                              </p>
+                            </MDBCol>
+                            <MDBCol>
+                              <select
+                                className="browser-default custom-select mt-1"
+                                name="category"
+                                onChange={this.onChange}>
+                                <option>Choose your option</option>
+                                <option value="Clock">Clock</option>
+                                <option value="Accessories">Accessories</option>
+                                <option value="Shoes">Shoes</option>
+                                <option value="Dresses">Dresses</option>
+                                <option value="Pants">Pants</option>
+                                <option value="Jeans">Jeans</option>
+                                <option value="Straps">Straps</option>
+                                <option value="Handbags">Handbags</option>
+                                <option value="Wallets">Wallets</option>
+                                <option value="Scarves">Scarves</option>
+                                <option value="Costumes">Costumes</option>
+                                <option value="Sports Shoes">
+                                  Sport Shoes
+                                </option>
+                                <option value="Telephone">Telephone</option>
+                              </select>
+                            </MDBCol>
+                          </MDBRow>
+                          <MDBRow>
+                            <MDBCol>
+                              <MDBInput
+                                name="description"
+                                onChange={this.onChange}
+                                label="Description"
+                                className="mt-0"
+                              />
+                              <p className="error-message">
+                                {errorMessages.description}
+                              </p>
+                            </MDBCol>
+                          </MDBRow>
+                          <MDBRow>
+                            <MDBCol md="9">
+                              {data.products.length !== 0 ? (
+                                <div>
+                                  {data.products.map((product, index) => (
+                                    <Products
+                                      key={index}
+                                      index={index}
+                                      product={product}
+                                      onDeleteProduct={() =>
+                                        this.onDeleteProduct(index)
+                                      }
+                                    />
+                                  ))}
+                                </div>
+                              ) : (
+                                <MDBContainer className="body" fluid>
+                                  <h6 className="text-black-50 text-center">
+                                    Add size, color and quantity per product
+                                  </h6>
+                                </MDBContainer>
+                              )}
+
+                              <div className="d-flex justify-content-center align-items-center details-btn">
+                                <MDBBtn
+                                  onClick={() => this.changeFlag()}
+                                  className="btn btn-circle">
+                                  Add Details
+                                </MDBBtn>
+                              </div>
+                              {this.state.showNewProductForm ? (
+                                <div>
+                                  <MDBCard
+                                    style={{
+                                      marginBottom: '20px',
+                                    }}>
+                                    <MDBCardBody
+                                      style={{
+                                        paddingBottom: '0px',
+                                        paddingTop: '5px',
+                                        marginTop: '5px',
+                                      }}>
+                                      <MDBRow className="d-flex justify-content-around align-items-center text-center">
+                                        <MDBCol md="3">
+                                          <MDBInput
+                                            label="Size"
+                                            className=" product mt-0"
+                                            type="text"
+                                            name="size"
+                                            onChange={this.onChangeProduct}
+                                            onKeyUp={validate}
+                                            required
+                                          />
+                                          <p className="error-message">
+                                            {errorMessages.size}
+                                          </p>
+                                        </MDBCol>
+                                        <MDBCol md="3">
+                                          <MDBInput
+                                            label="Color"
+                                            className="product mt-0"
+                                            type="text"
+                                            name="color"
+                                            onChange={this.onChangeProduct}
+                                            onKeyUp={validate}
+                                            required
+                                          />
+                                          <p className="error-message">
+                                            {errorMessages.color}
+                                          </p>
+                                        </MDBCol>
+                                        <MDBCol md="3">
+                                          <MDBInput
+                                            label="Quantity"
+                                            className="product mt-0"
+                                            type="number"
+                                            name="quantity"
+                                            onChange={this.onChangeProduct}
+                                            onKeyUp={validate}
+                                            required
+                                          />
+                                          <p className="error-message">
+                                            {errorMessages.quantity}
+                                          </p>
+                                        </MDBCol>
+                                        <MDBCol
+                                          md="1"
+                                          style={{
+                                            marginTop: '-5px',
+                                            paddingLeft: '0px',
+                                          }}>
+                                          <MDBBtn
+                                            className="btn-add"
+                                            onClick={this.onNewProduct}>
+                                            <MDBIcon icon="plus" />
+                                          </MDBBtn>
+                                        </MDBCol>
+                                      </MDBRow>
+                                    </MDBCardBody>
+                                  </MDBCard>
+                                </div>
+                              ) : (
+                                <div></div>
+                              )}
+                            </MDBCol>
+                          </MDBRow>
+                          <MDBRow>
+                            <MDBCol md="12">
+                              <h5 className="text-center font-weight-bold">
+                                *Bazl Fee 15%
+                              </h5>
+                            </MDBCol>
+                            <MDBCol md="2">
+                              <MDBInput
+                                name="price"
+                                onChange={this.onChange}
+                                onKeyUp={validate}
+                                value={this.state.data.price}
+                                label="Price"
+                                className="mt-0"
+                                required
+                              />
+                              <p className="error-message">
+                                {errorMessages.price}
+                              </p>
+                            </MDBCol>
+                            <MDBCol>
+                              <small>
+                                Commission percentage Minimum commission 3%
+                              </small>
+                            </MDBCol>
+                            <MDBCol md="2">
+                              <select
+                                className="browser-default custom-select mt-1"
+                                name="commission"
+                                onChange={this.onChange}>
+                                <option>Select</option>
+                                <option value="3%">3%</option>
+                                <option value="4%">4%</option>
+                                <option value="5%">5%</option>
+                              </select>
+                              <p className="error-message">
+                                {errorMessages.commission}
+                              </p>
+                            </MDBCol>
+                            <MDBCol>
+                              <MDBInput
+                                name="additionalFee"
+                                onChange={this.onChange}
+                                onKeyUp={validate}
+                                label="Additional Fee"
+                                className="mt-0"
+                                value={this.state.data.additionalFee}
+                                required
+                              />
+                              <p className="error-message">
+                                {errorMessages.additionalFee}
+                              </p>
+                            </MDBCol>
+                            <MDBCol>
+                              <MDBInput
+                                name="shippingFee"
+                                onChange={this.onChange}
+                                onKeyUp={validate}
+                                label="Shipping Fee"
+                                className="mt-0"
+                                value={this.state.data.shippingFee}
+                                required
+                              />
+                              <p className="error-message">
+                                {errorMessages.shippingFee}
+                              </p>
+                            </MDBCol>
+                          </MDBRow>
+                          <MDBRow>
+                            <MDBCol className="text-center">
+                              <ModalComponent
+                                allValid={allValid}
+                                callbackFromParent={this.onSubmit}
+                              />
+                            </MDBCol>
+                          </MDBRow>
                         </MDBCol>
                       </MDBRow>
-                      <MDBRow>
-                        <MDBCol className="text-center">
-                          <ModalComponent callbackFromParent={this.onSubmit} />
-                        </MDBCol>
-                      </MDBRow>
-                    </MDBCol>
-                  </MDBRow>
-                </MDBContainer>
-              </form>
+                    </MDBContainer>
+                  </form>
+                )}
+              </Validate>
             </MDBAnimation>
           )}
         </SidebarComponent>

@@ -16,7 +16,8 @@ class Products extends Component {
     const { size, color, quantity } = this.props.product;
     return (
       <MDBCard className="accountCard" style={{ marginBottom: '20px' }}>
-        <MDBCardBody style={{ paddingBottom: '0px', paddingTop: '5px' }}>
+        <MDBCardBody
+          style={{ paddingBottom: '0px', paddingTop: '5px', marginTop: '5px' }}>
           <MDBRow className="d-flex justify-content-around align-items-center text-center">
             <MDBCol md="3" className="product">
               <MDBInput
@@ -48,7 +49,7 @@ class Products extends Component {
                 value={quantity}
               />
             </MDBCol>
-            <MDBCol md="1" style={{ paddingTop: '5px' }}>
+            <MDBCol md="1" style={{ marginTop: '-5px', paddingLeft: '0px' }}>
               <MDBBtn className="btn-delete" onClick={onDeleteProduct}>
                 <MDBIcon icon="times" />
               </MDBBtn>
