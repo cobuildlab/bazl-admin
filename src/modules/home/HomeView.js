@@ -42,6 +42,10 @@ class HomeView extends View {
     fetchUserProducts();
   }
 
+  detailPublication = (publication) => {
+    this.props.history.push(`/inventory-details/${publication.productID}`);
+  };
+
   render() {
     const { inventory, loadingInventory, data } = this.state;
     return (
@@ -105,8 +109,12 @@ class HomeView extends View {
                   <Loader />
                 </div>
               ) : (
-                <SliderCardsMap inventory={inventory} />
+                <SliderCardsMap
+                  inventory={inventory}
+                  detailPublication={this.detailPublication}
+                />
               )}
+              <br />
               <h5 className="font-weight-bold text-black-50">Recent Sales</h5>
               <TableSales />
             </MDBContainer>

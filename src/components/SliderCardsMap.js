@@ -3,7 +3,8 @@ import { MDBCard, MDBCardText, MDBContainer } from 'mdbreact';
 import PropTypes from 'prop-types';
 
 const SliderCardsMap = (props) => {
-  const { inventory } = props;
+  const { inventory, detailPublication } = props;
+
   return (
     <React.Fragment>
       <div
@@ -16,6 +17,7 @@ const SliderCardsMap = (props) => {
                 key={i}
                 item={item}
                 className="hover conten-img-card-publication"
+                onClick={() => detailPublication(item)}
                 style={{
                   width: '10rem',
                   margin: '15px',
