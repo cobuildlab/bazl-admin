@@ -48,6 +48,7 @@ class EditProfileView extends View {
         },
         () => {
           toast.info('Successful');
+          this.props.history.push('/profile');
         },
       );
     });
