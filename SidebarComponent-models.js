@@ -1,7 +1,6 @@
 export const routesModel = {
-  path: '',
-  name: '',
-  image: '',
-  className: '',
-}
-
+  path: "",
+  name: "",
+  image: "",
+  className: ""
+};
