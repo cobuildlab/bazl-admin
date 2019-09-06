@@ -204,7 +204,7 @@ class NewProductView extends View {
                   <form>
                     <MDBContainer className="body" fluid>
                       <MDBRow>
-                        <MDBCol md="3">
+                        <MDBCol className="text-center" md="3">
                           {picture}
                           <input
                             type="file"
@@ -212,9 +212,7 @@ class NewProductView extends View {
                             id="upload-photo"
                             onChange={this.onImageChange}
                           />
-                          <small className="text-center">
-                            JPG or PNG format with a maximum of 5mb
-                          </small>
+                          <small>JPG or PNG format with a maximum of 5mb</small>
                         </MDBCol>
                         <MDBCol md="9">
                           <MDBRow style={{ marginBottom: '20px' }}>
@@ -381,6 +379,12 @@ class NewProductView extends View {
                               <h5 className="text-center font-weight-bold">
                                 *Bazl Fee 15%
                               </h5>
+                              <h6
+                                className="text-center"
+                                style={{ fontSize: 'smaller' }}>
+                                Extra commission and additional fee shouldn’t be
+                                required
+                              </h6>
                             </MDBCol>
                             <MDBCol md="2">
                               <MDBInput

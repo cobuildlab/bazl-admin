@@ -41,6 +41,7 @@ class ModalComponent extends Component {
           toggle={this.toggle}>
           <MDBModalBody>
             ¿Are you shure to publish this new product?{' '}
+            {/* <h6><strong>Extra commission and additional fee shouldn’t be required</strong></h6> */}
           </MDBModalBody>
           <MDBRow>
             <MDBCol>
