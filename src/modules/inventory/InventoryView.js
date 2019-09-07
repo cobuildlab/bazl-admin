@@ -1,5 +1,6 @@
 import React from 'react';
 import { MDBContainer, MDBBtn, MDBAnimation, MDBRow, MDBCol } from 'mdbreact';
+import * as R from 'ramda';
 import SidebarComponent from '../../components/SidebarComponent';
 import { Loader } from '../../components/Loader';
 import TableInventory from './components/TableInventory';
@@ -8,10 +9,10 @@ import View from 'react-flux-state';
 import {
   INVENTORY_EVENT,
   INVENTORY_ERROR_EVENT,
-  SEARCH_EVENT,
+  // SEARCH_EVENT,
   inventoryStore,
 } from './inventory-store';
-import { fetchUserProducts, searchProduct } from './inventory-actions';
+import { fetchUserProducts } from './inventory-actions';
 import { toast } from 'react-toastify';
 
 class InventoryView extends View {
@@ -19,37 +20,65 @@ class InventoryView extends View {
     super(props);
     this.state = {
       products: [],
+      productsAux: [],
       loading: true,
     };
   }
+
   componentDidMount() {
     this.subscribe(inventoryStore, INVENTORY_EVENT, (product) => {
-      const products = product;
+      let products = product;
+      products.sort(function(o1, o2) {
+        if (o1.name > o2.name) {
+          return 1;
+        } else if (o1.name < o2.name) {
+          return -1;
+        }
+        return 0;
+      });
       this.setState({
         products: products,
+        productsAux: products,
         loading: false,
       });
     });
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (error) => {
       toast.error(error.message);
     });
-    this.subscribe(inventoryStore, SEARCH_EVENT, (product) => {
-      const products = product;
-      console.log(products);
-      this.setState({
-        products: products,
-      });
-    });
+    // this.subscribe(inventoryStore, SEARCH_EVENT, (product) => {
+    //   const products = product;
+    //   console.log("SEARCH_EVENT",products);
+    //   let productsAux = R.clone(products)
+    //   this.setState({
+    //     products,
+    //     productsAux,
+    //   });
+    // });
     fetchUserProducts();
   }
+  // onSearch = (e) => {
+  //   if (e.key === 'Enter') {
+  //     let search = e.target.value;
 
-  onSearch = (e) => {
-    if (e.key === 'Enter') {
-      let search = e.target.value;
+  //     searchProduct(search);
+  //   }
+  // };
 
-      searchProduct(search);
-    }
+  onChange = (e) => {
+    let { products } = this.state;
+    let productsAux = R.clone(products);
+
+    productsAux = products.filter(function(item) {
+      return (
+        item.name.toLowerCase().search(e.target.value.toLowerCase()) !== -1
+      );
+    });
+
+    this.setState({
+      productsAux,
+    });
   };
+
   ViewInventory() {
     if (this.state.products.length === 0) {
       return (
@@ -71,7 +100,7 @@ class InventoryView extends View {
       return (
         <MDBAnimation type="fadeIn">
           <MDBContainer className="body" fluid>
-            <TableInventory products={this.state.products} />
+            <TableInventory products={this.state.productsAux} />
           </MDBContainer>
         </MDBAnimation>
       );
@@ -88,7 +117,8 @@ class InventoryView extends View {
                 placeholder="Search"
                 className="form-control form-control-search"
                 id="formGroupExampleInput"
-                onKeyPress={this.onSearch}
+                // onKeyPress={this.onSearch}
+                onChange={this.onChange}
               />
             </div>
             <div>

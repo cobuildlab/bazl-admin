@@ -84,6 +84,12 @@ class FormLogin extends View {
     }));
   };
 
+  onKeyPress = (e) => {
+    if (e.which === 13) {
+      this.onSubmit(e);
+    }
+  };
+
   render() {
     let { email, password, loading, forgot, rememberMe } = this.state;
     return (
@@ -128,6 +134,7 @@ class FormLogin extends View {
                       placeholder="Password"
                       aria-label="Password"
                       aria-describedby="basic-addon1"
+                      onKeyPress={this.onKeyPress}
                     />
                   </div>
                   <div
