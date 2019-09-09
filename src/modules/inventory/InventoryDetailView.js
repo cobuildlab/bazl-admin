@@ -268,21 +268,21 @@ class InventoryDetailView extends View {
                                 onChange={this.onChange}
                                 value={this.state.data.category}>
                                 <option disabled>Choose your option</option>
-                                <option value="Clock">Clock</option>
                                 <option value="Accessories">Accessories</option>
-                                <option value="Shoes">Shoes</option>
-                                <option value="Dresses">Dresses</option>
-                                <option value="Pants">Pants</option>
-                                <option value="Jeans">Jeans</option>
-                                <option value="Straps">Straps</option>
-                                <option value="Handbags">Handbags</option>
-                                <option value="Wallets">Wallets</option>
-                                <option value="Scarves">Scarves</option>
+                                <option value="Clock">Clock</option>
                                 <option value="Costumes">Costumes</option>
+                                <option value="Dresses">Dresses</option>
+                                <option value="Handbags">Handbags</option>
+                                <option value="Jeans">Jeans</option>
+                                <option value="Pants">Pants</option>
+                                <option value="Scarves">Scarves</option>
+                                <option value="Shoes">Shoes</option>
                                 <option value="Sports Shoes">
                                   Sport Shoes
                                 </option>
+                                <option value="Straps">Straps</option>
                                 <option value="Telephone">Telephone</option>
+                                <option value="Wallets">Wallets</option>
                               </select>
                             </MDBCol>
                           </MDBRow>
