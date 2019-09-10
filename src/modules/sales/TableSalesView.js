@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import {
   MDBRow,
   MDBCol,
@@ -23,7 +24,7 @@ class TableSales extends View {
   componentDidMount() {
     this.subscribe(salesStore, SALE_EVENT, (sale) => {
       const sales = sale;
-
+      console.log('Sales', sale);
       this.setState({
         sales: sales,
       });
@@ -63,19 +64,19 @@ class TableSales extends View {
                 className="img-profile-table"
                 style={{ backgroundImage: `url(${ImgProfile})` }}
               />
-              <span className="username-table">{sale.buyerID}</span>
+              {/* <span className="username-table">{sale.controlNumber}</span> */}
             </td>
             <td>{sale.price}</td>
-            <td></td>
-            <td>{sale.nOrder}</td>
+            <td>{moment.unix(sale.orderDate, 'DD/MM/YYYY').format('LL')}</td>
+            <td>{sale.controlNumber}</td>
             <td>
               <Link
                 to={`/order-details/${sale.saleID}`}
                 className="btn btn-circle btn-circle-link">
                 Order Details
               </Link>
+              {statBtn}
             </td>
-            <td>{statBtn}</td>
           </tr>
         </MDBTableBody>
       );
@@ -93,7 +94,8 @@ class TableSales extends View {
                 <th>Price</th>
                 <th>Date</th>
                 <th>Order No</th>
-                <th> </th>
+                <th></th>
+                <th></th>
               </tr>
             </MDBTableHead>
             {this.salesList()}
