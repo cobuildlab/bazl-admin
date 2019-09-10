@@ -22,11 +22,12 @@ import {
   productStore,
   PRODUCT_EVENT,
   PRODUCT_ERROR_EVENT,
+  PRODUCT_CATEGORIES_EVENT,
 } from './newproduct-store';
 import { landingStore, LOGIN_EVENT } from '../landing/landing-store';
 import { error } from 'pure-logger';
 import { Loader } from '../../components/Loader';
-import { createProduct } from './newproduct-actions';
+import { createProduct, getCategory } from './newproduct-actions';
 import { Products } from './components/Products';
 import { toast } from 'react-toastify';
 import ModalComponent from './components/ModalComponent';
@@ -38,10 +39,11 @@ class NewProductView extends View {
       data: {},
       userID: '',
       image: null,
-      loading: false,
       showNewProductForm: false,
       product: {},
+      categories: [],
       btnDisabled: true,
+      loading: false,
     };
     this.onError = error.bind(this);
   }
@@ -65,6 +67,12 @@ class NewProductView extends View {
         userID: user.id,
       });
     });
+    this.subscribe(productStore, PRODUCT_CATEGORIES_EVENT, (categories) => {
+      this.setState({
+        categories,
+      });
+    });
+    getCategory();
   }
 
   onChange = (e) => {
@@ -132,8 +140,8 @@ class NewProductView extends View {
       description,
       products,
       price,
-      additionalFee,
-      shippingFee,
+      // additionalFee,
+      // shippingFee,
       commission,
     } = this.state.data;
     let finalQuantity = totalQuantity(products);
@@ -143,8 +151,8 @@ class NewProductView extends View {
       description === '' ||
       products.length === 0 ||
       price === '' ||
-      additionalFee === '' ||
-      shippingFee === '' ||
+      // additionalFee === '' ||
+      // shippingFee === '' ||
       commission === ''
     ) {
       toast.error('All Fields are Required');
@@ -157,8 +165,9 @@ class NewProductView extends View {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, categories } = this.state;
     let picture = this.state.data.picture;
+    console.log('categories', categories);
     if (picture != null) {
       picture = (
         <img
@@ -236,22 +245,16 @@ class NewProductView extends View {
                                 className="browser-default custom-select mt-1"
                                 name="category"
                                 onChange={this.onChange}>
-                                <option>Choose your option</option>
-                                <option value="Accessories">Accessories</option>
-                                <option value="Clock">Clock</option>
-                                <option value="Costumes">Costumes</option>
-                                <option value="Dresses">Dresses</option>
-                                <option value="Handbags">Handbags</option>
-                                <option value="Jeans">Jeans</option>
-                                <option value="Pants">Pants</option>
-                                <option value="Scarves">Scarves</option>
-                                <option value="Shoes">Shoes</option>
-                                <option value="Sports Shoes">
-                                  Sport Shoes
+                                <option selected disabled>
+                                  Choose your option
                                 </option>
-                                <option value="Straps">Straps</option>
-                                <option value="Telephone">Telephone</option>
-                                <option value="Wallets">Wallets</option>
+                                {categories.map((category) => (
+                                  <option
+                                    key={category.value}
+                                    value={category.value}>
+                                    {category.name}
+                                  </option>
+                                ))}
                               </select>
                             </MDBCol>
                           </MDBRow>

@@ -4,8 +4,36 @@ import {
   PRODUCT_EVENT,
   PRODUCT_ERROR_EVENT,
   IMPORT_EVENT,
+  PRODUCT_CATEGORIES_EVENT,
 } from './newproduct-store';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
+
+/**
+ * get all category
+ * @param {string} firebaseUser the firebase uid
+ * @returns {Promise<ProductModel>} product info or null if unexisting
+ */
+
+export const getCategory = async () => {
+  const DB = firebase.firestore();
+  const categoryRef = DB.collection('category');
+
+  let categoryCollection;
+  let categories = [];
+
+  try {
+    categoryCollection = await categoryRef.get();
+  } catch (err) {
+    Flux.dispatch(PRODUCT_ERROR_EVENT, err);
+  }
+
+  categoryCollection.forEach((doc) => {
+    categories.push(doc.data());
+  });
+
+  Flux.dispatchEvent(PRODUCT_CATEGORIES_EVENT, categories);
+};
+
 /**
  * creates a new product belonging to the user
  * @param {string} firebaseUser the firebase uid

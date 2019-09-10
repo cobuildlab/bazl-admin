@@ -9,10 +9,7 @@ import {
   UPLOAD_EVENT,
   UPLOAD_ERROR,
 } from './sales-store';
-import {
-  landingStore,
-  USER_EVENT,
-} from '../landing/landing-store';
+import { landingStore, USER_EVENT } from '../landing/landing-store';
 
 import Flux from 'flux-state';
 
@@ -22,15 +19,18 @@ import Flux from 'flux-state';
  */
 export const fetchSales = () => {
   const DB = firebase.firestore();
-  const salesCollection = DB.collection('sales');
+  const salesCollection = DB.collection('orders');
   const userData = landingStore.getState(USER_EVENT);
 
   let data = [];
   salesCollection
-    .where('user','==' ,userData.email).get()
+    .where('userEmail', '==', userData.email)
+    .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         const {
+          controlNumber,
+          orderDate,
           buyerID,
           color,
           date,
@@ -47,6 +47,8 @@ export const fetchSales = () => {
         } = doc.data();
         data.push({
           saleID: doc.id,
+          controlNumber,
+          orderDate,
           buyerID,
           color,
           date,

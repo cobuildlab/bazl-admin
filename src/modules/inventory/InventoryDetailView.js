@@ -36,6 +36,11 @@ import {
 import * as R from 'ramda';
 import ModalUpdate from './components/ModalUpdate';
 import ModalDelete from './components/ModalDelete';
+import { getCategory } from '../new-product/newproduct-actions';
+import {
+  productStore,
+  PRODUCT_CATEGORIES_EVENT,
+} from '../new-product/newproduct-store';
 
 class InventoryDetailView extends View {
   constructor(props) {
@@ -46,6 +51,7 @@ class InventoryDetailView extends View {
       loading: true,
       showNewProductForm: false,
       product: {},
+      categories: [],
     };
     this.onError = error.bind(this);
   }
@@ -60,7 +66,6 @@ class InventoryDetailView extends View {
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (e) => {
       toast.error(e.message);
     });
-
     this.subscribe(inventoryStore, INVENTORY_UPDATE_EVENT, () => {
       this.props.history.push('/inventory');
       toast.success('Product Updated');
@@ -68,7 +73,6 @@ class InventoryDetailView extends View {
         loading: false,
       });
     });
-
     this.subscribe(inventoryStore, INVENTORY_DELETE_EVENT, () => {
       this.props.history.push('/inventory');
       toast.success('Product Deleted');
@@ -76,7 +80,12 @@ class InventoryDetailView extends View {
         loading: false,
       });
     });
-
+    this.subscribe(productStore, PRODUCT_CATEGORIES_EVENT, (categories) => {
+      this.setState({
+        categories,
+      });
+    });
+    getCategory();
     fetchDetailProduct(this.props.match.params.id);
   }
 
@@ -183,7 +192,7 @@ class InventoryDetailView extends View {
   };
 
   render() {
-    const { data } = this.state;
+    const { data, categories } = this.state;
     let picture = this.state.data.picture;
     if (picture != null) {
       picture = (
@@ -267,22 +276,16 @@ class InventoryDetailView extends View {
                                 name="category"
                                 onChange={this.onChange}
                                 value={this.state.data.category}>
-                                <option disabled>Choose your option</option>
-                                <option value="Accessories">Accessories</option>
-                                <option value="Clock">Clock</option>
-                                <option value="Costumes">Costumes</option>
-                                <option value="Dresses">Dresses</option>
-                                <option value="Handbags">Handbags</option>
-                                <option value="Jeans">Jeans</option>
-                                <option value="Pants">Pants</option>
-                                <option value="Scarves">Scarves</option>
-                                <option value="Shoes">Shoes</option>
-                                <option value="Sports Shoes">
-                                  Sport Shoes
+                                <option selected disabled>
+                                  Choose your option
                                 </option>
-                                <option value="Straps">Straps</option>
-                                <option value="Telephone">Telephone</option>
-                                <option value="Wallets">Wallets</option>
+                                {categories.map((category) => (
+                                  <option
+                                    key={category.value}
+                                    value={category.value}>
+                                    {category.name}
+                                  </option>
+                                ))}
                               </select>
                             </MDBCol>
                           </MDBRow>
