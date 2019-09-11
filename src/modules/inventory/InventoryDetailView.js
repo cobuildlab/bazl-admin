@@ -81,6 +81,14 @@ class InventoryDetailView extends View {
       });
     });
     this.subscribe(productStore, PRODUCT_CATEGORIES_EVENT, (categories) => {
+      categories.sort(function(o1, o2) {
+        if (o1.name > o2.name) {
+          return 1;
+        } else if (o1.name < o2.name) {
+          return -1;
+        }
+        return 0;
+      });
       this.setState({
         categories,
       });

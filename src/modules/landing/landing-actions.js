@@ -105,6 +105,7 @@ export const createUser = async (firebaseUser) => {
   const user = R.clone(UserModel);
   user.email = firebaseUser.email;
   user.id = firebaseUser.uid;
+  user.privilege = 'merchant';
 
   const userRef = await usersCollection.doc(firebaseUser.email);
   try {

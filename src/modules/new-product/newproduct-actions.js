@@ -16,7 +16,7 @@ import { landingStore, USER_EVENT } from '../landing/landing-store';
 
 export const getCategory = async () => {
   const DB = firebase.firestore();
-  const categoryRef = DB.collection('category');
+  const categoryRef = DB.collection('categories');
 
   let categoryCollection;
   let categories = [];
