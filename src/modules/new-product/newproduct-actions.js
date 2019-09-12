@@ -61,7 +61,7 @@ export const createProduct = async (product, image, quantity) => {
     commission,
     additionalFee,
     shippingFee,
-    totalPrice,
+    // totalPrice,
     products,
   } = product;
 
@@ -75,7 +75,7 @@ export const createProduct = async (product, image, quantity) => {
       commission,
       additionalFee,
       shippingFee,
-      totalPrice,
+      // totalPrice,
       products,
       totalQuantity: quantity,
       user: userData.email,
@@ -128,7 +128,7 @@ export const uploadData = (data) => {
         commission,
         additionalFee,
         shippingFee,
-        totalPrice: '',
+        // totalPrice: '',
         user: userData.email,
       })
       .then((doc) => {

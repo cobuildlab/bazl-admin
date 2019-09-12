@@ -32,6 +32,7 @@ import { Products } from './components/Products';
 import { toast } from 'react-toastify';
 import ModalComponent from './components/ModalComponent';
 import { totalQuantity } from '../inventory/inventory-utils';
+
 class NewProductView extends View {
   constructor(props) {
     super(props);
@@ -175,7 +176,15 @@ class NewProductView extends View {
   render() {
     const { data, categories } = this.state;
     let picture = this.state.data.picture;
-    console.log('categories', categories);
+    let percent = [];
+    for (let index = 1; index <= 30; index++) {
+      let objAux = {
+        value: index,
+        name: index + '%',
+      };
+      percent.push(objAux);
+    }
+
     if (picture != null) {
       picture = (
         <img
@@ -280,7 +289,7 @@ class NewProductView extends View {
                             </MDBCol>
                           </MDBRow>
                           <MDBRow>
-                            <MDBCol md="9">
+                            <MDBCol md="12">
                               {data.products.length !== 0 ? (
                                 <div>
                                   {data.products.map((product, index) => (
@@ -390,14 +399,14 @@ class NewProductView extends View {
                               <h5 className="text-center font-weight-bold">
                                 *Bazl Fee 15%
                               </h5>
-                              <h6
+                              {/* <h6
                                 className="text-center"
                                 style={{ fontSize: 'smaller' }}>
                                 Extra commission and additional fee shouldn’t be
                                 required
-                              </h6>
+                              </h6> */}
                             </MDBCol>
-                            <MDBCol md="2">
+                            <MDBCol md="3">
                               <MDBInput
                                 name="price"
                                 onChange={this.onChange}
@@ -411,26 +420,42 @@ class NewProductView extends View {
                                 {errorMessages.price}
                               </p>
                             </MDBCol>
-                            <MDBCol>
-                              <small>
-                                Commission percentage Minimum commission 3%
-                              </small>
+                            <MDBCol
+                              md="3"
+                              style={{ display: 'flex', alignItems: 'center' }}>
+                              <small>Add Additional Commission</small>
                             </MDBCol>
-                            <MDBCol md="2">
+                            <MDBCol md="3">
+                              {/* <select
+                                  className="browser-default custom-select mt-1"
+                                  name="commission"
+                                  onChange={this.onChange}>
+                                  <option>Select</option>
+                                  <option value="3%">3%</option>
+                                  <option value="4%">4%</option>
+                                  <option value="5%">5%</option>
+                                </select> */}
                               <select
                                 className="browser-default custom-select mt-1"
                                 name="commission"
                                 onChange={this.onChange}>
-                                <option>Select</option>
-                                <option value="3%">3%</option>
-                                <option value="4%">4%</option>
-                                <option value="5%">5%</option>
+                                <option selected disabled>
+                                  Select %
+                                </option>
+                                {percent.map((category) => (
+                                  <option
+                                    key={category.value}
+                                    value={category.value}>
+                                    {category.name}
+                                  </option>
+                                ))}
                               </select>
+
                               <p className="error-message">
                                 {errorMessages.commission}
                               </p>
                             </MDBCol>
-                            <MDBCol>
+                            {/* <MDBCol>
                               <MDBInput
                                 name="additionalFee"
                                 onChange={this.onChange}
@@ -443,8 +468,8 @@ class NewProductView extends View {
                               <p className="error-message">
                                 {errorMessages.additionalFee}
                               </p>
-                            </MDBCol>
-                            <MDBCol>
+                            </MDBCol> */}
+                            <MDBCol md="3">
                               <MDBInput
                                 name="shippingFee"
                                 onChange={this.onChange}

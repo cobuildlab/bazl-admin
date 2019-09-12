@@ -128,9 +128,9 @@ class InventoryDetailView extends View {
       description,
       products,
       price,
-      additionalFee,
+      // additionalFee,
       shippingFee,
-      commission,
+      // commission,
     } = this.state.data;
     let finalQuantity = totalQuantity(this.state.data.products);
     if (confirm) {
@@ -139,9 +139,9 @@ class InventoryDetailView extends View {
         description === '' ||
         products.length === 0 ||
         price === '' ||
-        additionalFee === '' ||
-        shippingFee === '' ||
-        commission === ''
+        // additionalFee === '' ||
+        shippingFee === ''
+        // commission === ''
       ) {
         toast.error('All Fields are Required');
       } else {
@@ -202,6 +202,14 @@ class InventoryDetailView extends View {
   render() {
     const { data, categories } = this.state;
     let picture = this.state.data.picture;
+    let percent = [];
+    for (let index = 1; index <= 30; index++) {
+      let objAux = {
+        value: index,
+        name: index + '%',
+      };
+      percent.push(objAux);
+    }
     if (picture != null) {
       picture = (
         <label className="imgLabel" htmlFor="upload-photo">
@@ -312,7 +320,7 @@ class InventoryDetailView extends View {
                             </MDBCol>
                           </MDBRow>
                           <MDBRow>
-                            <MDBCol md="9">
+                            <MDBCol md="12">
                               {data.products.length !== 0 ? (
                                 <div>
                                   {data.products.map((product, index) => (
@@ -423,7 +431,7 @@ class InventoryDetailView extends View {
                                 *Bazl Fee 15%
                               </h5>
                             </MDBCol>
-                            <MDBCol md="2">
+                            <MDBCol md="3">
                               <MDBInput
                                 name="price"
                                 onChange={this.onChange}
@@ -437,13 +445,30 @@ class InventoryDetailView extends View {
                                 {errorMessages.price}
                               </p>
                             </MDBCol>
-                            <MDBCol>
-                              <small>
-                                Commission percentage Minimum commission 3%
-                              </small>
+                            <MDBCol
+                              md="3"
+                              style={{ display: 'flex', alignItems: 'center' }}>
+                              <small>Add Additional Commission</small>
                             </MDBCol>
-                            <MDBCol md="2">
+                            <MDBCol md="3">
                               <select
+                                className="browser-default custom-select mt-1"
+                                name="commission"
+                                onChange={this.onChange}
+                                value={this.state.data.commission}>
+                                <option selected disabled>
+                                  Select %
+                                </option>
+                                {percent.map((category) => (
+                                  <option
+                                    key={category.value}
+                                    value={category.value}>
+                                    {category.name}
+                                  </option>
+                                ))}
+                              </select>
+
+                              {/* <select
                                 className="browser-default custom-select mt-1"
                                 name="commission"
                                 onChange={this.onChange}
@@ -452,25 +477,26 @@ class InventoryDetailView extends View {
                                 <option value="3%">3%</option>
                                 <option value="4%">4%</option>
                                 <option value="5%">5%</option>
-                              </select>
+                              </select> */}
+
                               <p className="error-message">
                                 {errorMessages.commission}
                               </p>
                             </MDBCol>
-                            <MDBCol>
-                              <MDBInput
-                                name="additionalFee"
-                                onChange={this.onChange}
-                                onKeyUp={validate}
-                                label="Additional Fee"
-                                className="mt-0"
-                                value={this.state.data.additionalFee}
-                                required
-                              />
-                              <p className="error-message">
-                                {errorMessages.additionalFee}
-                              </p>
-                            </MDBCol>
+                            {/* <MDBCol>
+                                <MDBInput
+                                  name="additionalFee"
+                                  onChange={this.onChange}
+                                  onKeyUp={validate}
+                                  label="Additional Fee"
+                                  className="mt-0"
+                                  value={this.state.data.additionalFee}
+                                  required
+                                />
+                                <p className="error-message">
+                                  {errorMessages.additionalFee}
+                                </p>
+                              </MDBCol> */}
                             <MDBCol>
                               <MDBInput
                                 name="shippingFee"

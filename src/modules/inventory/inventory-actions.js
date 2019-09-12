@@ -35,7 +35,7 @@ export const fetchUserProducts = () => {
           commission,
           additionalFee,
           shippingFee,
-          totalPrice,
+          // totalPrice,
           totalQuantity,
           user,
         } = doc.data();
@@ -49,7 +49,7 @@ export const fetchUserProducts = () => {
           commission,
           additionalFee,
           shippingFee,
-          totalPrice,
+          // totalPrice,
           totalQuantity,
           user,
           productID: doc.id,
@@ -87,7 +87,7 @@ export const searchProduct = async (search) => {
           commission,
           additionalFee,
           shippingFee,
-          totalPrice,
+          // totalPrice,
           totalQuantity,
           user,
         } = doc.data();
@@ -101,7 +101,7 @@ export const searchProduct = async (search) => {
           commission,
           additionalFee,
           shippingFee,
-          totalPrice,
+          // totalPrice,
           totalQuantity,
           user,
           productID: doc.id,
@@ -160,7 +160,7 @@ export const updateProduct = async (product, image, quantity, id) => {
     commission,
     additionalFee,
     shippingFee,
-    totalPrice,
+    // totalPrice,
     user,
   } = product;
 
@@ -175,7 +175,7 @@ export const updateProduct = async (product, image, quantity, id) => {
       commission,
       additionalFee,
       shippingFee,
-      totalPrice,
+      // totalPrice,
       totalQuantity: quantity,
       user,
     })
