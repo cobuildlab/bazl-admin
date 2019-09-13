@@ -10,6 +10,6 @@ export const ProductModel = {
   price: '',
   additionalFee: '',
   shippingFee: '',
-  totalPrice: '',
+  // totalPrice: '',
   user: '',
 };
