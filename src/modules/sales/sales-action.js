@@ -44,6 +44,8 @@ export const fetchSales = () => {
           shippedStatus,
           productID,
           statusShipped,
+          totalAmount,
+          shippingFee,
         } = doc.data();
         data.push({
           saleID: doc.id,
@@ -62,6 +64,8 @@ export const fetchSales = () => {
           shippedStatus,
           productID,
           statusShipped,
+          totalAmount,
+          shippingFee,
         });
       });
       Flux.dispatchEvent(SALE_EVENT, data);
