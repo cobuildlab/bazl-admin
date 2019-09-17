@@ -18,9 +18,9 @@ class TableInventory extends React.Component {
             </td>
             <td>{product.description}</td>
             <td>{product.totalQuantity}</td>
-            <td>{product.price}</td>
-            <td>{product.commission}</td>
-            <td>{product.additionalFee}</td>
+            <td>${product.price}</td>
+            <td>%{product.commission}</td>
+            <td>${product.shippingFee}</td>
             <td>5</td>
             <td>
               <Link

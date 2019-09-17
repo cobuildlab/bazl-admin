@@ -66,8 +66,8 @@ class TableSales extends View {
               />
               {/* <span className="username-table">{sale.controlNumber}</span> */}
             </td>
-            <td>{sale.price}</td>
-            <td>{moment.unix(sale.orderDate, 'DD/MM/YYYY').format('LL')}</td>
+            <td>${sale.totalAmount}</td>
+            <td>{moment(sale.orderDate).format('Y-D-M TZ')}</td>
             <td>{sale.controlNumber}</td>
             <td>
               <Link
