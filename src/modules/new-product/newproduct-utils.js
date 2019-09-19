@@ -5,7 +5,6 @@ export const validations = {
   color: ['required'],
   price: ['required'],
   description: ['required'],
-  commission: ['required'],
   additionalFee: ['required'],
   shippingFee: ['required'],
 };

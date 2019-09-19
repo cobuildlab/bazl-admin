@@ -32,6 +32,12 @@ export const onLogin = async ({ email, password, rememberMe }) => {
   }
   const { user: firebaseUser } = data;
   let user = await fetchUser(firebaseUser.email);
+  if (user.privilege === 'influencer') {
+    return Flux.dispatchEvent(
+      LOGIN_ERROR_EVENT,
+      new Error('You have privilige influencer'),
+    );
+  }
   log('onLogin:fetchUser');
   Flux.dispatchEvent(LOGIN_EVENT, user);
 };

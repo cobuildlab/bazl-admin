@@ -53,6 +53,7 @@ class DataImportView extends View {
       complete: this.updateData,
     });
   };
+
   updateData = (result) => {
     let data = result.data;
     const fields = Object.keys(data[0]);
@@ -67,9 +68,10 @@ class DataImportView extends View {
         'quantity',
         'color',
         'price',
-        'commission',
         'additionalFee',
         'shippingFee',
+        'bazlFee',
+        'influencerFee',
       )
     ) {
       toast.error('Error, File is not properly formatted');

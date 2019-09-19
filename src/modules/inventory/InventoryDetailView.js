@@ -123,15 +123,7 @@ class InventoryDetailView extends View {
     reader.readAsDataURL(image);
   };
   onUpdate = (confirm) => {
-    const {
-      name,
-      description,
-      products,
-      price,
-      // additionalFee,
-      shippingFee,
-      // commission,
-    } = this.state.data;
+    const { name, description, products, price, shippingFee } = this.state.data;
     let finalQuantity = totalQuantity(this.state.data.products);
     if (confirm) {
       if (
@@ -139,9 +131,7 @@ class InventoryDetailView extends View {
         description === '' ||
         products.length === 0 ||
         price === '' ||
-        // additionalFee === '' ||
         shippingFee === ''
-        // commission === ''
       ) {
         toast.error('All Fields are Required');
       } else {
@@ -453,9 +443,9 @@ class InventoryDetailView extends View {
                             <MDBCol md="3">
                               <select
                                 className="browser-default custom-select mt-1"
-                                name="commission"
+                                name="additionalFee"
                                 onChange={this.onChange}
-                                value={this.state.data.commission}>
+                                value={this.state.data.additionalFee}>
                                 <option selected disabled>
                                   Select %
                                 </option>
@@ -467,38 +457,12 @@ class InventoryDetailView extends View {
                                   </option>
                                 ))}
                               </select>
-
-                              {/* <select
-                                className="browser-default custom-select mt-1"
-                                name="commission"
-                                onChange={this.onChange}
-                                value={this.state.data.commission}>
-                                <option disabled>Select</option>
-                                <option value="3%">3%</option>
-                                <option value="4%">4%</option>
-                                <option value="5%">5%</option>
-                              </select> */}
-
                               <p className="error-message">
-                                {errorMessages.commission}
+                                {errorMessages.additionalFee}
                               </p>
                             </MDBCol>
-                            {/* <MDBCol>
-                                <MDBInput
-                                  name="additionalFee"
-                                  onChange={this.onChange}
-                                  onKeyUp={validate}
-                                  label="Additional Fee"
-                                  className="mt-0"
-                                  value={this.state.data.additionalFee}
-                                  required
-                                />
-                                <p className="error-message">
-                                  {errorMessages.additionalFee}
-                                </p>
-                              </MDBCol> */}
                             <MDBCol>
-                              <MDBInput
+                              {/* <MDBInput
                                 name="shippingFee"
                                 onChange={this.onChange}
                                 onKeyUp={validate}
@@ -506,10 +470,19 @@ class InventoryDetailView extends View {
                                 className="mt-0"
                                 value={this.state.data.shippingFee}
                                 required
-                              />
-                              <p className="error-message">
-                                {errorMessages.shippingFee}
-                              </p>
+                              /> */}
+                              <select
+                                className="browser-default custom-select mt-1"
+                                name="shippingFee"
+                                onChange={this.onChange}
+                                value={this.state.data.shippingFee}>
+                                <option selected key="Not" value="Not">
+                                  Not
+                                </option>
+                                <option key="Yes" value="Yes">
+                                  Yes
+                                </option>
+                              </select>
                             </MDBCol>
                           </MDBRow>
                           <MDBRow>

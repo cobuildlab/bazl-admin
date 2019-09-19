@@ -32,6 +32,7 @@ import { Products } from './components/Products';
 import { toast } from 'react-toastify';
 import ModalComponent from './components/ModalComponent';
 import { totalQuantity } from '../inventory/inventory-utils';
+import Color from '../../components/Color';
 
 class NewProductView extends View {
   constructor(props) {
@@ -128,6 +129,14 @@ class NewProductView extends View {
     });
   };
 
+  onChangeColor = (color) => {
+    const product = R.clone(this.state.product);
+    product['color'] = color;
+    this.setState({
+      product: product,
+    });
+  };
+
   onDeleteProduct = (index) => {
     const data = this.state.data;
     data.products.splice(index, 1);
@@ -143,26 +152,14 @@ class NewProductView extends View {
   };
 
   onSubmit = () => {
-    const {
-      name,
-      category,
-      description,
-      products,
-      price,
-      // additionalFee,
-      // shippingFee,
-      commission,
-    } = this.state.data;
+    const { name, category, description, products, price } = this.state.data;
     let finalQuantity = totalQuantity(products);
     if (
       name === '' ||
       category === '' ||
       description === '' ||
       products.length === 0 ||
-      price === '' ||
-      // additionalFee === '' ||
-      // shippingFee === '' ||
-      commission === ''
+      price === ''
     ) {
       toast.error('All Fields are Required');
     } else {
@@ -334,7 +331,7 @@ class NewProductView extends View {
                                         <MDBCol md="3">
                                           <MDBInput
                                             label="Size"
-                                            className=" product mt-0"
+                                            className="product mt-0"
                                             type="text"
                                             name="size"
                                             onChange={this.onChangeProduct}
@@ -346,14 +343,17 @@ class NewProductView extends View {
                                           </p>
                                         </MDBCol>
                                         <MDBCol md="3">
-                                          <MDBInput
-                                            label="Color"
-                                            className="product mt-0"
-                                            type="text"
-                                            name="color"
-                                            onChange={this.onChangeProduct}
-                                            onKeyUp={validate}
-                                            required
+                                          {/* <MDBInput
+                                              label="Color"
+                                              className="product mt-0"
+                                              type="text"
+                                              name="color"
+                                              onChange={this.onChangeProduct}
+                                              onKeyUp={validate}
+                                              required
+                                            /> */}
+                                          <Color
+                                            onChangeColor={this.onChangeColor}
                                           />
                                           <p className="error-message">
                                             {errorMessages.color}
@@ -399,15 +399,10 @@ class NewProductView extends View {
                               <h5 className="text-center font-weight-bold">
                                 *Bazl Fee 15%
                               </h5>
-                              {/* <h6
-                                className="text-center"
-                                style={{ fontSize: 'smaller' }}>
-                                Extra commission and additional fee shouldn’t be
-                                required
-                              </h6> */}
                             </MDBCol>
                             <MDBCol md="3">
                               <MDBInput
+                                type="number"
                                 name="price"
                                 onChange={this.onChange}
                                 onKeyUp={validate}
@@ -426,18 +421,9 @@ class NewProductView extends View {
                               <small>Add Additional Commission</small>
                             </MDBCol>
                             <MDBCol md="3">
-                              {/* <select
-                                  className="browser-default custom-select mt-1"
-                                  name="commission"
-                                  onChange={this.onChange}>
-                                  <option>Select</option>
-                                  <option value="3%">3%</option>
-                                  <option value="4%">4%</option>
-                                  <option value="5%">5%</option>
-                                </select> */}
                               <select
                                 className="browser-default custom-select mt-1"
-                                name="commission"
+                                name="additionalFee"
                                 onChange={this.onChange}>
                                 <option selected disabled>
                                   Select %
@@ -450,38 +436,30 @@ class NewProductView extends View {
                                   </option>
                                 ))}
                               </select>
-
-                              <p className="error-message">
-                                {errorMessages.commission}
-                              </p>
-                            </MDBCol>
-                            {/* <MDBCol>
-                              <MDBInput
-                                name="additionalFee"
-                                onChange={this.onChange}
-                                onKeyUp={validate}
-                                label="Additional Fee"
-                                className="mt-0"
-                                value={this.state.data.additionalFee}
-                                required
-                              />
                               <p className="error-message">
                                 {errorMessages.additionalFee}
                               </p>
-                            </MDBCol> */}
+                            </MDBCol>
                             <MDBCol md="3">
-                              <MDBInput
+                              {/* <MDBInput
+                                  type="number"
+                                  name="shippingFee"
+                                  onChange={this.onChange}
+                                  label="Shipping Fee"
+                                  className="mt-0"
+                                  value={this.state.data.shippingFee}
+                                /> */}
+                              <select
+                                className="browser-default custom-select mt-1"
                                 name="shippingFee"
-                                onChange={this.onChange}
-                                onKeyUp={validate}
-                                label="Shipping Fee"
-                                className="mt-0"
-                                value={this.state.data.shippingFee}
-                                required
-                              />
-                              <p className="error-message">
-                                {errorMessages.shippingFee}
-                              </p>
+                                onChange={this.onChange}>
+                                <option selected key="Not" value="Not">
+                                  Not
+                                </option>
+                                <option key="Yes" value="Yes">
+                                  Yes
+                                </option>
+                              </select>
                             </MDBCol>
                           </MDBRow>
                           <MDBRow>
