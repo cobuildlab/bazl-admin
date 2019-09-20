@@ -24,7 +24,6 @@ class TableSales extends View {
   componentDidMount() {
     this.subscribe(salesStore, SALE_EVENT, (sale) => {
       const sales = sale;
-      console.log('Sales', sale);
       this.setState({
         sales: sales,
       });
@@ -67,7 +66,7 @@ class TableSales extends View {
               {/* <span className="username-table">{sale.controlNumber}</span> */}
             </td>
             <td>${sale.totalAmount}</td>
-            <td>{moment(sale.orderDate).format('Y-D-M TZ')}</td>
+            <td>{moment(sale.orderDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
             <td>{sale.controlNumber}</td>
             <td>
               <Link

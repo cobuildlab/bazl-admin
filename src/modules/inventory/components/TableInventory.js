@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class TableInventory extends React.Component {
   render() {
@@ -19,8 +20,8 @@ class TableInventory extends React.Component {
             <td>{product.description}</td>
             <td>{product.totalQuantity}</td>
             <td>${product.price}</td>
-            <td>%{product.commission}</td>
-            <td>${product.shippingFee}</td>
+            <td>${product.additionalFee}</td>
+            <td>{product.shippingFee}</td>
             <td>5</td>
             <td>
               <Link
@@ -57,4 +58,9 @@ class TableInventory extends React.Component {
     );
   }
 }
+
+TableInventory.propTypes = {
+  products: PropTypes.array.isRequired,
+};
+
 export default TableInventory;

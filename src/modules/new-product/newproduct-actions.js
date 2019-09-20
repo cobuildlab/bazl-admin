@@ -43,9 +43,24 @@ export const getCategory = async () => {
 export const createProduct = async (product, image, quantity) => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products');
+  const settingsCollection = DB.collection('settings');
+  let settingsRef;
+  let settings = {};
   let imageURL = null;
   const storage = firebase.storage();
   const userData = landingStore.getState(USER_EVENT);
+
+  try {
+    settingsRef = await settingsCollection.get();
+  } catch (err) {
+    Flux.dispatch(PRODUCT_ERROR_EVENT, err);
+  }
+
+  settingsRef.forEach((doc) => {
+    settings = doc.data();
+  });
+
+  console.log('settings', settings);
 
   if (image) {
     const storageRef = storage.ref(`/productImages/${image.name}`);
@@ -53,32 +68,32 @@ export const createProduct = async (product, image, quantity) => {
     imageURL = await task.ref.getDownloadURL();
   }
 
-  const {
+  let {
     name,
     category,
     description,
     price,
-    commission,
+    products,
     additionalFee,
     shippingFee,
-    // totalPrice,
-    products,
   } = product;
-
+  console.log('product', product);
+  let bazlGain = (settings.bazlFee / 100) * price;
+  let influencerGain = settings.influencerFee + (additionalFee / 100) * price;
   await productCollection
     .add({
       picture: imageURL,
+      user: userData.email,
+      totalQuantity: quantity,
       name,
       category,
       description,
       price,
-      commission,
+      products,
       additionalFee,
       shippingFee,
-      // totalPrice,
-      products,
-      totalQuantity: quantity,
-      user: userData.email,
+      bazlGain,
+      influencerGain,
     })
     .then((doc) => {
       console.log('Document writen with ID: ', doc.id);
@@ -96,11 +111,24 @@ export const createProduct = async (product, image, quantity) => {
  * @returns {Promise<ProductModel>} product info or null if unexisting
  */
 
-export const uploadData = (data) => {
+export const uploadData = async (data) => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products');
+  const settingsCollection = DB.collection('settings');
+  let settingsRef;
+  let settings = {};
   const userData = landingStore.getState(USER_EVENT);
   let idProducts;
+
+  try {
+    settingsRef = await settingsCollection.get();
+  } catch (err) {
+    Flux.dispatch(PRODUCT_ERROR_EVENT, err);
+  }
+
+  settingsRef.forEach((doc) => {
+    settings = doc.data();
+  });
 
   data.forEach((product) => {
     const {
@@ -109,7 +137,6 @@ export const uploadData = (data) => {
       description,
       products,
       price,
-      commission,
       additionalFee,
       shippingFee,
     } = product;
@@ -117,6 +144,10 @@ export const uploadData = (data) => {
     if (product.imageUrl !== '') {
       imageUrl = product.imageUrl;
     }
+
+    let bazlGain = (settings.bazlFee / 100) * price;
+    let influencerGain = settings.influencerFee + (additionalFee / 100) * price;
+
     productCollection
       .add({
         picture: imageUrl,
@@ -125,10 +156,10 @@ export const uploadData = (data) => {
         description,
         products,
         price,
-        commission,
         additionalFee,
         shippingFee,
-        // totalPrice: '',
+        bazlGain,
+        influencerGain,
         user: userData.email,
       })
       .then((doc) => {

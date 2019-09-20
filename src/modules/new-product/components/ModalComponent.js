@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MDBBtn, MDBModal, MDBModalBody, MDBRow, MDBCol } from 'mdbreact';
+import PropTypes from 'prop-types';
 
 class ModalComponent extends Component {
   state = {
@@ -11,6 +12,7 @@ class ModalComponent extends Component {
       modal: !this.state.modal,
     });
   };
+
   confirmAction = () => {
     const isConfirmed = true;
     this.props.callbackFromParent(isConfirmed);
@@ -41,7 +43,6 @@ class ModalComponent extends Component {
           toggle={this.toggle}>
           <MDBModalBody>
             ¿Are you shure to publish this new product?{' '}
-            {/* <h6><strong>Extra commission and additional fee shouldn’t be required</strong></h6> */}
           </MDBModalBody>
           <MDBRow>
             <MDBCol>
@@ -64,5 +65,10 @@ class ModalComponent extends Component {
     );
   }
 }
+
+ModalComponent.propTypes = {
+  allValid: PropTypes.bool.isRequired,
+  callbackFromParent: PropTypes.func.isRequired,
+};
 
 export default ModalComponent;
