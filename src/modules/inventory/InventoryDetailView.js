@@ -41,6 +41,7 @@ import {
   productStore,
   PRODUCT_CATEGORIES_EVENT,
 } from '../new-product/newproduct-store';
+import Color from '../../components/Color';
 
 class InventoryDetailView extends View {
   constructor(props) {
@@ -147,6 +148,7 @@ class InventoryDetailView extends View {
       }
     }
   };
+
   onDelete = (confirm) => {
     if (confirm === true) {
       deleteProduct(this.props.match.params.id);
@@ -155,6 +157,7 @@ class InventoryDetailView extends View {
       });
     }
   };
+
   onNewProduct = () => {
     const data = this.state.data;
     let products = data.products.slice();
@@ -170,6 +173,14 @@ class InventoryDetailView extends View {
   onChangeProduct = (e) => {
     const product = R.clone(this.state.product);
     product[e.target.name] = e.target.value;
+    this.setState({
+      product: product,
+    });
+  };
+
+  onChangeColor = (color) => {
+    const product = R.clone(this.state.product);
+    product['color'] = color;
     this.setState({
       product: product,
     });
@@ -367,7 +378,7 @@ class InventoryDetailView extends View {
                                           </p>
                                         </MDBCol>
                                         <MDBCol md="3">
-                                          <MDBInput
+                                          {/* <MDBInput
                                             label="Color"
                                             className="product mt-0"
                                             type="text"
@@ -375,6 +386,9 @@ class InventoryDetailView extends View {
                                             onChange={this.onChangeProduct}
                                             onKeyUp={validate}
                                             required
+                                          /> */}
+                                          <Color
+                                            onChangeColor={this.onChangeColor}
                                           />
                                           <p className="error-message">
                                             {errorMessages.color}

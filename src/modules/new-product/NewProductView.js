@@ -56,6 +56,7 @@ class NewProductView extends View {
       data: model,
     });
   }
+
   componentDidMount() {
     this.subscribe(productStore, PRODUCT_EVENT, () => {
       this.props.history.push('/inventory');
