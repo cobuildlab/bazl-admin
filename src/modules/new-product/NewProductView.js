@@ -1,4 +1,10 @@
 import React from 'react';
+import { toast } from 'react-toastify';
+import { error } from 'pure-logger';
+import * as R from 'ramda';
+import View from 'react-flux-state';
+import Validate from 'react-validate-form';
+import { Link } from 'react-router-dom';
 import {
   MDBContainer,
   MDBRow,
@@ -12,10 +18,6 @@ import {
 } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
 import ImgDefault from '../../assets/img/img-default.png';
-import * as R from 'ramda';
-import { Link } from 'react-router-dom';
-import View from 'react-flux-state';
-import Validate from 'react-validate-form';
 import { validations } from './newproduct-utils';
 import { ProductModel } from './newproduct-models';
 import {
@@ -25,11 +27,9 @@ import {
   PRODUCT_CATEGORIES_EVENT,
 } from './newproduct-store';
 import { landingStore, LOGIN_EVENT } from '../landing/landing-store';
-import { error } from 'pure-logger';
 import { Loader } from '../../components/Loader';
 import { createProduct, getCategory } from './newproduct-actions';
 import { Products } from './components/Products';
-import { toast } from 'react-toastify';
 import ModalComponent from './components/ModalComponent';
 import { totalQuantity } from '../inventory/inventory-utils';
 import Color from '../../components/Color';

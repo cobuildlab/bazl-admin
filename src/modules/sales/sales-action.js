@@ -4,6 +4,8 @@ import {
   SALE_ERROR,
   DETAIL_EVENT,
   DETAIL_ERROR,
+  COMMENT_EVENT,
+  COMMENT_ERROR,
   STAT_EVENT,
   STAT_ERROR,
   UPLOAD_EVENT,
@@ -146,4 +148,40 @@ export const changeStatus = (id, e) => {
       Flux.dispatchEvent(STAT_ERROR, data);
     }
   });
+};
+
+/**
+ * Update the State of a Sale to closed and get the modified data
+ * @returns {Promise<SalesModel>}Sale info or null if unexisting
+ */
+export const updateCommentAction = async (messageData, i) => {
+  console.log('messageData', messageData);
+  const DB = firebase.firestore();
+  const ordersCollection = DB.collection('orders');
+  const sessionOrder = landingStore.getState(USER_EVENT);
+  let orders;
+
+  await ordersCollection
+    .where('userEmail', '==', sessionOrder.email)
+    .get()
+    .then((data) => {
+      data.forEach((doc) => {
+        orders = doc;
+      });
+    })
+    .catch((e) => {
+      Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
+      console.log(e);
+    });
+
+  const ordersRef = ordersCollection.doc(orders.id);
+
+  let ordersData = orders.data();
+  let { products } = ordersData;
+  console.log('products', products);
+  products[i].comment = messageData.comment;
+  products[i].pictureTax = messageData.pictureTax;
+  await ordersRef.set(ordersData, { merge: true });
+
+  Flux.dispatchEvent(COMMENT_EVENT, messageData);
 };
