@@ -12,7 +12,9 @@ class SalesDetailViewInformation extends Component {
       product: this.props.product,
       index: this.props.index,
       comment: this.props.product.comment,
+      pictureTax: this.props.pictureTax,
     };
+    this.onImageChange = this.onImageChange.bind(this);
   }
 
   onChange = (e) => {
@@ -21,20 +23,74 @@ class SalesDetailViewInformation extends Component {
     });
   };
 
+  onImageChange(e) {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    let { name } = e.target;
+    let state = this.state;
+
+    reader.onloadend = () => {
+      state[name] = reader.result;
+      this.setState({
+        state,
+        file,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
   render() {
-    let { product, index } = this.state;
+    let { product, index, pictureTax } = this.state;
     const { commentSales } = this.props;
-    let uploadFile = (
-      <div>
-        <input
-          type="file"
-          name="photo"
-          id="upload-photo"
-          style={{ opacity: 0 }}
-          onChange={this.handleUpload}
-        />
-      </div>
-    );
+
+    // let uploadFile = (
+    //    <div>
+    //       <input
+    //          type="file"
+    //          name="photo"
+    //          id="upload-photo"
+    //          style={{ opacity: 0 }}
+    //          onChange={this.handleUpload}
+    //       />
+    //    </div>
+    // );
+    let imagePreview = null;
+    if (pictureTax) {
+      imagePreview = (
+        <label
+          style={{ cursor: 'pointer' }}
+          width="80"
+          className="text-center"
+          htmlFor="upload-photo">
+          <img
+            alt={'User Profile'}
+            src={pictureTax}
+            className="img-fluid"
+            style={{ borderRadius: '10px', width: '160px', height: '180px' }}
+          />
+        </label>
+      );
+    } else {
+      imagePreview = (
+        // <label
+        //    style={{ cursor: 'pointer' }}
+        //    width="80"
+        //    className="CustomlabelProfile text-center"
+        //    htmlFor="upload-photo">
+        //    <img
+        //       alt={'User Profile'}
+        //       src={ImgDefault}
+        //       className="img-fluid img-label"
+        //       style={{ borderRadius: '10px' }}
+        //    />
+        // </label>
+        <label className="CustomlabelSales text-center" htmlFor="upload-photo">
+          <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload Image
+        </label>
+      );
+    }
 
     return (
       <MDBRow key={index}>
@@ -104,30 +160,45 @@ class SalesDetailViewInformation extends Component {
           </div>
           <small className="text-black-50">Status</small>
           <hr />
-          <label
-            className="CustomlabelSales text-center"
-            htmlFor="upload-photo">
-            <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload Image
-          </label>
-          {uploadFile}
-          {/* <img
+          {/* <label
+                  className="CustomlabelSales text-center"
+                  htmlFor="upload-photo">
+                  <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload Image
+               </label> */}
+
+          {/* {uploadFile}
+               <img
                   width="100%"
-                  src={sale.picture}
+                  style={{ maxWidth: "120px" }}
+                  src={product.picture}
                   className="mt-2 pt-2"
                   alt=""
-               /> */}
-          {/* {sale.picture ? (
-              <p className="text-center">
-                <a
-                  href={sale.picture}
-                  rel="noopener noreferrer"
-                  target="_blank">
-                  Download
-            </a>
-              </p>
-            ) : (
-                ''
-              )} */}
+               />
+               {product.picture ? (
+                  <p className="text-center">
+                     <a
+                        href={product.picture}
+                        rel="noopener noreferrer"
+                        target="_blank">
+                        Download
+                     </a>
+                  </p>
+               ) : (
+                     ''
+                  )} */}
+
+          <MDBCol
+            md="12"
+            style={{ display: 'flex', flexDirection: 'column' }}
+            className="text-center">
+            {imagePreview}
+            <input
+              type="file"
+              name="pictureTax"
+              id="upload-photo"
+              onChange={this.onImageChange}
+            />
+          </MDBCol>
 
           <MDBInput
             type="textarea"
@@ -160,7 +231,7 @@ class SalesDetailViewInformation extends Component {
 SalesDetailViewInformation.propTypes = {
   product: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  commentSales: PropTypes.string,
+  commentSales: PropTypes.func,
 };
 
 export { SalesDetailViewInformation };

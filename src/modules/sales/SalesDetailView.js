@@ -28,7 +28,6 @@ class SalesDetailView extends View {
     this.state = {
       sale: {},
       key: '',
-      picture: '',
       shippedStatus: '2',
       user: landingStore.getState(USER_EVENT),
       loading: true,
@@ -141,6 +140,7 @@ class SalesDetailView extends View {
                     index={index}
                     sale={sale}
                     commentSales={this.commentSales}
+                    pictureTax={product.pictureTax}
                   />
                 ))}
               </div>

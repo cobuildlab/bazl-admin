@@ -155,6 +155,7 @@ export const changeStatus = (id, e) => {
  * @returns {Promise<SalesModel>}Sale info or null if unexisting
  */
 export const updateCommentAction = async (messageData, i) => {
+  console.log('messageData', messageData);
   const DB = firebase.firestore();
   const ordersCollection = DB.collection('orders');
   const sessionOrder = landingStore.getState(USER_EVENT);
@@ -177,7 +178,9 @@ export const updateCommentAction = async (messageData, i) => {
 
   let ordersData = orders.data();
   let { products } = ordersData;
+  console.log('products', products);
   products[i].comment = messageData.comment;
+  products[i].pictureTax = messageData.pictureTax;
   await ordersRef.set(ordersData, { merge: true });
 
   Flux.dispatchEvent(COMMENT_EVENT, messageData);
