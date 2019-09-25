@@ -60,8 +60,6 @@ export const createProduct = async (product, image, quantity) => {
     settings = doc.data();
   });
 
-  console.log('settings', settings);
-
   if (image) {
     const storageRef = storage.ref(`/productImages/${image.name}`);
     const task = await storageRef.put(image);
@@ -77,9 +75,10 @@ export const createProduct = async (product, image, quantity) => {
     additionalFee,
     shippingFee,
   } = product;
-  console.log('product', product);
+
   let bazlGain = (settings.bazlFee / 100) * price;
-  let influencerGain = settings.influencerFee + (additionalFee / 100) * price;
+  let influencerGain =
+    ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
   await productCollection
     .add({
       picture: imageURL,
@@ -146,7 +145,8 @@ export const uploadData = async (data) => {
     }
 
     let bazlGain = (settings.bazlFee / 100) * price;
-    let influencerGain = settings.influencerFee + (additionalFee / 100) * price;
+    let influencerGain =
+      ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
 
     productCollection
       .add({

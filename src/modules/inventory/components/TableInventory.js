@@ -21,7 +21,7 @@ class TableInventory extends React.Component {
             <td>{product.totalQuantity}</td>
             <td>${product.price}</td>
             <td>${product.additionalFee}</td>
-            <td>{product.shippingFee}</td>
+            <td>{product.shippingFee ? product.shippingFee : 'Not'}</td>
             <td>5</td>
             <td>
               <Link

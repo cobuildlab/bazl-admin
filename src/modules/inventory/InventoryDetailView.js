@@ -1,4 +1,10 @@
 import React from 'react';
+import View from 'react-flux-state';
+import Validate from 'react-validate-form';
+import * as R from 'ramda';
+import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { error } from 'pure-logger';
 import {
   MDBContainer,
   MDBRow,
@@ -11,14 +17,9 @@ import {
   MDBIcon,
 } from 'mdbreact';
 import SidebarComponent from '../../components/SidebarComponent';
-import ImgDefault from '../../assets/img/img-default.png';
-import { Link } from 'react-router-dom';
-import View from 'react-flux-state';
 import { Products } from './components/Products';
-import Validate from 'react-validate-form';
 import { validations } from '../new-product/newproduct-utils';
 import { totalQuantity } from './inventory-utils';
-import { toast } from 'react-toastify';
 import { Loader } from '../../components/Loader';
 import {
   inventoryStore,
@@ -27,13 +28,11 @@ import {
   INVENTORY_UPDATE_EVENT,
   INVENTORY_DELETE_EVENT,
 } from './inventory-store';
-import { error } from 'pure-logger';
 import {
   fetchDetailProduct,
   updateProduct,
   deleteProduct,
 } from './inventory-actions';
-import * as R from 'ramda';
 import ModalUpdate from './components/ModalUpdate';
 import ModalDelete from './components/ModalDelete';
 import { getCategory } from '../new-product/newproduct-actions';
@@ -42,6 +41,7 @@ import {
   PRODUCT_CATEGORIES_EVENT,
 } from '../new-product/newproduct-store';
 import Color from '../../components/Color';
+import ImgDefault from '../../assets/img/img-default.png';
 
 class InventoryDetailView extends View {
   constructor(props) {
@@ -123,16 +123,16 @@ class InventoryDetailView extends View {
     };
     reader.readAsDataURL(image);
   };
+
   onUpdate = (confirm) => {
-    const { name, description, products, price, shippingFee } = this.state.data;
+    const { name, description, products, price } = this.state.data;
     let finalQuantity = totalQuantity(this.state.data.products);
     if (confirm) {
       if (
         name === '' ||
         description === '' ||
         products.length === 0 ||
-        price === '' ||
-        shippingFee === ''
+        price === ''
       ) {
         toast.error('All Fields are Required');
       } else {
