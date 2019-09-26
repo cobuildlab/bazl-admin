@@ -34,7 +34,15 @@ class HomeView extends View {
       inventory = R.clone(datas);
       let newData = R.clone(this.state.data);
       let totalProducts = inventory.length;
+      let totalImpressions = 0;
+
+      inventory.forEach((element) => {
+        if (element.views) {
+          totalImpressions = totalImpressions + element.views;
+        }
+      });
       newData.products = totalProducts;
+      newData.impressions = totalImpressions;
 
       this.setState({
         inventory,
