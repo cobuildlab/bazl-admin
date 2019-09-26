@@ -85,20 +85,23 @@ class SalesDetailView extends View {
   render() {
     let { sale } = this.state;
     let statBtn;
-    if (sale.status && sale.shippedStatus === '1') {
+
+    if (sale.orderStatus === 'pending') {
       statBtn = (
         <MDBBtn
           className="btn btn-circle-success"
           value={sale.shippedStatus}
-          onClick={(e) => this.closeSale(e)}>
+          onClick={(e) => this.closeSale(e)}
+          disabled>
           Active Sale
         </MDBBtn>
       );
-    } else if (sale.status && sale.shippedStatus === '2') {
+    } else if (sale.orderStatus === 'shipping') {
       statBtn = (
         <MDBBtn
           className="btn btn-circle-success"
-          onClick={(e) => this.closeSale(e)}>
+          onClick={(e) => this.closeSale(e)}
+          disabled>
           Shipped Sale
         </MDBBtn>
       );

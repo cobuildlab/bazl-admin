@@ -12,6 +12,8 @@ import { userModel } from './Profile-models';
 import { EditBasicInformation } from './components/EditBasicInformation';
 import { Loader } from '../../components/Loader';
 import SidebarComponent from '../../components/SidebarComponent';
+import { salesStore, SALE_EVENT } from '../sales/sales-store';
+import { fetchSales } from '../sales/sales-action';
 
 class EditProfileView extends View {
   constructor(props) {
@@ -25,6 +27,9 @@ class EditProfileView extends View {
       deleteBankAccountModalIsOpen: false,
       bankAccountIndex: 0,
       inventory: [],
+      data: {
+        totalSales: '0',
+      },
     };
   }
 
@@ -37,7 +42,6 @@ class EditProfileView extends View {
         loadingInventory: false,
       });
     });
-
     this.subscribe(landingStore, USER_EVENT, (user) => {
       this.setState(
         {
@@ -52,8 +56,24 @@ class EditProfileView extends View {
         },
       );
     });
+    this.subscribe(salesStore, SALE_EVENT, (sale) => {
+      let totalSales = 0;
+      sale.forEach((element) => {
+        let { products } = element;
+        products.forEach((product) => {
+          totalSales =
+            totalSales + parseFloat(product.price) * product.totalQuantity;
+        });
+      });
+      let newData = R.clone(this.state.data);
+      newData.totalSales = totalSales;
+      this.setState({
+        data: newData,
+      });
+    });
     fetchUserProducts();
     fetchProfileAction();
+    fetchSales();
   }
 
   onUpdateUser = (updateUser) => {
@@ -78,7 +98,7 @@ class EditProfileView extends View {
 
   render() {
     const { name, description, picture } = this.state.user;
-    const { loadingUser } = this.state;
+    const { loadingUser, data } = this.state;
     return (
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin body">
@@ -101,6 +121,7 @@ class EditProfileView extends View {
                 picture={picture}
                 onCancel={this.flagEdit}
                 onSave={this.onUpdateUser}
+                data={data}
               />
             </MDBRow>
             {loadingUser ? (

@@ -220,7 +220,9 @@ class SalesDetailViewInformation extends Component {
         <MDBCol md="2" className="mb-3">
           <h5>Total Sales</h5>
           <h6 className="text-primary">
-            <span className="font-weight-bold">80</span> Sales
+            <span className="font-weight-bold">
+              {product.price * product.totalQuantity}$
+            </span>
           </h6>
         </MDBCol>
       </MDBRow>
