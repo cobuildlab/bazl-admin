@@ -293,7 +293,7 @@ class InventoryDetailView extends View {
                                 name="category"
                                 onChange={this.onChange}
                                 value={this.state.data.category}>
-                                <option selected disabled>
+                                <option value disabled>
                                   Choose your option
                                 </option>
                                 {categories.map((category) => (
@@ -460,7 +460,7 @@ class InventoryDetailView extends View {
                                 name="additionalFee"
                                 onChange={this.onChange}
                                 value={this.state.data.additionalFee}>
-                                <option selected disabled>
+                                <option value disabled>
                                   Select %
                                 </option>
                                 {percent.map((category) => (
@@ -490,7 +490,7 @@ class InventoryDetailView extends View {
                                 name="shippingFee"
                                 onChange={this.onChange}
                                 value={this.state.data.shippingFee}>
-                                <option selected key="Not" value="Not">
+                                <option key="Not" value="Not">
                                   Not
                                 </option>
                                 <option key="Yes" value="Yes">

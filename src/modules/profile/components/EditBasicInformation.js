@@ -47,7 +47,7 @@ class EditBasicInformation extends React.Component {
   };
 
   render() {
-    const { onCancel, onSave } = this.props;
+    const { onCancel, onSave, data } = this.props;
     let { name, description, picture } = this.state;
     let imagePreview = null;
     if (picture) {
@@ -135,7 +135,9 @@ class EditBasicInformation extends React.Component {
           <MDBCard style={{ marginBottom: '30px' }}>
             <MDBCardBody>
               <MDBCardText className="text-center">Total Sales</MDBCardText>
-              <MDBCardTitle className="text-center">$0</MDBCardTitle>
+              <MDBCardTitle className="text-center">
+                ${data.totalSales}
+              </MDBCardTitle>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>

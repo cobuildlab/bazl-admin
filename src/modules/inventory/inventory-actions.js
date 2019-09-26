@@ -6,7 +6,7 @@ import {
   INVENTORY_DETAIL_EVENT,
   INVENTORY_UPDATE_EVENT,
   INVENTORY_DELETE_EVENT,
-  SEARCH_EVENT,
+  SETTINGS_EVENT,
 } from './inventory-store';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 /**
@@ -35,6 +35,7 @@ export const fetchUserProducts = () => {
           additionalFee,
           shippingFee,
           totalQuantity,
+          views,
           user,
         } = doc.data();
         data.push({
@@ -47,6 +48,7 @@ export const fetchUserProducts = () => {
           additionalFee,
           shippingFee,
           totalQuantity,
+          views,
           user,
           productID: doc.id,
         });
@@ -60,55 +62,6 @@ export const fetchUserProducts = () => {
     });
 };
 
-export const searchProduct = async (search) => {
-  const DB = firebase.firestore();
-  const productsCollection = DB.collection('products');
-  const userData = landingStore.getState(USER_EVENT);
-  const nameSearch = await search;
-
-  let data = [];
-  await productsCollection
-    .where('user', '==', userData.email)
-    .where('name', '==', nameSearch)
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        const {
-          picture,
-          name,
-          category,
-          description,
-          products,
-          price,
-          additionalFee,
-          shippingFee,
-          // totalPrice,
-          totalQuantity,
-          user,
-        } = doc.data();
-        data.push({
-          picture,
-          name,
-          category,
-          description,
-          products,
-          price,
-          additionalFee,
-          shippingFee,
-          // totalPrice,
-          totalQuantity,
-          user,
-          productID: doc.id,
-        });
-      });
-      console.log(data, 'data');
-      Flux.dispatchEvent(SEARCH_EVENT, data);
-    })
-    .catch((e) => {
-      console.log('Error getting documents', e);
-      Flux.dispatchEvent(INVENTORY_ERROR_EVENT, new Error(e));
-    });
-};
 /**
  * fetches all the info of a determinated product
  *
@@ -138,8 +91,22 @@ export const fetchDetailProduct = (id) => {
 export const updateProduct = async (product, image, quantity, id) => {
   const DB = firebase.firestore();
   const productCollection = DB.collection('products').doc(id);
+  const settingsCollection = DB.collection('settings');
+  let settingsRef;
+  let settings = {};
   let imageURL = product.picture;
   const storage = firebase.storage();
+
+  try {
+    settingsRef = await settingsCollection.get();
+  } catch (err) {
+    Flux.dispatch(INVENTORY_ERROR_EVENT, err);
+  }
+
+  settingsRef.forEach((doc) => {
+    settings = doc.data();
+  });
+
   if (image) {
     const storageRef = storage.ref(`/productImages/${image.name}`);
     const task = await storageRef.put(image);
@@ -156,6 +123,11 @@ export const updateProduct = async (product, image, quantity, id) => {
     user,
   } = product;
 
+  let bazlGain = (settings.bazlFee / 100) * price;
+  let influencerGain =
+    ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
+  let finalPrice = price - (bazlGain + influencerGain);
+
   productCollection
     .update({
       picture: imageURL,
@@ -168,6 +140,9 @@ export const updateProduct = async (product, image, quantity, id) => {
       shippingFee,
       totalQuantity: quantity,
       user,
+      bazlGain,
+      influencerGain,
+      finalPrice,
     })
     .then((doc) => {
       Flux.dispatchEvent(INVENTORY_UPDATE_EVENT, doc);
@@ -196,4 +171,29 @@ export const deleteProduct = (id) => {
       console.log('Error deleting document: ', e);
       Flux.dispatchEvent(INVENTORY_ERROR_EVENT, e);
     });
+};
+
+/**
+ * Get settings
+ *
+ * @returns {Promise<{userProducts}>}
+ */
+export const fetchSettings = async () => {
+  const DB = firebase.firestore();
+  const settingsCollection = DB.collection('settings');
+
+  let settingsRef;
+  let settings = {};
+
+  try {
+    settingsRef = await settingsCollection.get();
+  } catch (err) {
+    Flux.dispatchEvent(INVENTORY_ERROR_EVENT, err);
+  }
+
+  settingsRef.forEach((doc) => {
+    settings = doc.data();
+  });
+
+  Flux.dispatchEvent(SETTINGS_EVENT, settings);
 };

@@ -79,6 +79,7 @@ export const createProduct = async (product, image, quantity) => {
   let bazlGain = (settings.bazlFee / 100) * price;
   let influencerGain =
     ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
+
   await productCollection
     .add({
       picture: imageURL,
@@ -147,6 +148,7 @@ export const uploadData = async (data) => {
     let bazlGain = (settings.bazlFee / 100) * price;
     let influencerGain =
       ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
+    let finalPrice = price - (bazlGain + influencerGain);
 
     productCollection
       .add({
@@ -160,6 +162,7 @@ export const uploadData = async (data) => {
         shippingFee,
         bazlGain,
         influencerGain,
+        finalPrice,
         user: userData.email,
       })
       .then((doc) => {

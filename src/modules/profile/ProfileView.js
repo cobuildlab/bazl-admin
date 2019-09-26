@@ -26,6 +26,8 @@ import {
 } from './profile-actions';
 import { ModalConfirm } from '../../components/ModalConfirm';
 import { EditBankInformation } from './components/EditBankInformation';
+import { salesStore, SALE_EVENT } from '../sales/sales-store';
+import { fetchSales } from '../sales/sales-action';
 
 class ProfileView extends View {
   constructor(props) {
@@ -42,6 +44,7 @@ class ProfileView extends View {
       },
     };
   }
+
   componentDidMount() {
     this.subscribe(inventoryStore, INVENTORY_EVENT, (data) => {
       let { inventory } = this.state;
@@ -88,7 +91,6 @@ class ProfileView extends View {
         },
       );
     });
-
     this.subscribe(profileStore, DELETE_ACCOUNT_EVENT, (index) => {
       const { user } = this.state;
       user.bankAccounts.splice(index, 1);
@@ -102,7 +104,6 @@ class ProfileView extends View {
         },
       );
     });
-
     this.subscribe(profileStore, UPDATE_ACCOUNT_EVENT, (bankAccount) => {
       let { user } = this.state;
       let index = bankAccount[1];
@@ -117,7 +118,23 @@ class ProfileView extends View {
         },
       );
     });
+    this.subscribe(salesStore, SALE_EVENT, (sale) => {
+      let totalSales = 0;
+      sale.forEach((element) => {
+        let { products } = element;
+        products.forEach((product) => {
+          totalSales =
+            totalSales + parseFloat(product.price) * product.totalQuantity;
+        });
+      });
+      let newData = R.clone(this.state.data);
+      newData.totalSales = totalSales;
+      this.setState({
+        data: newData,
+      });
+    });
     fetchUserProducts();
+    fetchSales();
   }
 
   newAccount = (account) => {
@@ -158,6 +175,7 @@ class ProfileView extends View {
       deleteBankAccountModalIsOpen,
     } = this.state;
     const { bankAccounts } = this.state.user;
+
     return (
       <SidebarComponent>
         <div className="d-flex justify-content-between nav-admin">

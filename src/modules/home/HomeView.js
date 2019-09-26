@@ -1,14 +1,16 @@
 import React from 'react';
 import View from 'react-flux-state';
-import SidebarComponent from '../../components/SidebarComponent';
+import * as R from 'ramda';
+import { Link } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBAnimation } from 'mdbreact';
+import SidebarComponent from '../../components/SidebarComponent';
 import { Loader } from '../../components/Loader';
 import TableSales from '../sales/TableSalesView';
-import { Link } from 'react-router-dom';
 import { inventoryStore, INVENTORY_EVENT } from '../inventory/inventory-store';
 import { fetchUserProducts } from '../inventory/inventory-actions';
-import * as R from 'ramda';
 import SliderCardsMap from '../../components/SliderCardsMap';
+import { salesStore, SALE_EVENT } from '../sales/sales-store';
+import { fetchSales } from '../sales/sales-action';
 
 class HomeView extends View {
   constructor(props) {
@@ -16,6 +18,7 @@ class HomeView extends View {
     this.state = {
       loadingInventory: true,
       inventory: [],
+      sales: [],
       data: {
         tags: '0',
         impressions: '0',
@@ -31,7 +34,15 @@ class HomeView extends View {
       inventory = R.clone(datas);
       let newData = R.clone(this.state.data);
       let totalProducts = inventory.length;
+      let totalImpressions = 0;
+
+      inventory.forEach((element) => {
+        if (element.views) {
+          totalImpressions = totalImpressions + element.views;
+        }
+      });
       newData.products = totalProducts;
+      newData.impressions = totalImpressions;
 
       this.setState({
         inventory,
@@ -39,7 +50,17 @@ class HomeView extends View {
         data: newData,
       });
     });
+    this.subscribe(salesStore, SALE_EVENT, (sale) => {
+      const sales = sale;
+      let newData = R.clone(this.state.data);
+      let totalSales = sales.length;
+      newData.sales = totalSales;
+      this.setState({
+        data: newData,
+      });
+    });
     fetchUserProducts();
+    fetchSales();
   }
 
   detailPublication = (publication) => {

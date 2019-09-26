@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import View from 'react-flux-state';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import {
   MDBRow,
   MDBCol,
   MDBTable,
   MDBTableBody,
   MDBTableHead,
-  MDBBtn,
 } from 'mdbreact';
 import ImgProfile from '../../assets/img/profile-table.jpg';
 import { fetchSales } from './sales-action';
 import { salesStore, SALE_EVENT } from './sales-store';
-import View from 'react-flux-state';
+
 class TableSales extends View {
   constructor(props) {
     super(props);
@@ -36,25 +36,15 @@ class TableSales extends View {
     let statBtn;
 
     return list.map((sale) => {
-      if (sale.status && sale.shippedStatus === '1') {
-        statBtn = (
-          <MDBBtn className="btn btn-circle-success" disabled>
-            Active Sale
-          </MDBBtn>
-        );
-      } else if (sale.status && sale.shippedStatus === '2') {
-        statBtn = (
-          <MDBBtn className="btn btn-circle-success" disabled>
-            Shipped Sale
-          </MDBBtn>
-        );
+      let status = '';
+      if (sale.orderStatus === 'pending') {
+        status = 'Pending';
+      } else if (sale.orderStatus === 'shipping') {
+        status = 'Shipping';
       } else {
-        statBtn = (
-          <MDBBtn className="btn btn-circle-danger" disabled>
-            Closed Sale
-          </MDBBtn>
-        );
+        status = 'Close';
       }
+
       return (
         <MDBTableBody key={sale.saleID}>
           <tr>
@@ -65,12 +55,13 @@ class TableSales extends View {
               />
               {/* <span className="username-table">{sale.controlNumber}</span> */}
             </td>
-            <td>${sale.totalAmount}</td>
+            <td>${sale.orderTotalAmount}</td>
             <td>{moment(sale.orderDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
-            <td>{sale.controlNumber}</td>
+            <td>{sale.orderControlNumber}</td>
+            <td>{status}</td>
             <td>
               <Link
-                to={`/order-details/${sale.saleID}`}
+                to={`/order-details/${sale.id}`}
                 className="btn btn-circle btn-circle-link">
                 Order Details
               </Link>
@@ -93,7 +84,7 @@ class TableSales extends View {
                 <th>Price</th>
                 <th>Date</th>
                 <th>Order No</th>
-                <th></th>
+                <th>Estatus</th>
                 <th></th>
               </tr>
             </MDBTableHead>

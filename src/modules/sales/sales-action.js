@@ -21,53 +21,39 @@ import Flux from 'flux-state';
  */
 export const fetchSales = () => {
   const DB = firebase.firestore();
-  const salesCollection = DB.collection('orders');
+  const salesCollection = DB.collection('sales');
   const userData = landingStore.getState(USER_EVENT);
 
   let data = [];
   salesCollection
-    .where('userEmail', '==', userData.email)
+    .where('saleMerchantEmail', '==', userData.email)
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         const {
-          controlNumber,
+          buyerEmail,
+          id,
+          orderAddress,
+          orderControlNumber,
           orderDate,
-          buyerID,
-          color,
-          date,
-          influencer,
-          nOrder,
-          picture,
-          price,
-          quantity,
-          size,
-          status,
-          shippedStatus,
-          productID,
-          statusShipped,
-          totalAmount,
-          shippingFee,
+          orderId,
+          orderStatus,
+          orderTotalAmount,
+          products,
+          saleMerchantEmail,
         } = doc.data();
         data.push({
-          saleID: doc.id,
-          controlNumber,
+          buyerEmail,
+          id,
+          orderAddress,
+          orderControlNumber,
           orderDate,
-          buyerID,
-          color,
-          date,
-          influencer,
-          nOrder,
-          picture,
-          price,
-          quantity,
-          size,
-          status,
-          shippedStatus,
-          productID,
-          statusShipped,
-          totalAmount,
-          shippingFee,
+          orderId,
+          orderStatus,
+          orderTotalAmount,
+          products,
+          saleMerchantEmail,
+          // saleID: doc.id,
         });
       });
       Flux.dispatchEvent(SALE_EVENT, data);
@@ -84,7 +70,7 @@ export const fetchSales = () => {
  */
 export const detailFetch = (id) => {
   const DB = firebase.firestore();
-  const salesCollection = DB.collection('orders').doc(id);
+  const salesCollection = DB.collection('sales').doc(id);
 
   let data = [];
   salesCollection.get().then((doc) => {
@@ -157,16 +143,16 @@ export const changeStatus = (id, e) => {
 export const updateCommentAction = async (messageData, i) => {
   console.log('messageData', messageData);
   const DB = firebase.firestore();
-  const ordersCollection = DB.collection('orders');
-  const sessionOrder = landingStore.getState(USER_EVENT);
-  let orders;
+  const salesCollection = DB.collection('sales');
+  const sessionUser = landingStore.getState(USER_EVENT);
+  let sales;
 
-  await ordersCollection
-    .where('userEmail', '==', sessionOrder.email)
+  await salesCollection
+    .where('saleMerchantEmail', '==', sessionUser.email)
     .get()
     .then((data) => {
       data.forEach((doc) => {
-        orders = doc;
+        sales = doc;
       });
     })
     .catch((e) => {
@@ -174,14 +160,20 @@ export const updateCommentAction = async (messageData, i) => {
       console.log(e);
     });
 
-  const ordersRef = ordersCollection.doc(orders.id);
+  const salesRef = salesCollection.doc(sales.id);
 
-  let ordersData = orders.data();
+  let ordersData = sales.data();
   let { products } = ordersData;
-  console.log('products', products);
   products[i].comment = messageData.comment;
-  products[i].pictureTax = messageData.pictureTax;
-  await ordersRef.set(ordersData, { merge: true });
+
+  if (messageData.pictureTax) {
+    products[i].pictureTax = messageData.pictureTax;
+  }
+  if (products[i].pictureTax && products[i].comment) {
+    ordersData.orderStatus = 'shipping';
+  }
+
+  await salesRef.set(ordersData, { merge: true });
 
   Flux.dispatchEvent(COMMENT_EVENT, messageData);
 };

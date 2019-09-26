@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 class TableInventory extends React.Component {
   render() {
     const inventory = this.props.products;
+    const { settings } = this.props;
     const table = inventory.map((product) => {
       return (
         <MDBTableBody key={product.productID}>
@@ -20,9 +21,8 @@ class TableInventory extends React.Component {
             <td>{product.description}</td>
             <td>{product.totalQuantity}</td>
             <td>${product.price}</td>
-            <td>${product.additionalFee}</td>
-            <td>{product.shippingFee ? product.shippingFee : 'Not'}</td>
-            <td>5</td>
+            <td>{settings.bazlFee}%</td>
+            <td>{product.additionalFee}%</td>
             <td>
               <Link
                 to={`/inventory-details/${product.productID}`}
@@ -47,8 +47,7 @@ class TableInventory extends React.Component {
                 <th>Price</th>
                 <th>Comissions</th>
                 <th>Additional Fee</th>
-                <th># of posts</th>
-                <th> </th>
+                <th></th>
               </tr>
             </MDBTableHead>
             {table}
