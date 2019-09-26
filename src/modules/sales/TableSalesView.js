@@ -8,7 +8,6 @@ import {
   MDBTable,
   MDBTableBody,
   MDBTableHead,
-  MDBBtn,
 } from 'mdbreact';
 import ImgProfile from '../../assets/img/profile-table.jpg';
 import { fetchSales } from './sales-action';
@@ -37,24 +36,13 @@ class TableSales extends View {
     let statBtn;
 
     return list.map((sale) => {
+      let status = '';
       if (sale.orderStatus === 'pending') {
-        statBtn = (
-          <MDBBtn className="btn btn-circle-success" disabled>
-            Open
-          </MDBBtn>
-        );
+        status = 'Pending';
       } else if (sale.orderStatus === 'shipping') {
-        statBtn = (
-          <MDBBtn className="btn btn-circle-success" disabled>
-            Shipped
-          </MDBBtn>
-        );
+        status = 'Shipping';
       } else {
-        statBtn = (
-          <MDBBtn className="btn btn-circle-danger" disabled>
-            Closed
-          </MDBBtn>
-        );
+        status = 'Close';
       }
 
       return (
@@ -70,6 +58,7 @@ class TableSales extends View {
             <td>${sale.orderTotalAmount}</td>
             <td>{moment(sale.orderDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
             <td>{sale.orderControlNumber}</td>
+            <td>{status}</td>
             <td>
               <Link
                 to={`/order-details/${sale.id}`}
@@ -95,8 +84,8 @@ class TableSales extends View {
                 <th>Price</th>
                 <th>Date</th>
                 <th>Order No</th>
+                <th>Estatus</th>
                 <th></th>
-                {/* <th></th> */}
               </tr>
             </MDBTableHead>
             {this.salesList()}

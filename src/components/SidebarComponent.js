@@ -5,7 +5,7 @@ import HomeIcon from '../assets/img/home.png';
 import ProfileIcon from '../assets/img/profile.png';
 import SalesIcon from '../assets/img/cart.png';
 import ReportIcon from '../assets/img/report.png';
-import NotificationIcon from '../assets/img/notifications.png';
+// import NotificationIcon from '../assets/img/notifications.png';
 import InvetoryIcon from '../assets/img/invetory.png';
 import Icon from 'react-icons-kit';
 import { ic_menu } from 'react-icons-kit/md/ic_menu';
@@ -65,12 +65,12 @@ class SidebarComponent extends React.Component {
                   image: SalesIcon,
                   className: 'title-list-item',
                 },
-                {
-                  path: '/notifications',
-                  name: 'Notifications',
-                  image: NotificationIcon,
-                  className: 'title-list-item',
-                },
+                // {
+                //   path: '/notifications',
+                //   name: 'Notifications',
+                //   image: NotificationIcon,
+                //   className: 'title-list-item',
+                // },
                 {
                   path: '/inventory',
                   name: 'Inventory',

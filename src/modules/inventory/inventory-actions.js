@@ -6,7 +6,7 @@ import {
   INVENTORY_DETAIL_EVENT,
   INVENTORY_UPDATE_EVENT,
   INVENTORY_DELETE_EVENT,
-  SEARCH_EVENT,
+  SETTINGS_EVENT,
 } from './inventory-store';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 /**
@@ -62,55 +62,6 @@ export const fetchUserProducts = () => {
     });
 };
 
-export const searchProduct = async (search) => {
-  const DB = firebase.firestore();
-  const productsCollection = DB.collection('products');
-  const userData = landingStore.getState(USER_EVENT);
-  const nameSearch = await search;
-
-  let data = [];
-  await productsCollection
-    .where('user', '==', userData.email)
-    .where('name', '==', nameSearch)
-    .get()
-    .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        const {
-          picture,
-          name,
-          category,
-          description,
-          products,
-          price,
-          additionalFee,
-          shippingFee,
-          // totalPrice,
-          totalQuantity,
-          user,
-        } = doc.data();
-        data.push({
-          picture,
-          name,
-          category,
-          description,
-          products,
-          price,
-          additionalFee,
-          shippingFee,
-          // totalPrice,
-          totalQuantity,
-          user,
-          productID: doc.id,
-        });
-      });
-      console.log(data, 'data');
-      Flux.dispatchEvent(SEARCH_EVENT, data);
-    })
-    .catch((e) => {
-      console.log('Error getting documents', e);
-      Flux.dispatchEvent(INVENTORY_ERROR_EVENT, new Error(e));
-    });
-};
 /**
  * fetches all the info of a determinated product
  *
@@ -220,4 +171,29 @@ export const deleteProduct = (id) => {
       console.log('Error deleting document: ', e);
       Flux.dispatchEvent(INVENTORY_ERROR_EVENT, e);
     });
+};
+
+/**
+ * Get settings
+ *
+ * @returns {Promise<{userProducts}>}
+ */
+export const fetchSettings = async () => {
+  const DB = firebase.firestore();
+  const settingsCollection = DB.collection('settings');
+
+  let settingsRef;
+  let settings = {};
+
+  try {
+    settingsRef = await settingsCollection.get();
+  } catch (err) {
+    Flux.dispatchEvent(INVENTORY_ERROR_EVENT, err);
+  }
+
+  settingsRef.forEach((doc) => {
+    settings = doc.data();
+  });
+
+  Flux.dispatchEvent(SETTINGS_EVENT, settings);
 };

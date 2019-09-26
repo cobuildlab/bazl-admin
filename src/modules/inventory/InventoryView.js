@@ -9,10 +9,10 @@ import View from 'react-flux-state';
 import {
   INVENTORY_EVENT,
   INVENTORY_ERROR_EVENT,
-  // SEARCH_EVENT,
+  SETTINGS_EVENT,
   inventoryStore,
 } from './inventory-store';
-import { fetchUserProducts } from './inventory-actions';
+import { fetchUserProducts, fetchSettings } from './inventory-actions';
 import { toast } from 'react-toastify';
 
 class InventoryView extends View {
@@ -21,6 +21,7 @@ class InventoryView extends View {
     this.state = {
       products: [],
       productsAux: [],
+      settings: {},
       loading: true,
     };
   }
@@ -45,24 +46,14 @@ class InventoryView extends View {
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (error) => {
       toast.error(error.message);
     });
-    // this.subscribe(inventoryStore, SEARCH_EVENT, (product) => {
-    //   const products = product;
-    //   console.log("SEARCH_EVENT",products);
-    //   let productsAux = R.clone(products)
-    //   this.setState({
-    //     products,
-    //     productsAux,
-    //   });
-    // });
+    this.subscribe(inventoryStore, SETTINGS_EVENT, (settings) => {
+      this.setState({
+        settings,
+      });
+    });
     fetchUserProducts();
+    fetchSettings();
   }
-  // onSearch = (e) => {
-  //   if (e.key === 'Enter') {
-  //     let search = e.target.value;
-
-  //     searchProduct(search);
-  //   }
-  // };
 
   onChange = (e) => {
     let { products } = this.state;
@@ -80,6 +71,7 @@ class InventoryView extends View {
   };
 
   ViewInventory() {
+    let { productsAux, settings } = this.state;
     if (this.state.products.length === 0) {
       return (
         <MDBContainer className="empty-inventory" fluid>
@@ -100,7 +92,7 @@ class InventoryView extends View {
       return (
         <MDBAnimation type="fadeIn">
           <MDBContainer className="body" fluid>
-            <TableInventory products={this.state.productsAux} />
+            <TableInventory products={productsAux} settings={settings} />
           </MDBContainer>
         </MDBAnimation>
       );
@@ -117,7 +109,6 @@ class InventoryView extends View {
                 placeholder="Search"
                 className="form-control form-control-search"
                 id="formGroupExampleInput"
-                // onKeyPress={this.onSearch}
                 onChange={this.onChange}
               />
             </div>
