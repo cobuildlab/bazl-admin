@@ -16,11 +16,6 @@ import {
   MDBCardBody,
   MDBIcon,
 } from 'mdbreact';
-import SidebarComponent from '../../components/SidebarComponent';
-import { Products } from './components/Products';
-import { validations } from '../new-product/newproduct-utils';
-import { totalQuantity } from './inventory-utils';
-import { Loader } from '../../components/Loader';
 import {
   inventoryStore,
   INVENTORY_DETAIL_EVENT,
@@ -33,14 +28,19 @@ import {
   updateProduct,
   deleteProduct,
 } from './inventory-actions';
-import ModalUpdate from './components/ModalUpdate';
-import ModalDelete from './components/ModalDelete';
-import { getCategory } from '../new-product/newproduct-actions';
 import {
   productStore,
   PRODUCT_CATEGORIES_EVENT,
 } from '../new-product/newproduct-store';
+import ModalUpdate from './components/ModalUpdate';
+import ModalDelete from './components/ModalDelete';
+import SidebarComponent from '../../components/SidebarComponent';
 import Color from '../../components/Color';
+import { Products } from './components/Products';
+import { validations } from '../new-product/newproduct-utils';
+import { totalQuantity } from './inventory-utils';
+import { Loader } from '../../components/Loader';
+import { getCategory } from '../new-product/newproduct-actions';
 import ImgDefault from '../../assets/img/img-default.png';
 
 class InventoryDetailView extends View {
@@ -163,7 +163,6 @@ class InventoryDetailView extends View {
     let products = data.products.slice();
     products.push(this.state.product);
     data.products = products;
-    console.log(data, 'data');
     this.setState({
       data: data,
       showNewProductForm: false,
@@ -378,15 +377,6 @@ class InventoryDetailView extends View {
                                           </p>
                                         </MDBCol>
                                         <MDBCol md="3">
-                                          {/* <MDBInput
-                                            label="Color"
-                                            className="product mt-0"
-                                            type="text"
-                                            name="color"
-                                            onChange={this.onChangeProduct}
-                                            onKeyUp={validate}
-                                            required
-                                          /> */}
                                           <Color
                                             onChangeColor={this.onChangeColor}
                                           />

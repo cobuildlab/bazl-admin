@@ -37,6 +37,7 @@ export const fetchUserProducts = () => {
           totalQuantity,
           views,
           user,
+          id,
         } = doc.data();
         data.push({
           picture,
@@ -50,7 +51,7 @@ export const fetchUserProducts = () => {
           totalQuantity,
           views,
           user,
-          productID: doc.id,
+          id,
         });
       });
       console.log(data);

@@ -11,6 +11,7 @@ import { fetchUserProducts } from '../inventory/inventory-actions';
 import SliderCardsMap from '../../components/SliderCardsMap';
 import { salesStore, SALE_EVENT } from '../sales/sales-store';
 import { fetchSales } from '../sales/sales-action';
+import { landingStore, USER_EVENT } from '../landing/landing-store';
 
 class HomeView extends View {
   constructor(props) {
@@ -58,6 +59,12 @@ class HomeView extends View {
       this.setState({
         data: newData,
       });
+    });
+    const sessionUser = landingStore.getState(USER_EVENT);
+    let newData = R.clone(this.state.data);
+    newData.tags = sessionUser.totalTags;
+    this.setState({
+      data: newData,
     });
     fetchUserProducts();
     fetchSales();
