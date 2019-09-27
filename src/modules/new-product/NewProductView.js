@@ -442,14 +442,6 @@ class NewProductView extends View {
                               </p>
                             </MDBCol>
                             <MDBCol md="3">
-                              {/* <MDBInput
-                                  type="number"
-                                  name="shippingFee"
-                                  onChange={this.onChange}
-                                  label="Shipping Fee"
-                                  className="mt-0"
-                                  value={this.state.data.shippingFee}
-                                /> */}
                               <select
                                 className="browser-default custom-select mt-1"
                                 name="shippingFee"

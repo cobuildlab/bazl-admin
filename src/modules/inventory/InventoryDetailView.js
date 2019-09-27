@@ -476,15 +476,6 @@ class InventoryDetailView extends View {
                               </p>
                             </MDBCol>
                             <MDBCol>
-                              {/* <MDBInput
-                                name="shippingFee"
-                                onChange={this.onChange}
-                                onKeyUp={validate}
-                                label="Shipping Fee"
-                                className="mt-0"
-                                value={this.state.data.shippingFee}
-                                required
-                              /> */}
                               <select
                                 className="browser-default custom-select mt-1"
                                 name="shippingFee"
