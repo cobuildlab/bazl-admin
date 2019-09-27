@@ -2,13 +2,7 @@ import React from 'react';
 import View from 'react-flux-state';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import {
-  MDBRow,
-  MDBCol,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead,
-} from 'mdbreact';
+import { MDBRow, MDBCol, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import ImgProfile from '../../assets/img/profile-table.jpg';
 import { fetchSales } from './sales-action';
 import { salesStore, SALE_EVENT } from './sales-store';
@@ -37,10 +31,10 @@ class TableSales extends View {
 
     return list.map((sale) => {
       let status = '';
-      if (sale.orderStatus === 'pending') {
-        status = 'Pending';
-      } else if (sale.orderStatus === 'shipping') {
-        status = 'Shipping';
+      if (sale.orderStatus === 'open') {
+        status = 'Open';
+      } else if (sale.orderStatus === 'shipeed') {
+        status = 'Shipeed';
       } else {
         status = 'Close';
       }

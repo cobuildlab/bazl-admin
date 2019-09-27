@@ -80,6 +80,7 @@ export const createProduct = async (product, image, quantity) => {
   let influencerGain =
     ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
 
+  let id;
   await productCollection
     .add({
       picture: imageURL,
@@ -97,12 +98,26 @@ export const createProduct = async (product, image, quantity) => {
     })
     .then((doc) => {
       console.log('Document writen with ID: ', doc.id);
-      Flux.dispatchEvent(PRODUCT_EVENT, doc);
+      id = doc.id;
+      // Flux.dispatchEvent(PRODUCT_EVENT, doc);
     })
     .catch((e) => {
       console.log('Error Adding document: ', e);
       Flux.dispatchEvent(PRODUCT_ERROR_EVENT, e);
     });
+
+  const productRef = DB.collection('products').doc(id);
+  try {
+    productRef.set(
+      {
+        id: id,
+      },
+      { merge: true },
+    );
+    Flux.dispatchEvent(PRODUCT_EVENT, id);
+  } catch (error) {
+    Flux.dispatchEvent(PRODUCT_ERROR_EVENT, error);
+  }
 };
 
 /**

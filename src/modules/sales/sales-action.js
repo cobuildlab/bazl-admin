@@ -170,7 +170,7 @@ export const updateCommentAction = async (messageData, i) => {
     products[i].pictureTax = messageData.pictureTax;
   }
   if (products[i].pictureTax && products[i].comment) {
-    ordersData.orderStatus = 'shipping';
+    ordersData.orderStatus = 'shipeed';
   }
 
   await salesRef.set(ordersData, { merge: true });
