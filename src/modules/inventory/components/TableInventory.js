@@ -22,7 +22,7 @@ class TableInventory extends React.Component {
             <td>{product.totalQuantity}</td>
             <td>${product.price}</td>
             <td>{settings.bazlFee}%</td>
-            <td>{product.additionalFee}%</td>
+            <td>{product.additionalFee ? product.additionalFee : 0}%</td>
             <td>
               <Link
                 to={`/inventory-details/${product.productID}`}

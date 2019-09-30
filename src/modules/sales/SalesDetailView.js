@@ -60,6 +60,7 @@ class SalesDetailView extends View {
     });
     this.subscribe(salesStore, COMMENT_EVENT, (sale) => {
       toast.success('Comment Sent Successful');
+      this.props.history.push('/sales');
     });
     this.subscribe(salesStore, COMMENT_ERROR, (e) => {
       toast.error('Comment Sent Failed');
@@ -86,7 +87,7 @@ class SalesDetailView extends View {
     let { sale } = this.state;
     let statBtn;
 
-    if (sale.orderStatus === 'open') {
+    if (sale.orderStatus === 'open' || sale.orderStatus === 'Open') {
       statBtn = (
         <MDBBtn
           className="btn btn-circle-success"
