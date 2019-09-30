@@ -31,7 +31,7 @@ class TableSales extends View {
 
     return list.map((sale) => {
       let status = '';
-      if (sale.orderStatus === 'open') {
+      if (sale.orderStatus === 'open' || sale.orderStatus === 'Open') {
         status = 'Open';
       } else if (sale.orderStatus === 'shipeed') {
         status = 'Shipeed';
