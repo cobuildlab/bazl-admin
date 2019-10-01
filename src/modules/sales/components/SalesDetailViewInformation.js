@@ -13,6 +13,8 @@ class SalesDetailViewInformation extends Component {
       index: this.props.index,
       comment: this.props.product.comment,
       pictureTax: this.props.pictureTax,
+      idSale: this.props.sale.id,
+      idProduct: this.props.product.id,
     };
     this.onImageChange = this.onImageChange.bind(this);
   }
@@ -42,20 +44,8 @@ class SalesDetailViewInformation extends Component {
   }
 
   render() {
-    let { product, index, pictureTax } = this.state;
+    let { product, index, pictureTax, comment } = this.state;
     const { commentSales } = this.props;
-
-    // let uploadFile = (
-    //    <div>
-    //       <input
-    //          type="file"
-    //          name="photo"
-    //          id="upload-photo"
-    //          style={{ opacity: 0 }}
-    //          onChange={this.handleUpload}
-    //       />
-    //    </div>
-    // );
     let imagePreview = null;
     if (pictureTax) {
       imagePreview = (
@@ -74,18 +64,6 @@ class SalesDetailViewInformation extends Component {
       );
     } else {
       imagePreview = (
-        // <label
-        //    style={{ cursor: 'pointer' }}
-        //    width="80"
-        //    className="CustomlabelProfile text-center"
-        //    htmlFor="upload-photo">
-        //    <img
-        //       alt={'User Profile'}
-        //       src={ImgDefault}
-        //       className="img-fluid img-label"
-        //       style={{ borderRadius: '10px' }}
-        //    />
-        // </label>
         <label className="CustomlabelSales text-center" htmlFor="upload-photo">
           <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload Image
         </label>
@@ -160,32 +138,6 @@ class SalesDetailViewInformation extends Component {
           </div>
           <small className="text-black-50">Status</small>
           <hr />
-          {/* <label
-                  className="CustomlabelSales text-center"
-                  htmlFor="upload-photo">
-                  <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload Image
-               </label> */}
-
-          {/* {uploadFile}
-               <img
-                  width="100%"
-                  style={{ maxWidth: "120px" }}
-                  src={product.picture}
-                  className="mt-2 pt-2"
-                  alt=""
-               />
-               {product.picture ? (
-                  <p className="text-center">
-                     <a
-                        href={product.picture}
-                        rel="noopener noreferrer"
-                        target="_blank">
-                        Download
-                     </a>
-                  </p>
-               ) : (
-                     ''
-                  )} */}
 
           <MDBCol
             md="12"
@@ -207,12 +159,12 @@ class SalesDetailViewInformation extends Component {
             rows="1"
             className="mt-2 pt-2"
             onChange={this.onChange}
-            value={this.state.comment}
+            value={comment}
           />
           <div className="d-flex justify-content-center mt-4">
             <MDBBtn
               className="btn btn-circle"
-              onClick={(e) => commentSales(R.clone(this.state), index)}>
+              onClick={(e) => commentSales(R.clone(this.state))}>
               Send
             </MDBBtn>
           </div>
@@ -233,7 +185,9 @@ class SalesDetailViewInformation extends Component {
 SalesDetailViewInformation.propTypes = {
   product: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  commentSales: PropTypes.func,
+  pictureTax: PropTypes.string.isRequired,
+  sale: PropTypes.object.isRequired,
+  commentSales: PropTypes.func.isRequired,
 };
 
 export { SalesDetailViewInformation };

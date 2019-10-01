@@ -140,58 +140,80 @@ export const changeStatus = (id, e) => {
  * Update the State of a Sale to closed and get the modified data
  * @returns {Promise<SalesModel>}Sale info or null if unexisting
  */
-export const updateCommentAction = async (messageData, i) => {
-  console.log('messageData', messageData);
+export const updateCommentAction = async (data) => {
+  const ref = data;
   const DB = firebase.firestore();
-  const salesCollection = DB.collection('sales');
-  const sessionUser = landingStore.getState(USER_EVENT);
-  let sales;
+  // const sessionUser = landingStore.getState(USER_EVENT);
+  const salesRef = DB.collection('sales').doc(ref.idSale);
+  let sale;
+  let orderId;
+  await salesRef
+    .get()
+    .then((data) => {
+      sale = data.data();
+      orderId = sale.orderId;
+    })
+    .catch((e) => {
+      Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
+      console.log(e);
+    });
 
-  await salesCollection
-    .where('saleMerchantEmail', '==', sessionUser.email)
+  sale.products.forEach((product) => {
+    if (product.id === ref.idProduct) {
+      if (ref.comment) {
+        product.comment = ref.comment;
+      }
+      if (ref.pictureTax) {
+        product.pictureTax = ref.pictureTax;
+      }
+      if (product.pictureTax && product.comment) {
+        sale.orderStatus = 'shipeed';
+      }
+    }
+  });
+
+  const ordersRef = DB.collection('orders').doc(orderId);
+  const orderData = await ordersRef.get();
+  const order = orderData.data();
+
+  await order.products.forEach((product) => {
+    if (product.id === ref.idProduct) {
+      if (ref.comment) {
+        product.comment = ref.comment;
+        product.orderStatus = sale.orderStatus;
+      }
+    }
+  });
+
+  const influencerCollection = DB.collection('influencersSalesProducts');
+  let influencer;
+  let idInfluencer;
+
+  await influencerCollection
+    .where('saleId', '==', ref.idSale)
     .get()
     .then((data) => {
       data.forEach((doc) => {
-        sales = doc.data();
+        idInfluencer = doc.id;
+        influencer = doc.data();
+        if (ref.comment) {
+          influencer.comment = ref.comment;
+          influencer.orderStatus = sale.orderStatus;
+        }
       });
     })
     .catch((e) => {
       Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
       console.log(e);
     });
-  const salesRef = salesCollection.doc(sales.id);
 
-  let { products } = sales;
-  products[i].comment = messageData.comment;
+  const influencerRef = DB.collection('influencersSalesProducts').doc(
+    idInfluencer,
+  );
 
-  if (messageData.pictureTax) {
-    products[i].pictureTax = messageData.pictureTax;
-  }
-  if (products[i].pictureTax && products[i].comment) {
-    sales.orderStatus = 'shipeed';
-  }
+  await salesRef.set(sale, { merge: true });
+  await ordersRef.set(order, { merge: true });
+  await influencerRef.set(influencer, { merge: true });
 
-  await salesRef.set(sales, { merge: true });
-
-  // const influencersSalesProductsCollection = DB.collection('influencersSalesProducts')
-  // // const orderCollection = DB.collection('order')
-
-  // console.log("sales.id",sales.id)
-  // let influencersSalesProducts;
-  // await influencersSalesProductsCollection
-  // .where('id', '==', sales.id)
-  // .get()
-  // .then((data) => {
-  //   data.forEach((doc) => {
-  //     console.log("doc",doc)
-  //     influencersSalesProducts = doc.data();
-  //   });
-  // })
-  // .catch((e) => {
-  //   Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
-  //   console.log(e);
-  // });
-  // console.log("influencersSalesProducts",influencersSalesProducts)
-
-  Flux.dispatchEvent(COMMENT_EVENT, messageData);
+  Flux.dispatchEvent(COMMENT_EVENT, data);
 };
