@@ -146,16 +146,12 @@ export const updateCommentAction = async (data) => {
   // const sessionUser = landingStore.getState(USER_EVENT);
   const salesRef = DB.collection('sales').doc(ref.idSale);
   let sale;
-
+  let orderId;
   await salesRef
     .get()
     .then((data) => {
       sale = data.data();
-      // data.data().products.forEach((doc) => {
-      //   if (doc.id == ref.idProduct) {
-      //     product = doc;
-      //   }
-      // });
+      orderId = sale.orderId;
     })
     .catch((e) => {
       Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
@@ -176,26 +172,48 @@ export const updateCommentAction = async (data) => {
     }
   });
 
+  const ordersRef = DB.collection('orders').doc(orderId);
+  const orderData = await ordersRef.get();
+  const order = orderData.data();
+
+  await order.products.forEach((product) => {
+    if (product.id === ref.idProduct) {
+      if (ref.comment) {
+        product.comment = ref.comment;
+        product.orderStatus = sale.orderStatus;
+      }
+    }
+  });
+
+  const influencerCollection = DB.collection('influencersSalesProducts');
+  let influencer;
+  let idInfluencer;
+
+  await influencerCollection
+    .where('saleId', '==', ref.idSale)
+    .get()
+    .then((data) => {
+      data.forEach((doc) => {
+        idInfluencer = doc.id;
+        influencer = doc.data();
+        if (ref.comment) {
+          influencer.comment = ref.comment;
+          influencer.orderStatus = sale.orderStatus;
+        }
+      });
+    })
+    .catch((e) => {
+      Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
+      console.log(e);
+    });
+
+  const influencerRef = DB.collection('influencersSalesProducts').doc(
+    idInfluencer,
+  );
+
   await salesRef.set(sale, { merge: true });
-
-  // const influencersSalesProductsCollection = DB.collection('influencersSalesProducts')
-  // // const orderCollection = DB.collection('order')
-
-  // console.log("sales.id",sales.id)
-  // let influencersSalesProducts;
-  // await influencersSalesProductsCollection
-  // .get()
-  // .then((data) => {
-  //   data.forEach((doc) => {
-  //     console.log("doc",doc.data())
-  //     // influencersSalesProducts = doc.data();
-  //   });
-  // })
-  // .catch((e) => {
-  //   Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
-  //   console.log(e);
-  // });
-  // console.log("influencersSalesProducts",influencersSalesProducts)
+  await ordersRef.set(order, { merge: true });
+  await influencerRef.set(influencer, { merge: true });
 
   Flux.dispatchEvent(COMMENT_EVENT, data);
 };
