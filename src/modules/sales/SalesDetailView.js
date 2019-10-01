@@ -77,9 +77,9 @@ class SalesDetailView extends View {
     detailUpload(e);
   };
 
-  commentSales = (comment, index) => {
+  commentSales = (data) => {
     this.setState({ loading: true }, () => {
-      updateCommentAction({ ...comment }, index);
+      updateCommentAction(data);
     });
   };
 
@@ -143,8 +143,8 @@ class SalesDetailView extends View {
                     product={product}
                     index={index}
                     sale={sale}
-                    commentSales={this.commentSales}
                     pictureTax={product.pictureTax}
+                    commentSales={this.commentSales}
                   />
                 ))}
               </div>
