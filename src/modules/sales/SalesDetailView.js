@@ -97,7 +97,7 @@ class SalesDetailView extends View {
           Open Sale
         </MDBBtn>
       );
-    } else if (sale.orderStatus === 'shipeed') {
+    } else if (sale.orderStatus === 'shipped') {
       statBtn = (
         <MDBBtn
           className="btn btn-circle-success"

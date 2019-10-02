@@ -125,10 +125,18 @@ class SalesDetailViewInformation extends Component {
                 </span>
               </h6>
               <h6>
-                <span className="d-inline font-weight-bold ml-4">
-                  {product.color}
+                <span className="d-inline font-weight-bold">
+                  <div
+                    style={{
+                      width: 15,
+                      height: 15,
+                      borderRadius: 100,
+                      backgroundColor: product.color,
+                      marginLeft: 20,
+                    }}></div>
                 </span>
               </h6>
+
               <h6>
                 <span className="d-inline font-weight-bold ml-4">
                   {product.size}

@@ -167,7 +167,7 @@ export const updateCommentAction = async (data) => {
         product.pictureTax = ref.pictureTax;
       }
       if (product.pictureTax && product.comment) {
-        sale.orderStatus = 'shipeed';
+        sale.orderStatus = 'shipped';
       }
     }
   });

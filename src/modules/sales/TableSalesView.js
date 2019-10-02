@@ -33,8 +33,8 @@ class TableSales extends View {
       let status = '';
       if (sale.orderStatus === 'open' || sale.orderStatus === 'Open') {
         status = 'Open';
-      } else if (sale.orderStatus === 'shipeed') {
-        status = 'Shipeed';
+      } else if (sale.orderStatus === 'shipped') {
+        status = 'Shipped';
       } else {
         status = 'Close';
       }
