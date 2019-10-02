@@ -25,7 +25,7 @@ class TableInventory extends React.Component {
             <td>{product.additionalFee ? product.additionalFee : 0}%</td>
             <td>
               <Link
-                to={`/inventory-details/${product.productID}`}
+                to={`/inventory-details/${product.id}`}
                 className="btn btn-circle btn-circle-link">
                 Details
               </Link>

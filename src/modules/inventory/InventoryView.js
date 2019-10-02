@@ -45,6 +45,9 @@ class InventoryView extends View {
     });
     this.subscribe(inventoryStore, INVENTORY_ERROR_EVENT, (error) => {
       toast.error(error.message);
+      this.setState({
+        loading: false,
+      });
     });
     this.subscribe(inventoryStore, SETTINGS_EVENT, (settings) => {
       this.setState({
