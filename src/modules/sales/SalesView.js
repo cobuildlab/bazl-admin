@@ -6,8 +6,6 @@ import TableSales from './TableSalesView';
 
 class SalesView extends React.Component {
   render() {
-    
-
     return (
       <React.Fragment>
         <SidebarComponent>
@@ -18,13 +16,12 @@ class SalesView extends React.Component {
             <div>
               <Link
                 to="/new-product"
-                className="btn btn-circle btn-circle-link"
-              >
+                className="btn btn-circle btn-circle-link">
                 Upload <MDBIcon icon="upload" className="ml-1" />
               </Link>
             </div>
           </div>
-          <MDBAnimation type="fadeIn" >
+          <MDBAnimation type="fadeIn">
             <MDBContainer fluid className="body">
               <TableSales />
             </MDBContainer>

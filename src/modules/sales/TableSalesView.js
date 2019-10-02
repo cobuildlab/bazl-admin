@@ -40,7 +40,7 @@ class TableSales extends View {
       }
 
       return (
-        <MDBTableBody key={sale.saleID}>
+        <MDBTableBody key={sale.id}>
           <tr>
             <td>
               <div
