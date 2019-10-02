@@ -124,6 +124,17 @@ export const updateProduct = async (product, image, quantity, id) => {
     user,
   } = product;
 
+  products.forEach((element) => {
+    if (!element.idDetail) {
+      const firstCode = Math.floor(Math.random() * (100 - 10)) + 10;
+      const secondCode = Math.floor(Math.random() * (100 - 10)) + 10;
+      const thirdCode = Math.floor(Math.random() * (45 - 0)) + 0;
+      var caracteres = 'abcdefghijkmnpqrtuvwxyzABCDEFGHJKMNPQRTUVWXYZ';
+      const code = `${firstCode}${quantity}${secondCode}${caracteres[thirdCode]}`;
+      element.idDetail = code;
+    }
+  });
+
   let bazlGain = (settings.bazlFee / 100) * price;
   let influencerGain =
     ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
