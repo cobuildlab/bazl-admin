@@ -33,14 +33,14 @@ class TableSales extends View {
       let status = '';
       if (sale.orderStatus === 'open' || sale.orderStatus === 'Open') {
         status = 'Open';
-      } else if (sale.orderStatus === 'shipeed') {
-        status = 'Shipeed';
+      } else if (sale.orderStatus === 'shipped') {
+        status = 'Shipped';
       } else {
         status = 'Close';
       }
 
       return (
-        <MDBTableBody key={sale.saleID}>
+        <MDBTableBody key={sale.id}>
           <tr>
             <td>
               <div
