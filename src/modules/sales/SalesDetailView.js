@@ -77,10 +77,36 @@ class SalesDetailView extends View {
     detailUpload(e);
   };
 
-  commentSales = (data) => {
+  commentSales = (index) => {
+    const { sale } = this.state;
     this.setState({ loading: true }, () => {
-      updateCommentAction(data);
+      updateCommentAction(sale, index);
     });
+  };
+
+  onChange = (index, e) => {
+    let { sale } = this.state;
+    sale.products[index].comment = e.target.value;
+    this.setState({
+      sale,
+    });
+  };
+
+  onImageChange = (index, e) => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
+    let state = this.state;
+
+    reader.onloadend = () => {
+      state.sale.products[index].pictureTax = reader.result;
+      this.setState({
+        state,
+        file,
+      });
+    };
+    reader.readAsDataURL(file);
   };
 
   render() {
@@ -132,7 +158,6 @@ class SalesDetailView extends View {
               </Link>
             </div>
           </div>
-
           <MDBContainer className="body">
             <div className="d-flex justify-content-end mb-4">{statBtn}</div>
             {sale.products ? (
@@ -145,6 +170,8 @@ class SalesDetailView extends View {
                     sale={sale}
                     pictureTax={product.pictureTax}
                     commentSales={this.commentSales}
+                    onChange={this.onChange}
+                    onImageChange={this.onImageChange}
                   />
                 ))}
               </div>

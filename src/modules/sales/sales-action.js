@@ -140,11 +140,10 @@ export const changeStatus = (id, e) => {
  * Update the State of a Sale to closed and get the modified data
  * @returns {Promise<SalesModel>}Sale info or null if unexisting
  */
-export const updateCommentAction = async (data) => {
+export const updateCommentAction = async (data, index) => {
   const ref = data;
   const DB = firebase.firestore();
-  // const sessionUser = landingStore.getState(USER_EVENT);
-  const salesRef = DB.collection('sales').doc(ref.idSale);
+  const salesRef = DB.collection('sales').doc(ref.id);
   let sale;
   let orderId;
   await salesRef
@@ -158,19 +157,13 @@ export const updateCommentAction = async (data) => {
       console.log(e);
     });
 
-  sale.products.forEach((product) => {
-    if (product.id === ref.idProduct) {
-      if (ref.comment) {
-        product.comment = ref.comment;
-      }
-      if (ref.pictureTax) {
-        product.pictureTax = ref.pictureTax;
-      }
-      if (product.pictureTax && product.comment) {
-        sale.orderStatus = 'shipped';
-      }
-    }
-  });
+  sale.products[index].comment = ref.products[index].comment;
+  if (ref.products[index].pictureTax) {
+    sale.products[index].pictureTax = ref.products[index].pictureTax;
+  }
+  if (sale.products[index].comment && sale.products[index].pictureTax) {
+    sale.orderStatus = 'shipped';
+  }
 
   const ordersRef = DB.collection('orders').doc(orderId);
   const orderData = await ordersRef.get();
@@ -190,7 +183,7 @@ export const updateCommentAction = async (data) => {
   let idInfluencer;
 
   await influencerCollection
-    .where('saleId', '==', ref.idSale)
+    .where('saleId', '==', ref.id)
     .get()
     .then((data) => {
       data.forEach((doc) => {

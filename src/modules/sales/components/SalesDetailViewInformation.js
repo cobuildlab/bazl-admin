@@ -1,51 +1,13 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import * as R from 'ramda';
 import PropTypes from 'prop-types';
 import { MDBIcon, MDBCol, MDBRow, MDBBtn, MDBInput } from 'mdbreact';
 import ImgProfile from '../../../assets/img/profile-table.jpg';
 
 class SalesDetailViewInformation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      product: this.props.product,
-      index: this.props.index,
-      comment: this.props.product.comment,
-      pictureTax: this.props.pictureTax,
-      idSale: this.props.sale.id,
-      idProduct: this.props.product.id,
-    };
-    this.onImageChange = this.onImageChange.bind(this);
-  }
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  onImageChange(e) {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    let { name } = e.target;
-    let state = this.state;
-
-    reader.onloadend = () => {
-      state[name] = reader.result;
-      this.setState({
-        state,
-        file,
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-
   render() {
-    let { product, index, pictureTax, comment } = this.state;
-    const { commentSales } = this.props;
+    let { product, index, pictureTax } = this.props;
+    const { commentSales, onChange, onImageChange } = this.props;
     let imagePreview = null;
     if (pictureTax) {
       imagePreview = (
@@ -116,7 +78,7 @@ class SalesDetailViewInformation extends Component {
               </h6>
               <h6>
                 <span className="d-inline font-weight-bold ml-4">
-                  {product.totalQuantity}
+                  {product.amount}
                 </span>
               </h6>
               <h6>
@@ -146,7 +108,6 @@ class SalesDetailViewInformation extends Component {
           </div>
           <small className="text-black-50">Status</small>
           <hr />
-
           <MDBCol
             md="12"
             style={{ display: 'flex', flexDirection: 'column' }}
@@ -156,23 +117,22 @@ class SalesDetailViewInformation extends Component {
               type="file"
               name="pictureTax"
               id="upload-photo"
-              onChange={this.onImageChange}
+              onChange={(e) => onImageChange(index, e)}
             />
           </MDBCol>
-
           <MDBInput
             type="textarea"
             label="Comment"
             name="comment"
             rows="1"
             className="mt-2 pt-2"
-            onChange={this.onChange}
-            value={comment}
+            onChange={(e) => onChange(index, e)}
+            value={product.comment}
           />
           <div className="d-flex justify-content-center mt-4">
             <MDBBtn
               className="btn btn-circle"
-              onClick={(e) => commentSales(R.clone(this.state))}>
+              onClick={(e) => commentSales(index)}>
               Send
             </MDBBtn>
           </div>
@@ -181,7 +141,7 @@ class SalesDetailViewInformation extends Component {
           <h5>Total Sales</h5>
           <h6 className="text-primary">
             <span className="font-weight-bold">
-              {product.price * product.totalQuantity}$
+              {product.price * product.amount}$
             </span>
           </h6>
         </MDBCol>
