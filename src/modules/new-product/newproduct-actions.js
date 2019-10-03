@@ -86,6 +86,9 @@ export const createProduct = async (product, image, quantity) => {
   });
 
   let bazlGain = (settings.bazlFee / 100) * price;
+  if (!additionalFee) {
+    additionalFee = 0;
+  }
   let influencerGain =
     ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
 

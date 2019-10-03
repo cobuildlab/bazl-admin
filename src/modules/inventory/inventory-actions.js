@@ -113,7 +113,7 @@ export const updateProduct = async (product, image, quantity, id) => {
     const task = await storageRef.put(image);
     imageURL = await task.ref.getDownloadURL();
   }
-  const {
+  let {
     name,
     category,
     description,
@@ -136,6 +136,9 @@ export const updateProduct = async (product, image, quantity, id) => {
   });
 
   let bazlGain = (settings.bazlFee / 100) * price;
+  if (!additionalFee) {
+    additionalFee = 0;
+  }
   let influencerGain =
     ((settings.influencerFee + parseFloat(additionalFee)) / 100) * price;
   let finalPrice = price - (bazlGain + influencerGain);
