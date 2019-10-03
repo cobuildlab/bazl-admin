@@ -1,13 +1,33 @@
-import React, { Component } from 'react';
+import React from 'react';
+import View from 'react-flux-state';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { MDBIcon, MDBCol, MDBRow, MDBBtn, MDBInput } from 'mdbreact';
-import ImgProfile from '../../../assets/img/profile-table.jpg';
+import { fetchImgUserProduct } from '../sales-action';
+import { salesStore, IMG_EVENT } from '../sales-store';
 
-class SalesDetailViewInformation extends Component {
+class SalesDetailViewInformation extends View {
+  constructor(props) {
+    super(props);
+    this.state = {
+      imgUserProduct: '',
+    };
+  }
+
+  componentDidMount() {
+    this.subscribe(salesStore, IMG_EVENT, (imgUserProduct) => {
+      this.setState({
+        imgUserProduct,
+      });
+    });
+    fetchImgUserProduct(this.props.product.user);
+  }
+
   render() {
     let { product, index, pictureTax } = this.props;
     const { commentSales, onChange, onImageChange } = this.props;
+    const { imgUserProduct } = this.state;
+
     let imagePreview = null;
     if (pictureTax) {
       imagePreview = (
@@ -44,7 +64,7 @@ class SalesDetailViewInformation extends Component {
           <div className="mb-3">
             <div
               className="img-profile-table"
-              style={{ backgroundImage: `url(${ImgProfile})` }}
+              style={{ backgroundImage: `url(${imgUserProduct})` }}
             />
             <span className="username-table">{product.name}</span>
           </div>

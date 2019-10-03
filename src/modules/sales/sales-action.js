@@ -10,6 +10,7 @@ import {
   STAT_ERROR,
   UPLOAD_EVENT,
   UPLOAD_ERROR,
+  IMG_EVENT,
 } from './sales-store';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 
@@ -209,4 +210,26 @@ export const updateCommentAction = async (data, index) => {
   await influencerRef.set(influencer, { merge: true });
 
   Flux.dispatchEvent(COMMENT_EVENT, data);
+};
+
+/**
+ * Update the State of a Sale to closed and get the modified data
+ * @returns {Promise<SalesModel>}Sale info or null if unexisting
+ */
+export const fetchImgUserProduct = async (user) => {
+  const DB = firebase.firestore();
+  const userRef = DB.collection('users').doc(user);
+  let img;
+
+  await userRef
+    .get()
+    .then((data) => {
+      img = data.data().picture;
+    })
+    .catch((e) => {
+      Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
+      console.log(e);
+    });
+
+  Flux.dispatchEvent(IMG_EVENT, img);
 };

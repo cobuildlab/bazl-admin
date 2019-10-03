@@ -10,6 +10,7 @@ export const UPLOAD_EVENT = 'UPLOAD_EVENT';
 export const UPLOAD_ERROR = 'UPLOAD_ERROR';
 export const COMMENT_EVENT = 'COMMENT_EVENT';
 export const COMMENT_ERROR = 'COMMENT_ERROR';
+export const IMG_EVENT = 'IMG_EVENT';
 
 class SalesStore extends Flux.DashStore {
   constructor() {
@@ -24,6 +25,7 @@ class SalesStore extends Flux.DashStore {
     this.addEvent(UPLOAD_ERROR);
     this.addEvent(COMMENT_EVENT);
     this.addEvent(COMMENT_ERROR);
+    this.addEvent(IMG_EVENT);
   }
 }
 
