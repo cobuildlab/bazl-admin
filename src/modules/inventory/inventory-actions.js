@@ -54,7 +54,6 @@ export const fetchUserProducts = () => {
           id,
         });
       });
-      console.log(data);
       Flux.dispatchEvent(INVENTORY_EVENT, data);
     })
     .catch((e) => {

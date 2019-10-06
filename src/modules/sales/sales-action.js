@@ -11,6 +11,7 @@ import {
   UPLOAD_EVENT,
   UPLOAD_ERROR,
   IMG_EVENT,
+  IMG_EVENT_SALE,
 } from './sales-store';
 import { landingStore, USER_EVENT } from '../landing/landing-store';
 
@@ -232,4 +233,27 @@ export const fetchImgUserProduct = async (user) => {
     });
 
   Flux.dispatchEvent(IMG_EVENT, img);
+};
+
+/**
+ * Update the State of a Sale to closed and get the modified data
+ * @returns {Promise<SalesModel>}Sale info or null if unexisting
+ */
+export const fetchSalesImg = async (sales) => {
+  const DB = firebase.firestore();
+
+  await sales.forEach((element) => {
+    const userRef = DB.collection('users').doc(element.buyerEmail);
+    userRef
+      .get()
+      .then((data) => {
+        element.buyerImg = data.data().picture;
+      })
+      .catch((e) => {
+        Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
+        console.log(e);
+      });
+  });
+
+  Flux.dispatchEvent(IMG_EVENT_SALE, sales);
 };

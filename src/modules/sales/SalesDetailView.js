@@ -27,8 +27,8 @@ class SalesDetailView extends View {
     super(props);
     this.state = {
       sale: {},
-      key: '',
-      shippedStatus: '2',
+      // key: '',
+      // shippedStatus: '2',
       user: landingStore.getState(USER_EVENT),
       loading: true,
     };
@@ -98,12 +98,11 @@ class SalesDetailView extends View {
     let file = e.target.files[0];
 
     let state = this.state;
-
+    // state.sale.products[index].file = file;
     reader.onloadend = () => {
       state.sale.products[index].pictureTax = reader.result;
       this.setState({
         state,
-        file,
       });
     };
     reader.readAsDataURL(file);
