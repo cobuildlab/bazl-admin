@@ -51,7 +51,8 @@ class TableSales extends View {
             <td>
               <div
                 className="img-profile-table"
-                style={{ backgroundImage: `url(${sale.buyerImg})` }}
+                style={{ backgroundImage: `url(${sale.products[0].picture})` }}
+                // style={{ backgroundImage: `url(${sale.buyerImg})` }}
                 // style={{ backgroundImage: `url(${ImgProfile})` }}
               />
               {/* <span className="username-table">{sale.controlNumber}</span> */}
