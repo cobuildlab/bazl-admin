@@ -154,11 +154,11 @@ export const updateCommentAction = async (data, index) => {
   try {
     salesRefGet = await salesRef.get();
   } catch (err) {
-    Flux.dispatch(COMMENT_ERROR, new Error(err));
+    return Flux.dispatch(COMMENT_ERROR, new Error(err));
   }
 
   sale = salesRefGet.data();
-  orderId = salesRefGet.data().orderId;
+  orderId = sale.orderId;
 
   const storage = firebase.storage();
 
@@ -183,7 +183,7 @@ export const updateCommentAction = async (data, index) => {
   const orderData = await ordersRef.get();
   const order = orderData.data();
 
-  await order.products.forEach((product) => {
+  order.products.forEach((product) => {
     if (product.id === ref.idProduct) {
       if (ref.comment) {
         product.comment = ref.comment;
@@ -198,12 +198,14 @@ export const updateCommentAction = async (data, index) => {
   let idInfluencer;
 
   try {
-    influencerRefGet = await influencerCollection.get();
+    influencerRefGet = await influencerCollection
+      .where('saleId', '==', ref.id)
+      .get();
   } catch (err) {
-    Flux.dispatch(COMMENT_ERROR, new Error(err));
+    return Flux.dispatch(COMMENT_ERROR, new Error(err));
   }
 
-  await influencerRefGet.forEach((element) => {
+  influencerRefGet.forEach((element) => {
     if (element.data().saleId === ref.id) {
       idInfluencer = element.data().id;
       influencer = element.data();
@@ -224,7 +226,7 @@ export const updateCommentAction = async (data, index) => {
       await ordersRef.set(order, { merge: true });
       await influencerRef.set(influencer, { merge: true });
     } catch (err) {
-      Flux.dispatch(COMMENT_ERROR, new Error(err));
+      return Flux.dispatch(COMMENT_ERROR, new Error(err));
     }
   }
 

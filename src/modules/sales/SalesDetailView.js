@@ -97,7 +97,7 @@ class SalesDetailView extends View {
     let state = this.state;
 
     let kiloByte = parseInt(file.size / 1024);
-    if (kiloByte > 2000) {
+    if (kiloByte > 2048) {
       toast.error('Image too Large');
       return false;
     }
