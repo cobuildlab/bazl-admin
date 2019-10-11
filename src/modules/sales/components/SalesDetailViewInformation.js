@@ -28,6 +28,7 @@ class SalesDetailViewInformation extends View {
     const { commentSales, onChange, onImageChange } = this.props;
     let { product, index } = this.props;
 
+    const id = 'upload-photo' + index;
     let imagePreview = null;
 
     if (product.pictureTax) {
@@ -36,7 +37,7 @@ class SalesDetailViewInformation extends View {
           style={{ cursor: 'pointer' }}
           width="80"
           className="text-center"
-          htmlFor="upload-photo">
+          htmlFor={id}>
           <img
             alt={'User Profile'}
             src={product.pictureTax}
@@ -47,7 +48,7 @@ class SalesDetailViewInformation extends View {
       );
     } else {
       imagePreview = (
-        <label className="CustomlabelSales text-center" htmlFor="upload-photo">
+        <label className="CustomlabelSales text-center" htmlFor={id}>
           <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload Image
         </label>
       );
@@ -137,8 +138,9 @@ class SalesDetailViewInformation extends View {
             <input
               type="file"
               name="pictureTax"
-              id="upload-photo"
+              id={id}
               accept="image/*"
+              style={{ opacity: '0', position: 'absolute', zIndex: '-1' }}
               onChange={(e) => onImageChange(index, e)}
             />
           </MDBCol>
