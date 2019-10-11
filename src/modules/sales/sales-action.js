@@ -206,13 +206,11 @@ export const updateCommentAction = async (data, index) => {
   }
 
   influencerRefGet.forEach((element) => {
-    if (element.data().saleId === ref.id) {
-      idInfluencer = element.data().id;
-      influencer = element.data();
-      if (ref.comment) {
-        influencer.comment = ref.comment;
-        influencer.orderStatus = sale.orderStatus;
-      }
+    influencer = element.data();
+    idInfluencer = influencer.id;
+    if (ref.comment) {
+      influencer.comment = ref.comment;
+      influencer.orderStatus = sale.orderStatus;
     }
   });
 
@@ -222,14 +220,15 @@ export const updateCommentAction = async (data, index) => {
 
   if (sale.products[index].comment || sale.products[index].pictureTax) {
     try {
-      await salesRef.set(sale, { merge: true });
-      await ordersRef.set(order, { merge: true });
-      await influencerRef.set(influencer, { merge: true });
+      Promise.all([
+        salesRef.set(sale, { merge: true }),
+        ordersRef.set(order, { merge: true }),
+        influencerRef.set(influencer, { merge: true }),
+      ]);
     } catch (err) {
       return Flux.dispatch(COMMENT_ERROR, new Error(err));
     }
   }
-
   Flux.dispatchEvent(COMMENT_EVENT, data);
 };
 
