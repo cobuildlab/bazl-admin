@@ -146,23 +146,35 @@ export const updateCommentAction = async (data, index) => {
   const ref = data;
   const DB = firebase.firestore();
   const salesRef = DB.collection('sales').doc(ref.id);
+  let imageUrl = ref.products[index].image;
+  let salesRefGet;
   let sale;
   let orderId;
-  await salesRef
-    .get()
-    .then((data) => {
-      sale = data.data();
-      orderId = sale.orderId;
-    })
-    .catch((e) => {
-      Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
-      console.log(e);
-    });
 
-  sale.products[index].comment = ref.products[index].comment;
-  if (ref.products[index].pictureTax) {
-    sale.products[index].pictureTax = ref.products[index].pictureTax;
+  try {
+    salesRefGet = await salesRef.get();
+  } catch (err) {
+    Flux.dispatch(COMMENT_ERROR, new Error(err));
   }
+
+  sale = salesRefGet.data();
+  orderId = salesRefGet.data().orderId;
+
+  const storage = firebase.storage();
+
+  if (imageUrl && imageUrl.name) {
+    const storageRef = storage.ref(`/order-details/${imageUrl.name}`);
+    const task = await storageRef.put(imageUrl);
+    imageUrl = await task.ref.getDownloadURL();
+    sale.products[index].pictureTax = imageUrl;
+  }
+
+  if (ref.products[index].comment) {
+    sale.products[index].comment = ref.products[index].comment;
+  } else {
+    sale.products[index].comment = '';
+  }
+
   if (sale.products[index].comment && sale.products[index].pictureTax) {
     sale.orderStatus = 'shipped';
   }
@@ -181,34 +193,40 @@ export const updateCommentAction = async (data, index) => {
   });
 
   const influencerCollection = DB.collection('influencersSalesProducts');
+  let influencerRefGet;
   let influencer;
   let idInfluencer;
 
-  await influencerCollection
-    .where('saleId', '==', ref.id)
-    .get()
-    .then((data) => {
-      data.forEach((doc) => {
-        idInfluencer = doc.id;
-        influencer = doc.data();
-        if (ref.comment) {
-          influencer.comment = ref.comment;
-          influencer.orderStatus = sale.orderStatus;
-        }
-      });
-    })
-    .catch((e) => {
-      Flux.dispatchEvent(COMMENT_ERROR, new Error(e));
-      console.log(e);
-    });
+  try {
+    influencerRefGet = await influencerCollection.get();
+  } catch (err) {
+    Flux.dispatch(COMMENT_ERROR, new Error(err));
+  }
+
+  await influencerRefGet.forEach((element) => {
+    if (element.data().saleId === ref.id) {
+      idInfluencer = element.data().id;
+      influencer = element.data();
+      if (ref.comment) {
+        influencer.comment = ref.comment;
+        influencer.orderStatus = sale.orderStatus;
+      }
+    }
+  });
 
   const influencerRef = DB.collection('influencersSalesProducts').doc(
     idInfluencer,
   );
 
-  await salesRef.set(sale, { merge: true });
-  await ordersRef.set(order, { merge: true });
-  await influencerRef.set(influencer, { merge: true });
+  if (sale.products[index].comment || sale.products[index].pictureTax) {
+    try {
+      await salesRef.set(sale, { merge: true });
+      await ordersRef.set(order, { merge: true });
+      await influencerRef.set(influencer, { merge: true });
+    } catch (err) {
+      Flux.dispatch(COMMENT_ERROR, new Error(err));
+    }
+  }
 
   Flux.dispatchEvent(COMMENT_EVENT, data);
 };
