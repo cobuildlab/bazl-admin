@@ -219,16 +219,12 @@ export const updateCommentAction = async (data, index) => {
   );
 
   if (sale.products[index].comment || sale.products[index].pictureTax) {
-    const makeRequest = () => {
-      return Promise.all([
+    try {
+      await Promise.all([
         salesRef.set(sale, { merge: true }),
         ordersRef.set(order, { merge: true }),
         influencerRef.set(influencer, { merge: true }),
       ]);
-    };
-
-    try {
-      await makeRequest();
     } catch (err) {
       return Flux.dispatch(COMMENT_ERROR, new Error(err));
     }
