@@ -263,6 +263,7 @@ class InventoryDetailView extends View {
                             type="file"
                             name="picture"
                             id="upload-photo"
+                            accept="image/*"
                             onChange={this.onImageChange}
                           />
                           <small className="text-center">

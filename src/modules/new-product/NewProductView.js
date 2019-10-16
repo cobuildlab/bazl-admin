@@ -233,6 +233,7 @@ class NewProductView extends View {
                             type="file"
                             name="picture"
                             id="upload-photo"
+                            accept="image/*"
                             onChange={this.onImageChange}
                           />
                           <small>JPG or PNG format with a maximum of 5mb</small>

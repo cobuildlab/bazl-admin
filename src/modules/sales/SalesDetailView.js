@@ -27,8 +27,6 @@ class SalesDetailView extends View {
     super(props);
     this.state = {
       sale: {},
-      // key: '',
-      // shippedStatus: '2',
       user: landingStore.getState(USER_EVENT),
       loading: true,
     };
@@ -38,10 +36,9 @@ class SalesDetailView extends View {
   componentDidMount() {
     this.subscribe(salesStore, DETAIL_EVENT, (sale) => {
       const detailSale = sale;
-      const key = sale.id;
       this.setState({
         sale: detailSale,
-        key: key,
+        loading: false,
       });
     });
     this.subscribe(salesStore, STAT_EVENT, (sale) => {
@@ -98,9 +95,16 @@ class SalesDetailView extends View {
     let file = e.target.files[0];
 
     let state = this.state;
-    // state.sale.products[index].file = file;
+
+    let kiloByte = parseInt(file.size / 1024);
+    if (kiloByte > 2048) {
+      toast.error('Image too Large');
+      return false;
+    }
+
     reader.onloadend = () => {
       state.sale.products[index].pictureTax = reader.result;
+      state.sale.products[index].image = file;
       this.setState({
         state,
       });
@@ -109,7 +113,7 @@ class SalesDetailView extends View {
   };
 
   render() {
-    let { sale } = this.state;
+    let { sale, loading } = this.state;
     let statBtn;
 
     if (sale.orderStatus === 'open' || sale.orderStatus === 'Open') {
@@ -159,21 +163,27 @@ class SalesDetailView extends View {
           </div>
           <MDBContainer className="body">
             <div className="d-flex justify-content-end mb-4">{statBtn}</div>
-            {sale.products ? (
-              <div>
-                {sale.products.map((product, index) => (
-                  <SalesDetailViewInformation
-                    key={index}
-                    product={product}
-                    index={index}
-                    sale={sale}
-                    pictureTax={product.pictureTax}
-                    commentSales={this.commentSales}
-                    onChange={this.onChange}
-                    onImageChange={this.onImageChange}
-                  />
-                ))}
-              </div>
+            {!loading ? (
+              <>
+                {sale.products ? (
+                  <div>
+                    {sale.products.map((product, index) => (
+                      <SalesDetailViewInformation
+                        key={index}
+                        product={product}
+                        index={index}
+                        commentSales={this.commentSales}
+                        onChange={this.onChange}
+                        onImageChange={this.onImageChange}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <Loader />
+                  </div>
+                )}
+              </>
             ) : (
               <div className="text-center">
                 <Loader />

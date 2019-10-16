@@ -24,21 +24,23 @@ class SalesDetailViewInformation extends View {
   }
 
   render() {
-    let { product, index, pictureTax } = this.props;
-    const { commentSales, onChange, onImageChange } = this.props;
     const { imgUserProduct } = this.state;
+    const { commentSales, onChange, onImageChange } = this.props;
+    let { product, index } = this.props;
 
+    const id = 'upload-photo' + index;
     let imagePreview = null;
-    if (pictureTax) {
+
+    if (product.pictureTax) {
       imagePreview = (
         <label
           style={{ cursor: 'pointer' }}
           width="80"
           className="text-center"
-          htmlFor="upload-photo">
+          htmlFor={id}>
           <img
             alt={'User Profile'}
-            src={pictureTax}
+            src={product.pictureTax}
             className="img-fluid"
             style={{ borderRadius: '10px', width: '160px', height: '180px' }}
           />
@@ -46,7 +48,7 @@ class SalesDetailViewInformation extends View {
       );
     } else {
       imagePreview = (
-        <label className="CustomlabelSales text-center" htmlFor="upload-photo">
+        <label className="CustomlabelSales text-center" htmlFor={id}>
           <MDBIcon icon="file-upload" className="mb-4 pbs-4" /> Upload Image
         </label>
       );
@@ -136,7 +138,9 @@ class SalesDetailViewInformation extends View {
             <input
               type="file"
               name="pictureTax"
-              id="upload-photo"
+              id={id}
+              accept="image/*"
+              style={{ opacity: '0', position: 'absolute', zIndex: '-1' }}
               onChange={(e) => onImageChange(index, e)}
             />
           </MDBCol>
@@ -173,8 +177,6 @@ class SalesDetailViewInformation extends View {
 SalesDetailViewInformation.propTypes = {
   product: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  pictureTax: PropTypes.string.isRequired,
-  sale: PropTypes.object.isRequired,
   commentSales: PropTypes.func.isRequired,
 };
 

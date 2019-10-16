@@ -93,6 +93,7 @@ class EditBasicInformation extends React.Component {
             type="file"
             name="picture"
             id="upload-photo"
+            accept="image/*"
             onChange={this.onImageChange}
           />
           <small>JPG or PNG with a maximum of 5mb</small>
