@@ -392,7 +392,7 @@ class NewProductView extends View {
                                 *Bazl Fee 15%
                               </h5>
                             </MDBCol>
-                            <MDBCol md="3">
+                            <MDBCol md="2">
                               <MDBInput
                                 type="number"
                                 name="price"
@@ -408,7 +408,7 @@ class NewProductView extends View {
                               </p>
                             </MDBCol>
                             <MDBCol
-                              md="3"
+                              md="2"
                               style={{ display: 'flex', alignItems: 'center' }}>
                               <small>Add Additional Commission</small>
                             </MDBCol>
@@ -431,6 +431,11 @@ class NewProductView extends View {
                               <p className="error-message">
                                 {errorMessages.additionalFee}
                               </p>
+                            </MDBCol>
+                            <MDBCol
+                              md="2"
+                              style={{ display: 'flex', alignItems: 'center' }}>
+                              <small>Free Shipping</small>
                             </MDBCol>
                             <MDBCol md="3">
                               <select
