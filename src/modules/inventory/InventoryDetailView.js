@@ -426,7 +426,7 @@ class InventoryDetailView extends View {
                                 *Bazl Fee 15%
                               </h5>
                             </MDBCol>
-                            <MDBCol md="3">
+                            <MDBCol md="2">
                               <MDBInput
                                 name="price"
                                 onChange={this.onChange}
@@ -441,7 +441,7 @@ class InventoryDetailView extends View {
                               </p>
                             </MDBCol>
                             <MDBCol
-                              md="3"
+                              md="2"
                               style={{ display: 'flex', alignItems: 'center' }}>
                               <small>Add Additional Commission</small>
                             </MDBCol>
@@ -466,7 +466,12 @@ class InventoryDetailView extends View {
                                 {errorMessages.additionalFee}
                               </p>
                             </MDBCol>
-                            <MDBCol>
+                            <MDBCol
+                              md="2"
+                              style={{ display: 'flex', alignItems: 'center' }}>
+                              <small>Free Shipping</small>
+                            </MDBCol>
+                            <MDBCol md="3">
                               <select
                                 className="browser-default custom-select mt-1"
                                 name="shippingFee"
