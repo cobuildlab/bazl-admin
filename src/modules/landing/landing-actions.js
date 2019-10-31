@@ -112,6 +112,7 @@ export const createUser = async (firebaseUser) => {
   user.email = firebaseUser.email;
   user.id = firebaseUser.uid;
   user.privilege = 'merchant';
+  user.name = user.email.split('@')[0];
 
   const userRef = await usersCollection.doc(firebaseUser.email);
   try {
