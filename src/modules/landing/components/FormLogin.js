@@ -33,7 +33,7 @@ class FormLogin extends View {
 
   componentDidMount() {
     this.subscribe(landingStore, LOGIN_EVENT, (user) => {
-      toast.info('Welcome: ' + user.email);
+      toast.info('Welcome: ' + user.name);
       this.props.history.push('/home');
     });
     this.subscribe(landingStore, LOGIN_ERROR_EVENT, (err) => {
