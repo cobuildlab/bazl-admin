@@ -16,7 +16,7 @@ class EditableBankAccount extends Component {
     super(props);
     this.state = {
       type: this.props.account.type,
-      title: this.props.account.title,
+      nameHolder: this.props.account.nameHolder,
       number: this.props.account.number,
       routingNumber: this.props.account.routingNumber,
     };
@@ -36,7 +36,7 @@ class EditableBankAccount extends Component {
 
   render() {
     const { onDelete, editAccount, index } = this.props;
-    const { type, title, number, routingNumber } = this.state;
+    const { type, nameHolder, number, routingNumber } = this.state;
     return (
       <MDBCard className="accountCard" style={{ marginBottom: '20px' }}>
         <MDBCardBody style={{ paddingBottom: '0px', paddingTop: '0px' }}>
@@ -64,8 +64,8 @@ class EditableBankAccount extends Component {
                 label="Holder's name"
                 className="mt-0"
                 type="text"
-                name="title"
-                value={title}
+                name="nameHolder "
+                value={nameHolder}
                 onChange={this.onChange}
               />
             </MDBCol>

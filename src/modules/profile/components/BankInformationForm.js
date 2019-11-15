@@ -17,7 +17,7 @@ const BankInformationForm = () => {
           label="Holder's name"
           className="mt-0"
           type="text"
-          name="title"
+          name="nameHolder"
         />
         <MDBInput
           label="Account number"

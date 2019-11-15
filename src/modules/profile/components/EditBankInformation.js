@@ -17,7 +17,7 @@ class EditBankInformation extends React.Component {
     super(props);
     this.state = {
       type: false,
-      title: '',
+      nameHolder: '',
       number: '',
       routingNumber: '',
       showNewAccountForm: false,
@@ -40,7 +40,7 @@ class EditBankInformation extends React.Component {
     this.setState((prevState) => ({
       showNewAccountForm: !prevState.showNewAccountForm,
       type: false,
-      title: '',
+      nameHolder: '',
       number: '',
       routingNumber: '',
     }));
@@ -48,7 +48,13 @@ class EditBankInformation extends React.Component {
 
   render() {
     const { bankAccounts, onDelete, newAccount, editAccount } = this.props;
-    let { type, title, number, routingNumber, showNewAccountForm } = this.state;
+    let {
+      type,
+      nameHolder,
+      number,
+      routingNumber,
+      showNewAccountForm,
+    } = this.state;
     return (
       <React.Fragment>
         <h5
@@ -103,8 +109,8 @@ class EditBankInformation extends React.Component {
                       label="Holder's name"
                       className="mt-0"
                       type="text"
-                      name="title"
-                      value={title}
+                      name="nameHolder"
+                      value={nameHolder}
                       onChange={this.onChangeBank}
                     />
                   </MDBCol>
