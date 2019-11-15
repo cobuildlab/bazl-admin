@@ -9,12 +9,12 @@ class BankAccount extends Component {
   }
 
   render() {
-    let { type, title, number, routingNumber } = this.state;
+    let { type, nameHolder, number, routingNumber } = this.state;
     return (
       <MDBTableBody>
         <tr>
           <td>{type === true ? 'Business' : 'Personal'}</td>
-          <td>{title}</td>
+          <td>{nameHolder}</td>
           <td>{number}</td>
           <td>{routingNumber}</td>
         </tr>
