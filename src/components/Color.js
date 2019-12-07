@@ -23,6 +23,7 @@ class SketchExample extends React.Component {
   };
 
   render() {
+    const { className } = this.props;
     const styles = reactCSS({
       default: {
         color: {
@@ -54,7 +55,7 @@ class SketchExample extends React.Component {
     });
 
     return (
-      <div>
+      <div className={className}>
         <div style={styles.swatch} onClick={this.handleClick}>
           <div style={styles.color} />
         </div>
