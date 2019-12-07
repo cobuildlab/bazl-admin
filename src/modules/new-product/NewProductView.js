@@ -46,6 +46,7 @@ class NewProductView extends View {
       categories: [],
       btnDisabled: true,
       loading: false,
+      fieldsRequired: false,
     };
     this.onError = error.bind(this);
   }
@@ -111,14 +112,21 @@ class NewProductView extends View {
   };
 
   onNewProduct = () => {
-    const data = this.state.data;
-    let products = data.products.slice();
-    products.push(this.state.product);
-    data.products = products;
-    this.setState({
-      data: data,
-      showNewProductForm: false,
-    });
+    const { product } = this.state;
+    if (product && product.size && product.quantity && product.color) {
+      const data = this.state.data;
+      let products = data.products.slice();
+      products.push(this.state.product);
+      data.products = products;
+      this.setState({
+        data: data,
+        showNewProductForm: false,
+        fieldsRequired: false,
+      });
+    } else {
+      toast.error('All Fields are Required');
+      this.setState({ fieldsRequired: true });
+    }
   };
 
   onChangeProduct = (e) => {
@@ -171,7 +179,7 @@ class NewProductView extends View {
   };
 
   render() {
-    const { data, categories } = this.state;
+    const { data, categories, fieldsRequired, product } = this.state;
     let picture = this.state.data.picture;
     let percent = [];
     for (let index = 1; index <= 30; index++) {
@@ -332,7 +340,11 @@ class NewProductView extends View {
                                         <MDBCol md="3">
                                           <MDBInput
                                             label="Size"
-                                            className="product mt-0"
+                                            className={`product mt-0 ${
+                                              fieldsRequired && !product.size
+                                                ? 'red-borders'
+                                                : ''
+                                            }`}
                                             type="text"
                                             name="size"
                                             onChange={this.onChangeProduct}
@@ -345,6 +357,11 @@ class NewProductView extends View {
                                         </MDBCol>
                                         <MDBCol md="3">
                                           <Color
+                                            className={
+                                              fieldsRequired && !product.color
+                                                ? 'red-borders'
+                                                : ''
+                                            }
                                             onChangeColor={this.onChangeColor}
                                           />
                                           <p className="error-message">
@@ -354,7 +371,12 @@ class NewProductView extends View {
                                         <MDBCol md="3">
                                           <MDBInput
                                             label="Quantity"
-                                            className="product mt-0"
+                                            className={`product mt-0 ${
+                                              fieldsRequired &&
+                                              !product.quantity
+                                                ? 'red-borders'
+                                                : ''
+                                            }`}
                                             type="number"
                                             name="quantity"
                                             onChange={this.onChangeProduct}
