@@ -363,6 +363,7 @@ class NewProductView extends View {
                                                 : ''
                                             }
                                             onChangeColor={this.onChangeColor}
+                                            required
                                           />
                                           <p className="error-message">
                                             {errorMessages.color}
