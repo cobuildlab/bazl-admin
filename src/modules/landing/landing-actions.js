@@ -150,6 +150,9 @@ export const pushHome = async (props) => {
 
 export const confimrNewPassword = async (code, newPassword, email) => {
   // update property
+  console.log('code', code);
+  console.log('newPassword', newPassword);
+  console.log('email', email);
   const DB = firebase.firestore();
   const userRef = DB.collection('users').doc(email.toLowerCase());
   await userRef.update({ needsPasswordReset: false });

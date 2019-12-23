@@ -46,7 +46,9 @@ class ChangePasswordView extends View {
       return toast.error('the password must contain at least 6 characters');
     } else {
       let newPassword = firstInput;
-      confimrNewPassword(code, newPassword, email);
+      confimrNewPassword(code, newPassword, email).then((res) => {
+        console.log('respuesta', res);
+      });
       this.setState({ loading: true });
       toast.success('You have set your password succesfully');
       return this.props.history.push('/');
