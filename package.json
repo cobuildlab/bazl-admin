@@ -27,7 +27,7 @@
     "react-flux-state": "^1.1.4",
     "react-icons-kit": "^1.3.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "react-sidebar": "^3.0.2",
     "react-spinners": "^0.5.4",
     "react-toastify": "^5.1.0",
